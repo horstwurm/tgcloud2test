@@ -166,16 +166,16 @@ companies = Company.create({status:"ok", active:true, user_id:14, name:"Sondereg
 companies = Company.create({status:"ok", active:true, user_id:1, name:"Amt für Wirtschaft und Arbeit", partner:false, mcategory_id:22 ,stichworte: "Wirtschaft Arbeit Amt Kanton", address1:"Promenadenstrasse", address2:"8510 Frauenfeld", address3:"Thurgau", avatar:File.open(path+'awa.jpg', 'rb')}) 
 mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 1", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
 @mob = Mobject.where('name=?', "AWA Service 1").first
-mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas1.jpg', 'rb')})
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas1.jpg', 'rb')})
 mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 2", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
 @mob = Mobject.where('name=?', "AWA Service 2").first
-mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas2.jpg', 'rb')})
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas2.jpg', 'rb')})
 mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 3", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
 @mob = Mobject.where('name=?', "AWA Service 3").first
-mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas3.jpg', 'rb')})
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas3.jpg', 'rb')})
 mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 4", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
 @mob = Mobject.where('name=?', "AWA Service 4").first
-mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas4.jpg', 'rb')})
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas4.jpg', 'rb')})
 
 #create some customer relationships
 usanz = User.all.count-1
@@ -246,12 +246,12 @@ for i in 1..20
     mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Aktion", name:"Sonderaktion "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:29})
     @mob = Mobject.where('name=?', "Sonderaktion "+i.to_s+" von " + @comp.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
     mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"Angebot "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:28})
     @mob = Mobject.where('name=?', "Angebot "+i.to_s+" von " + @comp.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
 end
 for i in 1..20
@@ -260,12 +260,12 @@ for i in 1..20
     mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Aktion", name:"Sonderaktion "+i.to_s+" von "+@user.lastname, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:29})
     @mob = Mobject.where('name=?', "Sonderaktion "+i.to_s+" von " + @user.lastname).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
     mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"Angebot "+i.to_s+" von "+@user.lastname, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1,  mcategory_id:28})
     @mob = Mobject.where('name=?', "Angebot "+i.to_s+" von " + @user.lastname).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
 end
 
@@ -279,14 +279,14 @@ for i in 1..20
     mobjects = Mobject.create({active:true, mtype:"Vermietungen", msubtype: nil, name:"Vermietobjekt "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:30})
     @mob = Mobject.where('name=?', "Vermietobjekt "+i.to_s+" von " + @comp.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
     mobjects = Mobject.create({active:true, mtype:"Vermietungen", msubtype: nil, name:"Vermietobjekt "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:30})
     @mob = Mobject.where('name=?', "Vermietobjekt "+i.to_s+" von " + @user.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
 end
 
@@ -300,7 +300,10 @@ for i in 1..20
     mobjects = Mobject.create({active:true, mtype:"Ausschreibungen", msubtype: nil, name:"Ausschreibungslos "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id: cat})
     @mob = Mobject.where('name=?', "Ausschreibungslos "+i.to_s+" von " + @user.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+    end
+    for k in 1..3
+        mdetails = Mdetail.create({mtype: "Ausschreibungsangebote", mobject_id: @mob.id, name:"Kurzbezeichnung Angebot... ", description:"dies ist die Beschreibung Angebot... "})
     end
 end
 
@@ -314,7 +317,7 @@ for i in 1..20
     mobjects = Mobject.create({active:true, mtype:"Stellenanzeigen", msubtype: "Anbieten", name:"Stelle "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id: cat})
     @mob = Mobject.where('name=?', "Stelle "+i.to_s+" von " + @comp.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
 end
 
@@ -327,7 +330,7 @@ for i in 1..20
     mobjects = Mobject.create({active:true, mtype:"Veranstaltungen", msubtype: nil, name:"Event "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id: cat})
     @mob = Mobject.where('name=?', "Event "+i.to_s+" von " + @comp.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
 end
 
@@ -340,7 +343,7 @@ for i in 1..20
     mobjects = Mobject.create({active:true, mtype:"Ausflugsziele", msubtype: nil, name:"Ausflug "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id: cat})
     @mob = Mobject.where('name=?', "Ausflug "+i.to_s+" von " + @user.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
 end
     
@@ -353,7 +356,7 @@ for i in 1..20
     mobjects = Mobject.create({active:true, mtype:"Kleinanzeigen", msubtype: "Anbieten", name:"Kleinanzeige "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id: cat})
     @mob = Mobject.where('name=?', "Kleinanzeige "+i.to_s+" von " + @user.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
 end
 
@@ -367,14 +370,14 @@ for i in 1..10
     mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Spenden", name:"Spendeninitiative "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Spendeninitiative "+i.to_s+" von " + @comp.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
     mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Spenden", name:"Spendeninitiative "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Spendeninitiative "+i.to_s+" von " + @user.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
 end
 usanz = User.all.count-1
@@ -387,14 +390,14 @@ for i in 1..10
     mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Belohnungen", name:"Rewardinitiative "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Rewardinitiative "+i.to_s+" von " + @comp.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... " })
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... " })
     end
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
     mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Belohnungen", name:"Rewardinitiative "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Rewardinitiative "+i.to_s+" von " + @user.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... " })
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... " })
     end
 end
 usanz = User.all.count-1
@@ -407,14 +410,14 @@ for i in 1..10
     mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Zinsen", name:"Kreditinitiative "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Kreditinitiative "+i.to_s+" von " + @comp.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
     mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Zinsen", name:"Kreditinitiative "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Kreditinitiative "+i.to_s+" von " + @user.name).first
     for k in 1..3
-        mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
+        mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
 end
 
