@@ -8,7 +8,7 @@
         <% end %>
     <% end %>
 <% else %>
-    <% if !$activeapps %>
+    <% if !$activeapps or $activeapps.count == 0 %>
         <% init_credentials("System") %>
     <% end %>
     <% for i in 0..$activeapps.length-1 %>
