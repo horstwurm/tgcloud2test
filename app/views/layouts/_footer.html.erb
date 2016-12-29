@@ -14,37 +14,62 @@
     <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <footer_header>
-                    XCONNECT
+                    xCONNECT Nutzung
                 </footer_header>
-                <br><br>
+                <br>
                 <footer_text>
                     <%= link_to "Info", home_index_path %><br>
                     <%= link_to "Über uns", url_with_protocol("xConnect_ueber_uns.html"), :target => '_blank' %><br>
                     <%= link_to "Rechtliches & Impressum", url_with_protocol("xConnect_rechtliches_und.impressum"), :target => '_blank' %><br>
-                    <% if !user_signed_in? %>
-                        <%= link_to "Anmelden", new_user_session_path %><br>
-                        <%= link_to "Registrieren", new_user_registration_path %><br>
-                    <% else %>
-					   <% if current_user.webmaster %>
-							<%= link_to "Webmaster", webmasters_path  %><br>
-					   <% end %>
-					   <% if current_user.superuser %>
-							<%= link_to "Parameter Zugriffe", appparams_path %><br>
-							<%= link_to "Parameter Tabellen", home_index9_path  %><br>
-							<%= link_to "User Statistik", home_index2_path %><br>
-					   <% end %>
-                        <%= link_to "Abmelden", destroy_user_session_path, method: :delete %><br>
-    		            <%= link_to "Passwort ändern", edit_user_registration_path %><br><br>
-    		            <%= link_to "Account löschen", registration_path(current_user), data: { confirm: "Are you sure?" }, method: :delete, class:"btn btn-danger btn-xs" %><br>
-                    <% end %>
+                    <br>
                 </footer_text>
             </div>
 
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <footer_header>
+                    xCONNECT Anmeldung
+                </footer_header>
+                <br>
+                <footer_text>
+                    <% if !user_signed_in? %>
+                        <%= link_to "Anmelden", new_user_session_path %><br>
+                        <%= link_to "Registrieren", new_user_registration_path %><br>
+                    <% else %>
+                       <%= link_to "Einstellungen", credentials_path(current_user.id) %><br><br>
+                       <%= link_to "Abmelden", destroy_user_session_path, method: :delete %><br>
+    		           <%= link_to "Passwort ändern", edit_user_registration_path %><br><br>
+    		           <%= link_to "Account löschen", registration_path(current_user), data: { confirm: "Are you sure?" }, method: :delete, class:"btn btn-danger btn-xs" %><br>
+                    <% end %>
+                </footer_text>
+            </div>
+
+            <% if user_signed_in? and (current_user.webmaster or current_user.superuser) %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <footer_header>
+                        xCONNECT Poweruser
+                    </footer_header>
+                    <br>
+                    <footer_text>
+                        <% if user_signed_in? %>
+    					   <% if current_user.webmaster %>
+    							<%= link_to "Webmaster", webmasters_path  %><br><br>
+    					   <% end %>
+    					   <% if current_user.superuser %>
+        						<%= link_to "Superuser (Funktionen)", appparams_path %><br>
+        						<%= link_to "Superuser (Tabellen)", home_index9_path  %><br><br>
+        						<%= link_to "Superuser (Statistik)", home_index2_path %><br>
+        						<%= link_to "Superuser (Testpage)", home_index1_path %><br>
+    					   <% end %>
+                        <% end %>
+                    </footer_text>
+                </div>
+            <% end %>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <footer_header>
                     xConnect Partner
                 </footer_header>
-                <br><br>
+                <br>
                 <footer_text>
                 <% @partners = Company.where('partner=?','t') %>
                 <% @partners.each do |p| %>
@@ -54,9 +79,12 @@
                 <% end %>
                 </footer_text>
             </div>
+    </div>
+    <br>
+    <div class="row">
 
             <div class="col-sm-6 col-md-4 col-lg-3">
-                  <i class="glyphicon glyphicon-copyright-mark"></i> 2016, alle Rechte vorbehalten
+                  <i class="glyphicon glyphicon-copyright-mark"></i> 2016, 2017 alle Rechte vorbehalten
             </div>
     </div>
     </div>

@@ -15,9 +15,9 @@ Rails.application.routes.draw do
 
   get 'showcal/index'
   get 'home/index'
+  get 'home/index1'
   get 'home/index2'
   get 'home/index3'
-  get 'home/index6'
   get 'home/index6'
   get 'home/index7'
   get 'home/index8'

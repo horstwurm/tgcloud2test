@@ -159,9 +159,23 @@ companies = Company.create({status:"ok", active:true, user_id:8, name:"Blindenve
 companies = Company.create({status:"ok", active:true, user_id:9, name:"Kosmetikstudio Jasmine", mcategory_id:10 ,stichworte: "Kosmetik", address1:"Gartenstrasse 2", address2:"Bürglen", address3:"Thurgau", avatar:File.open(path+'kosmetik.jpg', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:10, name:"Autohaus Hummel", mcategory_id:25 ,stichworte: "Auto KFZ", address1:"Hauptstrasse", address2:"Bissegg", address3:"Thurgau", avatar:File.open(path+'autobissegg.png', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:11, name:"Valiant Bank", mcategory_id:26 ,stichworte: "Bank Finanz Geld", address1:"Bahnhof", address2:"Bern", address3:"Bern", avatar:File.open(path+'valiant.png', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:12, name:"St.Galler Kantonalbank", partner:true, mcategory_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"St.Gallen", address3:"St.gallen", avatar:File.open(path+'sgkb.png', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:14, name:"Graubündner Kantonalbank", partner:true, mcategory_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Chur", address3:"Graubünden", avatar:File.open(path+'grkb.png', 'rb')}) 
+companies = Company.create({status:"ok", active:true, user_id:12, name:"St.Galler Kantonalbank", partner:false, mcategory_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"St.Gallen", address3:"St.gallen", avatar:File.open(path+'sgkb.png', 'rb')}) 
+companies = Company.create({status:"ok", active:true, user_id:14, name:"Graubündner Kantonalbank", partner:false, mcategory_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Chur", address3:"Graubünden", avatar:File.open(path+'grkb.png', 'rb')}) 
 companies = Company.create({status:"ok", active:true, user_id:14, name:"Sonderegger publish", partner:false, mcategory_id:22 ,stichworte: "Copyshop Drucken Druckerei Publish Webdesign", address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau", avatar:File.open(path+'sonderegger.tiff', 'rb')}) 
+
+companies = Company.create({status:"ok", active:true, user_id:1, name:"Amt für Wirtschaft und Arbeit", partner:false, mcategory_id:22 ,stichworte: "Wirtschaft Arbeit Amt Kanton", address1:"Promenadenstrasse", address2:"8510 Frauenfeld", address3:"Thurgau", avatar:File.open(path+'awa.jpg', 'rb')}) 
+mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 1", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
+@mob = Mobject.where('name=?', "AWA Service 1").first
+mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas1.jpg', 'rb')})
+mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 2", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
+@mob = Mobject.where('name=?', "AWA Service 2").first
+mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas2.jpg', 'rb')})
+mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 3", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
+@mob = Mobject.where('name=?', "AWA Service 3").first
+mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas3.jpg', 'rb')})
+mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 4", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
+@mob = Mobject.where('name=?', "AWA Service 4").first
+mdetails = Mdetail.create({mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas4.jpg', 'rb')})
 
 #create some customer relationships
 usanz = User.all.count-1

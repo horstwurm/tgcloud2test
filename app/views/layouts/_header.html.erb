@@ -2,7 +2,7 @@
 	<!--<div class="container-fluid">-->
 		<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>	
 		<div class="row">
-			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1 nopadding pull-left">
 				<%= link_to home_index3_path do %>
 					<div class="thumbnail thumbnail-navnav" align="center">
 			            <i class="glyphicon glyphicon-home" style="font-size:2em"></i><br>
@@ -11,8 +11,8 @@
 				<% end %>
 			</div>
 
-			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
-				<% if user_signed_in? and $controller_list.include?(controller_name) %>
+			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1 nopadding">
+				<% if user_signed_in? and $controller_list.include?(controller_name) and action_name == "index" %>
 					<div class="thumbnail thumbnail-navnav" align="center">
 						<% controller_name %>
 						<% case controller_name %>
@@ -36,22 +36,22 @@
 				<% end %>
 			</div>
 
-			<div class="col-xs-6 col-sm-2 col-md-1 col-lg-1">
+			<div class="col-xs-5 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<% if $controller_list.include?(controller_name) and (action_name == "index") %>
 					<% @items = url_for(action: action_name, controller: controller_name) %>
 					<%= form_tag @items, method: 'get' do %>
 						<div class="form-inline">
 							<div class="form-group">
-								<div class="col-xs-8">
+								<div class="col-xs-8 nopadding">
 								  <%= search_field_tag 'search', nil, class: 'text-nav form-control', placeholder: 'Search' %>
 								  <%= text_field_tag 'mtype', session[:mtype], class: 'hidden' %>
 								  <% if session[:msubtype] and session[:msubtype] != "" %>
 									  <%= text_field_tag 'msubtype', session[:msubtype], class: 'hidden'  %>
 								  <% end %>
 								</div>
-								<div class="col-xs-4">
+								<!--<div class="col-xs-4 nopadding">-->
 								  <%= button_tag "", type: 'submit', class: "btn btn-nav btn-xs glyphicon glyphicon-search" %>
-								</div>
+								<!--</div>-->
 							</div>
 						</div>
 					<% end %>
@@ -59,8 +59,8 @@
 	    			<br><br>
 				<% end %>
 			</div>
-
-			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1 pull-right">
+			
+			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1 nopadding pull-right">
 				<% if user_signed_in? %>
 					<%= link_to current_user do %>
 						<div class="thumbnail thumbnail-navnav" align="center">

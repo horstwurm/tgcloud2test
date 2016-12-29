@@ -533,86 +533,87 @@ end
 
 def navigate(object,item)
     
-    html_string = "<navigate><div class='col-xs-12'><div class='panel-body'>"
-    html_string = "<navigate>"
+    # html_string = "<navigate><div class='col-xs-12'><div class='panel-body'>"
+    # html_string = "<navigate>"
+    html_string = ""
     
     case object
       when "Privatpersonen"
-        html_string = html_string + build_nav("Privatpersonen",item,"Info","user",item)
-        html_string = html_string + build_nav("Privatpersonen",item,"Kalendereintraege","calendar",Appointment.where('user_id1=? or user_id2=?',item,item).count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Angebote","shopping-cart",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Aktionen","shopping-cart",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Ansprechpartner","question-sign",item.madvisors.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Institutionen","copyright-mark",item.companies.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Stellenanzeigen","briefcase",item.mobjects.where('mtype=?',"Stellenanzeigen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Kleinanzeigen","pushpin",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Vermietungen","retweet",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Veranstaltungen","glass",item.mobjects.where('mtype=?',"Veranstaltungen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Tickets","barcode",item.user_tickets.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Ausflugsziele","camera",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Ausschreibungen","pencil",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Spenden)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Belohnungen)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Zinsen)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Beitraege)","gift", item.mstats.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Bewertungen","star", item.mratings.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Favoriten","heart", item.favourits.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Kundenbeziehungen","check", item.customers.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Transaktionen","list", item.transactions.where('ttype=?', "Payment").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"eMail","envelope", Email.where('m_to=? or m_from=?', item.id, item.id).count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Info",item)
+        html_string = html_string + build_nav("Privatpersonen",item,"Kalendereintraege",Appointment.where('user_id1=? or user_id2=?',item,item).count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Angebote",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Aktionen",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Ansprechpartner",item.madvisors.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Institutionen",item.companies.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Stellenanzeigen",item.mobjects.where('mtype=?',"Stellenanzeigen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Kleinanzeigen",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Vermietungen",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Veranstaltungen",item.mobjects.where('mtype=?',"Veranstaltungen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Tickets",item.user_tickets.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Ausflugsziele",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Ausschreibungen",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Spenden)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Belohnungen)",item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Zinsen)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Beitraege)", item.mstats.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Bewertungen", item.mratings.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Favoriten",item.favourits.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Kundenbeziehungen", item.customers.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Transaktionen", item.transactions.where('ttype=?', "Payment").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"eMail", Email.where('m_to=? or m_from=?', item.id, item.id).count > 0)
 
       when "Institutionen"
-        html_string = html_string + build_nav("Institutionen",item,"Info","copyright-mark",item)
-        html_string = html_string + build_nav("Institutionen",item,"Angebote","shopping-cart",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Aktionen","shopping-cart",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Stellenanzeigen","briefcase",item.mobjects.where('mtype=?',"Stellenanzeigen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Kleinanzeigen","pushpin",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Vermietungen","retweet",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Veranstaltungen","glass",item.mobjects.where('mtype=?',"Veranstaltungen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Sponsorenengagements","barcode",item.msponsors.count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Ausflugsziele","camera",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Ausschreibungen","pencil",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Spenden)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Belohnungen)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Zinsen)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Beitraege)","gift", item.mstats.count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Kundenbeziehungen","check", item.customers.count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Transaktionen","list", item.transactions.where('ttype=?', "Payment").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"eMail","envelope", Email.where('m_to=? or m_from=?', item.user.id, item.user.id).count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Info",item)
+        html_string = html_string + build_nav("Institutionen",item,"Angebote",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Aktionen",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Stellenanzeigen",item.mobjects.where('mtype=?',"Stellenanzeigen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Kleinanzeigen",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Vermietungen",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Veranstaltungen",item.mobjects.where('mtype=?',"Veranstaltungen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Sponsorenengagements",item.msponsors.count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Ausflugsziele",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Ausschreibungen",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Spenden)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Belohnungen)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Zinsen)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Beitraege)", item.mstats.count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Kundenbeziehungen", item.customers.count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Transaktionen",item.transactions.where('ttype=?', "Payment").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"eMail", Email.where('m_to=? or m_from=?', item.user.id, item.user.id).count > 0)
         if item.partner
-          html_string = html_string + build_nav("Institutionen",item,"Links (Partner)", "globe", item.partner_links.count > 0)
+          html_string = html_string + build_nav("Institutionen",item,"Links (Partner)", item.partner_links.count > 0)
         end
 
       when "Objekte"
-        html_string = html_string + build_nav("Objekte",item,"Info","info-sign",item)
-        html_string = html_string + build_nav("Objekte",item,"Details","book",item.mdetails.where('mtype=?',"Details").count > 0)
+        html_string = html_string + build_nav("Objekte",item,"Info",item)
+        html_string = html_string + build_nav("Objekte",item,"Details",item.mdetails.where('mtype=?',"Details").count > 0)
         if item.mtype == "Veranstaltungen"
-          html_string = html_string + build_nav("Objekte",item,"Sponsorenengagements","heart",item.msponsors.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Sponsorenengagements",item.msponsors.count > 0)
         end
         if item.mtype == "Angebote" or item.mtype == "Stellenanzeigen"
-          html_string = html_string + build_nav("Objekte",item,"Ansprechpartner","user",item.madvisors.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Ansprechpartner",item.madvisors.count > 0)
         end
         if item.mtype == "Vermietungen"
-          html_string = html_string + build_nav("Objekte",item,"Kalender","calendar",item.mcalendars.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Kalender",item.mcalendars.count > 0)
         end
         if item.mtype == "Ausschreibungen"
-          html_string = html_string + build_nav("Objekte",item,"Ausschreibungsangebote","inbox",item.mdetails.where('mtype=?',"Ausschreibungsangebote").count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Ausschreibungsangebote",item.mdetails.where('mtype=?',"Ausschreibungsangebote").count > 0)
         end
         if item.mtype == "Crowdfunding"
-          html_string = html_string + build_nav("Objekte",item,"CF Statistik","stats",item.mstats.count > 0)
-          html_string = html_string + build_nav("Objekte",item,"CF Transaktionen","euro",item.mstats.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"CF Statistik",item.mstats.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"CF Transaktionen",item.mstats.count > 0)
         end
-        html_string = html_string + build_nav("Objekte",item,"Bewertungen","star",item.mratings.count > 0)
+        html_string = html_string + build_nav("Objekte",item,"Bewertungen",item.mratings.count > 0)
 
     end
     
     #html_string = html_string + "</div></div></navigate>"
-    html_string = html_string + "</navigate>"
+    # html_string = html_string + "</navigate>"
     return html_string.html_safe
     
 end
 
-def build_nav(object, item, topic, glyphicon, condition)
+def build_nav(object, item, topic, condition)
   
   html_string=""
   if $activeapps.include?(object+topic)
@@ -626,15 +627,15 @@ def build_nav(object, item, topic, glyphicon, condition)
     case object
       when "Privatpersonen"
         html_string = link_to(user_path(item, :topic => topic)) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
         end
       when "Institutionen"
         html_string = link_to(company_path(item, :topic => topic)) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
         end
       when "Objekte"
         html_string = link_to(mobject_path(item, :topic => topic)) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
         end
     end
   end
@@ -870,163 +871,256 @@ def build_stats(array, records, label)
   return array
 end
 
-def build_kachel_color(domain, name, path_param, logon, user_id, company_id)
-  if logon and !user_signed_in?
-    return
-  else
+def getIcon(iconstring)
+    case iconstring
+
+      when "Info"
+        icon = "info-sign"
+      when "Kalendereintraege"
+        icon = "calendar"
+      when "Ansprechpartner"
+        icon = "user"
+      when "Stellenanzeigen"
+        icon = "briefcase"
+      when "Kleinanzeigen"
+        icon = "pushpin"
+      when "Tickets"
+        icon = "barcode"
+      when "Crowdfunding (Beitraege)"
+        icon = "gift"
+      when "Bewertungen"
+        icon = "star"
+      when "Favoriten"
+        icon = "heart"
+      when "Kundenbeziehungen"
+        icon = "check"
+      when "Kontobeziehungen"
+        icon = "list"
+      when "Transaktionen"
+        icon = "euro"
+      when "eMail"
+        icon = "list"
+      when "Positionen (Privatpersonen)"
+        icon = "map-marker"
+      when "Positionen (Favoriten)"
+        icon = "map-marker"
+      when "Aktivitaeten"
+        icon = "dashboard"
+      when "Sponsorenengagements"
+        icon = "heart"
+      when "Links (Partner)"
+        icon = "globe"
+      when "Details"
+        icon = "search"
+      when "Ausschreibungsangebote"
+        icon = "book"
+      when "Kalender (Vermietungen)"
+        icon = "calendar"
+      when "CF Statistik"
+        icon = "dashboard"
+      when "CF Transaktionen"
+        icon = "euro"
+
+
+      when "Einstellungen"
+        icon = "cog"
+      when "meine Abfragen"
+        icon = "question-sign"
+
+      when "Privatpersonen"
+        icon = "user"
+      when "Institutionen"
+        icon = "copyright-mark"
+
+      when "Angebote"
+        icon = "shopping-cart"
+      when "Aktionen"
+        icon = "shopping-cart"
+      when "Vermietungen"
+        icon = "retweet"
+      when "Ausschreibungen"
+        icon = "pencil"
+      when "Stellenanzeigen (Suchen)"
+        icon = "briefcase"
+      when "Stellenanzeigen (Anbieten)"
+        icon = "briefcase"
+      when "Veranstaltungen"
+        icon = "glass"
+      when "Ausflugsziele"
+        icon = "map-marker"
+      when "Kleinanzeigen (Suchen)"
+        icon = "align-justify"
+      when "Kleinanzeigen (Anbieten)"
+        icon = "align-justify"
+      when "Crowdfunding (Spenden)"
+        icon = "grain"
+      when "Crowdfunding (Belohnungen)"
+        icon = "grain"
+      when "Crowdfunding (Zinsen)"
+        icon = "grain"
+      when "Kalender (Aktionen)"
+        icon = "calendar"
+      when "Kalender (Veranstaltungen)"
+        icon = "calendar"
+      when "Kalender (Ausschreibungen)"
+        icon = "calendar"
+
+      when "Neues Angebot"
+        icon = "shopping-cart"
+      when "Neue Aktion"
+        icon = "shopping-cart"
+
+      when "Neue Kleinanzeige (Anbieten)"
+        icon = "align-justify"
+      when "Neue Kleinanzeige (Suchen)"
+        icon = "align-justify"
+
+      when "Neue Stellenanzeige (Anbieten)"
+        icon = "briefcase"
+      when "Neue Stellenanzeige (Suchen)"
+        icon = "briefcase"
+
+      when "Neue Crowdfunding-Initiative (Spenden)"
+        icon = "grain"
+      when "Neue Crowdfunding-Initiative (Belohnungen)"
+        icon = "grain"
+      when "Neue Crowdfunding-Initiative (Zinsen)"
+        icon = "grain"
+      else
+        icon = "question-mark"
+    end
+end
+
+def build_kachel_color(domain, name, path_param, user_id, company_id)
     case domain
-      when "mein Markt"
+    
+      when "Einstellungen"
         path = credentials_path(:user_id => current_user.id)
         pic = image_def(domain, domain, nil)
-        icon = "record"
       when "meine Abfragen"
         path = home_index6_path
         pic = image_def(domain, domain, nil)
-        icon = "question-sign"
 
       when "Privatpersonen"
         path = users_path(:mtype => nil, :msubtype => nil)
         pic = image_def(domain, domain, nil)
-        icon = "user"
+
       when "Institutionen"
         path = companies_path(:mtype => nil, :msubtype => nil)
         pic = image_def(domain, domain, nil)
-        icon = "copyright-mark"
 
       when "Angebote"
         path = mobjects_path(:mtype => "Angebote", :msubtype => "Standard")
         pic = image_def("Object", "Angebote", "Standard")
-        icon = "shopping-cart"
+
       when "Aktionen"
         path = mobjects_path(:mtype => "Angebote", :msubtype => "Aktion")
         pic = image_def("Object", "Angebote", "Aktion")
-        icon = "shopping-cart"
+
       when "Vermietungen"
         path = mobjects_path(:mtype => "Vermietungen", :msubtype => nil)
         pic = image_def("Object", "Vermietungen", nil)
-        icon = "retweet"
+
       when "Ausschreibungen"
         path = mobjects_path(:mtype => "Ausschreibungen", :msubtype => nil)
         pic = image_def("Object", "Ausschreibungen", nil)
-        icon = "pencil"
+
       when "Stellenanzeigen (Suchen)"
         path = mobjects_path(:mtype => "Stellenanzeigen", :msubtype => "Suchen")
         pic = image_def("Object", "Stellenanzeigen", "Suchen")
-        icon = "briefcase"
+
       when "Stellenanzeigen (Anbieten)"
         path = mobjects_path(:mtype => "Stellenanzeigen", :msubtype => "Anbieten")
         pic = image_def("Object", "Stellenanzeigen", "Anbieten")
-        icon = "briefcase"
+
       when "Veranstaltungen"
         path = mobjects_path(:mtype => "Veranstaltungen", :msubtype => nil)
         pic = image_def("Object", "Veranstaltungen", nil)
-        icon = "glass"
+
       when "Ausflugsziele"
         path = mobjects_path(:mtype => "Ausflugsziele", :msubtype => nil)
         pic = image_def("Object", "Ausflugsziele", nil)
-        icon = "map-marker"
+
       when "Kleinanzeigen (Suchen)"
         path = mobjects_path(:mtype => "Kleinanzeigen", :msubtype => "Suchen")
         pic = image_def("Object", "Kleinanzeigen", "Suchen")
-        icon = "align-justify"
+
       when "Kleinanzeigen (Anbieten)"
         path = mobjects_path(:mtype => "Kleinanzeigen", :msubtype => "Anbieten")
         pic = image_def("Object", "Kleinanzeigen", "Anbieten")
-        icon = "align-justify"
+
       when "Crowdfunding (Spenden)"
         path = mobjects_path(:mtype => "Crowdfunding", :msubtype => "Spenden")
         pic = image_def("Object", "Crowdfunding", "Spenden")
-        icon = "grain"
+
       when "Crowdfunding (Belohnungen)"
         path = mobjects_path(:mtype => "Crowdfunding", :msubtype => "Belohnungen")
         pic = image_def("Object", "Crowdfunding", "Belohnungen")
-        icon = "grain"
+
       when "Crowdfunding (Zinsen)"
         path = mobjects_path(:mtype => "Crowdfunding", :msubtype => "Zinsen")
         pic = image_def("Object", "Crowdfunding", "Zinsen")
-        icon = "grain"
+
       when "Kalender (Aktionen)"
         path = showcal_index_path(:mtype => "Angebote", :msubtype => "Aktion")
         pic = "calendar.jpg"
-        icon = "calendar"
+
       when "Kalender (Veranstaltungen)"
         path = showcal_index_path(:mtype => "Veranstaltungen", :msubtype => nil)
         pic = "calendar.jpg"
-        icon = "calendar"
+
       when "Kalender (Ausschreibungen)"
         path = showcal_index_path(:mtype => "Ausschreibungen", :msubtype => nil)
         pic = "calendar.jpg"
-        icon = "calendar"
 
       when "Neues Angebot"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Angebote", :msubtype => "Standard")
         pic = "angebot.jpg"
-        icon = "shopping-cart"
+
       when "Neue Aktion"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Angebote", :msubtype => "Aktion")
         pic = "aktion.jpg"
-        icon = "shopping-cart"
 
       when "Neue Kleinanzeige (Anbieten)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Kleinanzeigen", :msubtype => "Anbieten")
         pic = "kleinanzeige.jpg"
-        icon = "align-justify"
+
       when "Neue Kleinanzeige (Suchen)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Kleinanzeigen", :msubtype => "Suchen")
         pic = "kleinanzeige.jpg"
-        icon = "align-justify"
 
       when "Neue Stellenanzeige (Anbieten)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Stellenanzeigen", :msubtype => "Anbieten")
         pic = "stellenanzeige.jpg"
-        icon = "briefcase"
+
       when "Neue Stellenanzeige (Suchen)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Stellenanzeigen", :msubtype => "Suchen")
         pic = "stellenanzeige.jpg"
-        icon = "briefcase"
 
       when "Neue Crowdfunding-Initiative (Spenden)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id,  :mtype => "Crowdfunding", :msubtype => "Spenden")
         pic = "spende.jpg"
-        icon = "grain"
+
       when "Neue Crowdfunding-Initiative (Belohnungen)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Crowdfunding", :msubtype => "Belohnungen")
         pic = "belohnung.jpg"
-        icon = "grain"
+
       when "Neue Crowdfunding-Initiative (Zinsen)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Crowdfunding", :msubtype => "Zinsen")
         pic = "kredit.jpg"
-        icon = "grain"
 
     end
+    icon = getIcon(domain)
     if path_param
       path = path_param
     end
     html_string = ""
-    if false
-    html_string = html_string + link_to(path) do
-      content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
-        content_tag(:div, nil, class:"thumbnail kachel_min_height kachel_text", align:"center") do
-          content_tag(:span, nil) do
-            #content_tag(:i, nil, class:"glyphicon glyphicon-" + glyphicon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+object)
-            #content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(glyphicon+"-question-mark.png", :size => "45x45") + "<br><br>".html_safe + content_tag(:listh3, object)
-            if name and name.length > 0
-              content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(pic, :size => "100x100") + "<br><br>".html_safe + content_tag(:listh3, name)
-            else
-              content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(pic, :size => "100x100")
-            end
-          end
-        end
-      end
-    end
-    end
     html_string = html_string + link_to(path) do
       content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
         content_tag(:div, nil, class:"thumbnail", align:"center") do
           content_tag(:span, nil) do
             icon_size = "4"
             content_tag(:i, nil, class:"glyphicon glyphicon-" + icon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+domain)
-            #content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(glyphicon+".png", :size => "45x45") + "<br><br>".html_safe + content_tag(:listh3, name)
           end
         end
       end
@@ -1034,33 +1128,45 @@ def build_kachel_color(domain, name, path_param, logon, user_id, company_id)
     
     return html_string.html_safe
     
-  end
 end
 
-def build_kachel_access(credentials, mode)
+def build_kachel_access(topic, mode)
 
   if mode == "System"
-    cpath = appparams_path
+    credentials = Appparam.where('domain=?',topic)
   end
-  if mode == "User"  
-    cpath = credentials_path
+  if mode == "User"
+    credentials = current_user.credentials.where('domain=?',topic)
   end
-  
+
   html_string = ""
   credentials.each do |c|
     
-    if c.access == nil or c.access == true
-      thumbnail_state = 'thumbnail-active'
-    else
-      thumbnail_state = 'thumbnail-inactive'
+    if mode == "System"
+      cpath = appparams_path(:id => c.id)
     end
-
-    html_string = html_string + link_to(appparams_path(:id => c.id)) do
-      content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
-        content_tag(:div, nil, class:"thumbnail " + thumbnail_state, align:"center") do
-          content_tag(:span, nil) do
-            icon_size = "4"
-            content_tag(:i, nil, class:"glyphicon glyphicon-" + c.icon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+c.right)
+    skip = false
+    if mode == "User"
+      if !$activeapps.include?(topic+c.right)
+        skip = true
+      end
+      cpath = credentials_path(:id => c.id)
+    end
+    
+    if !skip
+      if c.access == nil or c.access == true
+        thumbnail_state = 'thumbnail-active'
+      else
+        thumbnail_state = 'thumbnail-inactive'
+      end
+  
+      html_string = html_string + link_to(cpath) do
+        content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
+          content_tag(:div, nil, class:"thumbnail " + thumbnail_state, align:"center") do
+            content_tag(:span, nil) do
+              icon_size = "4"
+              content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(c.right), style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+c.right)
+            end
           end
         end
       end
@@ -1177,6 +1283,265 @@ def AktionDatum2(datum, mobject)
     else
         return false
     end
+end
+
+def init_credentials(mode)
+    @array = []
+
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "meine Abfragen", "icon" => "question-mark", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Privatpersonen", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Institutionen", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Angebote", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Aktionen", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Kalender (Aktionen)", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Vermietungen", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Ausschreibungen", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Kalender (Ausschreibungen)", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Stellenanzeigen (Suchen)", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Stellenanzeigen (Anbieten)", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Veranstaltungen", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Kalender (Veranstaltungen)", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Ausflugsziele", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Kleinanzeigen (Suchen)", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Kleinanzeigen (Anbieten)", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Crowdfunding (Spenden)", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Crowdfunding (Belohnungen)", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Funktionen", "right" => "Crowdfunding (Zinsen)", "icon" => "user", "access" => "true"}
+    @array << hash
+
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Info", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Kalendereintraege", "icon" => "calendar", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Angebote", "icon" => "shopping-cart", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Aktionen", "icon" => "shopping-cart", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Ansprechpartner", "icon" => "question-sign", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Institutionen", "icon" => "copyright-mark", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Stellenanzeigen", "icon" => "briefcase", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Kleinanzeigen", "icon" => "pushpin", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Vermietungen", "icon" => "retweet", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Veranstaltungen", "icon" => "glass", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Tickets", "icon" => "barcode", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Ausflugsziele", "icon" => "camera", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Ausschreibungen", "icon" => "pencil", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Spenden)", "icon" => "grain", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Belohnungen)", "icon" => "grain", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Zinsen)", "icon" => "grain", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Beitraege)", "icon" => "gift", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Bewertungen", "icon" => "star", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Favoriten", "icon" => "heart", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Kundenbeziehungen", "icon" => "check", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Kontobeziehungen", "icon" => "th-list", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Transaktionen", "icon" => "euro", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "eMail", "icon" => "envelope", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Positionen (Privatpersonen)", "icon" => "map-marker", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Positionen (Favoriten)", "icon" => "map-marker", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Aktivitaeten", "icon" => "dashboard", "access" => "true"}
+    @array << hash
+    
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Info", "icon" => "copyright-mark", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Angebote", "icon" => "shopping-cart", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Aktionen", "icon" => "shopping-cart", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Stellenanzeigen", "icon" => "briefcase", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Kleinanzeigen", "icon" => "pushpin", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Vermietungen", "icon" => "retweet", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Veranstaltungen", "icon" => "glass", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Sponsorenengagements", "icon" => "barcode", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Ausflugsziele", "icon" => "camera", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Ausschreibungen", "icon" => "pencil", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Spenden)", "icon" => "grain", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Belohnungen)", "icon" => "grain", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Zinsen)", "icon" => "grain", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Beitraege)", "icon" => "gift", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Kundenbeziehungen", "icon" => "check", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Kontobeziehungen", "icon" => "th-list", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Transaktionen", "icon" => "euro", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "eMail", "icon" => "envelope", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Links (Partner)", "icon" => "globe", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Aktivitaeten", "icon" => "dashboard", "access" => "true"}
+    @array << hash
+    
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Info", "icon" => "search", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Details", "icon" => "book", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Sponsorenengagements", "icon" => "heart", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Ansprechpartner", "icon" => "user", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Kalender (Vermietungen)", "icon" => "calendar", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Ausschreibungsangebote", "icon" => "inbox", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Bewertungen", "icon" => "star", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "CF Statistik", "icon" => "stats", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "CF Transaktionen", "icon" => "euro", "access" => "true"}
+    @array << hash
+    
+    for i in 0..@array.length-1
+      if mode == "System"
+        c = Appparam.new
+      end
+      if mode == "User"
+        c = Credential.new
+        c.user_id = current_user.id
+      end
+      c.domain = @array[i]["domain"]
+      c.right = @array[i]["right"]
+      c.access = @array[i]["access"]
+      c.save
+    end
+
+end
+
+def getUserCreds
+  credapps = []
+  creds = current_user.credentials
+  if !creds or creds.count==0
+    init_credentials("User")
+  end
+  creds.each do |c|
+    if $activeapps.include?(c.domain+c.right)
+      credapps << c.domain+c.right if c.access
+    end
+  end
+  return credapps
 end
 
 end    

@@ -4,18 +4,18 @@
             
             <% case @mtype %>
               <% when "Angebote" %>
-                <%= build_kachel_color("Neues Angebot", "", nil, true, @user_id, @company_id) %>
-                <%= build_kachel_color("Neue Aktion", "", nil, true, @user_id, @company_id) %>
+                <%= build_kachel_color("Neues Angebot", "", nil, @user_id, @company_id) %>
+                <%= build_kachel_color("Neue Aktion", "", nil, @user_id, @company_id) %>
               <% when "Kleinanzeigen" %>
-                <%= build_kachel_color("Neue Kleinanzeige (Anbieten)", "", nil, true, @user_id, @company_id) %>
-                <%= build_kachel_color("Neue Kleinanzeige (Suchen)", "", nil, true, @user_id, @company_id) %>
+                <%= build_kachel_color("Neue Kleinanzeige (Anbieten)", "", nil, @user_id, @company_id) %>
+                <%= build_kachel_color("Neue Kleinanzeige (Suchen)", "", nil, @user_id, @company_id) %>
               <% when "Stellenanzeigen" %>
-                <%= build_kachel_color("Neue Stellenanzeige (Anbieten)", "", nil, true, @user_id, @company_id) %>
-                <%= build_kachel_color("Neue Stellenanzeige (Suchen)", "", nil, true, @user_id, @company_id) %>
+                <%= build_kachel_color("Neue Stellenanzeige (Anbieten)", "", nil, @user_id, @company_id) %>
+                <%= build_kachel_color("Neue Stellenanzeige (Suchen)", "", nil, @user_id, @company_id) %>
               <% when "Crowdfunding" %>
-                <%= build_kachel_color("Neue Crowdfunding-Initiative (Spenden)", "", nil, true, @user_id, @company_id) %>
-                <%= build_kachel_color("Neue Crowdfunding-Initiative (Belohnungen)", "", nil, true, @user_id, @company_id) %>
-                <%= build_kachel_color("Neue Crowdfunding-Initiative (Zinsen)", "", nil, true, @user_id, @company_id) %>
+                <%= build_kachel_color("Neue Crowdfunding-Initiative (Spenden)", "", nil, @user_id, @company_id) %>
+                <%= build_kachel_color("Neue Crowdfunding-Initiative (Belohnungen)", "", nil, @user_id, @company_id) %>
+                <%= build_kachel_color("Neue Crowdfunding-Initiative (Zinsen)", "", nil, @user_id, @company_id) %>
               <% end %>
 
           </div>

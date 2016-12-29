@@ -1,14 +1,16 @@
 <div class="row">
+    <%= header("mein Markt", true) %>
+</div>
+<%= build_kachel_access("Funktionen", "System") %>
+<div class="row">
     <%= header("Funktionen Privatpersonen", true) %>
 </div>
-<%= build_kachel_access(@appparams.where("domain=?","Privatpersonen"), "System") %>
-
+<%= build_kachel_access("Privatpersonen", "System") %>
 <div class="row">
     <%= header("Funktionen Institutionen", true) %>
 </div>
-<%= build_kachel_access(@appparams.where("domain=?","Institutionen"), "System") %>
-
+<%= build_kachel_access("Institutionen", "System") %>
 <div class="row">
     <%= header("Funktionen Business Objekte", true) %>
 </div>
-<%= build_kachel_access(@appparams.where("domain=?","Objekte"), "System") %>
+<%= build_kachel_access("Objekte", "System") %>

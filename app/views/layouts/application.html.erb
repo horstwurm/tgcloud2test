@@ -10,20 +10,24 @@
     <script src='//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js' type='text/javascript'></script> <!-- only if you need custom infoboxes -->  
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body>
+  <body class="testcontainer">
 
     <% $controller_list = %w[mobjects companies users madvisors showcal] %>
+    <% $wochentage = %w[Mo Di Mi Do Fr Sa So] %>
+
     <% $activeapps = [] %>
     <% apps = Appparam.all %>
+    <% if !apps or apps.count==0 %>
+      <% init_credentials("System") %>
+    <% end%>
     <% apps.each do |a| %>
-      <%   $activeapps << a.domain+a.right if a.access %>
+      <%  $activeapps << a.domain+a.right if a.access %>
     <% end %>
-    <% $wochentage = %w[Mo Di Mi Do Fr Sa So] %>
 
     <% $switch_color = "#ACC550" %>
     <%= render 'layouts/header' %>
     
-    <div class='container-fluid'>
+    <div class='container-fluid testcontainer'>
         <% flash.each do |name, msg| %>
           <% content_tag(:div, msg, class:"alert alert-warning") %>
         <% end %>
