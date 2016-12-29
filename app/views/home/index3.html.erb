@@ -1,3 +1,12 @@
+<% $activeapps = [] %>
+<% apps = Appparam.all %>
+<% if !apps or apps.count==0 %>
+  <% init_credentials("System") %>
+<% end%>
+<% apps.each do |a| %>
+  <%  $activeapps << a.domain+a.right if a.access %>
+<% end %>
+
 <% if user_signed_in? %>
     <% creds = getUserCreds %>
     <% if creds %>
@@ -8,9 +17,6 @@
         <% end %>
     <% end %>
 <% else %>
-    <% if !$activeapps or $activeapps.count == 0 %>
-        <% init_credentials("System") %>
-    <% end %>
     <% for i in 0..$activeapps.length-1 %>
         <% if $activeapps[i][0..9] == "Funktionen" %>
             <%= build_kachel_color($activeapps[i][10..$activeapps.length-1], "", nil, nil, nil) %>
