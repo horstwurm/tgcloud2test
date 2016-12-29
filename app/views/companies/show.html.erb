@@ -237,64 +237,6 @@
   </div>
 </div>
 
-<!--<script>-->
-<!--Morris.Donut({-->
-<!--  element: 'donut-example0',-->
-<!--  data: $('#donut-example0').data('reports'),-->
-<!--}).on('click', function(i, row){-->
-<!--  switch(row.label) {-->
-<!--      case "Angebote":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Angebote") %>");-->
-<!--        break-->
-<!--      case "Stellenanzeigen":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Stellenanzeigen") %>");-->
-<!--        break-->
-<!--      case "Kleinanzeigen":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Kleinanzeigen") %>");-->
-<!--        break-->
-<!--      case "Vermietungen":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Vermietungen") %>");-->
-<!--        break-->
-<!--      case "Ausschreibungen":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Ausschreibungen") %>");-->
-<!--        break-->
-<!--      case "Veranstaltungen":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Veranstaltungen") %>");-->
-<!--        break-->
-<!--      case "Sponsorenengagements":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Sponsorenengagements") %>");-->
-<!--        break-->
-<!--      case "Crowdfunding":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Crowdfunding") %>");-->
-<!--        break-->
-<!--      case "Crowdfunding Beitraege":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Crowdfunding Beitraege") %>");-->
-<!--        break-->
-<!--      case "Kundenstatus":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Kundenstatus") %>");-->
-<!--        break-->
-<!--      case "Transaktionen":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Transaktionen") %>");-->
-<!--        break-->
-<!--      case "Email":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Email") %>");-->
-<!--        break-->
-<!--      case "Links":-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Links") %>");-->
-<!--        break-->
-<!--      default:-->
-<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Company") %>");-->
-<!--  }-->
-<!--});-->
-<!--</script>-->
-
-<!--<script type="text/javascript">-->
-<!--function loadUrl(newLocation)-->
-<!--{-->
-<!--  window.location.href = newLocation;-->
-<!--}-->
-<!--</script>-->
-
 <script type="text/javascript">
     var latitudes = [<%= @company.latitude %>];
     var longitudes = [<%= @company.longitude %>];

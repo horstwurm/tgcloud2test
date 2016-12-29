@@ -8,6 +8,9 @@
         <% end %>
     <% end %>
 <% else %>
+    <% if !$activeapps %>
+        <% init_credentials("System") %>
+    <% end %>
     <% for i in 0..$activeapps.length-1 %>
         <% if $activeapps[i][0..9] == "Funktionen" %>
             <%= build_kachel_color($activeapps[i][10..$activeapps.length-1], "", nil, nil, nil) %>

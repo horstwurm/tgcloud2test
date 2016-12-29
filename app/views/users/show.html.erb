@@ -420,78 +420,6 @@
   </div>
 </div>
 
-<script>
-Morris.Donut({
-  element: 'donut-example0',
-  data: $('#donut-example0').data('reports'),
-}).on('click', function(i, row){
-  switch(row.label) {
-      case "Institutionen":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Institutionen") %>");
-        break
-      case "Kalendereintraege":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Kalendereintraege") %>");
-        break
-      case "Angebote":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Angebote") %>");
-        break
-      case "Ansprechpartner":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Ansprechpartner") %>");
-        break
-      case "Vermietungen":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Vermietungen") %>");
-        break
-      case "Kleinanzeigen":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Kleinanzeigen") %>");
-        break
-      case "Veranstaltungen":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Veranstaltungen") %>");
-        break
-      case "Ausschreibungen":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Ausschreibungen") %>");
-        break
-      case "Ausflugsziele":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Ausflugsziele") %>");
-        break
-      case "Crowdfunding":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Crowdfunding") %>");
-        break
-      case "Crowdfunding Beitraege":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Crowdfunding Beitraege") %>");
-        break
-     case "Tickets":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Tickets") %>");
-        break
-      case "Bewertungen":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Bewertungen") %>");
-        break
-      case "Favoriten":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Favoriten") %>");
-        break
-      case "Kundenstatus":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Kundenstatus") %>");
-        break
-      case "Transaktionen":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Transaktionen") %>");
-        break
-      case "Nachrichten":
-        loadUrl("<%= user_path(:id => @user.id, :topic => "Email") %>");
-        break
-      case "Abfragen":
-        loadUrl("<%= home_index6_path(:id => @user.id) %>");
-        break
-      default:
-        loadUrl("<%= user_path(:id => @user.id, :topic => "User") %>");
-  }
-});
-</script>
-<script type="text/javascript">
-function loadUrl(newLocation)
-{
-  window.location.href = newLocation;
-}
-</script>
-
 <script type="text/javascript">
     var latitudes = [<%= @user.latitude %>];
     var longitudes = [<%= @user.longitude %>];
@@ -510,7 +438,6 @@ function loadUrl(newLocation)
             mapOptions);
         marker.setMap(map);
     }
-    <!--init_map(0);-->
 </script>
 
 <script>
@@ -562,7 +489,7 @@ function initialize() {
 </script>
 
 <script>
-$(window).load(function(){ initialize(); init_map(0) })
+  $(window).load(function(){ initialize(); init_map(0) })
 </script>
 
 <script type="text/javascript" 

@@ -535,8 +535,8 @@ def navigate(object,item)
     
     # html_string = "<navigate><div class='col-xs-12'><div class='panel-body'>"
     # html_string = "<navigate>"
-    html_string = "<div class='panel-body'"
-    
+    #html_string = "<div class='panel-body'>"
+    html_string = ""
     case object
       when "Privatpersonen"
         html_string = html_string + build_nav("Privatpersonen",item,"Info",item)
@@ -609,7 +609,7 @@ def navigate(object,item)
     
     #html_string = html_string + "</div></div></navigate>"
     # html_string = html_string + "</navigate>"
-    html_string = html_string + "</div>"
+    #html_string = html_string + "</div>"
     return html_string.html_safe
     
 end
@@ -627,15 +627,15 @@ def build_nav(object, item, topic, condition)
     
     case object
       when "Privatpersonen"
-        html_string = link_to(user_path(item, :topic => topic)) do
+        html_string = link_to(user_path(:id => item.id, :topic => topic)) do
           content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
         end
       when "Institutionen"
-        html_string = link_to(company_path(item, :topic => topic)) do
+        html_string = link_to(company_path(:id => item.id, :topic => topic)) do
           content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
         end
       when "Objekte"
-        html_string = link_to(mobject_path(item, :topic => topic)) do
+        html_string = link_to(mobject_path(:id => item.id, :topic => topic)) do
           content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
         end
     end
@@ -681,7 +681,7 @@ def action_buttons2(object, item, topic)
               content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-euro")
             end
           end
-          if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen")
+          if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen)")
             html_string = html_string + link_to(new_user_position_path(:user_id => current_user.id)) do
               content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-map-marker")
             end
