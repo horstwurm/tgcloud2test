@@ -1,8 +1,10 @@
 <% if user_signed_in? %>
     <% creds = getUserCreds %>
-    <% for i in 0..creds.length-1 %>
-        <% if creds[i][0..9] == "Funktionen" %>
-            <%= build_kachel_color(creds[i][10..creds.length-1], "", nil, nil, nil) %>
+    <% if creds %>
+        <% for i in 0..creds.length-1 %>
+            <% if creds[i][0..9] == "Funktionen" %>
+                <%= build_kachel_color(creds[i][10..creds.length-1], "", nil, nil, nil) %>
+            <% end %>
         <% end %>
     <% end %>
 <% else %>
