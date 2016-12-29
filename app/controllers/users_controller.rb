@@ -164,7 +164,7 @@ class UsersController < ApplicationController
       @wins = @wins + "]"
     end
 
-    if params[:topic] == "User"
+    if params[:topic] == "Info"
      counter = 0 
      @locs = "["
      @wins = "["
