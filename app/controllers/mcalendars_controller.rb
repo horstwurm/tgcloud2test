@@ -33,7 +33,7 @@ class McalendarsController < ApplicationController
   def create
     @mcalendar = Mcalendar.new(mcalendar_params)
     if @mcalendar.save
-      redirect_to mobject_path(:id => @mcalendar.mobject_id, :topic => "Kalender", :year => session[:year], :cw => session[:cw]), notice: 'Calender entry was successfully created.'
+      redirect_to mobject_path(:id => @mcalendar.mobject_id, :topic => "Kalender (Vermietungen)", :year => session[:year], :cw => session[:cw]), notice: 'Calender entry was successfully created.'
     else
       render :new
     end
@@ -42,7 +42,7 @@ class McalendarsController < ApplicationController
   # PUT /mcalendars/1
   def update
     if @mcalendar.update(mcalendar_params)
-      redirect_to mobject_path(:id => @mcalendar.mobject_id, :topic => "Kalender", :year => session[:year], :cw => session[:cw]), notice: 'Calender entry was successfully updated.'
+      redirect_to mobject_path(:id => @mcalendar.mobject_id, :topic => "Kalender (Vermietungen)", :year => session[:year], :cw => session[:cw]), notice: 'Calender entry was successfully updated.'
     else
       render :edit
     end
@@ -52,7 +52,7 @@ class McalendarsController < ApplicationController
   def destroy
     @id = @mcalendar.mobject_id
     @mcalendar.destroy
-      redirect_to mobject_path(:id => @id, :topic => "Kalender", :year => session[:year], :cw => session[:cw]), notice: 'Calender entry was successfully destroyed.'
+      redirect_to mobject_path(:id => @id, :topic => "Kalender (Vermietungen)", :year => session[:year], :cw => session[:cw]), notice: 'Calender entry was successfully destroyed.'
   end
 
   private

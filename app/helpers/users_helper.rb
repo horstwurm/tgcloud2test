@@ -594,7 +594,7 @@ def navigate(object,item)
           html_string = html_string + build_nav("Objekte",item,"Ansprechpartner",item.madvisors.count > 0)
         end
         if item.mtype == "Vermietungen"
-          html_string = html_string + build_nav("Objekte",item,"Kalender",item.mcalendars.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Kalender (Vermietungen)",item.mcalendars.count > 0)
         end
         if item.mtype == "Ausschreibungen"
           html_string = html_string + build_nav("Objekte",item,"Ausschreibungsangebote",item.mdetails.where('mtype=?',"Ausschreibungsangebote").count > 0)
@@ -778,7 +778,7 @@ def action_buttons2(object, item, topic)
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
          case topic
-            when "Informationen"
+            when "Info"
                if user_signed_in?
                  if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
            	        html_string = html_string + link_to(edit_mobject_path(item)) do
@@ -809,19 +809,19 @@ def action_buttons2(object, item, topic)
                     end
                  end
                 end
-            when "Sponsoren"
+            when "Sponsorenengagements"
               if user_signed_in?
                 html_string = html_string + link_to(new_msponsor_path(:mobject_id => item.id)) do
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                 end
               end
-            when "Ratings"
+            when "Bewertungen"
               if user_signed_in?
       	        html_string = html_string + link_to(new_mrating_path :mobject_id => item.id, :user_id => current_user.id) do
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                 end
               end
-            when "Advisors"
+            when "Ansprechpartner"
               if user_signed_in?
                 if (item.owner_type == "User" and item.owner_id == current_user.id)
                   html_string = html_string + link_to(madvisors_path :mobject_id => item.id) do
@@ -829,7 +829,7 @@ def action_buttons2(object, item, topic)
                   end
                 end
               end
-            when "Kalender"
+            when "Kalender (Vermietungen)"
               html_string = html_string + link_to(mobject_path(:mobject_id => item.id, :dir => "<", :topic => topic)) do
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-left")
               end
@@ -841,8 +841,8 @@ def action_buttons2(object, item, topic)
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                 end
               end
-            when "CF_Statistik"
-            when "CF_Transaktionen"
+            when "CF Statistik"
+            when "CF Transaktionen"
               #if item.mstats.sum(:amount) < item.amount
                 html_string = html_string + link_to(new_mstat_path(:mobject_id => item.id, :dontype => "User")) do
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-user")

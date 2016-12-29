@@ -16,7 +16,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading header">
                       <li_header>
-                      <%= link_to mobject_path(:id => @mcalendar.mobject_id, :topic => "Kalender") do %>
+                      <%= link_to mobject_path(:id => @mcalendar.mobject_id, :topic => "Kalender (Vermietungen)") do %>
                         <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
                       <% end %>
                       RESERVATION <%= @mcalendar.mobject.name %>
@@ -78,5 +78,5 @@
 </script>
 
 <script>
-  document.addEventListener("turbolinks:load", function() {})
+  document.addEventListener("turbolinks:load", function() {$document.ready()})
 </script>
