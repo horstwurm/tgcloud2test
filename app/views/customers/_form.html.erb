@@ -19,11 +19,11 @@
                       <li_header>
                       <% if @customer.owner_type == "User" %>
                           <%= link_to user_path(:id => @customer.owner_id, :topic => "Kundenstatus") do %>
-                            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                            <i class="btn btn-primary glyphicon glyphicon-list"></i>
                           <% end %>
                       <% else %>
                           <%= link_to company_path(:id => @customer.owner_id, :topic => "Kundenstatus") do %>
-                            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                            <i class="btn btn-primary glyphicon glyphicon-list"></i>
                           <% end %>
                       <% end %>
                       KUNDEN-Nr

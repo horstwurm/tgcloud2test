@@ -698,7 +698,15 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(new_appointment_path :user_id1 => current_user.id, :user_id2 => @user.id) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Angebote", "Aktionen", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding (Spenden)", "Crowdfunding (Belohnungen)", "Crowdfunding (Zinsen)"
+            when "Angebote", "Aktionen"
+              html_string = html_string + link_to(home_index8_path :user_id => current_user.id, :mtype => "Angebote") do
+                content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+              end
+            when "Crowdfunding (Spenden)", "Crowdfunding (Belohnungen)", "Crowdfunding (Zinsen)"
+              html_string = html_string + link_to(home_index8_path :user_id => current_user.id, :mtype => "Crowdfunding") do
+                content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+              end
+            when "Kleinanzeigen", "Stellenanzeigen"
               html_string = html_string + link_to(home_index8_path :user_id => current_user.id, :mtype => topic) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
@@ -754,7 +762,15 @@ def action_buttons2(object, item, topic)
             end
           end
           case topic
-            when "Angebote", "Aktionen", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding (Spenden)", "Crowdfunding (Belohnungen)", "Crowdfunding (Zinsen)"
+            when "Angebote", "Aktionen"
+              html_string = html_string + link_to(home_index8_path :company_id => item.id, :mtype => "Angebote") do
+                content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+              end
+            when "Crowdfunding (Spenden)", "Crowdfunding (Belohnungen)", "Crowdfunding (Zinsen)"
+              html_string = html_string + link_to(home_index8_path :company_id => item.id, :mtype => "Crowdfunding") do
+                content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+              end
+            when "Kleinanzeigen", "Stellenanzeigen"
               html_string = html_string + link_to(home_index8_path :company_id => item.id, :mtype => topic) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end

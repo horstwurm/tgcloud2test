@@ -18,11 +18,11 @@
                     <div class="panel-heading header">
                       <li_header>
                       <%= link_to searches_path :search_domain => @search.search_domain, :controller_name => @search.controller, :ticket_id => @search.ticket_id do %>
-                        <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                        <i class="btn btn-primary glyphicon glyphicon-list"></i>
                       <% end %>
                       ABFRAGEN Einträge gefunden: <%= @search.counter.to_s %><%= @search.sql_string %>
                       <br>
-                      <% @search.sql_string %>
+                      <%= @search.build_sql %>
                       </li_header>
                     </div>
                 </div>
@@ -208,8 +208,8 @@
                   <%= f.hidden_field :counter %>
                   <%= f.hidden_field :mtype %>
                   <%= f.hidden_field :msubtype %>
-                  <%= f.number_field :age_from, :id => "from", class:"form-control hidden"%>
-                  <%= f.number_field :age_to, :id => "to", class:"form-control hidden"%>
+                  <%= f.number_field :age_from, :id => "from", class:"form-control"%>
+                  <%= f.number_field :age_to, :id => "to", class:"form-control"%>
                   <%= f.number_field :distance, :id => "distance", class:"form-control hidden"%>
                   <%= f.check_box :social, :id => "social", class:"form-control hidden"%>
                   <%= f.check_box :customer, :id => "customer", class:"form-control hidden"%>

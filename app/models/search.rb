@@ -49,7 +49,7 @@ class Search < ActiveRecord::Base
                 sql_string[0] = sql_string[0] + " and dateofbirth <=?"
                 sql_string << end_date.to_s
             end
-            if self.age_to != nil and self.age_to > 0 and self.age_to < 100
+            if self.age_to != nil and self.age_to > 0 and self.age_to <= 100
                 start_date = Date.new(Date.today.year - age_to, Date.today.month, Date.today.day)
                 sql_string[0] = sql_string[0] + " and dateofbirth >=?"
                 sql_string << start_date.to_s
@@ -75,8 +75,8 @@ class Search < ActiveRecord::Base
             if self.search_domain == "Tickets"
                 if self.customer
                     sql_string[0] = sql_string[0] + " and id IN (?)"
-                    cid = Ticket.find(self.ticket_id).sponsor.company.id
-                    @customers = Customer.where('company_id=?', cid)
+                    cid = Ticket.find(self.ticket_id).msponsor.company.id
+                    @customers = Customer.where('owner_type=? and owner_id=?', "Company", cid)
                     cli = []
                     @customers.each do |c|
                         cli << c.user_id

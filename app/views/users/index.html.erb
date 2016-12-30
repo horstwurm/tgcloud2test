@@ -8,11 +8,6 @@
     <div class="row">
       <div class="col-md-12">
         <div class="digg_pagination">
-    		    <!--<% if user_signed_in? %>-->
-  		      <!--  <%= link_to searches_path :search_domain => "Privatpersonen", :controller_name => controller_name do %>-->
-  		      <!--    <i class="btn btn-primary glyphicon glyphicon-filter"></i>-->
-  		      <!--  <% end %>-->
-    		    <!--<% end %>-->
             <%= will_paginate @users, :container => false, previous_label: "<", next_label: ">" %>
         </div>
       </div>
@@ -30,26 +25,6 @@
       </div>
     </div>
   </div>
-
-<script type="text/javascript">
-    var latitudes = [38.756675, 38.8507126, 38.84753];
-    var longitudes = [-77.13208299999997, -77.09903600000001, -77.06577290000001];
-    function init_map(index) {
-        var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
-        var mapOptions = {
-            center: myLocation,
-            zoom: 16
-        };
-        var marker = new google.maps.Marker({
-            position: myLocation,
-            title: "Property Location"
-        });
-        var map = new google.maps.Map(document.getElementById("map"),
-        mapOptions);
-        marker.setMap(map);
-    }
-    init_map(0);
-</script>
 
 <script>
 function initialize() {
@@ -99,10 +74,6 @@ function initialize() {
     });
     
 }
-</script>
-
-<script>
-$(window).load(function(){ initialize() })
 </script>
 
 <script>
