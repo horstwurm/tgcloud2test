@@ -41,11 +41,7 @@
                     <% end %>
                   </td>
                   <td>
-                    <% if ut.user.anonymous or ut.user.avatar_file_name == nil %>
-                      <%= image_tag("user_a.png", :size => "100x100", class:"img-rounded" ) %>
-                    <% else %>
-                      <%= image_tag ut.user.avatar(:small), class:"img-rounded"  %>
-                    <% end %>
+                    <%= showImage2(:small, ut.user, true) %>
                   </td>
                   <td>
                     <anzeigetext>

@@ -7,13 +7,18 @@
 
   <div class="row">
     <header>
-    <%= header(@user.name + " " + @user.lastname, true) %>
+    <%= header(@user.name + " " + @user.lastname + "<navshow><i class='btn btn-xs btn-primary glyphicon glyphicon-menu-down'></i></navshow><navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
+    <nav>
+      <div class='col-xs-12'>
+          <%= navigate("Privatpersonen", @user) %>
+      </div>
+    </nav>
     </header>
   </div>
 
   <div class="row">
 
-      <div class='col-xs-10'>
+      <div class='col-xs-12'>
       <% case @topic %>
         <% when "Info" %>
 
@@ -413,9 +418,11 @@
         
       </div>
       
+      <% if false %>
       <div class='col-xs-2'>
           <%= navigate("Privatpersonen", @user) %>
       </div>
+      <% end %>
       
   </div>
 </div>
@@ -521,3 +528,24 @@ function initialize() {
   document.addEventListener("turbolinks:load", function() {init_map(0);initialize();drawChart()})
 </script>
 
+<script>
+$(document).ready(function(){
+    $("nav").hide();
+    $("navhide").hide();
+    $("navhide").hide();
+
+    $("navshow").mouseover(function(){
+        $("nav").show();
+        $("navshow").hide();
+        $("navhide").show();
+
+    });
+    
+    $("navhide").mouseover(function(){
+        $("nav").hide();
+        $("navshow").show();
+        $("navhide").hide();
+    });
+  
+});
+</script>

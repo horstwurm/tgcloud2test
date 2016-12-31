@@ -21,7 +21,7 @@ class SearchesController < ApplicationController
       if params[:generate]
         #userticket = UserTicket.where('ticket_id=? and status=?', params[:ticket_id], "Filter Kampagne").destroy_all
         @searches.each do |s|
-          @users = User.where(s.sql_string)
+          @users = User.where(s.build_sql)
           @users.each do |u|
             if UserTicket.where('user_id=? and ticket_id=?', u.id, params[:ticket_id]).count == 0
               userticket = UserTicket.new
