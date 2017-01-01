@@ -1,8 +1,4 @@
-<div class="row nopadding">
-    <div class="col-xs-10">
-            <%= navigate("Privatpersonen", User.find(1)) %>
-    </div>
-    <div class="col-xs-2">
-        <%= navigate("Privatpersonen", User.find(1)) %>
-    </div>
-</div>
+<% @appointments = Appointment.last(5) %>
+<% @appointments.each do |a| %> 
+  <%= Date.today %> ===> <%= a.app_date %> <%= a.time_from %> <%= a.time_to %> <br>
+<% end %>

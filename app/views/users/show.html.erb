@@ -160,9 +160,6 @@
               </thead>
               <tbody>
                 <%= AppItem(@user, @appointments, @start) %>
-                <% @appointments.each do |a| %> 
-                  <%= a.app_date %> <%= a.time_from %> <%= a.time_to %> <br>
-                <% end %>
               </tbody>
             </table>
             <angefragt>?</angefragt><abgelehnt>NOK</abgelehnt><bestaetigt>OK</bestaetigt><geblockt>N/A</geblockt><br><br>
