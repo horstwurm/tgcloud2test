@@ -39,7 +39,7 @@ class UsersController < ApplicationController
      @wins = "["
      @users.each do |u|
 
-        if u.geo_address
+        if u.longitude and u.latitude and u.geo_address
        
           @locs = @locs + "["
           @locs = @locs + "'" + u.fullname + "', "
