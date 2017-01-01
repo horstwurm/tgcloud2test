@@ -17,6 +17,14 @@
 
     <% $controller_list = %w[mobjects companies users madvisors showcal] %>
     <% $wochentage = %w[Mo Di Mi Do Fr Sa So] %>
+    <% $activeapps = [] %>
+    <% apps = Appparam.all %>
+    <% if !apps or apps.count==0 %>
+      <% init_credentials("System") %>
+    <% end%>
+    <% apps.each do |a| %>
+      <%  $activeapps << a.domain+a.right if a.access %>
+    <% end %>
 
     <% $switch_color = "#ACC550" %>
     <%= render 'layouts/header' %>

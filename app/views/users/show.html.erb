@@ -78,7 +78,7 @@
             </div>
 
             <% if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen)") %>
-              <%= header("Wo war ich?", false) %>
+              <%= header("Meine Positionen", false) %>
               <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
               <div class="panel-body">
                 <div id="map2">
@@ -454,10 +454,9 @@
 </div>
 
 <script type="text/javascript">
-    var latitudes = [<%= @user.latitude %>];
-    var longitudes = [<%= @user.longitude %>];
-
     function init_map(index) {
+        var latitudes = [<%= @user.latitude %>];
+        var longitudes = [<%= @user.longitude %>];
         var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
         var mapOptions = {
             center: myLocation,

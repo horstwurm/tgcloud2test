@@ -144,7 +144,7 @@ class UsersController < ApplicationController
      @favourits = Favourit.where('user_id=? and object_name=?', @user.id, "User") 
      @favourits.each do |f|
         u = UserPosition.where('user_id=?',f.object_id).last
-        if u
+        if u.longitude and u.latitude and u.geo_address
           @locs = @locs + "["
           @locs = @locs + "'" + u.user.fullname + "', "
           @locs = @locs + u.latitude.to_s + ", "
@@ -176,7 +176,7 @@ class UsersController < ApplicationController
      @up = @user.user_positions.limit(20).order(created_at: :desc)
      @count = @up.count
      @up.each do |u|
-        if u.longitude and u.latitude
+        if u.longitude and u.latitude and u.geo_address
           @locs = @locs + "["
           @locs = @locs + "'" + u.user.fullname + "', "
           @locs = @locs + u.latitude.to_s + ", "
