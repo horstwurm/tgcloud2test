@@ -88,13 +88,13 @@
                 <tr>
                   <td>
                     <% case ca.status %>
-                      <% when "angefragt" %>
+                      <% when "?" %>
                          <angefragt><%= ca.status %></angefragt>
-                      <% when "geht leider nicht" %>
+                      <% when "NOK" %>
                          <abgelehnt><%= ca.status %></abgelehnt>
-                      <% when "bestaetigt" %>
+                      <% when "OK" %>
                          <bestaetigt><%= ca.status %></bestaetigt>
-                      <% when "nicht verfügbar" %>
+                      <% when "N/A" %>
                         <geblockt><%= ca.status %></geblockt>
                       <% else %>
                     <% end %>

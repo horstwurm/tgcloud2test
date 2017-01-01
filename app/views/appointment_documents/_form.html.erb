@@ -5,7 +5,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading header">
                 <li_header>
-                <%= link_to @appointment_document.appointment do %>
+                <%= link_to user_path(:id => @appointment_document.appointment.user_id1, :topic => "Kalendereintraege") do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
                   DOKUMENTE Termin <%= @appointment_document.name %>

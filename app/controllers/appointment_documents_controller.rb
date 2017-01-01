@@ -25,7 +25,7 @@ class AppointmentDocumentsController < ApplicationController
     @appointment_document = AppointmentDocument.new(appointment_document_params)
 
     if @appointment_document.save
-      redirect_to appointments_path :user_id1 => @appointment_document.appointment.user_id1, notice: 'Appointment document was successfully created.'
+      redirect_to user_path(:id => @appointment_document.appointment.user_id1, :topic => "Kalendereintraege"), notice: 'Appointment document was successfully created.'
     else
       render :new
     end
@@ -34,7 +34,7 @@ class AppointmentDocumentsController < ApplicationController
   # PUT /appointment_documents/1
   def update
     if @appointment_document.update(appointment_document_params)
-      redirect_to appointments_path :user_id1 => @appointment_document.appointment.user_id1, notice: 'Appointment document was successfully updated.'
+      redirect_to user_path(:id => @appointment_document.appointment.user_id1, :topic => "Kalendereintraege"), notice: 'Appointment document was successfully updated.'
     else
       render :edit
     end
@@ -45,7 +45,7 @@ class AppointmentDocumentsController < ApplicationController
     @user_id = @appointment_document.appointment.user_id1
     @appointment_document.destroy
 
-    redirect_to appointments_path :user_id1 => @user_id, notice: 'Appointment document was successfully destroyed.'
+    redirect_to user_path(:id => @user_id, :topic => "Kalendereintraege"), notice: 'Appointment document was successfully destroyed.'
   end
 
   private

@@ -7,7 +7,7 @@
 
   <div class="row">
     <header>
-    <%= header(@user.name + " " + @user.lastname + "<navshow><i class='btn btn-xs btn-primary glyphicon glyphicon-menu-down'></i></navshow><navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
+    <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow> " + @user.name + " " + @user.lastname + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
     <nav>
       <div class='col-xs-12'>
           <%= navigate("Privatpersonen", @user) %>
@@ -143,12 +143,16 @@
         		<table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Uhrzeit</th>
+                  <th><small_cal>Uhrzeit<small_cal></th>
                   <% for i in 0..6 %>
-                    <th>
+                    <% if @start+i == Date.today %>
+                      <th class="color_today">
+                    <% else %>
+                      <th>
+                    <% end %>
                       <%= $wochentage[i] %><br>
                       <small_cal>
-                      <%= (@start+i).strftime("%d.%m") %>
+                        <%= (@start+i).strftime("%d.%m") %>
                       </small_cal>
                     </th>
                   <% end %>
@@ -158,19 +162,19 @@
                 <%= AppItem(@user, @appointments, @start) %>
               </tbody>
             </table>
-            <angefragt>angefragt</angefragt><abgelehnt>leider nicht möglich</abgelehnt><bestaetigt>bestätigt</bestaetigt><geblockt>nicht verfügbar</geblockt><br><br>
+            <angefragt>?</angefragt><abgelehnt>NOK</abgelehnt><bestaetigt>OK</bestaetigt><geblockt>N/A</geblockt><br><br>
           <!--</div></div>-->
           </div>
-          <%= header("Kalendereinträge", false) %>
+          <%= header("Details", false) %>
           <div class="panel-body">
           	<table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Status</th>
-                  <th>Betreff</th>
-                  <th colspan=2>Dokumente</th>
-                  <th colspan=2>gebucht von</th>
-                  <th>Datum/Uhrzeit</th>
+          	      <small_cal>
+                  <th colspan=2>Termin/Status</th>
+                  <th colspan=2>Doks</th>
+                  <th colspan=2>wer/wann</th>
+                  </small_cal>
                 </tr>
               </thead>
               <body>
@@ -179,26 +183,14 @@
               			<% if true or (ca.user_id1 == current_user.id or ca.user_id2 == current_user.id) %>
                       <tr>
                         <td>
-                          <% case ca.status %>
-                            <% when "angefragt" %>
-                               <angefragt><%= ca.status %></angefragt>
-                            <% when "geht leider nicht" %>
-                               <abgelehnt><%= ca.status %></abgelehnt>
-                            <% when "bestaetigt" %>
-                               <bestaetigt><%= ca.status %></bestaetigt>
-                            <% when "nicht verfügbar" %>
-                              <geblockt><%= ca.status %></geblockt>
-                            <% else %>
-                          <% end %>
-                          <br>
                           <%= link_to edit_appointment_path(ca) do %>
                             <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
                           <% end %>
-                				  <% if ca.user_id1 == current_user.id and ca.status == "angefragt" %>
-                              <%= link_to user_path(:id => @user.id, :confirm_id => ca.id, :subject => @subject, :topic => "Userkalender") do %>
+                				  <% if ca.user_id1 == current_user.id and ca.status == "?" %>
+                              <%= link_to user_path(:id => @user.id, :confirm_id => ca.id, :subject => @subject, :topic => "Kalendereintraege") do %>
                                 <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
                               <% end %>
-                              <%= link_to user_path(:id => @user.id, :deny_id => ca.id, :subject => @subject, :topic => "Userkalender") do %>
+                              <%= link_to user_path(:id => @user.id, :deny_id => ca.id, :subject => @subject, :topic => "Kalendereintraege") do %>
                                 <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
                               <% end %>
                           <% end %>
@@ -210,8 +202,47 @@
                           <% end %>
                         </td>
                         <td>
-                          <%= ca.channel + " " + ca.channel_detail %><br>
-                          <%= ca.subject %>
+                          <% case ca.status %>
+                            <% when "?" %>
+                               <angefragt>
+                            <% when "NOK" %>
+                               <abgelehnt>
+                            <% when "OK" %>
+                               <bestaetigt>
+                            <% when "N/A" %>
+                               <geblockt>
+                            <% else %>
+                          <% end %>
+                          <% if ca.status != "N/A" %>
+                              <% case ca.channel %>
+                                <% when "Geschäftsstelle" %>
+                                   <i class="glyphicon glyphicon-briefcase"></i>
+                                <% when "Treffpunkt" %>
+                                   <i class="glyphicon glyphicon-map-marker"></i>
+                                <% when "Wohnort Berater" %>
+                                   <i class="glyphicon glyphicon-home"></i>
+                                <% when "Wohnort Kunde" %>
+                                   <i class="glyphicon glyphicon-home"></i>
+                                <% when "Telefon" %>
+                                   <i class="glyphicon glyphicon-phone-alt"></i>
+                                <% when "VideoChat" %>
+                                   <i class="glyphicon glyphicon-facetime-video"></i>
+                                <% else %>
+                              <% end %>
+                          <% else %>
+                              <i class="glyphicon glyphicon-remove"></i>
+                          <% end %>
+                          <% case ca.status %>
+                            <% when "?" %>
+                               </angefragt>
+                            <% when "NOK" %>
+                               </abgelehnt>
+                            <% when "OK" %>
+                               </bestaetigt>
+                            <% when "N/A" %>
+                               </geblockt>
+                            <% else %>
+                          <% end %>
                         </td>
               				  <td>
                           <%= link_to new_appointment_document_path(:appointment_id => ca.id) do %>
@@ -226,26 +257,21 @@
             				        <%= link_to ad, method: :delete, data: { confirm: 'Are you sure?' } do %>
                               <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
                             <% end %>
-                            <%= ad.name %><br>  
+                            <% ad.name %><br>  
                           <% end %>
                         </td>
                         <td>
                           <% @user2 = User.find(ca.user_id2) %>
-                          <% if @user2.avatar_file_name %>
-                            <%= image_tag @user2.avatar(:small), class:"img-rounded" %>
-                          <% else %>
-                            <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
-                          <% end %>
+                          <%= showImage2(:small, @user2, true) %>
                         </td>
                         <td>
-                          <anzeigetext>
-                          <%= @user2.name + " " + @user2.lastname %><br>
-                          </anzeigetext>
-                          <ntext><%= @user2.address2 %></ntext>
-                        </td>
-                        <td>
-                          <%= ca.app_date.strftime("%d.%m.%Y") %><br>
-                          <%= ca.time_from.to_s+"-"+ca.time_to.to_s+" Uhr"%>
+                          <small_cal>
+                            <%= @user2.name + " " + @user2.lastname %><br>
+                          </small_cal>
+                          <small_cal>
+                            <%= ca.app_date.strftime("%d.%m.%Y") %><br>
+                            <%= ca.time_from.to_s+"-"+ca.time_to.to_s+" Uhr"%>
+                          </small_cal>
                         </td>
                       </tr>
                     <% end %>

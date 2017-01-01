@@ -40,12 +40,12 @@ module AppointmentsHelper
         for stunde in 0..anz_stunden
             html_string = html_string + "<tr>"
                 html_string = html_string + "<td>"
-                    html_string = html_string + (stunde+start_stunde).to_s + " Uhr"
+                    html_string = html_string + "<small_cal>" + (stunde+start_stunde).to_s + " Uhr"+"</small_cal>"
                 html_string = html_string + "</td>"
                 for tag in 0..anz_tage-1
                     html_string = html_string + "<td>"
                         if array[stunde][tag] != 0
-                          html_string = html_string + appointment_details(array[stunde][tag]["status"], array[stunde][tag]["channel"])
+                          html_string = html_string + appointment_details(array[stunde][tag]["key"], array[stunde][tag]["status"], array[stunde][tag]["channel"])
                         end
                     html_string = html_string + "</td>"
                 end
@@ -54,48 +54,51 @@ module AppointmentsHelper
         return html_string.html_safe
     end
     
-    def appointment_details(status, channel)
+    def appointment_details(key, status, channel)
       html_string = ""
-      case status
-        when "angefragt"
-           html_string = html_string + "<angefragt>"
-        when "leider nicht möglich"
-           html_string = html_string + "<abgelehnt>"
-        when "bestaetigt"
-           html_string = html_string + "<bestaetigt>"
-        when "nicht verfügbar"
-           html_string = html_string + "<geblockt>"
-        else
-      end
-      if status != "nicht verfügbar"
-          case channel
-            when "Geschäftsstelle"
-               html_string = html_string + '<i class="glyphicon glyphicon-briefcase"></i>'
-            when "Treffpunkt"
-               html_string = html_string + '<i class="glyphicon glyphicon-map-marker"></i>'
-            when "Wohnort Berater"
-               html_string = html_string + '<i class="glyphicon glyphicon-home"></i>'
-            when "Wohnort Kunde"
-               html_string = html_string + '<i class="glyphicon glyphicon-home"></i>'
-            when "Telefon"
-               html_string = html_string + '<i class="glyphicon glyphicon-phone-alt"></i>'
-            when "VideoChat"
-               html_string = html_string + '<i class="glyphicon glyphicon-facetime-video"></i>'
+      html_string = html_string + link_to(edit_appointment_path(:id => key)) do
+          case status
+            when "?"
+               html_string = html_string + "<angefragt>"
+            when "NOK"
+               html_string = html_string + "<abgelehnt>"
+            when "OK"
+               html_string = html_string + "<bestaetigt>"
+            when "N/A"
+               html_string = html_string + "<geblockt>"
             else
           end
-      else
-          html_string = html_string + '<i class="glyphicon glyphicon-remove"></i>'
-      end
-      case status
-        when "angefragt"
-           html_string = html_string + "</angefragt>"
-        when "leider nicht möglich"
-           html_string = html_string + "</abgelehnt>"
-        when "bestaetigt"
-           html_string = html_string + "</bestaetigt>"
-        when "nicht verfügbar"
-           html_string = html_string + "</geblockt>"
-        else
+          if status != "N/A"
+              case channel
+                when "Geschäftsstelle"
+                   html_string = html_string + '<i class="glyphicon glyphicon-briefcase"></i>'
+                when "Treffpunkt"
+                   html_string = html_string + '<i class="glyphicon glyphicon-map-marker"></i>'
+                when "Wohnort Berater"
+                   html_string = html_string + '<i class="glyphicon glyphicon-home"></i>'
+                when "Wohnort Kunde"
+                   html_string = html_string + '<i class="glyphicon glyphicon-home"></i>'
+                when "Telefon"
+                   html_string = html_string + '<i class="glyphicon glyphicon-phone-alt"></i>'
+                when "VideoChat"
+                   html_string = html_string + '<i class="glyphicon glyphicon-facetime-video"></i>'
+                else
+              end
+          else
+              html_string = html_string + '<i class="glyphicon glyphicon-remove"></i>'
+          end
+          case status
+            when "?"
+               html_string = html_string + "</angefragt>"
+            when "NOK"
+               html_string = html_string + "</abgelehnt>"
+            when "OK"
+               html_string = html_string + "</bestaetigt>"
+            when "N/A"
+               html_string = html_string + "</geblockt>"
+            else
+          end
+          html_string = html_string.html_safe
       end
       return html_string.html_safe
     end

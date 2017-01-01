@@ -695,7 +695,7 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(user_path(:user_id => item.id, :dir => ">", :topic => topic)) do
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-right")
               end
-              html_string = html_string + link_to(new_appointment_path :user_id1 => current_user.id, :user_id2 => @user.id) do
+              html_string = html_string + link_to(new_appointment_path :user_id1 => item.id, :user_id2 => current_user.id) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
             when "Angebote", "Aktionen"

@@ -38,22 +38,27 @@ class UsersController < ApplicationController
      @locs = "["
      @wins = "["
      @users.each do |u|
-        @locs = @locs + "["
-        @locs = @locs + "'" + u.fullname + "', "
-        @locs = @locs + u.latitude.to_s + ", "
-        @locs = @locs + u.longitude.to_s
-        if counter+1 == @usanz
-          @locs = @locs + "]"
-        else
-          @locs = @locs + "],"
-        end
 
-        @wins = @wins + "["
-        @wins = @wins + "'<img src=" + u.avatar(:small) + "<br><h3>" + u.fullname + "</h3><p>" + u.geo_address + "</p>'"
-        if counter+1 == @usanz
-          @wins = @wins + "]"
-        else
-          @wins = @wins + "],"
+        if u.geo_address
+       
+          @locs = @locs + "["
+          @locs = @locs + "'" + u.fullname + "', "
+          @locs = @locs + u.latitude.to_s + ", "
+          @locs = @locs + u.longitude.to_s
+          if counter+1 == @usanz
+            @locs = @locs + "]"
+          else
+            @locs = @locs + "],"
+          end
+  
+          @wins = @wins + "["
+          @wins = @wins + "'<img src=" + u.avatar(:small) + "<br><h3>" + u.fullname + "</h3><p>" + u.geo_address + "</p>'"
+          if counter+1 == @usanz
+            @wins = @wins + "]"
+          else
+            @wins = @wins + "],"
+          end
+
         end
 
         counter = counter + 1

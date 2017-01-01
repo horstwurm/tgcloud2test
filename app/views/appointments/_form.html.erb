@@ -79,3 +79,22 @@
     $("#reminder").prop('checked',$("[name='my-checkbox']").bootstrapSwitch('state'));
     });
 </script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#appointment_app_date').datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+        language: "en",
+        daysOfWeekHighlighted: "0,6",
+        todayBtn: true,
+        todayHighlight: true,
+        firstDay: 1}
+    );
+  });
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {datepicker()})
+</script>
+

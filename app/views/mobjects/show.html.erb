@@ -6,12 +6,18 @@
 
   <div class="row">
     <header>
-    <%= header(@mobject.mtype + " " + @mobject.msubtype.to_s + " " + @mobject.name, true) %>
+    <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow> " + @mobject.mtype + " " + @mobject.msubtype.to_s + " " + @mobject.name + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
+    <nav>
+      <div class='col-xs-12'>
+          <%= navigate("Objekte", @mobject) %>
+      </div>
+    </nav>
     </header>
   </div>
   
+  
   <div class="row">
-      <div class='col-xs-10'>
+      <div class='col-xs-12'>
 
       <% case @topic %>
         <% when "Info" %>
@@ -240,7 +246,11 @@
                 <tr>
                   <th>Uhrzeit</th>
                   <% for i in 0..6 %>
-                    <th>
+                    <% if @start+i == Date.today %>
+                      <th class="color_today">
+                    <% else %>
+                      <th>
+                    <% end %>
                       <%= $wochentage[i] %><br>
                       <small_cal>
                       <%= (@start+i).strftime("%d.%m") %>
@@ -255,7 +265,7 @@
                   <% @items = CalItem2(@mobject.mcalendars,@start) %>
                   <% for hour in 0..@anz_stunden-1 %>
                     <tr>
-                      <td><%= (@mobject.time_from + hour).to_s + " Uhr" %></td>
+                      <td><small_cal><%= (@mobject.time_from + hour).to_s + " Uhr" %></small_cal></td>
                     <% for day in 0..@anz_tage-1 %>
                         <% if @array[hour][day] != 0 %>
                           <td class="blocked">
@@ -276,9 +286,7 @@
               <thead>
                 <tr>
                   <th colspan=3>gemietet von</th>
-                  <th>von</th>
-                  <th>bis</th>
-                  <th></th>
+                  <th colspan=2>wann</th>
                 </tr>
               </thead>
               <body>
@@ -303,13 +311,17 @@
                     <%= showImage2(:small, ca.user, true) %>
                     </td>
                       <td>
-                        <anzeigetext>
-                        <%= ca.user.name + " " + ca.user.lastname %><br>
-                        </anzeigetext>
-                        <ntext><%= ca.user.address2 %></ntext>
+                        <smallcall>
+                        <%= ca.user.name %><br>
+                        <%= ca.user.lastname %>
+                        </smallcal>
                       </td>
-                    <td><%= ca.date_from.strftime("%d.%m.%Y")+"  "+ca.time_from.to_s+" Uhr"%></td>
-                    <td><%= ca.date_to.strftime("%d.%m.%Y")+"  "+ca.time_to.to_s+" Uhr"%></td>
+                    <td>
+                      <smallcall>
+                      <%= ca.date_from.strftime("%d.%m.%Y")+"  "+ca.time_from.to_s+" Uhr"%><br>
+                      <%= ca.date_to.strftime("%d.%m.%Y")+"  "+ca.time_to.to_s+" Uhr"%>
+                      </smallcal>
+                    </td>
                   </tr>
                 <% end %>
               </body>
@@ -343,9 +355,11 @@
       <% end %>
     </div>
     
+      <% if false %>
       <div class='col-xs-2'>
         <%= navigate("Objekte", @mobject) %>
       </div>
+      <% end %>
     
   </div>
 
@@ -426,3 +440,24 @@ $(document).ready(function(){
   document.addEventListener("turbolinks:load", function() {drawChart1(); drawChart2(); owlCarousel()})
 </script>
 
+<script>
+$(document).ready(function(){
+    $("nav").hide();
+    $("navhide").hide();
+    $("navhide").hide();
+
+    $("navshow").mouseover(function(){
+        $("nav").show();
+        $("navshow").hide();
+        $("navhide").show();
+
+    });
+    
+    $("navhide").mouseover(function(){
+        $("nav").hide();
+        $("navshow").show();
+        $("navhide").hide();
+    });
+  
+});
+</script>

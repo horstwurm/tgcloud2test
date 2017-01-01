@@ -30,14 +30,14 @@ class AppointmentsController < ApplicationController
     if params[:confirm_id]
       @appoint = Appointment.find(params[:confirm_id])
       if @appoint
-        @appoint.status = "bestaetigt"
+        @appoint.status = "OK"
         @appoint.save
       end
     end
     if params[:deny_id]
       @appoint = Appointment.find(params[:deny_id])
       if @appoint
-        @appoint.status = "leider nicht möglich"
+        @appoint.status = "NOK"
         @appoint.save
       end
     end
@@ -57,14 +57,18 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new
     @appointment.user_id1 = params[:user_id1]
     @appointment.user_id2 = params[:user_id2]
-    @appointment.subject = params[:subject]
+    if params[:subject]
+      @appointment.subject = params[:subject]
+    else
+      @appointment.subject = "Terminanfrage"
+    end      
     @appointment.app_date = Date.today
     @appointment.time_from = 9
     @appointment.time_to = 10
     if @appointment.user_id1 == current_user.id
-      @appointment.status = "nicht verfügbar"
+      @appointment.status = "N/A"
     else
-      @appointment.status = "angefragt"
+      @appointment.status = "?"
     end
     @appointment.active = true
     @appointment.channel = "Geschäftstelle"

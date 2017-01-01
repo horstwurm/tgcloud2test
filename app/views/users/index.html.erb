@@ -19,7 +19,7 @@
 
   <div class="panel-body">
     <div class="row">
-      <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
+      <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initMap();"></i>
       <div class="col-md-12">
           <div id="map"></div>
       </div>
@@ -27,7 +27,7 @@
   </div>
 
 <script>
-function initialize() {
+function initMap() {
     var map;
     var bounds = new google.maps.LatLngBounds();
     var mapOptions = {
@@ -76,6 +76,8 @@ function initialize() {
 }
 </script>
 
+<% if false %>
 <script>
-  document.addEventListener("turbolinks:load", function() {initialize();})
+  document.addEventListener("turbolinks:load", function() {initMap();})
 </script>
+<% end %>
