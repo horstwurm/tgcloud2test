@@ -71,9 +71,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    
     if params[:header] != nil and params[:body] != nil
       UserMailer.send_message(params[:id], params[:header], params[:body]).deliver_now
     end
+    
      if params[:trx_status_ok_id]
        @trx = Transaction.find(params[:trx_status_ok_id])
        if @trx
@@ -88,54 +90,57 @@ class UsersController < ApplicationController
          @trx.save
        end
      end
+
      if params[:topic]
        @topic = params[:topic]
      else 
        @topic = "Info"
      end 
-     
-   if !session[:cw]
-      session[:cw] = Date.today.cweek.to_i
-    end
-    if !session[:year]
-      session[:year] = Date.today.year.to_i
-    end
-    if params[:dir]
-      case params[:dir]
-        when ">"
-          if session[:cw] == 52
-            session[:cw] = 1
-            session[:year] = session[:year].to_i + 1
-          else
-            session[:cw] = session[:cw].to_i + 1
-          end
-        when "<"
-          if session[:cw] == 1
-            session[:cw] = 52
-            session[:year] = session[:year].to_i - 1
-          else
-            session[:cw] = session[:cw].to_i - 1
-          end
+
+    if params[:topic] == "Kalendereintraege"
+     if !session[:cw]
+        session[:cw] = Date.today.cweek.to_i
       end
-    end
-    if params[:confirm_id]
-      @appoint = Appointment.find(params[:confirm_id])
-      if @appoint
-        @appoint.status = "bestaetigt"
-        @appoint.save
+      if !session[:year]
+        session[:year] = Date.today.year.to_i
       end
-    end
-    if params[:deny_id]
-      @appoint = Appointment.find(params[:deny_id])
-      if @appoint
-        @appoint.status = "leider nicht möglich"
-        @appoint.save
+      if params[:dir]
+        case params[:dir]
+          when ">"
+            if session[:cw] == 52
+              session[:cw] = 1
+              session[:year] = session[:year].to_i + 1
+            else
+              session[:cw] = session[:cw].to_i + 1
+            end
+          when "<"
+            if session[:cw] == 1
+              session[:cw] = 52
+              session[:year] = session[:year].to_i - 1
+            else
+              session[:cw] = session[:cw].to_i - 1
+            end
+        end
       end
+      if params[:confirm_id]
+        @appoint = Appointment.find(params[:confirm_id])
+        if @appoint
+          @appoint.status = "bestaetigt"
+          @appoint.save
+        end
+      end
+      if params[:deny_id]
+        @appoint = Appointment.find(params[:deny_id])
+        if @appoint
+          @appoint.status = "leider nicht möglich"
+          @appoint.save
+        end
+      end
+      @start = Date.commercial(session[:year],session[:cw],1)
+      @appointments = Appointment.search(@user.id, session[:cw], session[:year]).order(app_date: :asc)
+      @appanz = @appointments.count
+      @subject = params[:subject]
     end
-    @start = Date.commercial(session[:year],session[:cw],1)
-    @appointments = Appointment.search(@user.id, session[:cw], session[:year]).order(app_date: :asc)
-    @appanz = @appointments.count
-    @subject = params[:subject]
 
     if params[:topic] == "Favoriten"
      counter = 0 

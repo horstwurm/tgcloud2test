@@ -16,7 +16,8 @@ class CompaniesController < ApplicationController
    @locs = "["
    @wins = "["
    @companies.each do |c|
-      if c.longitude and c.latitude
+
+      if c.longitude and c.latitude and c.geo_address
         @locs = @locs + "["
         @locs = @locs + "'" + c.name + "', "
         @locs = @locs + c.latitude.to_s + ", "
