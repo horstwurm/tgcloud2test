@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 path=File.join(Rails.root, "/app/assets/images/")
-obanz = 300
+obanz = 5
 
 #OBJECT Branchen 1..27
 mcategories = Mcategory.create({ctype:"Branche", name:"Bau- und Erdarbeiten"})
