@@ -82,7 +82,7 @@
           <%= build_medialist2(@company.mobjects.where('mtype=?',"Veranstaltungen"), "mobjects", nil) %>
         <% when "Sponsorenengagements" %>
           <%= header("Sponsorenengagements", false) %>
-          <%= build_medialist2(@company.msponsors, "msponsors", nil) %>
+          <%= build_medialist2(@company.msponsors, "msponsors", "Object") %>
         <% when "Ausflugsziele" %>
           <%= header("Ausflugsziele", false) %>
           <%= build_medialist2(@company.mobjects.where('mtype=?',"Ausflugsziele"), "mobjects", nil) %>

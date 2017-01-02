@@ -88,7 +88,12 @@ def build_medialist2(items, cname, par)
                     html_string = html_string + item.mobject.name
                   end
                 when "msponsors"
-                  html_string = html_string + item.company.name
+                  if par == "Company"
+                    html_string = html_string + item.company.name
+                  end
+                  if par == "Object"
+                    html_string = html_string + item.mobject.name
+                  end
                 when "mratings"
                   html_string = html_string + item.user.name + " " + item.user.lastname
                 when "favourits"
@@ -134,7 +139,12 @@ def build_medialist2(items, cname, par)
                   when "mdetails"
                     html_string = html_string + showImage2(:medium, item, false)
                   when "msponsors"
-                    html_string = html_string + showImage2(:medium, item.company, true)
+                    if par == "Company"
+                      html_string = html_string + showImage2(:medium, item.company, true)
+                    end
+                    if par == "Object"
+                      html_string = html_string + showFirstImage2(:medium, item.mobject, item.mobject.mdetails)
+                    end
                   when "mratings"
                     html_string = html_string + showImage2(:medium, item.user, true)
                   when "mobjects"
