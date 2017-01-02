@@ -3,7 +3,7 @@ class WebmastersController < ApplicationController
 
   # GET /webmasters
   def index
-    @webmasters = Webmaster.search(params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
+    @webmasters = Webmaster.all.order(created_at: :desc).page(params[:page]).per_page(10)
     @webanz = @webmasters.count
   end
 
@@ -31,7 +31,8 @@ class WebmastersController < ApplicationController
     @webmaster = Webmaster.new(webmaster_params)
     @webmaster.status = "CHECK"
     if @webmaster.save
-      redirect_to webmasters_path :page => session[:page], notice: 'Webmaster was successfully updated.'
+      item = Object.const_get(@webmaster.object_name).find(@webmaster.object_id)
+      redirect_to item, :topic => "Info", notice: 'Webmaster was successfully updated.'
       # webmasters_path, notice: 'Webmaster was successfully created.'
     else
       render :new
@@ -48,18 +49,20 @@ class WebmastersController < ApplicationController
         item = Object.const_get(@webmaster.object_name).find(@webmaster.object_id)
         if item
           item.active = true
+          item.status = "OK"
           item.save
         end
       when "Sperren"
+        @webmaster.status = "NOK"
         item = Object.const_get(@webmaster.object_name).find(@webmaster.object_id)
         if item
           item.active = false
+          item.status = "NOK"
           item.save
         end
-        @webmaster.status = "NOK"
     end 
     if @webmaster.update(webmaster_params)
-      redirect_to webmasters_path :page => session[:page], notice: 'Webmaster was successfully updated.'
+      redirect_to webmasters_path, notice: 'Webmaster was successfully updated.'
     else
       render :edit
     end
@@ -68,7 +71,7 @@ class WebmastersController < ApplicationController
   # DELETE /webmasters/1
   def destroy
     @webmaster.destroy
-    redirect_to webmasters_path :page => session[:page], notice: 'Webmaster was successfully destroyed.'
+    redirect_to webmasters_path, notice: 'Webmaster was successfully destroyed.'
   end
 
   private

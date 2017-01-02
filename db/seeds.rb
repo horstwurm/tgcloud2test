@@ -7,6 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 path=File.join(Rails.root, "/app/assets/images/")
+obanz = 300
 
 #OBJECT Branchen 1..27
 mcategories = Mcategory.create({ctype:"Branche", name:"Bau- und Erdarbeiten"})
@@ -92,89 +93,91 @@ mcategories = Mcategory.create({ctype:"Ticket", name:"Gutschein"})
 mcategories = Mcategory.create({ctype:"Ticket", name:"Rabatt"})
 
 #create some users...
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"ok", active:true, email:"horst.wurm@bluewin.ch", password:"password", name:"Horst", lastname:"Wurm", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:true, webmaster:true, avatar:File.open(path+'horst.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"11.2.1970", anonymous:false, status:"ok", active:true, email:"t.oschewsky@bluewin.ch", password:"password", name:"Tanja", lastname:"Oschewsky", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:false,avatar:File.open(path+'ma_3.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.12.1954", anonymous:false, status:"ok", active:true, email:"hans.wurst@gmx.com", password:"password", name:"Hans", lastname:"Wurst", address1:"Bahnhofstrasse 11", address2:"Frauenfeld", address3:"", superuser:false,avatar:File.open(path+'ma_2.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"2.10.1960", anonymous:false, status:"ok", active:true, email:"anton.meier@outlook.com", password:"password", name:"Anton", lastname:"Meier", address1:"Im Roos", address2:"Weinfelden", address3:"", superuser:false,avatar:File.open(path+'ma_4.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"30.5.1970", anonymous:false, status:"ok", active:true, email:"e.oschewsky@bluewin.ch", password:"password", name:"Emelie", lastname:"Oschewsky", address1:"Hörnliblick 11", address2:"Zezikon", address3:"", superuser:false,avatar:File.open(path+'ma_8.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"11.5.1966", anonymous:false, status:"ok", active:true, email:"henning.gebert@outlook.com", password:"password", name:"Henning", lastname:"Gebert", address1:"Bahnhof", address2:"Pfäffikon SZ", address3:"", superuser:false,avatar:File.open(path+'ma_7.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"1.5.1970", anonymous:false, status:"ok", active:true, email:"heidi.hirsch@outlook.ch", password:"password", name:"Heidi", lastname:"Hirsch", address1:"Hauptstrasse 1", address2:"Amlikon", address3:"", superuser:false, avatar:File.open(path+'ma_9.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"14.4.1961", anonymous:false, status:"ok", active:true, email:"fred.gautschi@bluewin.ch", password:"password", name:"Fred", lastname:"Gautschi", address1:"Dorfplatz 1", address2:"Matzingen", address3:"", superuser:false,avatar:File.open(path+'ma_6.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"6.3.1966", anonymous:false, status:"ok", active:true, email:"christian.meier@gmx.com", password:"password", name:"Christian", lastname:"Meier", address1:"Alte Wilderenstrasse 4", address2:"Zezikon", address3:"", superuser:false,avatar:File.open(path+'ma_2.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.12.1958", anonymous:false, status:"ok", active:true, email:"barak@outlook.com", password:"password", name:"Barak", lastname:"Obama", address1:"Marktplatz", address2:"Frauenfeld", address3:"", superuser:false,avatar:File.open(path+'ma_10.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"26.4.1954", anonymous:false, status:"ok", active:true, email:"trump@bluewin.ch", password:"password", name:"Donald", lastname:"Trump", address1:"Hauptstrasse 1", address2:"Buch", address3:"Thurgau", superuser:false,avatar:File.open(path+'ma_11.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.7.1965", anonymous:false, status:"ok", active:true, email:"angela@outlook.com", password:"password", name:"Angela", lastname:"Merkel", address1:"Bahnhof", address2:"Wil SG", address3:"", superuser:false,avatar:File.open(path+'ma_12.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.8.1960", anonymous:false, status:"ok", active:true, email:"kurt.felix@outlook.com", password:"password", name:"Kurt", lastname:"Felix", address1:"Vadianstrasse 8", address2:"St Gallen", address3:"", superuser:false,avatar:File.open(path+'ma_5.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"15.7.1959", anonymous:false, status:"ok", active:true, email:"pierin.claglüna@outlook.com", password:"password", name:"Pierin", lastname:"Claglüna", address1:"Bahnhof", address2:"Chur", address3:"", superuser:false,avatar:File.open(path+'ma_13.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"22.7.1955", anonymous:false, status:"ok", active:true, email:"gregor.stuecheli@outlook.com", password:"password", name:"Gregor", lastname:"Stücheli", address1:"Bahnhof", address2:"Münchwilen", address3:"", superuser:false,avatar:File.open(path+'stuecheli.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1969", anonymous:false, status:"ok", active:true, email:"hans.nagel@outlook.com", password:"password", name:"Hans", lastname:"Nagel", address1:"Amriswil", address2:"Hauptstrasse 2", address3:"", superuser:false,avatar:File.open(path+'nagel.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.7.1969", anonymous:false, status:"ok", active:true, email:"corinne@outlook.com", password:"password", name:"Corinne", lastname:"Iaonnidis-Sondereggert", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'Corinne-Ioannidis-Sonderegger.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"11.5.1967", anonymous:false, status:"ok", active:true, email:"christoph@outlook.com", password:"password", name:"Christoph", lastname:"Sprenger", address1:"Marktstrasse 26", address2:"Bisseg", address3:"Thurgau", superuser:false,avatar:File.open(path+'Christoph-Sprenger.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1961", anonymous:false, status:"ok", active:true, email:"aron@outlook.com", password:"password", name:"Aron", lastname:"Gamba", address1:"Marktstrasse 26", address2:"Amlikon", address3:"Thurgau", superuser:false,avatar:File.open(path+'Aron_Gamba.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"13.5.1962", anonymous:false, status:"ok", active:true, email:"fabio@outlook.com", password:"password", name:"Fabio", lastname:"Tauro", address1:"Marktstrasse 26", address2:"Busnang", address3:"Thurgau", superuser:false,avatar:File.open(path+'FabioTauro.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"14.5.1963", anonymous:false, status:"ok", active:true, email:"isabelle@outlook.com", password:"password", name:"Isabelle", lastname:"Hugentobler", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'IsabelleHugentobler.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"16.5.1964", anonymous:false, status:"ok", active:true, email:"marco@outlook.com", password:"password", name:"Marco", lastname:"Sonderegger", address1:"Marktstrasse 26", address2:"Kreuzlingen", address3:"Thurgau", superuser:false,avatar:File.open(path+'Marco-Sonderegger.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"17.5.1965", anonymous:false, status:"ok", active:true, email:"melanie@outlook.com", password:"password", name:"Melanie", lastname:"Forster", address1:"Marktstrasse 26", address2:"Frauenfeld", address3:"Thurgau", superuser:false,avatar:File.open(path+'MelanieForster2015.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"18.5.1966", anonymous:false, status:"ok", active:true, email:"nunzia@outlook.com", password:"password", name:"Nunzia", lastname:"Seiler", address1:"Marktstrasse 26", address2:"Matzingen", address3:"Thurgau", superuser:false,avatar:File.open(path+'NunziaSeiler.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"19.5.1967", anonymous:false, status:"ok", active:true, email:"oliverp@outlook.com", password:"password", name:"Oliver", lastname:"Paulin", address1:"Marktstrasse 26", address2:"Wängi", address3:"Thurgau", superuser:false,avatar:File.open(path+'Oliver_Paulin.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"22.5.1968", anonymous:false, status:"ok", active:true, email:"petrak@outlook.com", password:"password", name:"Petra", lastname:"Koch", address1:"Marktstrasse 26", address2:"Wil", address3:"St.Gallen", superuser:false,avatar:File.open(path+'PetraKoch.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"22.4.1969", anonymous:false, status:"ok", active:true, email:"rschaelchi@outlook.com", password:"password", name:"Raymond", lastname:"Schaelchli", address1:"Marktstrasse 26", address2:"Effretikon", address3:"Zürich", superuser:false,avatar:File.open(path+'RaymondSchaelchli.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"15.5.1970", anonymous:false, status:"ok", active:true, email:"rschoch@outlook.com", password:"password", name:"Remo", lastname:"Schoch", address1:"Marktstrasse 26", address2:"Ebmatingen", address3:"Thurgau", superuser:false,avatar:File.open(path+'RemoSchoch.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"22.5.1971", anonymous:false, status:"ok", active:true, email:"sherzog@outlook.com", password:"password", name:"Stefanie", lastname:"Herzog", address1:"Marktstrasse 26", address2:"Stettfurt", address3:"Thurgau", superuser:false,avatar:File.open(path+'StefanieHerzog.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"23.5.1972", anonymous:false, status:"ok", active:true, email:"vkirli@outlook.com", password:"password", name:"Vesile", lastname:"Kirli", address1:"Marktstrasse 26", address2:"Lommis", address3:"Thurgau", superuser:false,avatar:File.open(path+'VesileKirli.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"25.5.1973", anonymous:false, status:"ok", active:true, email:"mbueschl@outlook.com", password:"password", name:"Manuela", lastname:"Bueschl", address1:"Marktstrasse 26", address2:"Bronschhofen", address3:"St.Gallen", superuser:false,avatar:File.open(path+'ManuelaBueschl.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"27.5.1974", anonymous:false, status:"ok", active:true, email:"ppreite@outlook.com", password:"password", name:"Patric", lastname:"Preite", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'PatricPreite.jpg', 'rb')})
-users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1974", anonymous:false, status:"ok", active:true, email:"rruckstuhl@outlook.com", password:"password", name:"Ramona", lastname:"Ruckstuhl", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'RamonaRuckstuhl.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:"horst.wurm@bluewin.ch", password:"password", name:"Horst", lastname:"Wurm", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:true, webmaster:true, avatar:File.open(path+'horst.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"11.2.1970", anonymous:false, status:"OK", active:true, email:"t.oschewsky@bluewin.ch", password:"password", name:"Tanja", lastname:"Oschewsky", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:false,avatar:File.open(path+'ma_3.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.12.1954", anonymous:false, status:"OK", active:true, email:"hans.wurst@gmx.com", password:"password", name:"Hans", lastname:"Wurst", address1:"Bahnhofstrasse 11", address2:"Frauenfeld", address3:"", superuser:false,avatar:File.open(path+'ma_2.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"2.10.1960", anonymous:false, status:"OK", active:true, email:"anton.meier@outlook.com", password:"password", name:"Anton", lastname:"Meier", address1:"Im Roos", address2:"Weinfelden", address3:"", superuser:false,avatar:File.open(path+'ma_4.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"30.5.1970", anonymous:false, status:"OK", active:true, email:"e.oschewsky@bluewin.ch", password:"password", name:"Emelie", lastname:"Oschewsky", address1:"Hörnliblick 11", address2:"Zezikon", address3:"", superuser:false,avatar:File.open(path+'ma_8.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"11.5.1966", anonymous:false, status:"OK", active:true, email:"henning.gebert@outlook.com", password:"password", name:"Henning", lastname:"Gebert", address1:"Bahnhof", address2:"Pfäffikon SZ", address3:"", superuser:false,avatar:File.open(path+'ma_7.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"1.5.1970", anonymous:false, status:"OK", active:true, email:"heidi.hirsch@outlook.ch", password:"password", name:"Heidi", lastname:"Hirsch", address1:"Hauptstrasse 1", address2:"Amlikon", address3:"", superuser:false, avatar:File.open(path+'ma_9.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"14.4.1961", anonymous:false, status:"OK", active:true, email:"fred.gautschi@bluewin.ch", password:"password", name:"Fred", lastname:"Gautschi", address1:"Dorfplatz 1", address2:"Matzingen", address3:"", superuser:false,avatar:File.open(path+'ma_6.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"6.3.1966", anonymous:false, status:"OK", active:true, email:"christian.meier@gmx.com", password:"password", name:"Christian", lastname:"Meier", address1:"Alte Wilderenstrasse 4", address2:"Zezikon", address3:"", superuser:false,avatar:File.open(path+'ma_2.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.12.1958", anonymous:false, status:"OK", active:true, email:"barak@outlook.com", password:"password", name:"Barak", lastname:"Obama", address1:"Marktplatz", address2:"Frauenfeld", address3:"", superuser:false,avatar:File.open(path+'ma_10.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"26.4.1954", anonymous:false, status:"OK", active:true, email:"trump@bluewin.ch", password:"password", name:"Donald", lastname:"Trump", address1:"Hauptstrasse 1", address2:"Buch", address3:"Thurgau", superuser:false,avatar:File.open(path+'ma_11.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.7.1965", anonymous:false, status:"OK", active:true, email:"angela@outlook.com", password:"password", name:"Angela", lastname:"Merkel", address1:"Bahnhof", address2:"Wil SG", address3:"", superuser:false,avatar:File.open(path+'ma_12.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.8.1960", anonymous:false, status:"OK", active:true, email:"kurt.felix@outlook.com", password:"password", name:"Kurt", lastname:"Felix", address1:"Vadianstrasse 8", address2:"St Gallen", address3:"", superuser:false,avatar:File.open(path+'ma_5.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"15.7.1959", anonymous:false, status:"OK", active:true, email:"pierin.claglüna@outlook.com", password:"password", name:"Pierin", lastname:"Claglüna", address1:"Bahnhof", address2:"Chur", address3:"", superuser:false,avatar:File.open(path+'ma_13.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"22.7.1955", anonymous:false, status:"OK", active:true, email:"gregor.stuecheli@outlook.com", password:"password", name:"Gregor", lastname:"Stücheli", address1:"Bahnhof", address2:"Münchwilen", address3:"", superuser:false,avatar:File.open(path+'stuecheli.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1969", anonymous:false, status:"OK", active:true, email:"hans.nagel@outlook.com", password:"password", name:"Hans", lastname:"Nagel", address1:"Amriswil", address2:"Hauptstrasse 2", address3:"", superuser:false,avatar:File.open(path+'nagel.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.7.1969", anonymous:false, status:"OK", active:true, email:"corinne@outlook.com", password:"password", name:"Corinne", lastname:"Iaonnidis-Sondereggert", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'Corinne-Ioannidis-Sonderegger.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"11.5.1967", anonymous:false, status:"OK", active:true, email:"christoph@outlook.com", password:"password", name:"Christoph", lastname:"Sprenger", address1:"Marktstrasse 26", address2:"Bisseg", address3:"Thurgau", superuser:false,avatar:File.open(path+'Christoph-Sprenger.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1961", anonymous:false, status:"OK", active:true, email:"aron@outlook.com", password:"password", name:"Aron", lastname:"Gamba", address1:"Marktstrasse 26", address2:"Amlikon", address3:"Thurgau", superuser:false,avatar:File.open(path+'Aron_Gamba.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"13.5.1962", anonymous:false, status:"OK", active:true, email:"fabio@outlook.com", password:"password", name:"Fabio", lastname:"Tauro", address1:"Marktstrasse 26", address2:"Busnang", address3:"Thurgau", superuser:false,avatar:File.open(path+'FabioTauro.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"14.5.1963", anonymous:false, status:"OK", active:true, email:"isabelle@outlook.com", password:"password", name:"Isabelle", lastname:"Hugentobler", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'IsabelleHugentobler.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"16.5.1964", anonymous:false, status:"OK", active:true, email:"marco@outlook.com", password:"password", name:"Marco", lastname:"Sonderegger", address1:"Marktstrasse 26", address2:"Kreuzlingen", address3:"Thurgau", superuser:false,avatar:File.open(path+'Marco-Sonderegger.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"17.5.1965", anonymous:false, status:"OK", active:true, email:"melanie@outlook.com", password:"password", name:"Melanie", lastname:"Forster", address1:"Marktstrasse 26", address2:"Frauenfeld", address3:"Thurgau", superuser:false,avatar:File.open(path+'MelanieForster2015.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"18.5.1966", anonymous:false, status:"OK", active:true, email:"nunzia@outlook.com", password:"password", name:"Nunzia", lastname:"Seiler", address1:"Marktstrasse 26", address2:"Matzingen", address3:"Thurgau", superuser:false,avatar:File.open(path+'NunziaSeiler.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"19.5.1967", anonymous:false, status:"OK", active:true, email:"oliverp@outlook.com", password:"password", name:"Oliver", lastname:"Paulin", address1:"Marktstrasse 26", address2:"Wängi", address3:"Thurgau", superuser:false,avatar:File.open(path+'Oliver_Paulin.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"22.5.1968", anonymous:false, status:"OK", active:true, email:"petrak@outlook.com", password:"password", name:"Petra", lastname:"Koch", address1:"Marktstrasse 26", address2:"Wil", address3:"St.Gallen", superuser:false,avatar:File.open(path+'PetraKoch.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"22.4.1969", anonymous:false, status:"OK", active:true, email:"rschaelchi@outlook.com", password:"password", name:"Raymond", lastname:"Schaelchli", address1:"Marktstrasse 26", address2:"Effretikon", address3:"Zürich", superuser:false,avatar:File.open(path+'RaymondSchaelchli.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"15.5.1970", anonymous:false, status:"OK", active:true, email:"rschoch@outlook.com", password:"password", name:"Remo", lastname:"Schoch", address1:"Marktstrasse 26", address2:"Ebmatingen", address3:"Thurgau", superuser:false,avatar:File.open(path+'RemoSchoch.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"22.5.1971", anonymous:false, status:"OK", active:true, email:"sherzog@outlook.com", password:"password", name:"Stefanie", lastname:"Herzog", address1:"Marktstrasse 26", address2:"Stettfurt", address3:"Thurgau", superuser:false,avatar:File.open(path+'StefanieHerzog.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"23.5.1972", anonymous:false, status:"OK", active:true, email:"vkirli@outlook.com", password:"password", name:"Vesile", lastname:"Kirli", address1:"Marktstrasse 26", address2:"Lommis", address3:"Thurgau", superuser:false,avatar:File.open(path+'VesileKirli.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"25.5.1973", anonymous:false, status:"OK", active:true, email:"mbueschl@outlook.com", password:"password", name:"Manuela", lastname:"Bueschl", address1:"Marktstrasse 26", address2:"Bronschhofen", address3:"St.Gallen", superuser:false,avatar:File.open(path+'ManuelaBueschl.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"27.5.1974", anonymous:false, status:"OK", active:true, email:"ppreite@outlook.com", password:"password", name:"Patric", lastname:"Preite", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'PatricPreite.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1974", anonymous:false, status:"OK", active:true, email:"rruckstuhl@outlook.com", password:"password", name:"Ramona", lastname:"Ruckstuhl", address1:"Marktstrasse 26", address2:"Weinfelden", address3:"Thurgau", superuser:false,avatar:File.open(path+'RamonaRuckstuhl.jpg', 'rb')})
+users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.5.1969", anonymous:false, status:"OK", active:true, email:"dwessner@outlook.com", password:"password", name:"Daniel", lastname:"Wessner", address1:"Marktplatz", address2:"Frauenfeld", address3:"Thurgau", superuser:false,avatar:File.open(path+'dwessner.jpg', 'rb')})
 
-#create some appointments
-usanz = User.all.count-1
-random = Random.new(Time.new.to_i)
-for i in 0..300
-    ura1 = random.rand(usanz)+1
-    ura2 = random.rand(usanz)+1
-    tira1 = random.rand(24)+1
-    tira2 = tira1 + 1
-    appointments = Appointment.create({user_id1: ura1, user_id2: ura2, subject:"Termin "+Date.today.to_s, active:true, status:"angefragt", app_date:Date.today+ura1, time_from: tira1, time_to: tira2, channel:"Geschäftsstelle", channel_detail:""})
+if false
+    #create some appointments
+    usanz = User.all.count-1
+    random = Random.new(Time.new.to_i)
+    for i in 0..300
+        ura1 = random.rand(usanz)+1
+        ura2 = random.rand(usanz)+1
+        tira1 = random.rand(24)+1
+        tira2 = tira1 + 1
+        appointments = Appointment.create({user_id1: ura1, user_id2: ura2, subject:"Termin "+Date.today.to_s, active:true, status:"angefragt", app_date:Date.today+ura1, time_from: tira1, time_to: tira2, channel:"Geschäftsstelle", channel_detail:""})
+    end
+    
+    #create some favorits
+    usanz = User.all.count-1
+    random = Random.new(Time.new.to_i)
+    for i in 0..100
+        ura1 = random.rand(usanz)+1
+        ura2 = random.rand(usanz)+1
+        favourits = Favourit.create({user_id: ura1, object_name:"User", object_id: ura2})
+    end
 end
-
-#create some favorits
-usanz = User.all.count-1
-random = Random.new(Time.new.to_i)
-for i in 0..100
-    ura1 = random.rand(usanz)+1
-    ura2 = random.rand(usanz)+1
-    favourits = Favourit.create({user_id: ura1, object_name:"User", object_id: ura2})
-end
-
 #create some companies...
-companies = Company.create({status:"ok", active:true, user_id:1, name:"Fischzucht Hecht", mcategory_id:24 ,stichworte: "Fische, Zierfische, Angelbedarf", address1:"Bahnhof", address2:"Frauenfeld", address3:"Thurgau", avatar:File.open(path+'fischhaendler.jpg', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:2, name:"Alder Entsorgung", mcategory_id:11 ,stichworte: "Hocbau, Tiefbau", address1:"Bahnhof", address2:"Wil", address3:"Thurgau", avatar:File.open(path+'alder.jpg', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:3, name:"Eisenwaren Müller", mcategory_id:12 ,stichworte: "Hocbau, Tiefbau", address1:"Thurgauer Str", address2:"Matzingen", address3:"Thurgau", avatar:File.open(path+'eisenmueller.jpg', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:1, name:"Thurgauer Kantonalbank", partner:true, mcategory_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Weinfelden", address3:"Thurgau", avatar:File.open(path+'tkb.png', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:4, name:"Prematic", mcategory_id:12 ,stichworte: "Luftdruck", address1:"Bahnhof", address2:"Wängi", address3:"Thurgau", avatar:File.open(path+'prematic.png', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:5, name:"Baufirma Meier", mcategory_id:11 ,stichworte: "Hocbau, Tiefbau", address1:"Hauptstrasse", address2:"Zezikon", address3:"Thurgau", avatar:File.open(path+'meier.jpg', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:5, name:"Lackierwerkstatt Manser", mcategory_id:9 ,stichworte: "Karosserie", address1:"Amlikon", address2:"Haupstrasse", address3:"Thurgau", avatar:File.open(path+'mazda-mx-5-cabriolet-2006-occasion.jpg', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:6, name:"Malermeister Painter", mcategory_id:10 ,stichworte: "Malerarbeiten", address1:"Gartenstrasse 2", address2:"Lommis", address3:"Thurgau", avatar:File.open(path+'maler.jpg', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:7, name:"Tierschutzbund Weinfelden", mcategory_id:25 ,stichworte: "Tiere", address1:"Gartenstrasse 2", address2:"Lommis", address3:"Thurgau", social:true, avatar:File.open(path+'tierschutz.png', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:8, name:"Blindenverein Wängi", mcategory_id:9 ,stichworte: "Verein", address1:"Wängi", address2:"Haupstrasse", address3:"Thurgau", avatar:File.open(path+'blindenverein.jpg', 'rb'), social:true}) 
-companies = Company.create({status:"ok", active:true, user_id:9, name:"Kosmetikstudio Jasmine", mcategory_id:10 ,stichworte: "Kosmetik", address1:"Gartenstrasse 2", address2:"Bürglen", address3:"Thurgau", avatar:File.open(path+'kosmetik.jpg', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:10, name:"Autohaus Hummel", mcategory_id:25 ,stichworte: "Auto KFZ", address1:"Hauptstrasse", address2:"Bissegg", address3:"Thurgau", avatar:File.open(path+'autobissegg.png', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:11, name:"Valiant Bank", mcategory_id:26 ,stichworte: "Bank Finanz Geld", address1:"Bahnhof", address2:"Bern", address3:"Bern", avatar:File.open(path+'valiant.png', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:12, name:"St.Galler Kantonalbank", partner:false, mcategory_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"St.Gallen", address3:"St.gallen", avatar:File.open(path+'sgkb.png', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:14, name:"Graubündner Kantonalbank", partner:false, mcategory_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Chur", address3:"Graubünden", avatar:File.open(path+'grkb.png', 'rb')}) 
-companies = Company.create({status:"ok", active:true, user_id:14, name:"Sonderegger publish", partner:false, mcategory_id:22 ,stichworte: "Copyshop Drucken Druckerei Publish Webdesign", address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau", avatar:File.open(path+'sonderegger.tiff', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:1, name:"Fischzucht Hecht", mcategory_id:24 ,stichworte: "Fische, Zierfische, Angelbedarf", address1:"Bahnhof", address2:"Frauenfeld", address3:"Thurgau", avatar:File.open(path+'fischhaendler.jpg', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:2, name:"Alder Entsorgung", mcategory_id:11 ,stichworte: "Hocbau, Tiefbau", address1:"Bahnhof", address2:"Wil", address3:"Thurgau", avatar:File.open(path+'alder.jpg', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:3, name:"Eisenwaren Müller", mcategory_id:12 ,stichworte: "Hocbau, Tiefbau", address1:"Thurgauer Str", address2:"Matzingen", address3:"Thurgau", avatar:File.open(path+'eisenmueller.jpg', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:1, name:"Thurgauer Kantonalbank", partner:true, mcategory_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Weinfelden", address3:"Thurgau", avatar:File.open(path+'tkb.png', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:4, name:"Prematic", mcategory_id:12 ,stichworte: "Luftdruck", address1:"Bahnhof", address2:"Wängi", address3:"Thurgau", avatar:File.open(path+'prematic.png', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:5, name:"Baufirma Meier", mcategory_id:11 ,stichworte: "Hocbau, Tiefbau", address1:"Hauptstrasse", address2:"Zezikon", address3:"Thurgau", avatar:File.open(path+'meier.jpg', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:5, name:"Lackierwerkstatt Manser", mcategory_id:9 ,stichworte: "Karosserie", address1:"Amlikon", address2:"Haupstrasse", address3:"Thurgau", avatar:File.open(path+'mazda-mx-5-cabriolet-2006-occasion.jpg', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:6, name:"Malermeister Painter", mcategory_id:10 ,stichworte: "Malerarbeiten", address1:"Gartenstrasse 2", address2:"Lommis", address3:"Thurgau", avatar:File.open(path+'maler.jpg', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:7, name:"Tierschutzbund Weinfelden", mcategory_id:25 ,stichworte: "Tiere", address1:"Gartenstrasse 2", address2:"Lommis", address3:"Thurgau", social:true, avatar:File.open(path+'tierschutz.png', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:8, name:"Blindenverein Wängi", mcategory_id:9 ,stichworte: "Verein", address1:"Wängi", address2:"Haupstrasse", address3:"Thurgau", avatar:File.open(path+'blindenverein.jpg', 'rb'), social:true}) 
+companies = Company.create({status:"OK", active:true, user_id:9, name:"Kosmetikstudio Jasmine", mcategory_id:10 ,stichworte: "Kosmetik", address1:"Gartenstrasse 2", address2:"Bürglen", address3:"Thurgau", avatar:File.open(path+'kosmetik.jpg', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:10, name:"Autohaus Hummel", mcategory_id:25 ,stichworte: "Auto KFZ", address1:"Hauptstrasse", address2:"Bissegg", address3:"Thurgau", avatar:File.open(path+'autobissegg.png', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:11, name:"Valiant Bank", mcategory_id:26 ,stichworte: "Bank Finanz Geld", address1:"Bahnhof", address2:"Bern", address3:"Bern", avatar:File.open(path+'valiant.png', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:12, name:"St.Galler Kantonalbank", partner:false, mcategory_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"St.Gallen", address3:"St.gallen", avatar:File.open(path+'sgkb.png', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:14, name:"Graubündner Kantonalbank", partner:false, mcategory_id:26 ,stichworte: "Banken", address1:"Bahnhof", address2:"Chur", address3:"Graubünden", avatar:File.open(path+'grkb.png', 'rb')}) 
+companies = Company.create({status:"OK", active:true, user_id:14, name:"Sonderegger publish", partner:false, mcategory_id:22 ,stichworte: "Copyshop Drucken Druckerei Publish Webdesign", address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau", avatar:File.open(path+'sonderegger.tiff', 'rb')}) 
 
-companies = Company.create({status:"ok", active:true, user_id:1, name:"Amt für Wirtschaft und Arbeit", partner:false, mcategory_id:22 ,stichworte: "Wirtschaft Arbeit Amt Kanton", address1:"Promenadenstrasse", address2:"8510 Frauenfeld", address3:"Thurgau", avatar:File.open(path+'awa.jpg', 'rb')}) 
-mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 1", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
+companies = Company.create({status:"OK", active:true, user_id:34, name:"Amt für Wirtschaft und Arbeit", partner:false, mcategory_id:22 ,stichworte: "Wirtschaft Arbeit Amt Kanton", address1:"Promenadenstrasse", address2:"8510 Frauenfeld", address3:"Thurgau", avatar:File.open(path+'awa.jpg', 'rb')}) 
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 1", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
 @mob = Mobject.where('name=?', "AWA Service 1").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas1.jpg', 'rb')})
 mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 2", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
 @mob = Mobject.where('name=?', "AWA Service 2").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas2.jpg', 'rb')})
-mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 3", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 3", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
 @mob = Mobject.where('name=?', "AWA Service 3").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas3.jpg', 'rb')})
-mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 4", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Angebote", msubtype:"Standard", name:"AWA Service 4", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: 17, mcategory_id:29, address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau"})
 @mob = Mobject.where('name=?', "AWA Service 4").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas4.jpg', 'rb')})
 
@@ -241,29 +244,29 @@ end
 usanz = User.all.count-1
 capanz = Company.all.count-1
 random = Random.new(Time.new.to_i)
-for i in 1..20
+for i in 1..obanz
     cra1 = random.rand(capanz)+1
     @comp = Company.find(cra1)
-    mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Aktion", name:"Sonderaktion "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:29})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Angebote", msubtype:"Aktion", name:"Sonderaktion "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:29})
     @mob = Mobject.where('name=?', "Sonderaktion "+i.to_s+" von " + @comp.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
-    mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"Angebot "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:28})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Angebote", msubtype:"Standard", name:"Angebot "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:28})
     @mob = Mobject.where('name=?', "Angebot "+i.to_s+" von " + @comp.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
 end
-for i in 1..20
+for i in 1..obanz
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
-    mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Aktion", name:"Sonderaktion "+i.to_s+" von "+@user.lastname, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:29})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Angebote", msubtype:"Aktion", name:"Sonderaktion "+i.to_s+" von "+@user.lastname, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:29})
     @mob = Mobject.where('name=?', "Sonderaktion "+i.to_s+" von " + @user.lastname).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
-    mobjects = Mobject.create({active:true, mtype:"Angebote", msubtype:"Standard", name:"Angebot "+i.to_s+" von "+@user.lastname, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1,  mcategory_id:28})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Angebote", msubtype:"Standard", name:"Angebot "+i.to_s+" von "+@user.lastname, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1,  mcategory_id:28})
     @mob = Mobject.where('name=?', "Angebot "+i.to_s+" von " + @user.lastname).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
@@ -273,18 +276,18 @@ end
 usanz = User.all.count-1
 capanz = Company.all.count-1
 random = Random.new(Time.new.to_i)
-for i in 1..20
+for i in 1..obanz
     cra1 = random.rand(capanz)+1
     cat = random.rand(10)+1+30
     @comp = Company.find(cra1)
-    mobjects = Mobject.create({active:true, mtype:"Vermietungen", msubtype: nil, name:"Vermietobjekt "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:30})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Vermietungen", msubtype: nil, name:"Vermietobjekt "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:30})
     @mob = Mobject.where('name=?', "Vermietobjekt "+i.to_s+" von " + @comp.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
-    mobjects = Mobject.create({active:true, mtype:"Vermietungen", msubtype: nil, name:"Vermietobjekt "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:30})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Vermietungen", msubtype: nil, name:"Vermietobjekt "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:30})
     @mob = Mobject.where('name=?', "Vermietobjekt "+i.to_s+" von " + @user.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
@@ -294,11 +297,11 @@ end
 #OBJECT Ausschreibungen 30..40
 usanz = User.all.count-1
 random = Random.new(Time.new.to_i)
-for i in 1..20
+for i in 1..obanz
     cat = random.rand(30)+1
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
-    mobjects = Mobject.create({active:true, mtype:"Ausschreibungen", msubtype: nil, name:"Ausschreibungslos "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id: cat})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Ausschreibungen", msubtype: nil, name:"Ausschreibungslos "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id: cat})
     @mob = Mobject.where('name=?', "Ausschreibungslos "+i.to_s+" von " + @user.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
@@ -311,11 +314,11 @@ end
 #OBJECT Stellenanzeigen 30..40
 capanz = Company.all.count-1
 random = Random.new(Time.new.to_i)
-for i in 1..20
+for i in 1..obanz
     cra1 = random.rand(capanz)+1
     cat = random.rand(30)+1
     @comp = Company.find(cra1)
-    mobjects = Mobject.create({active:true, mtype:"Stellenanzeigen", msubtype: "Anbieten", name:"Stelle "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id: cat})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Stellenanzeigen", msubtype: "Anbieten", name:"Stelle "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id: cat})
     @mob = Mobject.where('name=?', "Stelle "+i.to_s+" von " + @comp.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
@@ -324,11 +327,11 @@ end
 
 capanz = Company.all.count-1
 random = Random.new(Time.new.to_i)
-for i in 1..20
+for i in 1..obanz
     cra1 = random.rand(capanz)+1
     cat = random.rand(8)+1+40
     @comp = Company.find(cra1)
-    mobjects = Mobject.create({active:true, mtype:"Veranstaltungen", msubtype: nil, name:"Event "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id: cat})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Veranstaltungen", msubtype: nil, name:"Event "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id: cat})
     @mob = Mobject.where('name=?', "Event "+i.to_s+" von " + @comp.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
@@ -337,11 +340,11 @@ end
 
 usanz = User.all.count-1
 random = Random.new(Time.new.to_i)
-for i in 1..20
+for i in 1..obanz
     cat = random.rand(6)+1+48
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
-    mobjects = Mobject.create({active:true, mtype:"Ausflugsziele", msubtype: nil, name:"Ausflug "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id: cat})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Ausflugsziele", msubtype: nil, name:"Ausflug "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id: cat})
     @mob = Mobject.where('name=?', "Ausflug "+i.to_s+" von " + @user.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
@@ -350,11 +353,11 @@ end
     
 usanz = User.all.count-1
 random = Random.new(Time.new.to_i)
-for i in 1..20
+for i in 1..obanz
     cat = random.rand(8)+1+55
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
-    mobjects = Mobject.create({active:true, mtype:"Kleinanzeigen", msubtype: "Anbieten", name:"Kleinanzeige "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id: cat})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Kleinanzeigen", msubtype: "Anbieten", name:"Kleinanzeige "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id: cat})
     @mob = Mobject.where('name=?', "Kleinanzeige "+i.to_s+" von " + @user.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
@@ -364,18 +367,18 @@ end
 usanz = User.all.count-1
 capanz = Company.all.count-1
 random = Random.new(Time.new.to_i)
-for i in 1..10
+for i in 1..obanz
     cra1 = random.rand(capanz)+1
     cat = 65
     @comp = Company.find(cra1)
-    mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Spenden", name:"Spendeninitiative "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Crowdfunding", msubtype: "Spenden", name:"Spendeninitiative "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Spendeninitiative "+i.to_s+" von " + @comp.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
-    mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Spenden", name:"Spendeninitiative "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Crowdfunding", msubtype: "Spenden", name:"Spendeninitiative "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Spendeninitiative "+i.to_s+" von " + @user.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
@@ -384,18 +387,18 @@ end
 usanz = User.all.count-1
 capanz = Company.all.count-1
 random = Random.new(Time.new.to_i)
-for i in 1..10
+for i in 1..obanz
     cra1 = random.rand(capanz)+1
     cat = 65
     @comp = Company.find(cra1)
-    mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Belohnungen", name:"Rewardinitiative "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Crowdfunding", msubtype: "Belohnungen", name:"Rewardinitiative "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Rewardinitiative "+i.to_s+" von " + @comp.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... " })
     end
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
-    mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Belohnungen", name:"Rewardinitiative "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Crowdfunding", msubtype: "Belohnungen", name:"Rewardinitiative "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Rewardinitiative "+i.to_s+" von " + @user.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... " })
@@ -404,18 +407,18 @@ end
 usanz = User.all.count-1
 capanz = Company.all.count-1
 random = Random.new(Time.new.to_i)
-for i in 1..10
+for i in 1..obanz
     cra1 = random.rand(capanz)+1
     cat = 65
     @comp = Company.find(cra1)
-    mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Zinsen", name:"Kreditinitiative "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Crowdfunding", msubtype: "Zinsen", name:"Kreditinitiative "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Kreditinitiative "+i.to_s+" von " + @comp.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
     end
     ura1 = random.rand(usanz)+1
     @user = User.find(ura1)
-    mobjects = Mobject.create({active:true, mtype:"Crowdfunding", msubtype: "Zinsen", name:"Kreditinitiative "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
+    mobjects = Mobject.create({status:"OK", active:true, mtype:"Crowdfunding", msubtype: "Zinsen", name:"Kreditinitiative "+i.to_s+" von "+@user.name, date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: ura1, mcategory_id:cat, amount:1000, reward: "Test-CD", due_date: Date.today+365, interest_rate: 3.5, price:100})
     @mob = Mobject.where('name=?', "Kreditinitiative "+i.to_s+" von " + @user.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})
@@ -427,7 +430,7 @@ end
 @cfs.each do |c|
     usanz = User.all.count-1
     capanz = Company.all.count-1
-    for i in 1..20
+    for i in 1..obanz
         cra1 = random.rand(capanz)+1
         ura1 = random.rand(usanz)+1
         dat = random.rand(200)-200
@@ -438,7 +441,7 @@ end
 
 if false
 
-    rats = Rating.create({status:"ok", service_id:14, user_id:1, user_rating:4, user_comment:"Wahnsinn für den Preis" })
-    calenders = Calender.create({status:"ok", active:true, vehicle_id:1, user_id:4, date_from:DateTime.now, date_to:DateTime.now+1, time_from:10, time_to:12})
+    rats = Rating.create({status:"OK", service_id:14, user_id:1, user_rating:4, user_comment:"Wahnsinn für den Preis" })
+    calenders = Calender.create({status:"OK", active:true, vehicle_id:1, user_id:4, date_from:DateTime.now, date_to:DateTime.now+1, time_from:10, time_to:12})
 
 end

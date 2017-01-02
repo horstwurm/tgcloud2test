@@ -72,7 +72,7 @@ class MadvisorsController < ApplicationController
   def create
     @madvisor = Madvisor.new(madvisor_params)
     if @madvisor.save
-      redirect_to mobject_path(:id => @madvisors.mobject_id, :topic => "Advisors"), notice: 'Ansprechpartner was successfully created.'
+      redirect_to mobject_path(:id => @madvisors.mobject_id, :topic => "Ansprechpartner"), notice: 'Ansprechpartner was successfully created.'
     else
       render :new
     end
@@ -81,7 +81,7 @@ class MadvisorsController < ApplicationController
   # PUT /madvisors/1
   def update
     if @madvisor.update(madvisor_params)
-      redirect_to mobject_path(:id => @madvisors.mobject_id, :topic => "Advisors"), notice: 'Ansprechpartner was successfully updated.'
+      redirect_to mobject_path(:id => @madvisors.mobject_id, :topic => "Ansprechpartner"), notice: 'Ansprechpartner was successfully updated.'
     else
       render :edit
     end
@@ -91,7 +91,7 @@ class MadvisorsController < ApplicationController
   def destroy
     @id = @madvisors.mobject_id
     @madvisor.destroy
-      redirect_to mobject_path(:id => @id, :topic => "Advisors"), notice: 'Ansprechpartner was successfully destroyed.'
+      redirect_to mobject_path(:id => @id, :topic => "Ansprechpartner"), notice: 'Ansprechpartner was successfully destroyed.'
   end
 
   private

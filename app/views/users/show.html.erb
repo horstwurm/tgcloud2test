@@ -25,6 +25,16 @@
               <%= header("Kontaktdaten", false) %>
               <!--<div class='col-xs-12'><div class="panel-body">-->
               <div class="panel-body">
+               <% case @user.status %>
+                  <% when "CHECK" %>
+                    <i class="glyphicon glyphicon-question-sign"></i>
+                  <% when "OK" %>
+                    <i class="glyphicon glyphicon-ok-circle"></i>
+                  <% when "NOK" %>
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                <% end %>
+                <b> Status</b>
+                <br>
                 <% if @user.anonymous %>
                   <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>

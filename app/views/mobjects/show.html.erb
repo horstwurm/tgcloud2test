@@ -23,6 +23,16 @@
         <% when "Info" %>
           <%= header("Informationen", false) %>
           <div class="panel-body">
+           <% case @mobject.status %>
+              <% when "CHECK" %>
+                <i class="glyphicon glyphicon-question-sign"></i>
+              <% when "OK" %>
+                <i class="glyphicon glyphicon-ok-circle"></i>
+              <% when "NOK" %>
+                <i class="glyphicon glyphicon-ban-circle"></i>
+            <% end %>
+            <b> Status</b>
+            <br>
             <%= carousel2(@mobject, :medium) %>
       			</p>
             <br><br>
@@ -209,6 +219,14 @@
             <%= @mobject.created_at.strftime("%d.%m.%Y") %>
           </div>
 
+          <%= header("Ort (Karte)", false) %>
+          <div class="panel-body">
+            <i class="glyphicon glyphicon-map-marker pull-left" onclick="return init_map(0);"></i>
+            <div id="map">
+              <div id="map-canvas"></div>
+            </div>
+          </div>
+
         <% when "Details" %>
           <%= header("Details", false) %>
           <div class="panel-body">
@@ -370,19 +388,24 @@
     
   </div>
 
-<script>
-    handler = Gmaps.build('Google');
-    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-      markers = handler.addMarkers([
-        {
-          "lat": <%= @mobject.latitude %>,
-          "lng": <%= @mobject.longitude %>,
-          "infowindow": "<%= @mobject.name %>"
-        }
-      ]);
-      handler.bounds.extendWith(markers);
-      handler.fitMapToBounds();
-});
+<script type="text/javascript">
+    var latitudes = [<%= @mobject.latitude %>];
+    var longitudes = [<%= @mobject.longitude %>];
+    function init_map(index) {
+        var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
+        var mapOptions = {
+            center: myLocation,
+            zoom: 16
+        };
+        var marker = new google.maps.Marker({
+            position: myLocation,
+            title: "Property Location"
+        });
+        var map = new google.maps.Map(document.getElementById("map"),
+            mapOptions);
+        marker.setMap(map);
+    }
+    <!--init_map(0);-->
 </script>
 
 <script type="text/javascript">
@@ -444,7 +467,7 @@ $(document).ready(function(){
 </script>
 
 <script>
-  document.addEventListener("turbolinks:load", function() {drawChart1(); drawChart2(); owlCarousel()})
+  document.addEventListener("turbolinks:load", function() {init_map(0);drawChart1(); drawChart2(); owlCarousel()})
 </script>
 
 <script>

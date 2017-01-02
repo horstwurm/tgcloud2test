@@ -76,7 +76,7 @@ class CompaniesController < ApplicationController
       @company.user_id = params[:user_id]
       @company.active = true
       @company.social = false
-      @company.status = "new"
+      @company.status = "OK"
       @company.partner = false
   end
 

@@ -6,15 +6,20 @@ class MobjectsController < ApplicationController
     
     if params[:mtype]
       session[:mtype] = params[:mtype]
-    end
-    if params[:msubtype]
-      session[:msubtype] = params[:msubtype]
+      case params[:mtype]
+        when "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding"
+          if params[:msubtype]
+            session[:msubtype] = params[:msubtype]
+          end
+        else
+            session[:msubtype] = nil
+      end
     end
     
     @mobjects = Mobject.search(nil, nil, params[:filter_id], session[:mtype], session[:msubtype], params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
     @mobanz = @mobjects.count
-    @mtype = params[:mtype]
-    @msubtype = params[:msubtype]
+    @mtype = session[:mtype]
+    @msubtype = session[:msubtype]
     @param = params[:filter_id]
     @search = params[:search]
 
@@ -74,7 +79,7 @@ class MobjectsController < ApplicationController
   # GET /mobjects/new
   def new
     @mobject = Mobject.new
-    @mobject.status = "new"
+    @mobject.status = "OK"
     @mobject.mtype = params[:mtype]
     @mobject.msubtype = params[:msubtype]
     @mobject.mcategory_id = params[:msubtype]
@@ -162,7 +167,7 @@ class MobjectsController < ApplicationController
     @mtype = @mobject.mtype
     @msubtype = @mobject.msubtype
     @mobject.destroy
-    if @ownertype = "User"
+    if @ownertype == "User"
       redirect_to user_path(:id => @ownerid), notice: 'Mobject was successfully destroyed.'
     else
       redirect_to company_path(:id => @ownerid), notice: 'Mobject was successfully destroyed.'

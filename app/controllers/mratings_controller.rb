@@ -26,7 +26,7 @@ class MratingsController < ApplicationController
   def create
     @mrating = Mrating.new(mrating_params)
     if @mrating.save
-      redirect_to mobject_path(:id => @mrating.mobject_id, :topic => "Ratings"), notice: 'Rating was successfully created.'
+      redirect_to mobject_path(:id => @mrating.mobject_id, :topic => "Bewertungen"), notice: 'Rating was successfully created.'
     else
       render :new
     end
@@ -35,7 +35,7 @@ class MratingsController < ApplicationController
   # PUT /mratings/1
   def update
     if @mrating.update(mrating_params)
-      redirect_to mobject_path(:id => @mrating.mobject_id, :topic => "Ratings"), notice: 'Rating was successfully updated.'
+      redirect_to mobject_path(:id => @mrating.mobject_id, :topic => "Bewertungen"), notice: 'Rating was successfully updated.'
     else
       render :edit
     end
@@ -45,7 +45,7 @@ class MratingsController < ApplicationController
   def destroy
     @id = @mrating.mobject_id
     @mrating.destroy
-      redirect_to mobject_path(:id => @id, :topic => "Ratings"), notice: 'Rating was successfully destroyed.'
+      redirect_to mobject_path(:id => @id, :topic => "Bewertungen"), notice: 'Rating was successfully destroyed.'
   end
 
   private

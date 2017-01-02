@@ -31,9 +31,9 @@ class Company < ActiveRecord::Base
             where(@search.build_sql)
         else
           if search
-              where('active=? and stichworte LIKE ? OR name LIKE ?', true, "%#{search}%", "%#{search}%")
+              where('status=? and active=? and (stichworte LIKE ? OR name LIKE ?)', "OK", true, "%#{search}%", "%#{search}%")
             else
-                where('active=?', true)
+                where('status=? and active=?', "OK", true)
           end
         end
       end

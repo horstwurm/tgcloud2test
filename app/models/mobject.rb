@@ -25,15 +25,15 @@ if cw != nil and year != nil
       end_date = Date.commercial(year,cw,7)
       if msubtype
           if search
-              where('name LIKE ? and mtype=? and msubtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "%#{search}%", mtype, msubtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
+              where('status=? and name LIKE ? and mtype=? and msubtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "OK", "%#{search}%", mtype, msubtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
           else     
-              where('mtype=? and msubtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', mtype, msubtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
+              where('status=? and mtype=? and msubtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', mtype, msubtype, "OK", true, start_date, end_date, start_date, end_date, start_date, end_date)
           end
       else
           if search
-              where('name LIKE ? and mtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "%#{search}%", mtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
+              where('status=? and name LIKE ? and mtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "OK", "%#{search}%", mtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
           else
-              where('mtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', mtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
+              where('status=? and mtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "OK", mtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
           end
       end
     else
@@ -43,15 +43,15 @@ if cw != nil and year != nil
         else
             if search
                 if msubtype
-                    where('mtype=? and msubtype=? and active=? and name LIKE ?', mtype, msubtype, true, "%#{search}%")
+                    where('status=? and mtype=? and msubtype=? and active=? and name LIKE ?',"OK",  mtype, msubtype, true, "%#{search}%")
                 else
-                    where('mtype=? and active=? and name LIKE ?', mtype, true, "%#{search}%")
+                    where('status=? and mtype=? and active=? and name LIKE ?', "OK", mtype, true, "%#{search}%")
                 end
             else
                 if msubtype
-                    where('mtype=? and msubtype=? and active=?', mtype, msubtype, true)
+                    where('status=? and mtype=? and msubtype=? and active=?', "OK", mtype, msubtype, true)
                 else
-                    where('mtype=? and active=?', mtype, true)
+                    where('status=? and mtype=? and active=?', "OK", mtype, true)
                 end
             end
         end

@@ -44,9 +44,9 @@ class User < ActiveRecord::Base
             where(@search.build_sql)
         else
             if search
-                where('anonymous=? and active=? and (name LIKE ? OR lastname LIKE ? OR email LIKE ?)', false, true, "%#{search}%","%#{search}%","%#{search}%")
+                where('status=? and anonymous=? and active=? and (name LIKE ? OR lastname LIKE ? OR email LIKE ?)', "OK", false, true, "%#{search}%","%#{search}%","%#{search}%")
             else
-                where('anonymous=? and active=?',false, true)
+                where('status=? and anonymous=? and active=?',"OK", false, true)
             end
         end
     end
