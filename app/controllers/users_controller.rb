@@ -102,7 +102,7 @@ class UsersController < ApplicationController
         session[:cw] = Date.today.cweek.to_i
       end
       if !session[:year]
-        session[:year] = Date.today.year.to_i
+        session[:year] = Date.today.cwyear.to_i
       end
       if params[:dir]
         case params[:dir]
