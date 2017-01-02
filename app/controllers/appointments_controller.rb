@@ -93,7 +93,6 @@ class AppointmentsController < ApplicationController
   # PUT /appointments/
   def update
     @appointment.subject = @appointment.subject + params[:time_from].to_s
-    puts params[:time_to]
     if @appointment.update(appointment_params)
       redirect_to user_path(:id => @appointment.user_id1, :topic => "Kalendereintraege"), notice: 'Appointment was successfully updated.'
     else
