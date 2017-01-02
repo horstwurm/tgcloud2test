@@ -529,33 +529,86 @@
         </div>
       </div>
       <br>
-    
+
       <div class="row">
         <div class="col-md-12">
-          <div class="panel-heading header">
-            <li_header>
-              REGISTRATIONSVERLAUF Privatkunden
-            </li_header>
-          </div>
+          <%= header("Registrationen Privatkunden", false) %>
+          <%= @anz_pk.to_s %>
           <div class="panel-body">
-            <%= content_tag :div, "", id: "reports_chart_user",  data: {reports: @stat_user} %>
+            <div id="curve_chart1"></div>
           </div>
-        </div>
-      </div>
-      <br>
-    
-      <div class="row">
-        <div class="col-md-12">
-          <div class="panel-heading header">
-            <li_header>
-              REGISTRATIONSVERLAUF Firmen-/Gewerbekunden
-            </li_header>
-          </div>
+          <%= header("Registrationen Institutionen", false) %>
+          <%= @anz_fk.to_s %>
           <div class="panel-body">
-            <%= content_tag :div, "", id: "reports_chart_company",  data: {reports: @stat_company} %>
+            <div id="curve_chart2"></div>
+          </div>
+          <%= header("Registrationen Objekte", false) %>
+          <%= @anz_obj.to_s %>
+          <div class="panel-body">
+            <div id="curve_chart3"></div>
           </div>
         </div>  
       </div>
+      
     </div>
     <br>
-    
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart1);
+  function drawChart1() {
+    var data = google.visualization.arrayToDataTable([
+      ['Datum', 'Anzahl'],
+      <%= raw @anz_pk %>
+    ]);
+    var options = {
+      title: 'Registration Privatkunden',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+    chart.draw(data, options);
+  }
+</script>
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart2);
+  function drawChart2() {
+    var data = google.visualization.arrayToDataTable([
+      ['Datum', 'Anzahl'],
+      <%= raw @anz_fk %>
+    ]);
+    var options = {
+      title: 'Registration Firmenkunden/Gewerbe',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+    chart.draw(data, options);
+  }
+</script>
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart3);
+  function drawChart3() {
+    var data = google.visualization.arrayToDataTable([
+      ['Datum', 'Anzahl'],
+      <%= raw @anz_obj %>
+    ]);
+    var options = {
+      title: 'Registration Objekte',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart3'));
+    chart.draw(data, options);
+  }
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {drawChart1(); drawChart2(); drawChart3()})
+</script>
