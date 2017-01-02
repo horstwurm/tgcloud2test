@@ -119,47 +119,48 @@
                 <br>
                 
               <% when "Stellenanzeigen" %>
-                  <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="thumbnail" align="center">
-                      <anzeigetext>
-            						Ihre Aufgaben
-                      </anzeigetext>
-                      <p>
-                        <ntext>
-            						<%= @mobject.tasks %>
-            						</ntext>
-            					</p>
+                  <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                      <div class="thumbnail" align="center">
+                        <anzeigetext>
+              						Ihre Aufgaben
+                        </anzeigetext>
+                        <p>
+                          <ntext>
+              						<%= @mobject.tasks %>
+              						</ntext>
+              					</p>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="thumbnail" align="center">
-                      <anzeigetext>
-            						wir erwarten
-                      </anzeigetext>
-                      <p>
-                        <ntext>
-            						<%= @mobject.skills %>
-            						</ntext>
-            					</p>
+                    
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                      <div class="thumbnail" align="center">
+                        <anzeigetext>
+              						wir erwarten
+                        </anzeigetext>
+                        <p>
+                          <ntext>
+              						<%= @mobject.skills %>
+              						</ntext>
+              					</p>
+                      </div>
                     </div>
-                  </div>
-          
-                  <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="thumbnail" align="center">
-                      <anzeigetext>
-            						wir bieten
-                      </anzeigetext>
-                      <p>
-                        <ntext>
-            						<%= @mobject.offers %>
-            						</ntext>
-            					</p>
+            
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                      <div class="thumbnail" align="center">
+                        <anzeigetext>
+              						wir bieten
+                        </anzeigetext>
+                        <p>
+                          <ntext>
+              						<%= @mobject.offers %>
+              						</ntext>
+              					</p>
+                      </div>
                     </div>
-                  </div>
-                  <br><br>
-
+                </div>
             <% end %>
+            <br><br>
             
             <b>Bewertung</b><br>
             <% avg_rating2(@mobject.id).times do %>

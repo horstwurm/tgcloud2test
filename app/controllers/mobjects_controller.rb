@@ -157,8 +157,16 @@ class MobjectsController < ApplicationController
 
   # DELETE /mobjects/1
   def destroy
+    @ownerid = @mobject.owner_id
+    @ownertype = @mobject.owner_type
+    @mtype = @mobject.mtype
+    @msubtype = @mobject.msubtype
     @mobject.destroy
-    redirect_to mobjects_url, notice: 'Mobject was successfully destroyed.'
+    if @ownertype = "User"
+      redirect_to user_path(:id => @ownerid), notice: 'Mobject was successfully destroyed.'
+    else
+      redirect_to company_path(:id => @ownerid), notice: 'Mobject was successfully destroyed.'
+    end
   end
 
   private

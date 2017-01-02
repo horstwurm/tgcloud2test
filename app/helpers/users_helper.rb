@@ -319,8 +319,12 @@ def build_medialist2(items, cname, par)
                   if item.user_id == current_user.id or current_user.superuser
                     access = true
                   end
-                when "msponsors", "mdetails"
+                when "mdetails"
                   if (item.mobject.owner_type == "User"and item.mobject.owner_id == current_user.id) or (item.mobject.owner_type == "Company"and item.mobject.owner.user_id == current_user.id)
+                    access = true
+                  end
+                when "msponsors"
+                  if item.company.user_id == current_user.id
                     access = true
                   end
               end
@@ -966,9 +970,9 @@ def getIcon(iconstring)
       when "Ausflugsziele"
         icon = "map-marker"
       when "Kleinanzeigen (Suchen)"
-        icon = "align-justify"
+        icon = "pushpin"
       when "Kleinanzeigen (Anbieten)"
-        icon = "align-justify"
+        icon = "pushpin"
       when "Crowdfunding (Spenden)"
         icon = "grain"
       when "Crowdfunding (Belohnungen)"

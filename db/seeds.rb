@@ -72,7 +72,7 @@ mcategories = Mcategory.create({ctype:"Ausflugsziele", name:"Freizeitparks"})
 mcategories = Mcategory.create({ctype:"Ausflugsziele", name:"Bäder und Spa"})
 mcategories = Mcategory.create({ctype:"Ausflugsziele", name:"Seen und Gewässer"})
     
-#OBJECT Kleinanzeigen 56..64
+#OBJECT Kleinanzeigen 56..65
 mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Sportgeräte"})
 mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Antiquitäten"})
 mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Spielzeuge"})
@@ -82,10 +82,11 @@ mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Haushaltsgeräte"})
 mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Gartengeräte"})
 mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"KFZ und Motorrad"})
 mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Tiere"})
+mcategories = Mcategory.create({ctype:"Dienstleistungen", name:"Tiere"})
 
 mcategories = Mcategory.create({ctype:"Crowdfunding", name:"Crowdfunding"})
 
-#create ticket categories 66..68
+#create ticket categories 67..69
 mcategories = Mcategory.create({ctype:"Ticket", name:"Eintritt"})
 mcategories = Mcategory.create({ctype:"Ticket", name:"Gutschein"})
 mcategories = Mcategory.create({ctype:"Ticket", name:"Rabatt"})
