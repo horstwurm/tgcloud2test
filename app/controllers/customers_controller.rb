@@ -36,9 +36,9 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
     if @customer.save
       if @customer.owner_type == "User" 
-        redirect_to user_path(:id => @customer.owner_id, :topic => "Kundenstatus"), notice: 'Customer was successfully created.'
+        redirect_to user_path(:id => @customer.owner_id, :topic => "Kundenbeziehungen"), notice: 'Customer was successfully created.'
       else
-        redirect_to company_path(:id => @customer.owner_id, :topic => "Kundenstatus"), notice: 'Customer was successfully created.'
+        redirect_to company_path(:id => @customer.owner_id, :topic => "Kundenbeziehungen"), notice: 'Customer was successfully created.'
       end
     else
       render :new
@@ -48,10 +48,10 @@ class CustomersController < ApplicationController
   # PUT /customers/1
   def update
     if @customer.update(customer_params)
-      if @customer.owner_type == "Company"
-        redirect_to user_path(:id => @customer.owner_id, :topic => "Kundenstatus"), notice: 'Customer was successfully created.'
+      if @customer.owner_type == "User"
+        redirect_to user_path(:id => @customer.owner_id, :topic => "Kundenbeziehungen"), notice: 'Customer was successfully created.'
       else
-        redirect_to company_path(:id => @customer.owner_id, :topic => "Kundenstatus"), notice: 'Customer was successfully created.'
+        redirect_to company_path(:id => @customer.owner_id, :topic => "Kundenbeziehungen"), notice: 'Customer was successfully created.'
       end
     else
       render :edit
@@ -64,10 +64,9 @@ class CustomersController < ApplicationController
     @owner_type = @customer.owner_type
     @customer.destroy
       if @owner_type == "User"
-        redirect_to user_path(:id => @owner_id, :topic => "Kundenstatus"), notice: 'Customer was successfully created.'
-      end
-      if @owner_type == "Company"
-        redirect_to company_path(:id => @owner_id, :topic => "Kundenstatus"), notice: 'Customer was successfully created.'
+        redirect_to user_path(:id => @owner_id, :topic => "Kundenbeziehungen"), notice: 'Customer was successfully created.'
+      else
+        redirect_to company_path(:id => @owner_id, :topic => "Kundenbeziehungen"), notice: 'Customer was successfully created.'
       end
   end
 
