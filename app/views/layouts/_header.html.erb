@@ -59,16 +59,16 @@
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<% if user_signed_in? %>
+					<user_logged_in><%= current_user.name + " " + current_user.lastname %></user_logged_in>
+				<% else %>
+					<user_logged_in>kein Benutzer angemeldet!</user_logged_in>
+				<% end %>
 				<% if !flash.empty? %>
 				    <% flash.each do |name, msg| %>
 				      <% content_tag(:div, msg, class:"alert alert-warning") %>
 				      <message><fade><%= msg %></fade></message> 
 				    <% end %>
-				<% end %>
-				<% if user_signed_in? %>
-					<user_logged_in><%= current_user.name + " " + current_user.lastname %></user_logged_in>
-				<% else %>
-					<user_logged_in>kein Benutzer angemeldet!</user_logged_in>
 				<% end %>
 			</div>
 		</div>

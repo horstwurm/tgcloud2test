@@ -3,15 +3,20 @@ class MobjectsController < ApplicationController
 
   # GET /mobjects
   def index
-    @mobjects = Mobject.search(nil, nil, params[:filter_id], params[:mtype], params[:msubtype], params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
+    
+    if params[:mtype]
+      session[:mtype] = params[:mtype]
+    end
+    if params[:msubtype]
+      session[:msubtype] = params[:msubtype]
+    end
+    
+    @mobjects = Mobject.search(nil, nil, params[:filter_id], session[:mtype], session[:msubtype], params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
     @mobanz = @mobjects.count
     @mtype = params[:mtype]
     @msubtype = params[:msubtype]
     @param = params[:filter_id]
     @search = params[:search]
-
-    session[:mtype] = params[:mtype]
-    session[:msubtype] = params[:msubtype]
 
   end
 
@@ -26,7 +31,7 @@ class MobjectsController < ApplicationController
       session[:cw] = Date.today.cweek.to_i
     end
     if !session[:year]
-      session[:year] = Date.today.year.to_i
+      session[:year] = Date.today.cwyear.to_i
     end
     if params[:dir]
       case params[:dir]
