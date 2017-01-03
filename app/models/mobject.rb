@@ -21,20 +21,20 @@ end
 
 
 def self.search(cw, year, filter, mtype, msubtype, search)
-if cw != nil and year != nil
+if cw and year
       start_date = Date.commercial(year,cw,1)
       end_date = Date.commercial(year,cw,7)
       if msubtype
           if search
               where('status=? and name LIKE ? and mtype=? and msubtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "OK", "%#{search}%", mtype, msubtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
           else     
-              where('status=? and mtype=? and msubtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', mtype, msubtype, "OK", true, start_date, end_date, start_date, end_date, start_date, end_date)
+              where('status=? and mtype=? and msubtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "OK", mtype, msubtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
           end
       else
           if search
               where('status=? and name LIKE ? and mtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "OK", "%#{search}%", mtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
           else
-              where('status=? and mtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "OK", mtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
+              where('status=? and mtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', 'OK', mtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
           end
       end
     else
@@ -58,4 +58,5 @@ if cw != nil and year != nil
         end
     end
 end
+
 end

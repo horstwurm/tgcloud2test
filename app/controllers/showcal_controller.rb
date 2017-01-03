@@ -27,9 +27,6 @@ class ShowcalController < ApplicationController
     end
     @start = Date.commercial(session[:year],session[:cw],1)
     @mobjects = Mobject.search(session[:cw], session[:year], params[:filter_id], params[:mtype], params[:msubtype], params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
-    
-    #@mobjects = Mobject.all.page(params[:page])
-    
     @mobanz = @mobjects.count
     @mtype = params[:mtype]
     @msubtype = params[:msubtype]
@@ -41,7 +38,7 @@ class ShowcalController < ApplicationController
      @locs = "["
      @wins = "["
      @mobjects.each do |m|
-       if m.latitude and m.longitude 
+       if m.latitude and m.longitude and m.geo_address
           @locs = @locs + "["
           if m.owner_type == "User"
             @locs = @locs + "'" + m.owner.fullname + "', "
@@ -58,9 +55,9 @@ class ShowcalController < ApplicationController
     
           @wins = @wins + "["
           if m.mdetails.count > 0
-            @wins = @wins + "'<img src=" + m.mdetails.first.avatar(:small) + "<br><h3>" + m.name + "</h3><p>" + m.geo_address + "<br>"+ m.date_from.strftime("%d.%m.%Y") + " - " + m.date_from.strftime("%d.%m.%Y") +"</p>'"
+            @wins = @wins + "'<img src=" + m.mdetails.first.avatar(:small) + "><br><h3>" + m.name + "</h3><p>" + m.geo_address + "<br>"+ m.date_from.strftime("%d.%m.%Y") + " - " + m.date_from.strftime("%d.%m.%Y") +"</p>'"
           else
-            @wins = @wins + "'<img src=" + m.owner.avatar(:small) + "<br><h3>" + m.name + "</h3><p>" + m.geo_address + "<br>"+ m.date_from.strftime("%d.%m.%Y") + " - " + m.date_from.strftime("%d.%m.%Y") +"</p>'"
+            @wins = @wins + "'<img src=" + m.owner.avatar(:small) + "><br><h3>" + m.name + "</h3><p>" + m.geo_address + "<br>"+ m.date_from.strftime("%d.%m.%Y") + " - " + m.date_from.strftime("%d.%m.%Y") +"</p>'"
           end
           if counter+1 == @mobjects.count
             @wins = @wins + "]"
