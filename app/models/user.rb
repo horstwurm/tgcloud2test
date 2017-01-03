@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
     has_many :user_tickets, dependent: :destroy 
     has_many :madvisors, dependent: :destroy 
     has_many :user_positions, dependent: :destroy 
+    has_many :participants, dependent: :destroy   
     
     # validates :userid, presence: true, :uniqueness => true
     validates :lastname, presence: true    

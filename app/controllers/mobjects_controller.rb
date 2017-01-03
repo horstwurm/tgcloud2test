@@ -4,6 +4,22 @@ class MobjectsController < ApplicationController
   # GET /mobjects
   def index
     
+    if params[:set_part_id]
+      @anmeldung = current_user.participants.where('mobject_id=?', params[:set_part_id]).first
+      if !@anmeldung
+        @participant = Participant.new
+        @participant.user_id = current_user.id
+        @participant.mobject_id = params[:set_part_id]
+        @participant.save
+      end
+    end
+    if params[:del_part_id]
+      @anmeldung = current_user.participants.where('mobject_id=?', params[:del_part_id]).first
+      if @anmeldung
+        @anmeldung.destroy
+      end
+    end
+    
     if params[:mtype]
       session[:mtype] = params[:mtype]
       case params[:mtype]
@@ -80,6 +96,7 @@ class MobjectsController < ApplicationController
   def new
     @mobject = Mobject.new
     @mobject.status = "OK"
+    @mobject.eventpart = false
     @mobject.mtype = params[:mtype]
     @mobject.msubtype = params[:msubtype]
     @mobject.mcategory_id = params[:msubtype]
@@ -182,7 +199,7 @@ class MobjectsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def mobject_params
-      params.require(:mobject).permit(:owner_id, :owner_type, :mtype, :msubtype, :mcategory_id, :company_id, :user_id, :status, :name, :description, :reward, :interest_rate, :due_date, :date_from, :date_to, :time_from, :time_to, :days, :amount, :price, :tasks, :skills, :offers, :social, :price_reg, :price_new, :active, :keywords, :homepage, :address1, :address2, :address3, :latitude, :longitude, :geo_address)
+      params.require(:mobject).permit(:eventpart, :owner_id, :owner_type, :mtype, :msubtype, :mcategory_id, :company_id, :user_id, :status, :name, :description, :reward, :interest_rate, :due_date, :date_from, :date_to, :time_from, :time_to, :days, :amount, :price, :tasks, :skills, :offers, :social, :price_reg, :price_new, :active, :keywords, :homepage, :address1, :address2, :address3, :latitude, :longitude, :geo_address)
     end
 
 end

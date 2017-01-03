@@ -58,6 +58,12 @@
                         <%= f.text_field :date_to, class:"form-control"%>
                       </div>
                     <% end %>
+                    <% if @mobject.mtype == "Veranstaltungen" %>
+                      <div class="form-group">
+                        <input type="checkbox" name="my-checkbox3" checked>
+                        <%= f.label "Anmeldung obligatorisch" %>
+                      </div>
+                    <% end %>
                     <% if @mobject.mtype == "Crowdfunding" %>
                         <div class="form-group">
                           <%= f.label "Betrag:" %>
@@ -155,6 +161,7 @@
                 </div>
                 <%= f.check_box :active, :id => "active", class:"form-control hidden" %>
                 <%= f.check_box :social, :id => "social", class:"form-control hidden" %>
+                <%= f.check_box :eventpart, :id => "eventpart", class:"form-control hidden" %>
               </div>
           </div>
                 
@@ -203,6 +210,10 @@
      $("[name='my-checkbox2']").bootstrapSwitch('state',<%= @mobject.social %>);
      $("[name='my-checkbox2']").on('switchChange.bootstrapSwitch', function () {
      $("#social").prop('checked',$("[name='my-checkbox2']").bootstrapSwitch('state'));
+     });
+     $("[name='my-checkbox3']").bootstrapSwitch('state',<%= @mobject.eventpart %>);
+     $("[name='my-checkbox3']").on('switchChange.bootstrapSwitch', function () {
+     $("#eventpart").prop('checked',$("[name='my-checkbox3']").bootstrapSwitch('state'));
      });
 </script>
 

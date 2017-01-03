@@ -116,7 +116,11 @@
                     </div>
                     <% end %>
                   <% end %>
-                <% end %>
+                  <br>
+                  <% if @mobject.mtype == "Veranstaltungen" and @mobject.eventpart %>
+                      </b><i class="glyphicon glyphicon-info-sign"></i> Anmeldung obligatorisch</b>
+                   <% end %>
+                  <% end %>
 
                <% when "Vermietungen" %>
                 <b>Mietzeiten</b><br>
@@ -255,6 +259,12 @@
           <%= header("Ansprechpartner", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.madvisors, "madvisors", "User") %>
+          </div>
+
+        <% when "Teilnehmer (Veranstaltungen)" %>
+          <%= header("Teilnehmer", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.participants, "participants", "User") %>
           </div>
 
         <% when "Kalender (Vermietungen)" %>

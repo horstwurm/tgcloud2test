@@ -3,12 +3,13 @@ class Mobject < ActiveRecord::Base
 belongs_to :owner, polymorphic: true
 belongs_to :mcategory
 
-has_many :mdetails
-has_many :mratings
-has_many :madvisors
-has_many :mcalendars
-has_many :mstats
-has_many :msponsors
+has_many :mdetails, dependent: :destroy
+has_many :mratings, dependent: :destroy
+has_many :madvisors, dependent: :destroy
+has_many :mcalendars, dependent: :destroy
+has_many :mstats, dependent: :destroy
+has_many :msponsors, dependent: :destroy
+has_many :participants, dependent: :destroy
 
 before_validation :update_geo_address
 geocoded_by :geo_address

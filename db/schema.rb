@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219164938) do
+ActiveRecord::Schema.define(version: 20170103105723) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -53,8 +53,8 @@ ActiveRecord::Schema.define(version: 20161219164938) do
     t.string   "domain"
     t.string   "right"
     t.boolean  "access"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "companies", force: :cascade do |t|
@@ -202,6 +202,7 @@ ActiveRecord::Schema.define(version: 20161219164938) do
     t.text     "skills"
     t.text     "offers"
     t.boolean  "social"
+    t.boolean  "eventpart"
     t.decimal  "price_reg"
     t.decimal  "price_new"
     t.boolean  "active"
@@ -250,6 +251,14 @@ ActiveRecord::Schema.define(version: 20161219164938) do
     t.datetime "updated_at", null: false
     t.index ["owner_id"], name: "index_mstats_on_owner_id"
     t.index ["owner_type"], name: "index_mstats_on_owner_type"
+  end
+
+  create_table "participants", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "mobject_id"
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "partner_links", force: :cascade do |t|

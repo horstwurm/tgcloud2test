@@ -142,10 +142,13 @@
         <% when "Crowdfunding (Beitraege)" %>
           <%= header("Crowdfunding Beitraege", false) %>
           <%= build_medialist2(@user.mstats, "mstats", "CF") %>
-      <% when "Bewertungen" %>
-          <%= header("Bewertungen", false) %>
-          <%= build_medialist2(@user.mratings, "mratings", nil) %>
-
+        <% when "Bewertungen" %>
+            <%= header("Bewertungen", false) %>
+            <%= build_medialist2(@user.mratings, "mratings", nil) %>
+        <% when "Veranstaltungen (angemeldet)" %>
+            <%= header("Veranstaltungen (angemeldet)", false) %>
+            <%= build_medialist2(@user.participants, "participants", "Object") %>
+  
         <% when "Kalendereintraege" %>
           <%= header("Kalender KW " + session[:cw].to_s, false) %>
           <!--<div class='col-xs-12'><div class="panel-body">-->

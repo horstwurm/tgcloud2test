@@ -331,7 +331,7 @@ for i in 1..obanz
     cra1 = random.rand(capanz)+1
     cat = random.rand(8)+1+40
     @comp = Company.find(cra1)
-    mobjects = Mobject.create({status:"OK", active:true, mtype:"Veranstaltungen", msubtype: nil, name:"Event "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id: cat})
+    mobjects = Mobject.create({eventpart:false, status:"OK", active:true, mtype:"Veranstaltungen", msubtype: nil, name:"Event "+i.to_s+" von "+@comp.name, date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: cra1, mcategory_id: cat})
     @mob = Mobject.where('name=?', "Event "+i.to_s+" von " + @comp.name).first
     for k in 1..3
         mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... "})

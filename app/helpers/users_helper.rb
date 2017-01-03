@@ -80,7 +80,7 @@ def build_medialist2(items, cname, par)
                 when "customers"
                   @comp = Company.find(item.partner_id)
                   html_string = html_string + @comp.name
-                when "madvisors"
+                when "madvisors", "participants"
                   if par == "User"
                     html_string = html_string + item.user.name + " " + item.user.lastname
                   end
@@ -158,7 +158,7 @@ def build_medialist2(items, cname, par)
                     if par == "Owner"
                       html_string = html_string + showImage2(:medium, item.owner, true)
                     end
-                  when "madvisors"
+                  when "madvisors", "participants"
                     if par == "Object"
                       html_string = html_string + showFirstImage2(:medium, item.mobject, item.mobject.mdetails)
                     end
@@ -234,10 +234,28 @@ def build_medialist2(items, cname, par)
                           html_string = html_string + '<i class="glyphicon glyphicon-user"></i> '
                           html_string = html_string + item.owner.name + " "+ item.owner.lastname + "<br>"
                       end
-                    when "madvisors"
+
+                      if item.mtype == "Veranstaltungen" 
+                        if item.eventpart
+                          html_string = html_string + '<i class="glyphicon glyphicon-info-sign"></i> '+"Anmeldung erforderlich<br>"
+                          @angemeldet = current_user.participants.where('mobject_id=?', item.id).first
+                          if @angemeldet
+                            html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '+"angemeldet<br>"
+                          end
+                        else
+                          #html_string = html_string + '<i class="glyphicon glyphicon-info-sign"></i> '+"keine Anmeldung erforderlich"<br>
+                        end
+                        
+                      end
+
+
+                      when "madvisors"
                           html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
                           html_string = html_string + item.grade + "<br>"
-                    when "mstats"
+                      when "participants"
+                          html_string = html_string + '<i class="glyphicon glyphicon-time"></i> '
+                          html_string = html_string + item.created_at.strftime("%d.%m.%Y") 
+                      when "mstats"
                         if item.owner_type == "Company"
                             html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i> '
                             html_string = html_string + item.owner.name + "<br>"
@@ -336,6 +354,21 @@ def build_medialist2(items, cname, par)
                 when "msponsors"
                   if item.company.user_id == current_user.id
                     access = true
+                  end
+                 
+                when "mobjects"
+                  if item.mtype == "Veranstaltungen" 
+                    if item.eventpart
+                      if @angemeldet
+          	            html_string = html_string + link_to(mobjects_path(:del_part_id => item.id, :topic => item.mtype)) do 
+                          content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-pencil")
+                        end
+                      else
+          	            html_string = html_string + link_to(mobjects_path(:set_part_id => item.id, :topic => item.mtype)) do 
+                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+                        end
+                      end
+                    end
                   end
               end
             end
@@ -563,6 +596,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Privatpersonen",item,"Kleinanzeigen",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Vermietungen",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Veranstaltungen",item.mobjects.where('mtype=?',"Veranstaltungen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Veranstaltungen (angemeldet)",item.participants.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Tickets",item.user_tickets.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Ausflugsziele",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Ausschreibungen",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
@@ -584,6 +618,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Institutionen",item,"Kleinanzeigen",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Vermietungen",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Veranstaltungen",item.mobjects.where('mtype=?',"Veranstaltungen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Veranstaltungen (angemeldet)",item.mparticipants.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Sponsorenengagements",item.msponsors.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Ausflugsziele",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Ausschreibungen",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
@@ -606,6 +641,9 @@ def navigate(object,item)
         end
         if item.mtype == "Angebote" or item.mtype == "Stellenanzeigen"
           html_string = html_string + build_nav("Objekte",item,"Ansprechpartner",item.madvisors.count > 0)
+        end
+        if item.mtype == "Veranstaltungen"
+          html_string = html_string + build_nav("Objekte",item,"Teilnehmer (Veranstaltungen)",item.participants.count > 0)
         end
         if item.mtype == "Vermietungen"
           html_string = html_string + build_nav("Objekte",item,"Kalender (Vermietungen)",item.mcalendars.count > 0)
@@ -947,11 +985,12 @@ def getIcon(iconstring)
         icon = "book"
       when "Kalender (Vermietungen)"
         icon = "calendar"
+      when "Teilnehmer (Veranstaltungen)"
+        icon = "user"
       when "CF Statistik"
         icon = "dashboard"
       when "CF Transaktionen"
         icon = "euro"
-
 
       when "Einstellungen"
         icon = "cog"
@@ -976,6 +1015,8 @@ def getIcon(iconstring)
       when "Stellenanzeigen (Anbieten)"
         icon = "briefcase"
       when "Veranstaltungen"
+        icon = "glass"
+      when "Veranstaltungen (angemeldet)"
         icon = "glass"
       when "Ausflugsziele"
         icon = "map-marker"
@@ -1065,6 +1106,14 @@ def build_kachel_color(domain, name, path_param, user_id, company_id)
         pic = image_def("Object", "Stellenanzeigen", "Anbieten")
 
       when "Veranstaltungen"
+        path = mobjects_path(:mtype => "Veranstaltungen", :msubtype => nil)
+        pic = image_def("Object", "Veranstaltungen", nil)
+
+      when "Veranstaltungen (angemeldet)"
+        path = mobjects_path(:mtype => "Veranstaltungen", :msubtype => nil)
+        pic = image_def("Object", "Veranstaltungen", nil)
+
+      when "Teilnehmer (Veranstaltungen)"
         path = mobjects_path(:mtype => "Veranstaltungen", :msubtype => nil)
         pic = image_def("Object", "Veranstaltungen", nil)
 
@@ -1235,6 +1284,8 @@ def image_def (domain, mtype, msubtype)
             pic = "ausflug.jpg"
 
           when "Veranstaltungen"
+            pic = "veranstaltung.jpg"
+          when "Anmeldungen"
             pic = "veranstaltung.jpg"
 
           when "Stellenanzeigen"
@@ -1408,6 +1459,9 @@ def init_credentials(mode)
     hash = {"domain" => "Privatpersonen", "right" => "Veranstaltungen", "icon" => "glass", "access" => "true"}
     @array << hash
     hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Veranstaltungen (angemeldet)", "icon" => "glass", "access" => "true"}
+    @array << hash
+    hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Tickets", "icon" => "barcode", "access" => "true"}
     @array << hash
     hash = Hash.new
@@ -1531,6 +1585,9 @@ def init_credentials(mode)
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "Kalender (Vermietungen)", "icon" => "calendar", "access" => "true"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Teilnehmer (Veranstaltungen)", "icon" => "user", "access" => "true"}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "Ausschreibungsangebote", "icon" => "inbox", "access" => "true"}
