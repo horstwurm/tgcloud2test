@@ -300,9 +300,8 @@
             <% @user.user_tickets.where('status<>? and status<>?',"zurückgegeben", "Filter Kampagne").each do |ut| %>
             
               <% content = link_to(home_index1_path(:par => ut.id.to_s)) %>
-              <% content = "tkbmarkt.herokuapp.com/home/index1" %>
-
-
+              <% content = "tkbmarkt.herokuapp.com/home/index1?ticket="+ut.id.to_s %>
+              
               <% qr = RQRCode::QRCode.new(content, size: 12, :level => :h) %>
               <% qr_img = qr.to_img %>
               <% qr_img.resize(200, 200).save(File.join(Rails.root, "/app/assets/images/qr_image.png")) %>

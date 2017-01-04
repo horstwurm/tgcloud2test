@@ -28,8 +28,8 @@ def index
 end
 
 def index1
-  if params[:ticket_id]
-    @ticket = UserTicket.find(params[:ticket_id])
+  if params[:ticket]
+    @ticket = UserTicket.find(params[:ticket])
     if @ticket
       @status = "Ticket gültig"
     else
