@@ -299,13 +299,11 @@
           <div class="panel-body">
             <% @user.user_tickets.where('status<>? and status<>?',"zurückgegeben", "Filter Kampagne").each do |ut| %>
             
-              <% content = link_to(home_index1_path(:par => ut.id.to_s)) %>
               <% content = "tkbmarkt.herokuapp.com/users/"+ut.id.to_s %>
-              
               <% qr = RQRCode::QRCode.new(content, size: 12, :level => :h) %>
               <% qr_img = qr.to_img %>
-              <%= file = File.join(Rails.root, "/app/assets/images/qrimage.png") %>
-              <%= file = "qrimage.png" %>
+              
+              <%= file = "qrimage_" + ut.id.to_s + ".png" %>
               <% qr_img.resize(200, 200).save(file) %>
               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <div class="thumbnail" align="center">
