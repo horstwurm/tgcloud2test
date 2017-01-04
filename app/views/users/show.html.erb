@@ -304,10 +304,11 @@
               
               <% qr = RQRCode::QRCode.new(content, size: 12, :level => :h) %>
               <% qr_img = qr.to_img %>
-              <% qr_img.resize(200, 200).save(File.join(Rails.root, "/app/assets/images/qr_image.png")) %>
+              <%= file = File.join(Rails.root, "/app/assets/images/qrimage.png") %>
+              <% qr_img.resize(200, 200).save(file) %>
               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <div class="thumbnail" align="center">
-                  <%= image_tag("qr_image.png") %>
+                  <%= image_tag(file) %>
                   <% if false %>
                     <table class="qr-code">
                     <% qr.modules.each_index do |x| %>
