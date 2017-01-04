@@ -305,6 +305,7 @@
               <% qr = RQRCode::QRCode.new(content, size: 12, :level => :h) %>
               <% qr_img = qr.to_img %>
               <%= file = File.join(Rails.root, "/app/assets/images/qrimage.png") %>
+              <%= file = "qrimage.png" %>
               <% qr_img.resize(200, 200).save(file) %>
               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <div class="thumbnail" align="center">
