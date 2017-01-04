@@ -1,4 +1,4 @@
-<% @appointments = Appointment.last(5) %>
-<% @appointments.each do |a| %> 
-  <%= Date.today %> ===> <%= a.app_date %> <%= a.time_from %> <%= a.time_to %> <%= a.user_id1 %> <%= a.user_id2 %><br>
-<% end %>
+<%= header("Tickets", false) %>
+<div class="panel-body">
+    <h1><%= @status %> </h1>
+</div>

@@ -298,8 +298,31 @@
           <%= header("Tickets", false) %>
           <div class="panel-body">
             <% @user.user_tickets.where('status<>? and status<>?',"zurückgegeben", "Filter Kampagne").each do |ut| %>
-              <div class="col-sm-6 col-md-4 col-lg-3">
+            
+              <% content = link_to(home_index1_path(:par => ut.id.to_s)) %>
+              <% content = "tkbmarkt.herokuapp.com/home/index1/?ticket_id="+ut.id.to_s %>
+              
+              <% qr = RQRCode::QRCode.new(content, size: 12, :level => :h) %>
+              <% qr_img = qr.to_img %>
+              <% qr_img.resize(200, 200).save(File.join(Rails.root, "/app/assets/images/qr_image.png")) %>
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <div class="thumbnail" align="center">
+                  <%= image_tag("qr_image.png") %>
+                  <% if false %>
+                    <table class="qr-code">
+                    <% qr.modules.each_index do |x| %>
+                      <tr>
+                      <% qr.modules.each_index do |y| %>
+                       <% if qr.dark?(x,y) %>
+                        <td class="black"/>
+                       <% else %>
+                        <td class="white"/>
+                       <% end %>
+                      <% end %>
+                      </tr>
+                    <% end %>
+                    </table>
+                  <% end %>
                   <anzeigetext>
                     <%= ut.ticket.mcategory.name %><br>
           					<%= ut.ticket.name %><br>

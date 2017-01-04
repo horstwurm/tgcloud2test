@@ -26,6 +26,18 @@ def index
     #redirect_to current_user
   end
 end
+
+def index1
+  if params[:ticket_id]
+    @ticket = UserTicket.find(params[:ticket_id])
+    if @ticket
+      @status = "Ticket gültig"
+    else
+      @status = "Ticket ungültig"
+    end
+  end
+end
+
 def index2
     @users = User.all.order(last_sign_in_at: :desc).page(params[:page]).per_page(20)
     @usanz = @users.count

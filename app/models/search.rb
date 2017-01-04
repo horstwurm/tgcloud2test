@@ -63,7 +63,7 @@ class Search < ActiveRecord::Base
                 end
                 sql_string << sli
             end
-            if self.distance > 0 and self.longitude != nil and self.latitude != nil
+            if self.distance > 0 and self.longitude != nil and self.latitude != nil and self.geo_address != nil
                 sql_string[0] = sql_string[0] + " and id IN (?)"
                 @users = User.near(self.geo_address, self.distance)
                 uli = []

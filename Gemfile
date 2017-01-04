@@ -39,6 +39,8 @@ gem 'owlcarousel-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-turbolinks'
 gem 'aws-sdk', '~>2.3'
+gem 'rqrcode-with-patches', '~> 0.5.4'
+gem 'rqrcode_png'
 
 group :development, :test do
 
