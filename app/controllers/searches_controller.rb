@@ -38,6 +38,11 @@ class SearchesController < ApplicationController
         @usertickets = UserTicket.where('ticket_id=? and status=?', params[:ticket_id], "Filter Kampagne")
         @usertickets.each do |ut|
           ut.status = "übergeben"
+          content = "Ticket_ID"+ut.id.to_s
+          qr = RQRCode::QRCode.new(content, size: 12, :level => :h)
+          qr_img = qr.to_img
+          qr_img.resize(200, 200).save("ticketqrcode.png")
+          ut.avatar = File.open("ticketqrcode.png")
           ut.save
         end
       end
