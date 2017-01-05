@@ -199,7 +199,7 @@ def build_medialist2(items, cname, par)
             html_string = html_string + '</div>'
 
             html_string = html_string + '<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">'
-              html_string = html_string + '<div class="panel-header pull-left"><list>'
+              html_string = html_string + '<div class="panel-header"><list>'
                 case items.table_name
                     when "mdetails"
                       html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
@@ -373,6 +373,10 @@ def build_medialist2(items, cname, par)
               end
             end
 
+            html_string = html_string + link_to(item, :topic => "Info") do 
+              content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign")
+            end
+ 
             if access
               case cname 
                 when "favourits"
@@ -618,7 +622,6 @@ def navigate(object,item)
         html_string = html_string + build_nav("Institutionen",item,"Kleinanzeigen",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Vermietungen",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Veranstaltungen",item.mobjects.where('mtype=?',"Veranstaltungen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Veranstaltungen (angemeldet)",item.mparticipants.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Sponsorenengagements",item.msponsors.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Ausflugsziele",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Ausschreibungen",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
