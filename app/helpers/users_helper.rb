@@ -373,9 +373,9 @@ def build_medialist2(items, cname, par)
               end
             end
 
-            html_string = html_string + link_to(item, :topic => "Info") do 
-              content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign")
-            end
+            #html_string = html_string + link_to(item, :topic => "Info") do 
+            #  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign")
+            #end
  
             if access
               case cname 
@@ -543,7 +543,7 @@ def showImage2(size, item, linkit)
             si = "500x500"
     end
     if linkit
-      link_to item do
+      link_to(item) do
         if item.avatar_file_name
             image_tag item.avatar(size), class:"card-img-top img-responsive"
         else
