@@ -104,6 +104,7 @@ Rails.application.configure do
   }
 
   config.web_socket_server_url = "wss://tkbmarkt.herokuapp.com/cable" 
+  config.action_cable.allowed_request_origins = [ 'http://tkbmarkt.herokuapp.com', /http:\/\/tkbmarkt.*/ ]
   
   uri = URI.parse(ENV["REDISTOGO_URL"])
   REDIS = Redis.new(:url => uri)
