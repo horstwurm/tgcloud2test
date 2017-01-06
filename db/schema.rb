@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170103105723) do
+ActiveRecord::Schema.define(version: 20170106164536) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -177,6 +177,13 @@ ActiveRecord::Schema.define(version: 20170103105723) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "mobjects", force: :cascade do |t|
@@ -363,8 +370,8 @@ ActiveRecord::Schema.define(version: 20170103105723) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "users", force: :cascade do |t|
