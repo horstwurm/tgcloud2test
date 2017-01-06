@@ -6,4 +6,4 @@ test:
 
 production:
   adapter: redis
-  url: URI.parse(ENV["REDISTOGO_URL"])
+  #url: URI.parse(ENV["REDISTOGO_URL"])
