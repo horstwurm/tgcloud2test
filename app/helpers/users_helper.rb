@@ -703,6 +703,11 @@ def action_buttons2(object, item, topic)
     html_string = "<div class='col-xs-12'><div class='panel-body'>"
     
     case object 
+      when "TicketChoice"
+        html_string = html_string + link_to(user_path(:id => item, :topic => "Tickets")) do
+          content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
+        end
+        
       when "Mcategory"
         html_string = html_string + link_to(home_index9_path) do
           content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
@@ -710,6 +715,7 @@ def action_buttons2(object, item, topic)
         html_string = html_string + link_to(new_mcategory_path(:ctype => item)) do
           content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
         end
+        
       when "Privatpersonen"
         html_string = html_string + link_to(users_path :page => session[:page]) do
           content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
@@ -741,7 +747,7 @@ def action_buttons2(object, item, topic)
               content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-map-marker")
             end
           end
-          
+
           case topic
             when "Kalendereintraege"
               html_string = html_string + link_to(user_path(:user_id => item.id, :dir => "<", :topic => topic)) do
@@ -779,6 +785,10 @@ def action_buttons2(object, item, topic)
               end
             when "eMail"
               html_string = html_string + link_to(new_email_path(:m_from_id => current_user.id, :m_to_id => item.id)) do
+                content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+              end
+            when "Tickets"
+              html_string = html_string + link_to(ticketuserview_index2_path(:user_id => item.id)) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
           end
@@ -1633,6 +1643,13 @@ def getUserCreds
     end
   end
   return credapps
+end
+
+def buildQRCode(content)
+  qr = RQRCode::QRCode.new(content, size: 12, :level => :h)
+  qr_img = qr.to_img
+  qr_img.resize(200, 200).save("ticketqrcode.png")
+  img = File.open("ticketqrcode.png")
 end
 
 end    

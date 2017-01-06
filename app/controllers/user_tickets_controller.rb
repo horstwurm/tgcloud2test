@@ -17,7 +17,14 @@ class UserTicketsController < ApplicationController
     @user_ticket.ticket_id = params[:ticket_id]
     @user_ticket.status = "persönlich"
     @user_ticket.save
-    redirect_to User.find(@user_ticket.user_id), notice: 'User ticket was successfully created.'    
+    
+    @user_ticket = UserTicket.where('user_id=? and ticket_id=?',params[:user_id], params[:ticket_id]).last
+    if @user_ticket
+        content = "Ticket_ID:"+ @user_ticket.id.to_s + " für " + @user_ticket.ticket.name + " für " + User.find(@user_ticket.user_id).fullname + " für Event " + @user_ticket.ticket.msponsor.mobject.name + " gesponsort von " + @user_ticket.ticket.msponsor.company.name + " persönliches Ticket"
+        @user_ticket.avatar = @user_ticket.buildQRCode(content)
+        @user_ticket.save
+    end
+    redirect_to user_path(:id => @user_ticket.user_id, :topic => "Tickets"), notice: 'User ticket was successfully created.'    
   end
 
   # GET /user_tickets/1/edit

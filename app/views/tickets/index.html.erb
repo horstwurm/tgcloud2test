@@ -37,7 +37,7 @@
     <% end %>
     <% @anz_s[i] = @anz_s[i][0, @anz_s[i].length - 1] %>
     
-    <div class="col-sm-6 col-md-6 col-lg-4">
+    <div class="col-xs=12 col-sm-6 col-md-6 col-lg-6">
       <div class="thumbnail" align="center">
         <br>
         <% ticketcount = 0 %>
@@ -92,14 +92,14 @@
   			<p>
         <% @search_anz = Search.where('ticket_id=?',t.id).count %>
         <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => t.id do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-filter">
+          <i class="btn btn-primary glyphicon glyphicon-filter">
           <span class="badge"><%= @search_anz %></span></i>
         <% end %>
         <%= link_to edit_ticket_path(t) do %>
-          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-wrench"></i>
+          <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
         <% end %>
         <%= link_to t, method: :delete, data: { confirm: 'Are you sure?' } do %>
-          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
         <% end %>
   		</div>
 		</div>

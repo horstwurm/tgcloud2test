@@ -297,71 +297,38 @@
     	 <% when "Tickets" %>
           <%= header("Tickets", false) %>
           <div class="panel-body">
-            <% @user.user_tickets.where('status<>? and status<>?',"zurückgegeben", "Filter Kampagne").each do |ut| %>
+            <% @user.user_tickets.where('status<>?', "Filter Kampagne").each do |ut| %>
             
               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <div class="thumbnail" align="center">
                   <% if ut.avatar_file_name %>
                   <%= image_tag ut.avatar(:medium), class:"img-rounded" %>            
-                  <% end %>
-                  <% if false %>
-                    <table class="qr-code">
-                    <% qr.modules.each_index do |x| %>
-                      <tr>
-                      <% qr.modules.each_index do |y| %>
-                       <% if qr.dark?(x,y) %>
-                        <td class="black"/>
-                       <% else %>
-                        <td class="white"/>
-                       <% end %>
-                      <% end %>
-                      </tr>
                     <% end %>
-                    </table>
-                  <% end %>
                   <anzeigetext>
                     <%= ut.ticket.mcategory.name %><br>
           					<%= ut.ticket.name %><br>
           				</anzeigetext>
           				<ticketstatuss><b>
           				<%= ut.status %>
-                  </b></ticketstatuss><br><br>
+                  </b></ticketstatuss><br>
                   
-                  <%= showImage2(:small, ut.user, true) %>
-                  
-                  <%= ut.user.name + " " + ut.user.lastname %><br>
                   <ntext><br>
-                  <b>Veranstaltung</b><br>
+                  <b><%= ut.ticket.msponsor.mobject.name %></b><br>
+                  <%= ut.ticket.msponsor.mobject.date_from.strftime("%d.%m.%Y") + " - " + ut.ticket.msponsor.mobject.date_to.strftime("%d.%m.%Y")  %><br>
                   <%= link_to ut.ticket.msponsor.mobject do %>
                     <%= showFirstImage2(:medium, ut.ticket.msponsor.mobject, ut.ticket.msponsor.mobject.mdetails) %><br>
                   <% end %>
-                  <%= ut.ticket.msponsor.mobject.name %><br>
-                  <%= ut.ticket.msponsor.mobject.date_from.strftime("%d.%m.%Y") + " - " + ut.ticket.msponsor.mobject.date_to.strftime("%d.%m.%Y")  %><br>
                   <br>
+                  <%= showImage2(:small, ut.user, true) %>
+                  <%= ut.user.name + " " + ut.user.lastname %><br>
+                  <br>
+                  
                   <b>überreicht von</b><br>
-                  
                   <%= showImage2(:small, ut.ticket.msponsor.company, true) %>
-                  
                   <%= ut.ticket.msponsor.company.name %>
+
                   </ntext>
-                  <div class="caption">
-                      <ntext>
-            				  <%= ut.ticket.description %>
-                      </ntext>
-            			</div>
-                  <ntext>
-            		  <%= ut.ticket.created_at.strftime("%d.%b.%Y %H:%M Uhr") %>
-            		  <% if ut.ticket.created_at.to_date == Date.today %>
-            		    Heute
-            		  <% end %>
-            		  <% if (Date.today - ut.ticket.created_at.to_date) == 1 %>
-            		    Gestern
-            		  <% end %>
-            		  <% if Date.today - ut.ticket.created_at.to_date > 1 %>
-                    <% anz = (Date.today.to_date - ut.ticket.created_at.to_date).to_i %>
-                    Vor <%= anz %> Tagen
-            		  <% end %>
-                  </ntext>    		  
+
                   </p>
             			<p>
             			<% if user_signed_in? and current_user.id == ut.user_id %>
@@ -374,8 +341,8 @@
                           <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-up"> aktivieren</i>
                         <% end %>
               			  <% when "zurückgegeben" %>
-                        <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
-                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> zurückgegeben</i>
+                        <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "aktivieren" do %>
+                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-up"> aktivieren</i>
                         <% end %><br><br>
               			  <% when "aktiv" %>
                         <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>

@@ -1,69 +1,64 @@
 
   <div class="row">
-     <div class="col-md-12">
-       <div class="panel-heading header">
-          <li_header>
-          <%= link_to @user do %>
-            <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
-          <% end %>
-          Verfügbare Tickets für <%= @user.name + " " + @user.lastname %>
-          <span class="badge"><%= @ticanz %></span>
-          </li_header>
-       </div>
-     </div>
-   </div>
-   <br>
-   
+    <action>
+    <%= action_buttons2("TicketChoice", @user.id, "Tickets") %>
+    </action>
+  </div>
+
+  <div class="row">
+      <%= header("Verfügbare Tickets von "+current_user.name + " " + current_user.lastname, true) %>
+  </div>
+  
   <div class="panel-body">
     <% com = Company.where('user_id=?',current_user.id) %>
     <% com.each do |c| %>
-      <% c.sponsors.each do |sp| %>
+      <% c.msponsors.each do |sp| %>
         <% sp.tickets.where('active=?','t').each do |t| %>
-            <div class="col-sm-6 col-md-6 col-lg-4">
-              <div class="thumbnail" align="center">
-                <anzeigetext>
-                <%= t.sponsor.event.name %><br>
-                </anzeigetext>
-                <ntext>
-                <%= t.sponsor.event.date_from.strftime("%d.%m.%Y") + " - " + t.sponsor.event.date_to.strftime("%d.%m.%Y")  %><br>
-                </ntext>
-                <anzeigetext>
-                <%= t.sponsor.company.name %><br>
-                <%= t.ticket_category.name %><br>
-                <%= t.name %><br>
-                </anzeigetext>
-                <ntext>
-                <%= t.description %>
-                </ntext>
-                <br><br>
-                <% ticketcount = 0 %>
-                <% if t.contingent != nil %>
-                  <% ticketcount = t.contingent %>
-                  <% ut = t.user_tickets.count %>
-                  <% if ut > 0 %>
-                    <% ticketcount = t.contingent - ut %>
-                  <% end %>
+        
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+            <div class="thumbnail" align="center">
+              <% ticketcount = 0 %>
+              <% if t.contingent != nil %>
+                <% ticketcount = t.contingent %>
+                <% ut = t.user_tickets.count %>
+                <% if ut > 0 %>
+                  <% ticketcount = t.contingent - ut %>
                 <% end %>
-                <p>
-                  <b><ntext>noch </ntext></b><restlaufzeit><%= ticketcount %></restlaufzeit> <b><ntext> Tickets</ntext></b>
-                </p>
-                <ntext>
-                  <b>Ticket-Statistik</b><br>
-                  Kontingent: <%= t.contingent %><br>
-                  Kampagne: <%= UserTicket.where('ticket_id=? and status=?',t.id, "Filter Kampagne").count %><br>
-                  Persönlich: <%= UserTicket.where('ticket_id=? and status=?',t.id, "überreicht").count %><br>
-                  zurückgegeben: <%= UserTicket.where('ticket_id=? and status=?',t.id, "zurückgegeben").count %><br>
-                  aktiv: <%= UserTicket.where('ticket_id=? and status=?', t.id, "aktiv").count %><br>
-                  eingelöst: <%= UserTicket.where('ticket_id=? and status=?',t.id, "eingelöst").count %><br>
-                  <br>
-                </ntext>
-                <%= link_to new_user_ticket_path :user_id => @user.id, :ticket_id => t.id do %>
-                  <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-                <% end %>
-                <br><br>
-              </div>
-            </div>
-          <% end %>
+              <% end %>
+              <p>
+                <b><ntext>noch </ntext></b><restlaufzeit><%= ticketcount %></restlaufzeit> <b><ntext> Tickets</ntext></b>
+              </p>
+              <anzeigetext>
+                <%= t.mcategory.name %><br>
+      					<%= t.name %><br>
+      				</anzeigetext>
+              <b>Veranstaltung</b><br>
+              <%= link_to t.msponsor.mobject do %>
+                <%= showFirstImage2(:medium, t.msponsor.mobject, t.msponsor.mobject.mdetails) %><br>
+              <% end %>
+              <%= t.msponsor.mobject.name %><br>
+              <%= t.msponsor.mobject.date_from.strftime("%d.%m.%Y") + " - " + t.msponsor.mobject.date_to.strftime("%d.%m.%Y")  %><br>
+              <br>
+              <b>überreicht von</b><br>
+              
+              <%= showImage2(:small, t.msponsor.company, true) %>
+              
+              <%= t.msponsor.company.name %>
+              </ntext>
+              <div class="caption">
+                  <ntext>
+        				  <%= t.description %>
+                  </ntext>
+        			</div>
+              </p>
+        			<p>
+              <%= link_to new_user_ticket_path :user_id => @user.id, :ticket_id => t.id do %>
+                <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+              <% end %>
+
+        		</div>
+      		</div>
         <% end %>
       <% end %>
+    <% end %>
   </div>

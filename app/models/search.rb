@@ -76,10 +76,10 @@ class Search < ActiveRecord::Base
                 if self.customer
                     sql_string[0] = sql_string[0] + " and id IN (?)"
                     cid = Ticket.find(self.ticket_id).msponsor.company.id
-                    @customers = Customer.where('owner_type=? and owner_id=?', "Company", cid)
+                    @customers = Customer.where('owner_type=? and partner_id=?', "User", cid)
                     cli = []
                     @customers.each do |c|
-                        cli << c.user_id
+                        cli << c.owner_id
                     end
                     sql_string << cli
                 end
