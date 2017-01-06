@@ -41,6 +41,7 @@ gem 'jquery-turbolinks'
 gem 'aws-sdk', '~>2.3'
 gem 'rqrcode-with-patches', '~> 0.5.4'
 gem 'rqrcode_png'
+gem 'redis'
 
 group :development, :test do
 
