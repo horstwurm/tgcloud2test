@@ -149,26 +149,28 @@ class UsersController < ApplicationController
      @favourits = Favourit.where('user_id=? and object_name=?', @user.id, "User") 
      @favourits.each do |f|
         u = UserPosition.where('user_id=?',f.object_id).last
-        if u.longitude and u.latitude and u.geo_address
-          @locs = @locs + "["
-          @locs = @locs + "'" + u.user.fullname + "', "
-          @locs = @locs + u.latitude.to_s + ", "
-          @locs = @locs + u.longitude.to_s
-          if counter+1 == @favourits.count
-            @locs = @locs + "]"
-          else
-            @locs = @locs + "],"
+        if u
+          if u.longitude and u.latitude and u.geo_address
+            @locs = @locs + "["
+            @locs = @locs + "'" + u.user.fullname + "', "
+            @locs = @locs + u.latitude.to_s + ", "
+            @locs = @locs + u.longitude.to_s
+            if counter+1 == @favourits.count
+              @locs = @locs + "]"
+            else
+              @locs = @locs + "],"
+            end
+    
+            @wins = @wins + "["
+            @wins = @wins + "'<img src=" + u.user.avatar(:medium) + "<br><h3>" + u.user.fullname + "</h3><p>" + u.user.geo_address + "</p>'"
+            if counter+1 == @favourits.count
+              @wins = @wins + "]"
+            else
+              @wins = @wins + "],"
+            end
           end
-  
-          @wins = @wins + "["
-          @wins = @wins + "'<img src=" + u.user.avatar(:medium) + "<br><h3>" + u.user.fullname + "</h3><p>" + u.user.geo_address + "</p>'"
-          if counter+1 == @favourits.count
-            @wins = @wins + "]"
-          else
-            @wins = @wins + "],"
-          end
+          counter = counter + 1
         end
-        counter = counter + 1
       end
       @locs = @locs + "]"
       @wins = @wins + "]"

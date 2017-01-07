@@ -23,7 +23,7 @@ class MobjectsController < ApplicationController
     if params[:mtype]
       session[:mtype] = params[:mtype]
       case params[:mtype]
-        when "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding"
+        when "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding", "Angebote"
           if params[:msubtype]
             session[:msubtype] = params[:msubtype]
           end

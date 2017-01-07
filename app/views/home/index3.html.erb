@@ -18,7 +18,7 @@
     <% end %>
 <% else %>
     <% for i in 0..$activeapps.length-1 %>
-        <% if $activeapps[i][0..9] == "Funktionen" %>
+        <% if $activeapps[i][0..9] == "Funktionen" and $activeapps[i][10..$activeapps.length-1] != "meine Abfragen" %>
             <%= build_kachel_color($activeapps[i][10..$activeapps.length-1], "", nil, nil, nil) %>
         <% end %>
     <% end %>

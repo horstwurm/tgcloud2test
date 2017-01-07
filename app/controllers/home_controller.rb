@@ -44,6 +44,7 @@ def index2
 end
 
 def index3
+  session[:page] = nil
 end
 
 def index4

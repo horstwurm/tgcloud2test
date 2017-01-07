@@ -92,6 +92,16 @@
                <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding" %>
                  <% if @mobject.msubtype == "Standard" %>
                  <% else %>
+                  <% if @mobject.msubtype == "Aktion" %>
+                    <b>Preis</b><br>
+                    <% if @mobject.price_new %> 
+                      <%= sprintf("%05.2f CHF",@mobject.price_new) %> / 
+                    <% end %>
+                    <% if @mobject.price_reg  %>
+                      <%= sprintf("%05.2f CHF",@mobject.price_reg) %><br>
+                    <% end %>
+                    <br>
+                  <% end %>
                   <b>Datum von-bis</b><br>
                   <% if @mobject.date_from  %>
                     <%= @mobject.date_from.strftime("%d.%m.%Y") %>
@@ -137,7 +147,11 @@
                     <div class="col-sm-6 col-md-4 col-lg-3">
                       <div class="thumbnail" align="center">
                         <anzeigetext>
+                        <% if @mobject.msubtype == "Anbieten" %>
               						Ihre Aufgaben
+              					<% else %>
+              					  meine Kenntnisse
+              					<% end %>
                         </anzeigetext>
                         <p>
                           <ntext>
@@ -150,7 +164,11 @@
                     <div class="col-sm-6 col-md-4 col-lg-3">
                       <div class="thumbnail" align="center">
                         <anzeigetext>
+                        <% if @mobject.msubtype == "Anbieten" %>
               						wir erwarten
+              					<% else %>
+              					  meine Referenzen
+              					<% end %>
                         </anzeigetext>
                         <p>
                           <ntext>
@@ -163,7 +181,11 @@
                     <div class="col-sm-6 col-md-4 col-lg-3">
                       <div class="thumbnail" align="center">
                         <anzeigetext>
+                        <% if @mobject.msubtype == "Anbieten" %>
               						wir bieten
+              					<% else %>
+              					  meine Ausbildung & Berufserfahrung
+              					<% end %>
                         </anzeigetext>
                         <p>
                           <ntext>

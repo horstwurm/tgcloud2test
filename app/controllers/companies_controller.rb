@@ -10,7 +10,7 @@ class CompaniesController < ApplicationController
       session[:page] = params[:page]
     end
     
-    @companies = Company.search(params[:filter_id], params[:search]).page(params[:page]).per_page(10)
+    @companies = Company.search(params[:filter_id], params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
     @companz = @companies.count
    counter = 0 
    @locs = "["

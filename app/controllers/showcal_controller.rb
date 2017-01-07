@@ -1,6 +1,9 @@
 class ShowcalController < ApplicationController
 
   def index
+    if params[:page]
+      session[:page] = params[:page]
+    end
     if !session[:cw]
       session[:cw] = Date.today.cweek.to_i
     end
@@ -26,7 +29,7 @@ class ShowcalController < ApplicationController
       end
     end
     @start = Date.commercial(session[:year],session[:cw],1)
-    @mobjects = Mobject.search(session[:cw], session[:year], params[:filter_id], params[:mtype], params[:msubtype], params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
+    @mobjects = Mobject.search(session[:cw], session[:year], params[:filter_id], params[:mtype], params[:msubtype], params[:search]).order(created_at: :desc).page(params[:page]).per_page(100)
     @mobanz = @mobjects.count
     @mtype = params[:mtype]
     @msubtype = params[:msubtype]

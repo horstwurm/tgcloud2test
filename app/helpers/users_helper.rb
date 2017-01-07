@@ -348,6 +348,11 @@ def build_medialist2(items, cname, par)
                     access = true
                   end
                 when "mdetails"
+                  if item.document_file_name
+      	            html_string = html_string + link_to(item.document.url, target: "_blank") do 
+                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-cloud-download")
+                    end
+                  end
                   if (item.mobject.owner_type == "User"and item.mobject.owner_id == current_user.id) or (item.mobject.owner_type == "Company"and item.mobject.owner.user_id == current_user.id)
                     access = true
                   end
@@ -444,11 +449,6 @@ def build_medialist2(items, cname, par)
                     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
                   end
                 when "mdetails"
-                  if item.document_file_name
-      	            html_string = html_string + link_to(item.document.url, target: "_blank") do 
-                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-cloud-download")
-                    end
-                  end
     	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
                     content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
                   end
@@ -720,6 +720,17 @@ def action_buttons2(object, item, topic)
         html_string = html_string + link_to(users_path :page => session[:page]) do
           content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
         end
+        
+        case topic
+            when "Kalendereintraege"
+              html_string = html_string + link_to(user_path(:user_id => item.id, :dir => "<", :topic => topic)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-left")
+              end
+              html_string = html_string + link_to(user_path(:user_id => item.id, :dir => ">", :topic => topic)) do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-right")
+              end
+        end
+        
         if user_signed_in?
           if $activeapps.include?("PrivatpersonenFavoriten")
             html_string = html_string + link_to(new_favourit_path :object_name => "User", :object_id => item.id, :user_id => current_user.id) do
@@ -750,12 +761,12 @@ def action_buttons2(object, item, topic)
 
           case topic
             when "Kalendereintraege"
-              html_string = html_string + link_to(user_path(:user_id => item.id, :dir => "<", :topic => topic)) do
-                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-left")
-              end
-              html_string = html_string + link_to(user_path(:user_id => item.id, :dir => ">", :topic => topic)) do
-                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-right")
-              end
+              #html_string = html_string + link_to(user_path(:user_id => item.id, :dir => "<", :topic => topic)) do
+              #  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-left")
+              #end
+              #html_string = html_string + link_to(user_path(:user_id => item.id, :dir => ">", :topic => topic)) do
+              #  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-right")
+              #end
               html_string = html_string + link_to(new_appointment_path :user_id1 => item.id, :user_id2 => current_user.id) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end

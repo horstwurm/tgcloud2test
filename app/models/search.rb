@@ -18,7 +18,9 @@ class Search < ActiveRecord::Base
     end
 
     def upper?
-        self.keywords = self.keywords.upcase
+        if self.keywords
+            self.keywords = self.keywords.upcase
+        end
         return true
     end
 

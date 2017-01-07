@@ -143,7 +143,7 @@ class SearchesController < ApplicationController
     @save_mtype = @search.mtype
     @save_msubtype = @search.msubtype
     @save_search_domain = @search.search_domain
-    @save_search_controller = @search.search_controller
+    @save_search_controller = @search.controller
     
     @search.destroy
     redirect_to searches_path(:user_id => current_user.id, :search_domain => @save_search_domain, :controller_name => @save_search_controller, :mtype => @save_search_mtype, :msubtype => @save_search_msubtype, :ticket_id => ticket_id), notice: 'Search was successfully destroyed.'
