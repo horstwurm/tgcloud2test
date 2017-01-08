@@ -39,6 +39,7 @@ class SearchesController < ApplicationController
         @usertickets.each do |ut|
           ut.status = "übergeben"
           content = "Ticket_ID:"+ut.id.to_s+ " für " + ut.ticket.name + " für " + ut.user.name + " " + ut.user.lastname + " für Event " + ut.ticket.msponsor.mobject.name + " gesponsort von " + ut.ticket.msponsor.company.name + " CRM Ticket"
+          content = "http://tkbmarkt.herokuapp.com/home/index1?me="+ut.id.to_s
           ut.avatar = ut.buildQRCode(content)
           ut.save
         end
