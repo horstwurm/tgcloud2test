@@ -11,6 +11,31 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-sm-6 col-md-4 col-lg-3">
+
+          <% content = "http://tkbmarkt.herokuapp.com/home/index1?me=1" %>
+          <% content = "https://ostch-horstwurm.c9users.io/home/index1?me=1" %>
+          
+          <% qr = RQRCode::QRCode.new(content, size: 12, :level => :h) %>
+          <% qr_img = qr.to_img %>
+          <% path=File.join(Rails.root, "/app/assets/images/") %>
+          <% qr_img.resize(200, 200).save(path+"app_qrcode.png") %>
+          <%= image_tag("app_qrcode.png", :size => "200x200") %>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-12">
+          <li_header>
+          xConnect - Funktionen<br>
+          </li_header>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
           <div class="media">
             <div class="media-left">
               <%= link_to users_path do %>

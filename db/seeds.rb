@@ -134,9 +134,10 @@ users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"12.8.1
 usanz = User.all.count-1
 random = Random.new(Time.new.to_i)
 for i in 0..300
-    ura1 = random.rand(usanz)+1
     random = Random.new(Time.new.to_i)
-    ura2 = random.rand(usanz)+1
+    ura1 = rand(usanz)+1
+    random = Random.new(Time.new.to_i)
+    ura2 = rand(usanz)+1
     random = Random.new(Time.new.to_i)
     tira1 = random.rand(24)+1
     tira2 = tira1 + 1
