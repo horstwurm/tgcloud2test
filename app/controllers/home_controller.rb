@@ -28,12 +28,28 @@ def index
 end
 
 def index1
+  case params[:status] 
+    when "einlösen"
+      if params[:userticket_id]
+        @ticket = UserTicket.find(params[:userticket_id])
+        @ticket.status = "eingelöst"
+        @ticket.save
+      end
+    when "reaktivieren"
+      if params[:userticket_id]
+        @ticket = UserTicket.find(params[:userticket_id])
+        @ticket.status = "aktiv"
+        @ticket.save
+      end
+  end
   if params[:me]
     @ticket = UserTicket.where('id=?',params[:me]).first
     if @ticket
-      @status = "Ticket gültig"
-    else
-      @status = "Ticket ungültig"
+      if @ticket.status == "aktiv"
+        @status = "Ticket gültig"
+      else
+        @status = "Ticket ungültig"
+      end
     end
   end
 end

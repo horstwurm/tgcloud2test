@@ -1,4 +1,42 @@
 <%= header("Tickets", false) %>
 <div class="panel-body">
-    <h1><%= @status %> </h1>
-</div>
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+    <div class="thumbnail" align="center">
+        <%= @ticket.ticket.mcategory.name %><br>
+      	<%= @ticket.ticket.name %><br>
+      	<ticketstatuss>
+      	    <b><%= @ticket.status %></b>
+        </ticketstatuss><br>
+        <ntext><br>
+        <b><%= @ticket.ticket.msponsor.mobject.name %></b><br>
+        <%= @ticket.ticket.msponsor.mobject.date_from.strftime("%d.%m.%Y") + " - " + @ticket.ticket.msponsor.mobject.date_to.strftime("%d.%m.%Y")  %><br>
+        <%= link_to @ticket.ticket.msponsor.mobject do %>
+          <%= showFirstImage2(:medium, @ticket.ticket.msponsor.mobject, @ticket.ticket.msponsor.mobject.mdetails) %><br>
+        <% end %>
+        <br>
+        <%= showImage2(:small, @ticket.user, true) %>
+        <%= @ticket.user.name + " " + @ticket.user.lastname %><br>
+        <br>
+      
+        <b>überreicht von</b><br>
+        <%= showImage2(:small, @ticket.ticket.msponsor.company, true) %>
+        <%= @ticket.ticket.msponsor.company.name %>
+        </ntext>
+        <br><br>
+
+  		<% case @ticket.status %>
+  		  <% when "aktiv", "persönlich", "übergeben" %>
+            <%= link_to home_index1_path :userticket_id => @ticket.id, :status => "einlösen" do %>
+              <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> einlösen</i>
+            <% end %>
+
+          <% else %>
+            <%= link_to home_index1_path :userticket_id => @ticket.id, :status => "reaktivieren" do %>
+              <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> reaktivieren</i>
+            <% end %>
+          
+        <% end %>
+        <br>
+    </div>
+  </div>
+ </div>
