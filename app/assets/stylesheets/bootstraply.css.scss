@@ -337,7 +337,11 @@ geblockt {
 /*******************************************************************************************************/
 .panel-nav {
   border-color: $color5!important;
+   padding: 3px!important;
+   margin: 3px !important;
+   box-shadow: 1px 1px 1px #B1B1B1;
 }
+
 .panel-black {
   background: black!important;
   border-color: black!important;
