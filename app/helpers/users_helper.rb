@@ -199,7 +199,7 @@ def build_medialist2(items, cname, par)
             html_string = html_string + '</div>'
 
             html_string = html_string + '<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">'
-              html_string = html_string + '<div class="panel-header"><list>'
+              html_string = html_string + '<div class="panel-header panel-media"><list>'
                 case items.table_name
                     when "mdetails"
                       html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
