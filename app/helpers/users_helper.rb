@@ -1329,17 +1329,33 @@ def build_kachel_color(domain, name, path_param, user_id, company_id)
     if path_param
       path = path_param
     end
-    html_string = ""
-    html_string = html_string + link_to(path) do
-      content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
-        content_tag(:div, nil, class:"thumbnail", align:"center") do
-          content_tag(:span, nil) do
-            icon_size = "4"
-            content_tag(:i, nil, class:"glyphicon glyphicon-" + icon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+domain)
+    
+    showmode = "noicon"
+    if showmode == "icon"
+      html_string = ""
+      html_string = html_string + link_to(path) do
+        content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
+          content_tag(:div, nil, class:"thumbnail", align:"center") do
+            content_tag(:span, nil) do
+              icon_size = "4"
+              content_tag(:i, nil, class:"glyphicon glyphicon-" + icon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+domain)
+            end
           end
         end
       end
-    end
+    else
+      html_string = ""
+      html_string = html_string + link_to(path) do
+        content_tag(:div, nil, class:"col-xs-12 col-sm-12 col-md-6 col-lg-4") do
+          content_tag(:div, nil, class:"panel") do
+            content_tag(:span, nil) do
+              icon_size = "4"
+              content_tag(:i, nil, class:"glyphicon glyphicon-" + icon, style:"font-size:" + icon_size + "em") + " " + content_tag(:home_nav, domain) + content_tag(:i, nil, class:"glyphicon glyphicon-chevron-right pull-right")
+            end
+          end
+        end
+      end
+    end  
     
     return html_string.html_safe
     
@@ -1374,17 +1390,18 @@ def build_kachel_access(topic, mode)
       else
         thumbnail_state = 'thumbnail-inactive'
       end
-  
-      html_string = html_string + link_to(cpath) do
-        content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
-          content_tag(:div, nil, class:"thumbnail " + thumbnail_state, align:"center") do
-            content_tag(:span, nil) do
-              icon_size = "4"
-              content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(c.right), style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+c.right)
+
+        html_string = html_string + link_to(cpath) do
+          content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
+            content_tag(:div, nil, class:"thumbnail " + thumbnail_state, align:"center") do
+              content_tag(:span, nil) do
+                icon_size = "4"
+                content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(c.right), style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+c.right)
+              end
             end
           end
         end
-      end
+
     end
 
   end    
