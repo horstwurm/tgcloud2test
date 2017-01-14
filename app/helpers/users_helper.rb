@@ -1347,11 +1347,19 @@ def build_kachel_color(domain, name, path_param, user_id, company_id)
       html_string = ""
       html_string = html_string + link_to(path) do
         content_tag(:div, nil, class:"col-xs-12 col-sm-12 col-md-6 col-lg-4") do
-          content_tag(:div, nil, class:"panel") do
-            content_tag(:span, nil) do
+          content_tag(:div, nil, class:"panel-default") do
+            
+            temp = content_tag(:div, nil, class:"col-xs-2 col-sm-2 col-md-2 col-lg-2") do
               icon_size = "4"
-              content_tag(:i, nil, class:"glyphicon glyphicon-" + icon, style:"font-size:" + icon_size + "em") + " " + content_tag(:home_nav, domain) + content_tag(:i, nil, class:"glyphicon glyphicon-chevron-right pull-right")
+              content_tag(:i, nil, class:"glyphicon glyphicon-" + icon, style:"font-size:" + icon_size + "em") 
             end
+            temp = temp + content_tag(:div, nil, class:"col-xs-8 col-sm-8 col-md-8 col-lg-8") do
+              content_tag(:home_nav, domain)
+            end
+            temp = temp + content_tag(:div, nil, class:"col-xs-2 col-sm-2 col-md-2 col-lg-2") do
+              content_tag(:i, nil, class:"glyphicon glyphicon-chevron-right pull-right")
+            end
+            
           end
         end
       end
