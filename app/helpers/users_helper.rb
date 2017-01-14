@@ -1347,8 +1347,8 @@ def build_kachel_color(domain, name, path_param, user_id, company_id)
       html_string = ""
       html_string = html_string + link_to(path) do
         content_tag(:div, nil, class:"col-xs-12 col-sm-12 col-md-6 col-lg-4") do
-          content_tag(:div, nil, class:"panel-default") do
-            
+          content_tag(:div, nil, class:"panel-body") do
+
             temp = content_tag(:div, nil, class:"col-xs-2 col-sm-2 col-md-2 col-lg-2") do
               icon_size = "4"
               content_tag(:i, nil, class:"glyphicon glyphicon-" + icon, style:"font-size:" + icon_size + "em") 
