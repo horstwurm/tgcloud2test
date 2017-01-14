@@ -1,5 +1,6 @@
 class MratingsController < ApplicationController
   before_action :set_mrating, only: [:show, :edit, :update, :destroy]
+  after_action :set_sumrating, only: [:create, :update, :destroy]
 
   # GET /mratings
   def index
@@ -57,5 +58,13 @@ class MratingsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def mrating_params
       params.require(:mrating).permit(:status, :user_id, :mobject_id, :comment, :rating)
+    end
+    
+    def set_sumrating
+      @mobject = Mobject.find(@mrating.mobject_id)
+      if @mobject
+        @mobject.sum_rating = @mobject.avg_rating2()
+        @mobject.save
+      end
     end
 end

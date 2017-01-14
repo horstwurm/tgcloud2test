@@ -221,6 +221,8 @@ ActiveRecord::Schema.define(version: 20170106164536) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "geo_address"
+    t.float    "sum_rating"
+    t.float    "sum_amount"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["owner_id"], name: "index_mobjects_on_owner_id"

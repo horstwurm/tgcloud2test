@@ -59,4 +59,24 @@ if cw and year
     end
 end
 
+def avg_rating2()
+    #rat = Mrating.where("mobject_id=?", self.id).average(:rating)
+    rat = self.mratings.average(:rating)
+    if rat != nil
+        return rat
+    else
+        return 0
+    end
+end
+
+def sum_stat2()
+    #rat = Mrating.where("mobject_id=?", self.id).average(:rating)
+    rat = self.mstats.sum(:amount)
+    if rat != nil
+        return rat
+    else
+        return 0
+    end
+end
+
 end

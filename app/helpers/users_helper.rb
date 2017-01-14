@@ -206,15 +206,45 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + item.description + '<br>'
                     when "users"
                       html_string = html_string + '<i class="glyphicon glyphicon-home"></i> '
-                      html_string = html_string + item.geo_address + '<br>'
-                      html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i> '
+                      if item.address1 and item.address1.length > 0 
+                        html_string = html_string + item.address1 + '<br>' 
+                      end
+                      if item.address2 and item.address2.length > 0 
+                        html_string = html_string + item.address2 + '<br>' 
+                      end
+                      if item.address3 and item.address3.length > 0 
+                        html_string = html_string + item.address3 + '<br>' 
+                      end
+                      html_string = html_string + '<i class="glyphicon glyphicon-phone-alt"></i> '
+                      if item.phone1 and item.phone1.length > 0 
+                        html_string = html_string + item.phone1 + '<br>' 
+                      end
+                      if item.phone2 and item.phone2.length > 0 
+                        html_string = html_string + item.phone2 + '<br>' 
+                      end
+                      html_string = html_string + '<br><i class="glyphicon glyphicon-envelope"></i> '
                       html_string = html_string +  item.email
                     when "companies"
                       html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
                       html_string = html_string + item.mcategory.name + '<br>'
                       html_string = html_string + '<i class="glyphicon glyphicon-home"></i> '
-                      html_string = html_string + item.geo_address + '<br>'
-                      html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i> '
+                      if item.address1 and item.address1.length > 0 
+                        html_string = html_string + item.address1 + '<br>' 
+                      end
+                      if item.address2 and item.address2.length > 0 
+                        html_string = html_string + item.address2 + '<br>' 
+                      end
+                      if item.address3 and item.address3.length > 0 
+                        html_string = html_string + item.address3 + '<br>' 
+                      end
+                      html_string = html_string + '<i class="glyphicon glyphicon-phone-alt"></i> '
+                      if item.phone1 and item.phone1.length > 0 
+                        html_string = html_string + item.phone1 + '<br>' 
+                      end
+                      if item.phone2 and item.phone2.length > 0 
+                        html_string = html_string + item.phone2 + '<br>' 
+                      end
+                      html_string = html_string + '<br><i class="glyphicon glyphicon-envelope"></i> '
                       html_string = html_string + item.user.email
                     when "customers"
                       html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
@@ -223,9 +253,26 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + @comp.geo_address + '<br>'
                       html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i> '
                       html_string = html_string + @comp.user.email + '<br>'
+
                     when "mobjects"
+                      if item.sum_rating and item.sum_rating > 0
+                        item.sum_rating.round.times do
+                          html_string = html_string + '<i class="glyphicon glyphicon-star"></i> '
+                        end
+                        html_string = html_string + ' (' + sprintf("%.1f",item.sum_rating) + ')<br>'
+                      end
+                      
                       html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
                       html_string = html_string + item.mcategory.name + '<br>'
+                      if item.msubtype == "Belohnungen"
+                        html_string = html_string + '<i class="glyphicon glyphicon-gift"></i> '
+                        html_string = html_string + item.reward + '<br>'
+                      end
+                      if item.msubtype == "Zinsen"
+                        html_string = html_string + '<i class="glyphicon glyphicon-signal"></i> '
+                        html_string = html_string + sprintf("%3.1f %",item.interest_rate)  + '<br>'
+                      end
+
                       if item.owner_type == "Company"
                           html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i> '
                           html_string = html_string + item.owner.name + "<br>"
@@ -235,17 +282,81 @@ def build_medialist2(items, cname, par)
                           html_string = html_string + item.owner.name + " "+ item.owner.lastname + "<br>"
                       end
 
-                      if item.mtype == "Veranstaltungen" 
-                        if item.eventpart
-                          html_string = html_string + '<i class="glyphicon glyphicon-info-sign"></i> '+"Anmeldung erforderlich<br>"
-                          @angemeldet = current_user.participants.where('mobject_id=?', item.id).first
-                          if @angemeldet
-                            html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '+"angemeldet<br>"
+                      case item.mtype
+                        when "Veranstaltungen" 
+                          if item.eventpart
+                            html_string = html_string + '<i class="glyphicon glyphicon-info-sign"></i> '+"Anmeldung erforderlich<br>"
+                            @angemeldet = current_user.participants.where('mobject_id=?', item.id).first
+                            if @angemeldet
+                              html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '+"angemeldet<br>"
+                            end
+                          else
+                            #html_string = html_string + '<i class="glyphicon glyphicon-info-sign"></i> '+"keine Anmeldung erforderlich"<br>
                           end
-                        else
-                          #html_string = html_string + '<i class="glyphicon glyphicon-info-sign"></i> '+"keine Anmeldung erforderlich"<br>
-                        end
-                        
+                          html_string = html_string + '<i class="glyphicon glyphicon-calendar"></i> '
+                          html_string = html_string +  item.date_from.strftime("%d.%m.%Y") + " - " + item.date_to.strftime("%d.%m.%Y") + '<br>'
+                          soll = (item.date_to.to_date - item.date_from.to_date).to_i
+                          ist = (DateTime.now.to_date - item.date_from.to_date).to_i
+                          if soll > 0 and ist > 0
+                            html_string = html_string + '<div class="progress">'
+                            html_string = html_string + '<div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar2" aria-valuenow="' + ist.to_s + '" aria-valuemin="0" aria-valuemax="' + soll.to_s + '" style="width:' + (ist*100/soll).to_s + '%">'
+                            html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
+                            html_string = html_string + '</div>'
+                            html_string = html_string + '</div>'
+                          end
+
+                        when "Ausschreibungen", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding"
+                          html_string = html_string + '<i class="glyphicon glyphicon-calendar"></i> '
+                          html_string = html_string +  item.date_from.strftime("%d.%m.%Y") + " - " + item.date_to.strftime("%d.%m.%Y") + '<br>'
+                          soll = (item.date_to.to_date - item.date_from.to_date).to_i
+                          ist = (DateTime.now.to_date - item.date_from.to_date).to_i
+                          if soll > 0 and ist > 0
+                            html_string = html_string + '<div class="progress">'
+                            html_string = html_string + '<div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar2" aria-valuenow="' + ist.to_s + '" aria-valuemin="0" aria-valuemax="' + soll.to_s + '" style="width:' + (ist*100/soll).to_s + '%">'
+                            html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
+                            html_string = html_string + '</div>'
+                            html_string = html_string + '</div>'
+                          end
+                          if item.mtype == "Crowdfunding"
+                            if item.sum_amount and item.sum_amount > 0 and item.amount and item.amount > 0
+                              html_string = html_string + '<i class="glyphicon glyphicon-euro"></i> '+ sprintf("%05.2f CHF", item.sum_amount) + " / " + sprintf("%05.2f CHF", item.amount) + "<br>"
+                              html_string = html_string + '<div class="progress">'
+                              html_string = html_string + '<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="' + item.sum_amount.to_s + '" aria-valuemin="0" aria-valuemax="' + item.amount.to_s + '" style="width:' + (item.sum_amount/item.amount*100).to_s + '%">'
+                              html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
+                              html_string = html_string + '</div>'
+                              html_string = html_string + '</div>'
+                            end
+                          end
+
+                        when "Angebote"
+                          if item.msubtype == "Standard"
+                            if item.price_reg
+                              html_string = html_string + '<i class="glyphicon glyphicon-euro"></i> '
+                              html_string = html_string +  sprintf("%05.2f CHF",item.price_reg) 
+                            end
+                          end
+                          if item.msubtype == "Aktion"
+                            if item.price_new
+                              html_string = html_string + '<i class="glyphicon glyphicon-euro"></i> '
+                              html_string = html_string +  sprintf("%05.2f CHF",item.price_new) 
+                            end
+                            if item.price_reg
+                              html_string = html_string + " statt " + sprintf("%05.2f CHF",item.price_reg) + '<br>'
+                            end
+
+                            html_string = html_string + '<i class="glyphicon glyphicon-calendar"></i> '
+                            html_string = html_string +  item.date_from.strftime("%d.%m.%Y") + " - " + item.date_to.strftime("%d.%m.%Y") + '<br>'
+                            soll = (item.date_to.to_date - item.date_from.to_date).to_i
+                            ist = (DateTime.now.to_date - item.date_from.to_date).to_i
+                            if soll > 0 and ist > 0
+                              html_string = html_string + '<div class="progress">'
+                              html_string = html_string + '<div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar2" aria-valuenow="' + ist.to_s + '" aria-valuemin="0" aria-valuemax="' + soll.to_s + '" style="width:' + (ist*100/soll).to_s + '%">'
+                              html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
+                              html_string = html_string + '</div>'
+                              html_string = html_string + '</div>'
+                            end
+
+                          end
                       end
 
 

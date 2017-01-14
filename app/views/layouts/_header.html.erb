@@ -19,6 +19,7 @@
 			            <i class="glyphicon glyphicon-log-in" style="font-size:2em"></i>
 					<% end %> 
 				<% end %>
+
 				<% if user_signed_in? and $controller_list.include?(controller_name) and action_name == "index" %>
 					<% case controller_name %>
 						<% when "users" %>
@@ -76,6 +77,10 @@
 	</div>
 </div>
 <br><br><br><br>
+
+<% if false %>
+<%= render ("layouts/header2") %>
+<% end %>
 
 <script>
 $(document).ready(function(){

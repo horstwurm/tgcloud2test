@@ -1,5 +1,7 @@
 class MstatsController < ApplicationController
   before_action :set_mstat, only: [:show, :edit, :update, :destroy]
+  after_action :set_sumamount, only: [:create, :update, :destroy]
+
 
   # GET /mstats
   def index
@@ -66,6 +68,14 @@ class MstatsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def mstat_params
       params.require(:mstat).permit(:status, :mobject_id, :owner_type, :owner_id, :user_id, :company_id, :amount, :anonymous)
+    end
+
+    def set_sumamount
+      @mobject = Mobject.find(@mstat.mobject_id)
+      if @mobject
+        @mobject.sum_amount = @mobject.sum_stat2()
+        @mobject.save
+      end
     end
 
 end

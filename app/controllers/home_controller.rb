@@ -45,10 +45,15 @@ def index1
   if params[:me]
     @ticket = UserTicket.where('id=?',params[:me]).first
     if @ticket
-      if @ticket.status == "aktiv"
-        @status = "Ticket gültig"
+      if @ticket.ticket.msponsor.company.user.id == current_user.id
+        auth_status == "autorisiert"
       else
-        @status = "Ticket ungültig"
+        @auth_status = "nicht autorisiert"
+      end
+      if @ticket.status == "aktiv"
+        @ticket_status = "Ticket gültig"
+      else
+        @ticket_status = "Ticket ungültig"
       end
     end
   end
@@ -107,6 +112,9 @@ end
 
 def index6
   @searches = Search.where('user_id=?', current_user.id).order(:mtype)
+end
+
+def index7
 end
   
 def index8

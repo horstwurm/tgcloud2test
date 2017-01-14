@@ -116,6 +116,8 @@ class MobjectsController < ApplicationController
     @mobject.reward = "Belohnung..."
     @mobject.interest_rate = 5
     @mobject.due_date = Date.today + 365
+    @mobject.sum_amount = 0
+    @mobject.sum_rating = 0
 
     if params[:user_id]
       @mobject.owner_id = params[:user_id]
