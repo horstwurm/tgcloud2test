@@ -20,4 +20,6 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require bootstrap
+//= require moment 
+//= require fullcalendar
 //= require_tree .

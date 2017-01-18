@@ -115,6 +115,62 @@ def index6
 end
 
 def index7
+ if params[home_index7_path]
+   @test = params[home_index7_path][:domain]
+ else
+   @test = "Veranstaltungen"
+ end 
+ counter = 0 
+ @array = ""
+ case @test
+  when "Geburtstage Favoriten"
+     current_user.favourits.each do |u|
+          if u.object_name == "User" 
+            @user = User.find(u.object_id)
+            if @user and @user.dateofbirth
+
+              @caldate = Date.today.year.to_s + "-" + @user.dateofbirth.strftime("%m-%d")
+              
+              counter = counter + 1
+              @array = @array + "{"
+              @array = @array + "color : '#ACC550',"
+              @array = @array + "textColor : 'white',"
+              @array = @array + "title : '" + @user.name + " " + @user.lastname + "', "
+              @array = @array + "start : '" + @caldate + "', "
+              @array = @array + "url : '" + user_path(:id => @user.id, :topic => "Info") +"'" 
+              @array = @array + "}"
+              if current_user.favourits.count >= counter
+                @array = @array + ", "
+              end  
+            end
+          end
+      end
+      
+  when "Veranstaltungen", "Crowdfunding", "Aktionen", "Ausschreibungen", "Stellenanzeigen"
+    if @test == "Aktionen"
+      @mobjects = Mobject.where('mtype=? and msubtype=?', "Angebote", "Aktion")
+    else
+      @mobjects = Mobject.where('mtype=?', @test)
+    end
+    @mobjects.each do |u|
+          if u.date_from
+            counter = counter + 1
+            @array = @array + "{"
+            @array = @array + "color : '#ACC550',"
+            @array = @array + "textColor : 'white',"
+            @array = @array + "title : '" + u.name + "', "
+            @array = @array + "start : '" + u.date_from.to_s + "', "
+            if u.date_to
+              @array = @array + "end : '" + u.date_to.to_s + "', "
+            end
+            @array = @array + "url : '" + mobject_path(:id => u.id, :topic => "Info") +"'" 
+            @array = @array + "}"
+            if @mobjects.count >= counter
+              @array = @array + ", "
+            end  
+          end
+      end
+  end
 end
   
 def index8

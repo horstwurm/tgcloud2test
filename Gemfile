@@ -43,6 +43,9 @@ gem 'rqrcode-with-patches', '~> 0.5.4'
 gem 'rqrcode_png'
 gem 'redis'
 
+gem 'fullcalendar-rails'
+gem 'momentjs-rails'
+
 group :development, :test do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

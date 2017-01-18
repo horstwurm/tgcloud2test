@@ -50,14 +50,11 @@
               <tr>
                 <td>
                   <list>
-          		    <% if avg_rating2(e.id) == 0 %>
-                    <% image_tag("no_rating.jpg", :size => "50x50" , class:"img-rounded") %>
-          		    <% else %>
-                    <% avg_rating2(e.id).times do %>
-                      <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                  <% if e.sum_rating and e.sum_rating >0 %>
+                    <% e.sum_rating.times.to_i do %>
                       <i class="glyphicon glyphicon-star"></i>
-                    <% end %>
-                  <% end %><br>
+                    <% end %><br>
+                  <% end %>
                   <%= showFirstImage2(:small, e, e.mdetails) %>
                   <%= e.name %>
                   </list>  
