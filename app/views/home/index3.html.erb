@@ -1,25 +1,30 @@
-<% $activeapps = [] %>
-<% apps = Appparam.all %>
-<% if !apps or apps.count==0 %>
-  <% init_credentials("System") %>
-<% end%>
-<% apps.each do |a| %>
-  <%  $activeapps << a.domain+a.right if a.access %>
-<% end %>
+<%= build_hauptmenue %>
 
-<% if user_signed_in? %>
-    <% creds = getUserCreds %>
-    <% if creds %>
-        <% for i in 0..creds.length-1 %>
-            <% if creds[i][0..9] == "Funktionen" %>
-                <%= build_kachel_color(creds[i][10..creds.length-1], "", nil, nil, nil) %>
-            <% end %>
-        <% end %>
-    <% end %>
-<% else %>
-    <% for i in 0..$activeapps.length-1 %>
-        <% if $activeapps[i][0..9] == "Funktionen" and $activeapps[i][10..$activeapps.length-1] != "meine Abfragen" %>
-            <%= build_kachel_color($activeapps[i][10..$activeapps.length-1], "", nil, nil, nil) %>
-        <% end %>
-    <% end %>
-<% end %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("angebote").hover(function(){
+        $("angebote_options").show();
+    });
+    $("angebote").mouseleave(function(){
+        $("angebote_options").hide();
+    });
+    $("kleinanzeigen").hover(function(){
+        $("kleinanzeigen_options").show();
+    });
+    $("kleinanzeigen").mouseleave(function(){
+        $("kleinanzeigen_options").hide();
+    });
+    $("stellenanzeigen").hover(function(){
+        $("stellenanzeigen_options").show();
+    });
+    $("stellenanzeigen").mouseleave(function(){
+        $("stellenanzeigen_options").hide();
+    });
+    $("crowdfunding").hover(function(){
+        $("crowdfunding_options").show();
+    });
+    $("crowdfunding").mouseleave(function(){
+        $("crowdfunding_options").hide();
+    });
+});
+</script>

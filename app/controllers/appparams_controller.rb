@@ -66,7 +66,7 @@ class AppparamsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def appparam_params
-      params.require(:appparam).permit(:domain, :icon, :right, :access)
+      params.require(:appparam).permit(:domain, :parent_domain, :icon, :right, :access)
     end
     
     

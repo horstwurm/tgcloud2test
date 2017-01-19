@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20170106164536) do
 
   create_table "appparams", force: :cascade do |t|
     t.string   "domain"
+    t.string   "parent_domain"
     t.string   "right"
     t.boolean  "access"
     t.datetime "created_at", null: false
@@ -85,8 +86,7 @@ ActiveRecord::Schema.define(version: 20170106164536) do
   end
 
   create_table "credentials", force: :cascade do |t|
-    t.string   "domain"
-    t.string   "right"
+    t.integer  "appparam_id"
     t.integer  "user_id"
     t.boolean  "access"
     t.datetime "created_at", null: false

@@ -124,7 +124,9 @@ def index7
  @array = ""
  case @test
   when "Geburtstage Favoriten"
-     current_user.favourits.each do |u|
+     @users = current_user.favourits
+     @anz = @users.count
+     @users.each do |u|
           if u.object_name == "User" 
             @user = User.find(u.object_id)
             if @user and @user.dateofbirth
@@ -152,6 +154,7 @@ def index7
     else
       @mobjects = Mobject.where('mtype=?', @test)
     end
+    @anz = @mobjects.count
     @mobjects.each do |u|
           if u.date_from
             counter = counter + 1
