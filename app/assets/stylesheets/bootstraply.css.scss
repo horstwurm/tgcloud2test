@@ -15,6 +15,7 @@
  $color4: #F5F5F5;         /* hellgrau */
  $color5: grey;
 
+ $color1: $orange;
 /*******************************************************************************************************/
 /* GENERIC */
 /*******************************************************************************************************/
@@ -229,6 +230,25 @@ small_cal {
 
 home_nav {
     font-size: 150%;
+}
+
+angebote, stellenanzeigen, kleinanzeigen, crowdfunding {
+    color: grey;
+    :hover {
+        color: $color1;
+    }
+}
+
+angebote_options, stellenanzeigen_options, kleinanzeigen_options, crowdfunding_options {
+    color: grey;
+    a {
+        color: grey!important;
+        background: white!important;
+    }
+    :hover {
+        color: $color1!important;
+        background: white!important;
+    }
 }
 
 .color_today {
