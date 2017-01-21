@@ -459,7 +459,8 @@ ticket = Ticket.create({active: true, msponsor_id: Msponsor.last.id, mcategory_i
 for i in 1..20
     us = rand(usanz)+1
     @user = User.find(us)
-    qr = RQRCode::QRCode.new("Ticket"+Ticket.last.id.to_s, size: 12, :level => :h)
+    content = "http://tkbmarkt.herokuapp.com/home/index1?me="+Ticket.last.id.to_s
+    qr = RQRCode::QRCode.new(content, size: 12, :level => :h)
     qr_img = qr.to_img
     qr_img.resize(200, 200).save("ticketqrcode.png")
     img = File.open("ticketqrcode.png")
