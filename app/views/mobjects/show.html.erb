@@ -64,7 +64,7 @@
             <br>
             <% if @mobject.mtype == "Crowdfunding" %>
             
-              <% if @mobject.sum_amount >= @mobject.amount %>
+              <% if @mobject.sum_amount and @mobject.sum_amount >= @mobject.amount %>
                 <%= render("mobjects/form_crowdfunding_service") %>
               <% end %>
             
