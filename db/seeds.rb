@@ -459,12 +459,15 @@ ticket = Ticket.create({active: true, msponsor_id: Msponsor.last.id, mcategory_i
 for i in 1..20
     us = rand(usanz)+1
     @user = User.find(us)
-    content = "http://tkbmarkt.herokuapp.com/home/index1?me="+Ticket.last.id.to_s
-    qr = RQRCode::QRCode.new(content, size: 12, :level => :h)
-    qr_img = qr.to_img
-    qr_img.resize(200, 200).save("ticketqrcode.png")
-    img = File.open("ticketqrcode.png")
-    usertickets = UserTicket.create({status:"persönlich", user_id: @user.id, ticket_id: Ticket.last.id, avatar:File.open('ticketqrcode.png', 'rb')})
+    usertickets = UserTicket.create({status:"persönlich", user_id: @user.id, ticket_id: Ticket.last.id})
+    ut = UserTicket.last
+        content = "http://tkbmarkt.herokuapp.com/home/index1?me="+ut.id.to_s
+        qr = RQRCode::QRCode.new(content, size: 12, :level => :h)
+        qr_img = qr.to_img
+        qr_img.resize(200, 200).save("ticketqrcode.png")
+        img = File.open("ticketqrcode.png")
+        ut.avatar = File.open('ticketqrcode.png', 'rb')
+    ut.save    
 end
 
 # Sponsor
@@ -477,12 +480,15 @@ ticket = Ticket.create({active: true, msponsor_id: Msponsor.last.id, mcategory_i
 for i in 1..30
     us = rand(usanz)+1
     @user = User.find(us)
-    content = "http://tkbmarkt.herokuapp.com/home/index1?me="+Ticket.last.id.to_s
-    qr = RQRCode::QRCode.new(content, size: 12, :level => :h)
-    qr_img = qr.to_img
-    qr_img.resize(200, 200).save("ticketqrcode.png")
-    img = File.open("ticketqrcode.png")
-    usertickets = UserTicket.create({status:"persönlich", user_id: @user.id, ticket_id: Ticket.last.id, avatar:File.open('ticketqrcode.png', 'rb')})
+    usertickets = UserTicket.create({status:"persönlich", user_id: @user.id, ticket_id: Ticket.last.id})
+    ut = UserTicket.last
+        content = "http://tkbmarkt.herokuapp.com/home/index1?me="+ut.id.to_s
+        qr = RQRCode::QRCode.new(content, size: 12, :level => :h)
+        qr_img = qr.to_img
+        qr_img.resize(200, 200).save("ticketqrcode.png")
+        img = File.open("ticketqrcode.png")
+        ut.avatar = File.open('ticketqrcode.png', 'rb')
+    ut.save    
 end
 
 #Ausflugsziele
