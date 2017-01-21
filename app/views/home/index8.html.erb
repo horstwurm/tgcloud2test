@@ -4,20 +4,115 @@
             
             <% case @mtype %>
               <% when "Angebote" %>
-                <%= build_kachel_color("Neues Angebot", "", nil, @user_id, @company_id) %>
-                <%= build_kachel_color("Neue Aktion", "", nil, @user_id, @company_id) %>
+                <!--<%= build_kachel_color("Neues Angebot", "", nil, @user_id, @company_id) %>-->
+                <!--<%= build_kachel_color("Neue Aktion", "", nil, @user_id, @company_id) %>-->
+
+                <% hasharray = [] %>
+                <% domain = "Angebote" %>
+                <% domain_text = "Neues Angebot" %>
+                <% hash = Hash.new %>
+                <% path = new_mobject_path(:mtype => "Angebote", :msubtype => "Standard", :user_id => @user_id, :company_id => @company_id) %>
+                <% hash = {"path" => path, "text" => "Angebot", "icon" => "Angebot", :user_id => @user_id, :company_id => @company_id } %>
+                <% hasharray << hash %>
+                <% hash = Hash.new %>
+                <% path = new_mobject_path(:mtype => "Angebote", :msubtype => "Aktion", :user_id => @user_id, :company_id => @company_id) %>
+                <% hash = {"path" => path, "text" => "Aktion", "icon" => "Aktion", :user_id => @user_id, :company_id => @company_id } %>
+                <% hasharray << hash %>
+                <%= complex_menue(domain, domain_text, hasharray) %>
+
               <% when "Kleinanzeigen" %>
-                <%= build_kachel_color("Neue Kleinanzeige (Anbieten)", "", nil, @user_id, @company_id) %>
-                <%= build_kachel_color("Neue Kleinanzeige (Suchen)", "", nil, @user_id, @company_id) %>
+                <!--<%= build_kachel_color("Neue Kleinanzeige (Anbieten)", "", nil, @user_id, @company_id) %>-->
+                <!--<%= build_kachel_color("Neue Kleinanzeige (Suchen)", "", nil, @user_id, @company_id) %>-->
+
+                <% hasharray = [] %>
+                <% domain = "Kleinanzeigen" %>
+                <% domain_text = "Neue Kleinanzeige" %>
+                <% hash = Hash.new %>
+                <% path = new_mobject_path(:mtype => "Kleinanzeigen", :msubtype => "Suchen", :user_id => @user_id, :company_id => @company_id) %>
+                <% hash = {"path" => path, "text" => "Suchen", "icon" => "Suchen", :user_id => @user_id, :company_id => @company_id } %>
+                <% hasharray << hash %>
+                <% hash = Hash.new %>
+                <% path = new_mobject_path(:mtype => "Kleinanzeigen", :msubtype => "Anbieten", :user_id => @user_id, :company_id => @company_id) %>
+                <% hash = {"path" => path, "text" => "Anbieten", "icon" => "Anbieten", :user_id => @user_id, :company_id => @company_id } %>
+                <% hasharray << hash %>
+                <%= complex_menue(domain, domain_text, hasharray) %>
+
               <% when "Stellenanzeigen" %>
-                <%= build_kachel_color("Neue Stellenanzeige (Anbieten)", "", nil, @user_id, @company_id) %>
-                <%= build_kachel_color("Neue Stellenanzeige (Suchen)", "", nil, @user_id, @company_id) %>
+                <!--<%= build_kachel_color("Neue Stellenanzeige (Anbieten)", "", nil, @user_id, @company_id) %>-->
+                <!--<%= build_kachel_color("Neue Stellenanzeige (Suchen)", "", nil, @user_id, @company_id) %>-->
+
+                <% hasharray = [] %>
+                <% domain = "Stellenanzeigen" %>
+                <% domain_text = "Neue Stellenanzeige" %>
+                <% hash = Hash.new %>
+                <% path = new_mobject_path(:mtype => "Stellenanzeigen", :msubtype => "Suchen", :user_id => @user_id, :company_id => @company_id) %>
+                <% hash = {"path" => path, "text" => "Suchen", "icon" => "Suchen", :user_id => @user_id, :company_id => @company_id } %>
+                <% hasharray << hash %>
+                <% hash = Hash.new %>
+                <% path = new_mobject_path(:mtype => "Stellenanzeigen", :msubtype => "Anbieten", :user_id => @user_id, :company_id => @company_id) %>
+                <% hash = {"path" => path, "text" => "Anbieten", "icon" => "Anbieten", :user_id => @user_id, :company_id => @company_id } %>
+                <% hasharray << hash %>
+                <%= complex_menue(domain, domain_text, hasharray) %>
+
               <% when "Crowdfunding" %>
-                <%= build_kachel_color("Neue Crowdfunding-Initiative (Spenden)", "", nil, @user_id, @company_id) %>
-                <%= build_kachel_color("Neue Crowdfunding-Initiative (Belohnungen)", "", nil, @user_id, @company_id) %>
-                <%= build_kachel_color("Neue Crowdfunding-Initiative (Zinsen)", "", nil, @user_id, @company_id) %>
+                <!--<%= build_kachel_color("Neue Crowdfunding-Initiative (Spenden)", "", nil, @user_id, @company_id) %>-->
+                <!--<%= build_kachel_color("Neue Crowdfunding-Initiative (Belohnungen)", "", nil, @user_id, @company_id) %>-->
+                <!--<%= build_kachel_color("Neue Crowdfunding-Initiative (Zinsen)", "", nil, @user_id, @company_id) %>-->
+
+                <% hasharray = [] %>
+                <% domain = "Crowdfunding" %>
+                <% domain_text = "Neue Crowdfunding Initiative" %>
+                <% hash = Hash.new %>
+                <% path = new_mobject_path(:mtype => "Crowdfunding", :msubtype => "Spenden", :user_id => @user_id, :company_id => @company_id) %>
+                <% hash = {"path" => path, "text" => "Spenden", "icon" => "Spenden", :user_id => @user_id, :company_id => @company_id } %>
+                <% hasharray << hash %>
+                <% hash = Hash.new %>
+                <% path = new_mobject_path(:mtype => "Crowdfunding", :msubtype => "Belohnungen", :user_id => @user_id, :company_id => @company_id) %>
+                <% hash = {"path" => path, "text" => "Belohnungen", "icon" => "Belohnungen", :user_id => @user_id, :company_id => @company_id } %>
+                <% hasharray << hash %>
+                <% hash = Hash.new %>
+                <% path = new_mobject_path(:mtype => "Crowdfunding", :msubtype => "Zinsen", :user_id => @user_id, :company_id => @company_id) %>
+                <% hash = {"path" => path, "text" => "Zinsen", "icon" => "Zinsen", :user_id => @user_id, :company_id => @company_id } %>
+                <% hasharray << hash %>
+                <%= complex_menue(domain, domain_text, hasharray) %>
+
               <% end %>
 
           </div>
       </div>
   </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $("angebote_options").hide();
+    $("kleinanzeigen_options").hide();
+    $("stellenanzeigen_options").hide();
+    $("crowdfunding_options").hide();
+
+    $("angebote").hover(function(){
+        $("angebote_options").show();
+    });
+    $("angebote").mouseleave(function(){
+        $("angebote_options").hide();
+    });
+    $("kleinanzeigen").hover(function(){
+        $("kleinanzeigen_options").show();
+    });
+    $("kleinanzeigen").mouseleave(function(){
+        $("kleinanzeigen_options").hide();
+    });
+    $("stellenanzeigen").hover(function(){
+        $("stellenanzeigen_options").show();
+    });
+    $("stellenanzeigen").mouseleave(function(){
+        $("stellenanzeigen_options").hide();
+    });
+    $("crowdfunding").hover(function(){
+        $("crowdfunding_options").show();
+    });
+    $("crowdfunding").mouseleave(function(){
+        $("crowdfunding_options").hide();
+    });
+});
+</script>

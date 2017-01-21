@@ -36,6 +36,22 @@
                   <%= f.label "Beschreibung" %><br/>
                   <%= f.text_area :description, rows: 5, class:"form-control"%>
                 </div>
+                
+                <% if @mobject.mtype == "Stellenanzeigen" %>
+                  <div class="form-group">
+                    <% if @mobject.msubtype == "Suchen" %>
+                      <%= f.label "Referenzen" %><br/>
+                    <% else %>
+                      <%= f.label "Aufgaben" %><br/>
+                    <% end %>
+                    <%= f.text_area :tasks, rows: 5, class:"form-control"%>
+                    <%= f.label "Qualifikationen" %><br/>
+                    <%= f.text_area :skills, rows: 5, class:"form-control"%>
+                    <%= f.label "Angebot" %><br/>
+                    <%= f.text_area :offers, rows: 5, class:"form-control"%>
+                  </div>
+                <% end %>
+                
                 <div class="form-group">
                   <%= f.label "Kategorie" %><br/>
                   <% case @mobject.mtype %>

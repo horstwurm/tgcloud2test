@@ -987,6 +987,12 @@ def action_buttons2(object, item, topic)
            	        html_string = html_string + link_to(edit_mobject_path(item)) do
                        content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
                      end
+                     # Möglichkeit Service anzubieten
+                     #if item.sum_amount >= item.amount
+               	     #    html_string = html_string + link_to(home_index10_path(item)) do
+                     #      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-lock")
+                     #   end
+                     #end
            	        html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do
                        content_tag(:i, nil, class:"btn btn-danger pull-right glyphicon glyphicon-trash")
                      end
@@ -1046,7 +1052,7 @@ def action_buttons2(object, item, topic)
               end
             when "CF Statistik"
             when "CF Transaktionen"
-              #if item.mstats.sum(:amount) < item.amount
+              #if item.sum_amount < item.amount
                 html_string = html_string + link_to(new_mstat_path(:mobject_id => item.id, :dontype => "User")) do
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-user")
                 end
@@ -1423,8 +1429,9 @@ def build_hauptmenue
           hasharray << hash
         end
         domain = "Angebote"
+        domain_text = domain
         #html_string = html_string + hasharray.to_s
-        html_string = html_string + complex_menue(domain, hasharray)
+        html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
 
     if creds.include?("Hauptmenue"+"Vermietungen")
@@ -1442,6 +1449,7 @@ def build_hauptmenue
     if creds.include?("Hauptmenue"+"Stellenanzeigen")
         hasharray = []
         domain = "Stellenanzeigen"
+        domain_text = domain
         if creds.include?("Hauptmenue"+"StellenanzeigenSuchen")
           path = mobjects_path(:mtype => "Stellenanzeigen", :msubtype => "Suchen")
           hash = Hash.new
@@ -1454,7 +1462,7 @@ def build_hauptmenue
           hash = {"path" => path, "text" => "Anbieten", "icon" => "Anbieten" }
           hasharray << hash
        end
-       html_string = html_string + complex_menue(domain, hasharray)
+       html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
 
     if creds.include?("Hauptmenue"+"Veranstaltungen")
@@ -1472,6 +1480,7 @@ def build_hauptmenue
     if creds.include?("Hauptmenue"+"Kleinanzeigen")
         hasharray = []
         domain = "Kleinanzeigen"
+        domain_text = domain
       if creds.include?("Hauptmenue"+"KleinanzeigenSuchen")
         path = mobjects_path(:mtype => "Kleinanzeigen", :msubtype => "Suchen")
         hash = Hash.new
@@ -1484,12 +1493,13 @@ def build_hauptmenue
         hash = {"path" => path, "text" => "Anbieten", "icon" => "Anbieten" }
         hasharray << hash
       end
-      html_string = html_string + complex_menue(domain, hasharray)
+      html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
 
     if creds.include?("Hauptmenue"+"Crowdfunding")
         hasharray = []
         domain = "Crowdfunding"
+        domain_text = domain
       if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
         path = mobjects_path(:mtype => "Crowdfunding", :msubtype => "Spenden")
         hash = Hash.new
@@ -1508,7 +1518,7 @@ def build_hauptmenue
         hash = {"path" => path, "text" => "Zinsen", "icon" => "Zinsen" }
         hasharray << hash
       end
-      html_string = html_string + complex_menue(domain, hasharray)
+      html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
     
     if creds.include?("Hauptmenue"+"Kalender")
@@ -1543,7 +1553,7 @@ def simple_menue (domain, path)
   return html_string.html_safe
 end
 
-def complex_menue (domain, hasharray)
+def complex_menue (domain, domain_text, hasharray)
   html_string = "<" + domain + ">"
   html_string = html_string + content_tag(:div, nil, class:"col-xs-12 col-sm-12 col-md-6 col-lg-4") do
     content_tag(:div, nil, class:"panel-body panel-nav") do
@@ -1553,8 +1563,8 @@ def complex_menue (domain, hasharray)
         content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(domain), style:"font-size:" + icon_size + "em") 
       end
       temp = temp + content_tag(:div, nil, class:"col-xs-9 col-sm-9 col-md-9 col-lg-9") do
-        temp2 = content_tag(:home_nav, domain) + "<br><br>".html_safe
-        temp2 = temp2 + content_tag(:home_nav_small, build_sub_menu(domain,hasharray))
+        temp2 = content_tag(:home_nav, domain_text) + "<br><br>".html_safe
+        temp2 = temp2 + content_tag(:home_nav_small, build_sub_menu(domain, domain_text, hasharray))
       end
     end
   end
@@ -1562,13 +1572,12 @@ def complex_menue (domain, hasharray)
   return html_string.html_safe
 end
 
-def build_sub_menu(domain, hasharray)
+def build_sub_menu(domain, domain_text, hasharray)
   html_string = "<" + domain + "_options" + ">"
   for i in 0..hasharray.length-1
         html_string = html_string + "<a href="+hasharray[i]["path"] + ">"
-          html_string = html_string + "<i class='glyphicon glyphicon-"+getIcon(hasharray[i]["icon"])+"' style='font-size:2em'> </i> "
-          html_string = html_string + hasharray[i]["text"]
-          #html_string = html_string + "<i class='glyphicon glyphicon-chevron-right pull right'></i>"
+        html_string = html_string + "<i class='glyphicon glyphicon-"+getIcon(hasharray[i]["icon"])+"' style='font-size:2em'> </i> "
+        html_string = html_string + hasharray[i]["text"]
         html_string = html_string + "</a><br><br>"
   end
   html_string = html_string + "</" + domain + "_options" + ">"

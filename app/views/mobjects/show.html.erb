@@ -63,6 +63,11 @@
             <% end %>
             <br>
             <% if @mobject.mtype == "Crowdfunding" %>
+            
+              <% if @mobject.sum_amount >= @mobject.amount %>
+                <%= render("mobjects/form_crowdfunding_service") %>
+              <% end %>
+            
               <% soll = @mobject.amount %>
               <% if @mobject.mstats != nil %>
                 <% ist  = @mobject.mstats.sum(:amount) %>
@@ -148,9 +153,9 @@
                       <div class="thumbnail" align="center">
                         <anzeigetext>
                         <% if @mobject.msubtype == "Anbieten" %>
-              						Ihre Aufgaben
+              						Aufgaben
               					<% else %>
-              					  meine Kenntnisse
+              					  Referenzen
               					<% end %>
                         </anzeigetext>
                         <p>
@@ -164,11 +169,7 @@
                     <div class="col-sm-6 col-md-4 col-lg-3">
                       <div class="thumbnail" align="center">
                         <anzeigetext>
-                        <% if @mobject.msubtype == "Anbieten" %>
-              						wir erwarten
-              					<% else %>
-              					  meine Referenzen
-              					<% end %>
+                          Qualifikationen
                         </anzeigetext>
                         <p>
                           <ntext>
@@ -181,11 +182,7 @@
                     <div class="col-sm-6 col-md-4 col-lg-3">
                       <div class="thumbnail" align="center">
                         <anzeigetext>
-                        <% if @mobject.msubtype == "Anbieten" %>
-              						wir bieten
-              					<% else %>
-              					  meine Ausbildung & Berufserfahrung
-              					<% end %>
+                          Angebot
                         </anzeigetext>
                         <p>
                           <ntext>

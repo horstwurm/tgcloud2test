@@ -1,0 +1,98 @@
+    <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-heading header">
+            <li_header>
+              <showOffer><i class='glyphicon glyphicon-menu-down'></i></showOffer>
+              Crowdfunding Services der Thurgauer Kantonalbank
+              <hideOffer><i class='glyphicon glyphicon-menu-up pull-right'></i></hideOffer>
+            </li_header>
+          </div>
+        </div>
+    </div>
+
+    <offer>
+    <%= form_for home_index10_path, method: :get do |f| %>
+
+        <div class="row">
+            <div class="col-md-12">
+              <div class="panel-body">
+                
+                <% c=Company.where('name=?','Thurgauer Kantonalbank').first %>
+                <%= showImage2(:medium,c, true) %>
+
+                <div class="form-group">
+                  <%= f.label "Bezeichnung" %><br/>
+                  <%= f.text_field :name, autofocus: true, class:"form-control"%>
+                </div>
+                <div class="form-group">
+                  <%= f.label "Beschreibung" %><br/>
+                  <%= f.text_area :description, rows: 5, class:"form-control"%>
+                </div>
+                
+                <div class="form-group">
+                  <input type="checkbox" name="my-checkbox1" checked>
+                  <%= f.label "Vertragserstellung" %>
+                </div>
+                <div class="form-group">
+                  <input type="checkbox" name="my-checkbox2" checked>
+                  <%= f.label "Kontoführung und Zahlungsverkehr" %>
+                </div>
+                <div class="form-group">
+                  <input type="checkbox" name="my-checkbox3" checked>
+                  <%= f.label "Risikomanagement" %>
+                </div>
+                
+                <div class="actions">
+                   <%= f.submit "Offerte",  class:"btn btn-primary btn-lg"%>
+                </div>
+
+                <%= f.check_box :contract, :id => "contract", class:"form-control hidden" %>
+                <%= f.check_box :payment, :id => "payment", class:"form-control hidden" %>
+                <%= f.check_box :risk, :id => "risk", class:"form-control hidden" %>
+                
+              </div>
+          </div>
+        </div>
+    <% end %>                
+    </offer>
+
+<script>
+     $.fn.bootstrapSwitch.defaults.onColor = 'success';
+     $("[name='my-checkbox1']").bootstrapSwitch('state',<%= true %>);
+     $("[name='my-checkbox1']").on('switchChange.bootstrapSwitch', function () {
+     $("#contract").prop('checked',$("[name='my-checkbox1']").bootstrapSwitch('state'));
+     });
+     $("[name='my-checkbox2']").bootstrapSwitch('state',<%= true %>);
+     $("[name='my-checkbox2']").on('switchChange.bootstrapSwitch', function () {
+     $("#payment").prop('checked',$("[name='my-checkbox2']").bootstrapSwitch('state'));
+     });
+     $("[name='my-checkbox3']").bootstrapSwitch('state',<%= true %>);
+     $("[name='my-checkbox3']").on('switchChange.bootstrapSwitch', function () {
+     $("#risk").prop('checked',$("[name='my-checkbox3']").bootstrapSwitch('state'));
+     });
+</script>
+
+<script>
+$(document).ready(function(){
+    $("offer").hide();
+
+    $("showOffer").mouseover(function(){
+        $("offer").show();
+        $("showOffer").hide();
+        $("hideOffer").show();
+
+    });
+    
+    $("hideOffer").mouseover(function(){
+        $("offer").hide();
+        $("showOffer").show();
+        $("hideOffer").hide();
+    });
+  
+});
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {init_map(0)})
+</script>
+
