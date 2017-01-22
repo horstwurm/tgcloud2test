@@ -4,9 +4,11 @@
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
       <div class="thumbnail" align="center">
           <h1><%= @auth_status %></h1>
+          <b><%= auth_reason %></b>
           <h1><%= @ticket_status %></h1>
+          <b><%= status_reason %></b>
         	<ticketstatuss>
-        	    <b><%= @ticket.status %></b>
+        	<b><%= @ticket.status %></b>
           </ticketstatuss><br>
           <h1><%= @ticket.ticket.name %><br></h1>
           <ntext>
