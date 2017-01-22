@@ -28,36 +28,40 @@ def index
 end
 
 def index1
-  case params[:status] 
-    when "einlösen"
-      if params[:userticket_id]
-        @ticket = UserTicket.find(params[:userticket_id])
-        @ticket.status = "eingelöst"
-        @ticket.save
-      end
-    when "reaktivieren"
-      if params[:userticket_id]
-        @ticket = UserTicket.find(params[:userticket_id])
-        @ticket.status = "aktiv"
-        @ticket.save
-      end
-  end
-  if params[:me]
-    @ticket = UserTicket.where('id=?',params[:me]).first
-    if @ticket
-      if @ticket.ticket.msponsor.company.user.id == current_user.id
-        auth_status == "autorisiert"
-      else
-        @auth_status = "nicht autorisiert"
-        @auth_reason = "nur "+@ticket.ticket.msponsor.company.user.name + " " + @ticket.ticket.msponsor.company.user.lastname+ "!"
-      end
-      if @ticket.status == "aktiv"
-        @ticket_status = "Ticket gültig"
-      else
-        @ticket_status = "Ticket ungültig"
-        @status_reason = "Ticketstatus muss 'aktiv' sein!, ist aber " + @ticket.status 
+  if user_signed_in?
+    case params[:status] 
+      when "einlösen"
+        if params[:userticket_id]
+          @ticket = UserTicket.find(params[:userticket_id])
+          @ticket.status = "eingelöst"
+          @ticket.save
+        end
+      when "reaktivieren"
+        if params[:userticket_id]
+          @ticket = UserTicket.find(params[:userticket_id])
+          @ticket.status = "aktiv"
+          @ticket.save
+        end
+    end
+    if params[:me]
+      @ticket = UserTicket.where('id=?',params[:me]).first
+      if @ticket
+        if @ticket.ticket.msponsor.company.user.id == current_user.id
+          @auth_status = "autorisiert"
+        else
+          @auth_status = "nicht autorisiert"
+          @auth_reason = "nur " + @ticket.ticket.msponsor.company.user.name + " " + @ticket.ticket.msponsor.company.user.lastname + "!"
+        end
+        if @ticket.status == "aktiv"
+          @ticket_status = "Ticket gültig"
+        else
+          @ticket_status = "Ticket ungültig"
+          @status_reason = "Ticketstatus muss 'aktiv' sein!, ist aber " + @ticket.status 
+        end
       end
     end
+  else
+    redirect_to home_index7_path, notice: "Kein Benutzer angemeldet!"
   end
 end
 
