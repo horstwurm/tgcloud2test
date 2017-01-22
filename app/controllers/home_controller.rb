@@ -49,11 +49,13 @@ def index1
         auth_status == "autorisiert"
       else
         @auth_status = "nicht autorisiert"
+        @auth_reason = "nur "+@ticket.ticket.msponsor.company.user.name + " " + @ticket.ticket.msponsor.company.user.lastname+ "!"
       end
       if @ticket.status == "aktiv"
         @ticket_status = "Ticket gültig"
       else
         @ticket_status = "Ticket ungültig"
+        @status_reason = "Ticketstatus muss 'aktiv' sein!, ist aber " + @ticket.status 
       end
     end
   end
