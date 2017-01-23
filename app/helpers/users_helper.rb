@@ -1523,8 +1523,8 @@ def build_hauptmenue
     
     if creds.include?("Hauptmenue"+"Kalender")
         domain = "Kalender"
-        #path = showcal_index_path
-        path = home_index7_path
+        path = showcal_index_path
+        #path = home_index7_path
         html_string = html_string + simple_menue(domain, path)
     end
     

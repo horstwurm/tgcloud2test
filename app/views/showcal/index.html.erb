@@ -1,3 +1,4 @@
+<% if false %>
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-body">
@@ -74,7 +75,26 @@
       </div>
     </div>
   </div>
-  
+<% end %>  
+
+
+  <div class="row">
+    <%= header("Kalender " + "<span class='badge'>" + @anz.to_s + "</span>", true) %>
+  </div>
+
+  <%= form_for showcal_index_path, method: 'get' do |f| %>
+    <% if user_signed_in? %>
+      <%= f.select :domain, options_for_select([ "Geburtstage Favoriten", "Aktionen", "Ausschreibungen", "Veranstaltungen", "Stellenanzeigen", "Crowdfunding" ], @test), {}, class:"form-control" ,:onchange => "this.form.submit();" %>
+    <% else %>
+      <%= f.select :domain, options_for_select([ "Aktionen", "Ausschreibungen", "Veranstaltungen", "Stellenanzeigen", "Crowdfunding" ], @test), {}, class:"form-control" ,:onchange => "this.form.submit();" %>
+    <% end %>
+    <div class="actions">
+       <%= f.submit "Kalender",  class:"btn btn-primary"%>
+    </div>
+  <% end %>
+
+  <div id='calendar'></div>
+
   <div class="row">
     <div class="col-md-12">
 	    <div class="panel-body">
@@ -84,7 +104,30 @@
       </div>
     </div>
   </div>
-    
+
+<% raw @array %>
+
+<script>
+$(document).ready(function() {
+
+    // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+        defaultView: 'basicWeek',
+        defaultView: 'basicDay',
+        defaultView: 'basicWeek',
+        defaultView: 'listYear',
+        defaultView: 'month',
+        textColor: 'white',
+        firstDay: 1,
+        weekNumbers: true,
+        events: [<%= raw @array %> ]
+
+
+    })
+
+});
+</script>
 
 <script>
 function initialize() {

@@ -3,7 +3,7 @@
   <%= header("Kalender " + "<span class='badge'>" + @anz.to_s + "</span>", true) %>
 </div>
 
-<%= form_for home_index7_path, method: 'get' do |f| %>
+<%= form_for showcal_index_path, method: 'get' do |f| %>
   <% if user_signed_in? %>
     <%= f.select :domain, options_for_select([ "Geburtstage Favoriten", "Aktionen", "Ausschreibungen", "Veranstaltungen", "Stellenanzeigen", "Crowdfunding" ], @test), {}, class:"form-control" ,:onchange => "this.form.submit();" %>
   <% else %>
