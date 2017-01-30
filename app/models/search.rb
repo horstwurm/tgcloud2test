@@ -58,7 +58,7 @@ class Search < ActiveRecord::Base
             end
             if self.social
                 sql_string[0] = sql_string[0] + " and id IN (?)"
-                @services = Service.where('social=?', 't')
+                @services = Mobject.where('social=?', 't')
                 sli = []
                 @services.each do |s|
                     sli << s.user_id
