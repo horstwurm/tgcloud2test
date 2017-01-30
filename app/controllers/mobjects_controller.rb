@@ -41,6 +41,47 @@ class MobjectsController < ApplicationController
     @param = params[:filter_id]
     @search = params[:search]
 
+     counter = 0 
+     @locs = "["
+     @wins = "["
+     @mobjects.each do |u|
+
+        if u.longitude and u.latitude and u.geo_address
+       
+          @locs = @locs + "["
+          @locs = @locs + "'" + u.name + "', "
+          @locs = @locs + u.latitude.to_s + ", "
+          @locs = @locs + u.longitude.to_s
+          if counter+1 == @mobanz
+            @locs = @locs + "]"
+          else
+            @locs = @locs + "],"
+          end
+  
+          @wins = @wins + "["
+          if u.mdetails.count > 0
+            if u.mdetails.first.avatar_file_name 
+              img = url_for(u.mdetails.first.avatar(:small))
+            else
+              img = File.join(Rails.root, "/app/assets/images/no_pic.jpg")
+            end
+          else
+            img = File.join(Rails.root, "/app/assets/images/no_pic.jpg")
+          end
+          @wins = @wins + "'<img src=" + img + " <br><h3>" + u.name + "</h3><p>" + u.geo_address + "</p>'"
+          if counter+1 == @mobanz
+            @wins = @wins + "]"
+          else
+            @wins = @wins + "],"
+          end
+
+        end
+
+        counter = counter + 1
+      end
+      @locs = @locs + "]"
+      @wins = @wins + "]"
+
   end
 
   # GET /mobjects/1
