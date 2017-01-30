@@ -131,7 +131,7 @@ def build_medialist2(items, cname, par)
 
           html_string = html_string + '<div class="row">'
             html_string = html_string + '<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">'
-              html_string = html_string + '<div class="panel-header pull-left">'
+              html_string = html_string + '<div class="panel-header">'
 
                 case items.table_name
                   when "users", "companies"
