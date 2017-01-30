@@ -5,6 +5,8 @@ class CompaniesController < ApplicationController
 
   # GET /companies
   def index
+
+    @controller_name = controller_name
     
     if params[:page]
       session[:page] = params[:page]

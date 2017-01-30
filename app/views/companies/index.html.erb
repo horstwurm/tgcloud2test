@@ -1,16 +1,30 @@
+  <% if false %>
   <div class="row">
       <%= header("Institutionen " + "<span class='badge'>" + @companz.to_s + "</span>", true) %>
   </div>
+  <% end %>
   
+  <div class="row">
+    <header>
+    <%= header("<queryshow><i class='glyphicon glyphicon-filter'></i></queryshow> Institutionen <span class='badge'>" + @compsanz.to_s + "</span><queryhide><i class='glyphicon glyphicon-menu-up pull-right'></i></queryhide>", true) %>
+    <query>
+      <div class='col-xs-12'>
+           <div class="panel-body">
+        	  <%= link_to new_search_path(:user_id => current_user.id, :search_domain => "Institutionen", :controller_name => @controller_name) do %>
+                  <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+              <% end %>
+           </div>
+          <% @searches = Search.where('search_domain=? and user_id=?', "Institutionen", current_user.id) %>
+          <%= build_medialist2(@searches, "searches", nil) %>
+      </div>
+    </query>
+    </header>
+  </div>
+
     <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
         <div class="digg_pagination">
-    		    <!--<% if user_signed_in? %>-->
-      		  <!--      <%= link_to searches_path :search_domain => "Institutionen", :controller_name => controller_name do %>-->
-      		  <!--        <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>-->
-      		  <!--      <% end %>-->
-    		    <!--<% end %>-->
             <%= will_paginate @companies, :container => false, previous_label: "<", next_label: ">" %>
         </div>
       </div>
@@ -83,4 +97,26 @@ function initialize() {
 
 <script>
   document.addEventListener("turbolinks:load", function() {initialize();})
+</script>
+
+<script>
+$(document).ready(function(){
+    $("query").hide();
+    $("queryhide").hide();
+    $("queryhide").hide();
+
+    $("queryshow").mouseover(function(){
+        $("query").show();
+        $("queryshow").hide();
+        $("queryhide").show();
+
+    });
+    
+    $("queryhide").mouseover(function(){
+        $("query").hide();
+        $("queryshow").show();
+        $("queryhide").hide();
+    });
+  
+});
 </script>

@@ -175,21 +175,32 @@ def build_medialist2(items, cname, par)
                         html_string = html_string + showImage2(:medium, @comp, true)
                       end
                   when "searches"
-                      case item.search_domain
-                        when "Privatpersonen"
-                          html_string = html_string + link_to(users_path(:filter_id => item.id)) do
-                            image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
-                          end
-                        when "Tickets"
-                            html_string = html_string + image_tag(image_def("Privatpersonen", item.mtype, item.msubtype))
-                        when "Institutionen"
-                          html_string = html_string + link_to(companies_path(:filter_id => item.id)) do
-                            image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
-                          end
-                        when "Objekte"
-                          html_string = html_string + link_to(mobjects_path(:filter_id => item.id)) do
-                            image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
-                          end
+                      if par != nil and par != ""
+                        html_string = html_string + link_to(showcal_index_path(:filter_id => item.id, :dom => par)) do
+                          content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.mtype), style:"font-size:8em") 
+                          #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
+                        end
+                      else
+                        case item.search_domain
+                          when "Privatpersonen"
+                            html_string = html_string + link_to(users_path(:filter_id => item.id)) do
+                              content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
+                              #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
+                            end
+                          when "Tickets"
+                              #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
+                              html_string = html_string + image_tag(image_def("Privatpersonen", item.mtype, item.msubtype))
+                          when "Institutionen"
+                            html_string = html_string + link_to(companies_path(:filter_id => item.id)) do
+                              content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
+                              #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
+                            end
+                          when "Objekte"
+                            html_string = html_string + link_to(mobjects_path(:filter_id => item.id)) do
+                              content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.mtype), style:"font-size:8em") 
+                              #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
+                            end
+                        end
                       end
                   when "transactions"
                     html_string = html_string + showImage2(:medium, @ac_ver.customer.owner, true)
@@ -1396,11 +1407,11 @@ def build_hauptmenue
 
     #html_string=html_string+creds.to_s
 
-    if creds.include?("Hauptmenue"+"meine Abfragen")
-      domain = "meine Abfragen"
-      path = home_index6_path
-      html_string = html_string + simple_menue(domain, path)
-    end
+    # if creds.include?("Hauptmenue"+"meine Abfragen")
+    #   domain = "meine Abfragen"
+    #   path = home_index6_path
+    #   html_string = html_string + simple_menue(domain, path)
+    # end
 
     if creds.include?("Hauptmenue"+"Privatpersonen")
         domain = "Privatpersonen"
@@ -1522,10 +1533,53 @@ def build_hauptmenue
     end
     
     if creds.include?("Hauptmenue"+"Kalender")
-        domain = "Kalender"
-        path = showcal_index_path
+        #domain = "Kalender"
+        #path = showcal_index_path
         #path = home_index7_path
-        html_string = html_string + simple_menue(domain, path)
+        #html_string = html_string + simple_menue(domain, path)
+        
+      hasharray = []
+      domain = "Kalender"
+      domain_text = domain
+      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+        if user_signed_in?
+          path = showcal_index_path + "?dom=Geburtstage"
+          hash = Hash.new
+          hash = {"path" => path, "text" => "Geburtstage Favoriten", "icon" => "Privatpersonen" }
+          hasharray << hash
+        end
+      #end
+      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+        path = showcal_index_path + "?dom=Aktionen"
+        hash = Hash.new
+        hash = {"path" => path, "text" => "Aktionen", "icon" => "Aktionen" }
+        hasharray << hash
+      #end
+      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+        path = showcal_index_path + "?dom=Ausschreibungen"
+        hash = Hash.new
+        hash = {"path" => path, "text" => "Ausschreibungen", "icon" => "Ausschreibungen" }
+        hasharray << hash
+      #end
+      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+        path = showcal_index_path + "?dom=Veranstaltungen"
+        hash = Hash.new
+        hash = {"path" => path, "text" => "Veranstaltungen", "icon" => "Veranstaltungen" }
+        hasharray << hash
+      #end
+      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+        path = showcal_index_path + "?dom=Stellenanzeigen"
+        hash = Hash.new
+        hash = {"path" => path, "text" => "Stellenanzeigen", "icon" => "Stellenanzeigen" }
+        hasharray << hash
+      #end
+      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+        path = showcal_index_path + "?dom=Crowdfunding"
+        hash = Hash.new
+        hash = {"path" => path, "text" => "Crowdfunding", "icon" => "Crowdfunding" }
+        hasharray << hash
+      #end
+      html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
     
     return html_string.html_safe

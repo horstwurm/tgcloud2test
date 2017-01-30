@@ -1,5 +1,30 @@
+  <% if false %>
   <div class="row">
       <%= header(@mtype.to_s + " " + @msubtype.to_s + " " + @filter_id.to_s + " " + @search.to_s + "<span class='badge'>" + @mobanz.to_s + "</span>", true) %>
+  </div>
+  <% end %>
+  
+  <div class="row">
+    <header>
+    <%= header("<queryshow><i class='glyphicon glyphicon-filter'></i></queryshow> " + @mtype.to_s + " " + @msubtype.to_s + " " + @filter_id.to_s + " " + @search.to_s + "<span class='badge'>" + @mobanz.to_s + "</span><queryhide><i class='glyphicon glyphicon-menu-up pull-right'></i></queryhide>", true) %>
+    <query>
+      <div class='col-xs-12'>
+        <div class="panel-body">
+  		    <%= link_to new_search_path(:user_id => current_user.id, :search_domain => "Objekte", :controller_name => @controller_name, :mtype => @mtype, :msubtype => @msubtype) do %>
+            <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+          <% end %>
+			  </div>
+        <% if @msubtype %>
+          <% @searches = Search.where('search_domain=? and user_id=? and mtype=? and msubtype=?', "Objekte", current_user.id, @mtype, @msubtype) %>
+        <% else %>
+          <% if @mtype %>
+            <% @searches = Search.where('search_domain=? and user_id=? and mtype=?', "Objekte", current_user.id, @mtype) %>
+          <% end %>
+        <% end %>
+        <%= build_medialist2(@searches, "searches", nil) %>
+      </div>
+    </query>
+    </header>
   </div>
 
   <div class="panel-body">
@@ -13,4 +38,26 @@
   </div>
 
   <%= build_medialist2(@mobjects, @mtype, nil) %>
+  
+<script>
+$(document).ready(function(){
+    $("query").hide();
+    $("queryhide").hide();
+    $("queryhide").hide();
+
+    $("queryshow").mouseover(function(){
+        $("query").show();
+        $("queryshow").hide();
+        $("queryhide").show();
+
+    });
+    
+    $("queryhide").mouseover(function(){
+        $("query").hide();
+        $("queryshow").show();
+        $("queryhide").hide();
+    });
+  
+});
+</script>
 

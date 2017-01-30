@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   end
   
   def index
+    @controller_name = controller_name
     if params[:page] != nil
       session[:page] = params[:page]
     end

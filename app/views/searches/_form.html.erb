@@ -17,10 +17,17 @@
                 <div class="panel panel-default">
                     <div class="panel-heading header">
                       <li_header>
-                      <%= link_to searches_path :search_domain => @search.search_domain, :controller_name => @search.controller, :ticket_id => @search.ticket_id do %>
-                        <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                      <% if false %>
+                        <%= link_to searches_path :search_domain => @search.search_domain, :controller_name => @search.controller, :ticket_id => @search.ticket_id do %>
+                          <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                        <% end %>
                       <% end %>
-                      ABFRAGEN Einträge gefunden: <%= @search.counter.to_s %>
+                      <% if @search.controller != nil and @search.controller != "" %>
+                        <%= link_to url_for(action: "index", controller: @search.controller) do %>
+                          <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                        <% end %>
+                      <% end %>
+                      meine ABFRAGEN <span class='badge'><%= @search.counter.to_s %></span>
                       <br>
                       <% @search.build_sql %>
                       </li_header>
@@ -69,7 +76,7 @@
                         <%= f.label "gemeinnützig" %>
                       </div>
 
-                   <% when "Object" %>
+                   <% when "Objekte" %>
                       
                       <% case @search.mtype %>
                         <% when "Angebote" %>

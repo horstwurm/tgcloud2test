@@ -74,7 +74,11 @@ class SearchesController < ApplicationController
   # GET /searches/new
   def new
     @search = Search.new
-    @search.name = "Meine Abfrage..."+params[:search_domain]
+    if params[:search_domain] == "Privatpersonen" or params[:search_domain] == "Institutionen"
+      @search.name = "Meine Abfrage..."+params[:search_domain]
+    else
+      @search.name = "Meine Abfrage..."+params[:mtype].to_s + " " + params[:msubtype].to_s
+    end
     @search.sql_string = []
     @search.search_domain = params[:search_domain]
     @search.mtype = params[:mtype]

@@ -34,7 +34,7 @@
                 <%= link_to companies_path do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
-              <% when "Object" %>
+              <% when "Objekte" %>
                 <%= link_to mobjects_path(:mtype => @mtype, :msubtype => @msubtype) do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
@@ -56,7 +56,7 @@
       <% if @ticket %>
         <%= header("Suchen " + @search_domain + " " + @ticket.msponsor.mobject.name + " " + @ticket.name + " <span class='badge'>" + @seranz.to_s + "</span>", true) %>
       <% else %>
-        <% if @search_domain == "Object" %>
+        <% if @search_domain == "Objekte" %>
           <%= header("Suchen " + @mtype.to_s + " " + @msubtype.to_s + " <span class='badge'>" + @seranz.to_s + "</span>", true) %>
         <% else %>
           <%= header("Suchen " + @search_domain + " <span class='badge'>" + @seranz.to_s + "</span>", true) %>

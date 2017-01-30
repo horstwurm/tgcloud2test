@@ -99,7 +99,7 @@ class Search < ActiveRecord::Base
                 sql_string[0] = sql_string[0] + " and social=?"
                 sql_string << true
             end
-            if self.distance > 0 and self.longitude != nil and self.latitude != nil
+            if self.distance > 0 and self.longitude != nil and self.latitude != nil and self.geo_address != nil
                 sql_string[0] = sql_string[0] + " and id IN (?)"
                 @companies = Company.near(self.geo_address, self.distance)
                 cli = []
@@ -112,7 +112,7 @@ class Search < ActiveRecord::Base
             self.counter = Company.where(sql_string).count
             self.sql_string = sql_string
 
-        when "Object"
+        when "Objekte"
             case self.mtype
                 when "Angebote"
                     if self.social == true
@@ -221,7 +221,7 @@ class Search < ActiveRecord::Base
                 sql_string[0] = sql_string[0] + " and id IN (select mobject_id from mratings WHERE rating >=?)"
                 sql_string << self.rating
             end 
-            if self.distance > 0 and self.longitude != nil and self.latitude != nil
+            if self.distance > 0 and self.longitude != nil and self.latitude != nil and self.geo_address != nil
                 sql_string[0] = sql_string[0] + " and id IN (?)"
                 @mobjects = Mobject.near(self.geo_address, self.distance)
                 moli = []

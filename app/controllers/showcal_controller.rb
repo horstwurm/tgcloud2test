@@ -2,15 +2,56 @@ class ShowcalController < ApplicationController
 
   def index
     
-   if params[showcal_index_path]
-     @test = params[showcal_index_path][:domain]
-   else
-     @test = "Veranstaltungen"
-   end 
+    if false
+      if params[:page]
+        session[:page] = params[:page]
+      end
+      if !session[:cw]
+        session[:cw] = Date.today.cweek.to_i
+      end
+      if !session[:year]
+        session[:year] = Date.today.cwyear.to_i
+      end
+      if params[:dir]
+        case params[:dir]
+          when ">"
+            if session[:cw] == 52
+              session[:cw] = 1
+              session[:year] = session[:year].to_i + 1
+            else
+              session[:cw] = session[:cw].to_i + 1
+            end
+          when "<"
+            if session[:cw] == 1
+              session[:cw] = 52
+              session[:year] = session[:year].to_i - 1
+            else
+              session[:cw] = session[:cw].to_i - 1
+            end
+        end
+      end
+      @start = Date.commercial(session[:year],session[:cw],1)
+      @mobjects = Mobject.search(session[:cw], session[:year], params[:filter_id], params[:mtype], params[:msubtype], params[:search]).order(created_at: :desc).page(params[:page]).per_page(100)
+      @mobanz = @mobjects.count
+      @mtype = params[:mtype]
+      @msubtype = params[:msubtype]
+  
+      session[:mtype] = params[:mtype]
+      session[:msubtype] = params[:msubtype]
+
+     if params[showcal_index_path]
+       @test = params[showcal_index_path][:domain]
+     else
+       @test = "Veranstaltungen"
+     end
+     
+   end
+   
+   @domain = params[:dom]
    counter = 0 
    @array = ""
-   case @test
-    when "Geburtstage Favoriten"
+   case @domain
+    when "Geburtstage"
        @users = current_user.favourits
        @anz = @users.count
        @users.each do |u|
@@ -36,10 +77,16 @@ class ShowcalController < ApplicationController
         end
         
     when "Veranstaltungen", "Crowdfunding", "Aktionen", "Ausschreibungen", "Stellenanzeigen"
-      if @test == "Aktionen"
-        @mobjects = Mobject.where('mtype=? and msubtype=?', "Angebote", "Aktion")
+      if params[:filter_id]
+        @mobjects = Mobject.search(nil, nil, params[:filter_id], nil, nil, nil)
       else
-        @mobjects = Mobject.where('mtype=?', @test)
+        if @domain == "Aktionen"
+          @mobjects = Mobject.where('mtype=? and msubtype=?', "Angebote", "Aktion")
+          #@mobjects = Mobject.search(session[:cw], session[:year], params[:filter_id], "Angebote", "Aktion", params[:search]).order(created_at: :desc).page(params[:page]).per_page(100)
+        else
+          @mobjects = Mobject.where('mtype=?', @domain)
+          #@mobjects = Mobject.search(session[:cw], session[:year], params[:filter_id], @test, nil, params[:search]).order(created_at: :desc).page(params[:page]).per_page(100)
+        end
       end
       @anz = @mobjects.count
       @mobjects.each do |u|
@@ -62,45 +109,7 @@ class ShowcalController < ApplicationController
         end
     end
 
-    if false
-    if params[:page]
-      session[:page] = params[:page]
-    end
-    if !session[:cw]
-      session[:cw] = Date.today.cweek.to_i
-    end
-    if !session[:year]
-      session[:year] = Date.today.cwyear.to_i
-    end
-    if params[:dir]
-      case params[:dir]
-        when ">"
-          if session[:cw] == 52
-            session[:cw] = 1
-            session[:year] = session[:year].to_i + 1
-          else
-            session[:cw] = session[:cw].to_i + 1
-          end
-        when "<"
-          if session[:cw] == 1
-            session[:cw] = 52
-            session[:year] = session[:year].to_i - 1
-          else
-            session[:cw] = session[:cw].to_i - 1
-          end
-      end
-    end
-    @start = Date.commercial(session[:year],session[:cw],1)
-    @mobjects = Mobject.search(session[:cw], session[:year], params[:filter_id], params[:mtype], params[:msubtype], params[:search]).order(created_at: :desc).page(params[:page]).per_page(100)
-    @mobanz = @mobjects.count
-    @mtype = params[:mtype]
-    @msubtype = params[:msubtype]
-
-    session[:mtype] = params[:mtype]
-    session[:msubtype] = params[:msubtype]
-    end
-
-    if @test == "Geburtstage Favoriten"
+    if @domain == "Geburtstage"
        counter = 0 
        @locs = "["
        @wins = "["

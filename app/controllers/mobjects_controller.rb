@@ -3,6 +3,8 @@ class MobjectsController < ApplicationController
 
   # GET /mobjects
   def index
+
+    @controller_name = controller_name
     
     if params[:set_part_id]
       @anmeldung = current_user.participants.where('mobject_id=?', params[:set_part_id]).first

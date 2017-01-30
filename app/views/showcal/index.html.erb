@@ -1,4 +1,5 @@
-<% if false %>
+<% if false %>    
+
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-body">
@@ -12,11 +13,14 @@
     </div>
   </div>
 
+
+
   <div class="row">
       <%= header("Kalenderwoche " + session[:cw].to_s + " " + @mtype + " " + @msubtype.to_s + "<span class='badge'>" + @mobanz.to_s + "</span>", true) %>
       <br><%= @info %>
   </div>
-  
+
+
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-body">
@@ -77,11 +81,32 @@
   </div>
 <% end %>  
 
-
+  <% if false %>
   <div class="row">
     <%= header("Kalender " + "<span class='badge'>" + @anz.to_s + "</span>", true) %>
   </div>
+  <% end %>
+  
+  <div class="row">
+    <header>
+    <%= header("<queryshow><i class='glyphicon glyphicon-filter'></i></queryshow> Kalender " + @domain + " <span class='badge'>" + @anz.to_s + "</span><queryhide><i class='glyphicon glyphicon-menu-up pull-right'></i></queryhide>", true) %>
+    <query>
+      <% if user_signed_in? and @domain != "Geburtstage" %>
+        <div class='col-xs-12'>
+             <div class="panel-body">
+          	    <%= link_to new_search_path(:user_id => current_user.id, :search_domain => @domain, :controller_name => @controller_name) do %>
+                    <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+                <% end %>
+             </div>
+             <% @searches = Search.where('search_domain=? and user_id=? and mtype=?', "Objekte", current_user.id, @domain) %>
+             <%= build_medialist2(@searches, "searches", @domain) %>
+        </div>
+      <% end %>
+    </query>
+    </header>
+  </div>
 
+  <% if false %>
   <%= form_for showcal_index_path, method: 'get' do |f| %>
     <% if user_signed_in? %>
       <%= f.select :domain, options_for_select([ "Geburtstage Favoriten", "Aktionen", "Ausschreibungen", "Veranstaltungen", "Stellenanzeigen", "Crowdfunding" ], @test), {}, class:"form-control" ,:onchange => "this.form.submit();" %>
@@ -92,7 +117,8 @@
        <%= f.submit "Kalender",  class:"btn btn-primary"%>
     </div>
   <% end %>
-
+  <% end %>
+  
   <div id='calendar'></div>
 
   <div class="row">
@@ -109,6 +135,23 @@
 
 <script>
 $(document).ready(function() {
+  
+    $("query").hide();
+    $("queryhide").hide();
+    $("queryhide").hide();
+
+    $("queryshow").mouseover(function(){
+        $("query").show();
+        $("queryshow").hide();
+        $("queryhide").show();
+
+    });
+    
+    $("queryhide").mouseover(function(){
+        $("query").hide();
+        $("queryshow").show();
+        $("queryhide").hide();
+    });
 
     // page is now ready, initialize the calendar...
 
