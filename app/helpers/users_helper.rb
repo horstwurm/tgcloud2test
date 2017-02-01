@@ -652,7 +652,7 @@ def showFirstImage2(size, item, details)
       #  when :big
       #      si = "500x500"
       #end
-    link_to item do
+    html_string = link_to item do
       if details.count > 0
         pic = details.first
         if pic.avatar_file_name
@@ -664,6 +664,7 @@ def showFirstImage2(size, item, details)
         image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => size, class:"card-img-top img-responsive" )
       end
     end
+    return html_string.html_safe
 end
 
 def showImage2(size, item, linkit)
