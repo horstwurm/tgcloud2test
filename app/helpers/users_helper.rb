@@ -71,6 +71,9 @@ def build_medialist2(items, cname, par)
     if items.table_name == "companies"
     html_string = html_string + "<a href=/companies/" + item.id.to_s + "> " + item.name + "</a>"
     end
+    if items.table_name == "mobjects"
+    html_string = html_string + "<a href=/mobjects/" + item.id.to_s + "> " + item.name + "</a>"
+    end
 
     if item and show
       
