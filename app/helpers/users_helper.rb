@@ -74,9 +74,7 @@ def build_medialist2(items, cname, par)
 
             case items.table_name
                 when "users"
-                  html_string = html_string + link_to(item) do 
-                    item.name + " " + item.lastname 
-                  end
+                  html_string = html_string + "<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
                 when "companies", "mobjects", "searches", "mdetails"
                   html_string = html_string + item.name
                 when "customers"
