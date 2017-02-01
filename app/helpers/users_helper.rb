@@ -139,7 +139,7 @@ def build_medialist2(items, cname, par)
 
                 case items.table_name
                   when "users", "companies"
-                    #html_string = html_string + showImage2(:medium, item, true)
+                    html_string = html_string + showImage2(:medium, item, true)
                   when "mdetails"
                     html_string = html_string + showImage2(:medium, item, false)
                   when "msponsors"
@@ -658,16 +658,16 @@ def showFirstImage2(size, item, details)
 end
 
 def showImage2(size, item, linkit)
-    case size
-        when :small
-            si = "50x50"
-        when :thumb
-            si = "100x100"
-        when :medium
-            si = "250x250"
-        when :big
-            si = "500x500"
-    end
+    #case size
+    #    when :small
+    #        si = "50x50"
+    #    when :thumb
+    #        si = "100x100"
+    #    when :medium
+    #        si = "250x250"
+    #    when :big
+    #        si = "500x500"
+    #end
     if linkit
       link_to(item) do
         if item.avatar_file_name
@@ -675,11 +675,11 @@ def showImage2(size, item, linkit)
         else
           case item.class.name
             when "User"
-              image_tag(image_def("Privatpersonen", nil, nil), :size => si, class:"card-img-top img-responsive" )
+              image_tag(image_def("Privatpersonen", nil, nil), :size => size, class:"card-img-top img-responsive" )
             when "Company"
-              image_tag(image_def("Institutionen", nil, nil), :size => si, class:"card-img-top img-responsive" )
+              image_tag(image_def("Institutionen", nil, nil), :size => size, class:"card-img-top img-responsive" )
             else
-              image_tag("no_pic.jpg", :size => si, class:"card-img-top img-responsive" )
+              image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive" )
           end
         end
       end
@@ -689,11 +689,11 @@ def showImage2(size, item, linkit)
       else
         case item.class.name
           when "User"
-            image_tag(image_def("Privatpersonen", nil, nil), :size => si, class:"card-img-top img-responsive" )
+            image_tag(image_def("Privatpersonen", nil, nil), :size => size, class:"card-img-top img-responsive" )
           when "Company"
-            image_tag(image_def("Institutionen", nil, nil), :size => si, class:"card-img-top img-responsive" )
+            image_tag(image_def("Institutionen", nil, nil), :size => size, class:"card-img-top img-responsive" )
           else
-            image_tag("no_pic.jpg", :size => si, class:"card-img-top img-responsive" )
+            image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive" )
         end
       end
     end
