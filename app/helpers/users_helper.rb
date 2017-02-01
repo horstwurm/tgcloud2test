@@ -78,9 +78,9 @@ def build_medialist2(items, cname, par)
 
             case items.table_name
                 when "users"
-                  html_string = html_string + link_to(item) do
-                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign")
-                  end  
+                  html_string = html_string + item.name + " " + item.lastname
+                    #item.name + content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign")
+                  #end  
                   #"<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
                 when "companies", "mobjects", "searches", "mdetails"
                   html_string = html_string + item.name
@@ -661,6 +661,9 @@ def showFirstImage2(size, item, details)
 end
 
 def showImage2(size, item, linkit)
+  
+   html_string = ""
+  
     #case size
     #    when :small
     #        si = "50x50"
@@ -672,7 +675,7 @@ def showImage2(size, item, linkit)
     #        si = "500x500"
     #end
     if linkit
-      link_to(item) do
+      html_string = html_string + link_to(item) do
         if item.avatar_file_name
             image_tag item.avatar(size), class:"card-img-top img-responsive"
         else
@@ -688,18 +691,19 @@ def showImage2(size, item, linkit)
       end
     else
       if item.avatar_file_name
-          image_tag item.avatar(size), class:"card-img-top img-responsive"
+          html_string = image_tag item.avatar(size), class:"card-img-top img-responsive"
       else
         case item.class.name
           when "User"
-            image_tag(image_def("Privatpersonen", nil, nil), :size => size, class:"card-img-top img-responsive" )
+            html_string = image_tag(image_def("Privatpersonen", nil, nil), :size => size, class:"card-img-top img-responsive" )
           when "Company"
-            image_tag(image_def("Institutionen", nil, nil), :size => size, class:"card-img-top img-responsive" )
+            html_string = image_tag(image_def("Institutionen", nil, nil), :size => size, class:"card-img-top img-responsive" )
           else
-            image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive" )
+            html_string = image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive" )
         end
       end
     end
+    return html_string.html_safe
 end
 
 def header(header, format)
