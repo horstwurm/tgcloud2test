@@ -675,7 +675,7 @@ def showImage2(size, item, linkit)
     #        si = "500x500"
     #end
     if linkit
-      html_string = html_string + link_to(item) do
+      html_string = link_to(item) do
         if item.avatar_file_name
             image_tag item.avatar(size), class:"card-img-top img-responsive"
         else
