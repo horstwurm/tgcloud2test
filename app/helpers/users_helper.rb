@@ -662,8 +662,8 @@ end
 
 def showImage2(size, item, linkit)
   
-   html_string = ""
-  
+   html_string = "<a href=/users/" + item.id.to_s + "> test </a>"
+   return html_string.html_safe
     #case size
     #    when :small
     #        si = "50x50"
