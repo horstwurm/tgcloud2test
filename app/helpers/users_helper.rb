@@ -2,16 +2,16 @@ module UsersHelper
   
 def carousel2(mobject, size)
 
-      case size
-        when :small
-            si = "50x50"
-        when :thumb
-            si = "100x100"
-        when :medium
-            si = "250x250"
-        when :big
-            si = "500x500"
-    end
+    #case size
+    #    when :small
+    #        si = "50x50"
+    #    when :thumb
+    #        si = "100x100"
+    #    when :medium
+    #        si = "250x250"
+    #    when :big
+    #        si = "500x500"
+    #end
     html = ""
     if mobject.mdetails == nil
       html = html + image_tag(image_def("Objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
@@ -78,7 +78,10 @@ def build_medialist2(items, cname, par)
 
             case items.table_name
                 when "users"
-                  html_string = html_string + "<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
+                  html_string = html_string + link_to(item) do
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign")
+                  end  
+                  #"<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
                 when "companies", "mobjects", "searches", "mdetails"
                   html_string = html_string + item.name
                 when "customers"
@@ -633,26 +636,26 @@ def build_medialist2(items, cname, par)
 end
 
 def showFirstImage2(size, item, details)
-      case size
-        when :small
-            si = "50x50"
-        when :thumb
-            si = "100x100"
-        when :medium
-            si = "250x250"
-        when :big
-            si = "500x500"
-    end
+      #case size
+      #  when :small
+      #      si = "50x50"
+      #  when :thumb
+      #      si = "100x100"
+      #  when :medium
+      #      si = "250x250"
+      #  when :big
+      #      si = "500x500"
+      #end
     link_to item do
       if details.count > 0
         pic = details.first
         if pic.avatar_file_name
           image_tag pic.avatar(size), class:"img-rounded"
         else
-          image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => si, class:"card-img-top img-responsive" )
+          image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => size, class:"card-img-top img-responsive" )
         end
       else
-        image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => si, class:"card-img-top img-responsive" )
+        image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => size, class:"card-img-top img-responsive" )
       end
     end
 end
