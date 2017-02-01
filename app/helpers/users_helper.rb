@@ -65,11 +65,11 @@ def build_medialist2(items, cname, par)
       end
     end
     
-    #if items.table_name == "users"
-    #html_string = html_string + "<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
-    #end    
+    if items.table_name == "users"
+    html_string = html_string + "<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
+    end    
   
-    if item and show
+    if item and show and false
       
       html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">'
         html_string = html_string + '<div class="thumbnail thumbnail-list">'
@@ -662,8 +662,8 @@ end
 
 def showImage2(size, item, linkit)
   
-   html_string = "<a href=/users/" + item.id.to_s + "> test </a>"
-   return html_string.html_safe
+   #html_string = "<a href=/users/" + item.id.to_s + "> test </a>"
+   #return html_string.html_safe
     #case size
     #    when :small
     #        si = "50x50"
