@@ -65,8 +65,10 @@ def build_medialist2(items, cname, par)
       end
     end
     
+    if items.table_name == "users"
     html_string = html_string + "<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
-    
+    end    
+  
     if item and show and false
       
       html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">'
