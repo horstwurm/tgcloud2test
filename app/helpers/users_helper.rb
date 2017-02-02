@@ -312,12 +312,15 @@ def build_medialist2(items, cname, par)
                         when "Veranstaltungen" 
                           if item.eventpart
                             html_string = html_string + '<i class="glyphicon glyphicon-info-sign"></i> '+"Anmeldung erforderlich<br>"
+                          else
+                            html_string = html_string + '<i class="glyphicon glyphicon-info-sign"></i> '+"keine Anmeldung erforderlich<br>"
+                          end
+                          @angemeldet = nil
+                          if user_signed_in?
                             @angemeldet = current_user.participants.where('mobject_id=?', item.id).first
                             if @angemeldet
                               html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '+"angemeldet<br>"
                             end
-                          else
-                            html_string = html_string + '<i class="glyphicon glyphicon-info-sign"></i> '+"keine Anmeldung erforderlich<br>"
                           end
                           html_string = html_string + '<i class="glyphicon glyphicon-calendar"></i> '
                           html_string = html_string +  item.date_from.strftime("%d.%m.%Y") + " - " + item.date_to.strftime("%d.%m.%Y") + '<br>'
