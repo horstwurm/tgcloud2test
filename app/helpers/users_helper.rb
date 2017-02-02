@@ -90,8 +90,10 @@ def build_medialist2(items, cname, par)
                     #item.name + content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign")
                   #end  
                   #"<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
-                when "companies", "mobjects", "searches", "mdetails"
+                when "companies", "mobjects", "mdetails"
                   html_string = html_string + item.name
+                when "searches"
+                  html_string = html_string + "Abfrage"
                 when "customers"
                   @comp = Company.find(item.partner_id)
                   html_string = html_string + @comp.name
@@ -196,26 +198,32 @@ def build_medialist2(items, cname, par)
                           #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
                         end
                       else
+                        html_string = html_string + "<soft_padding>"
                         case item.search_domain
                           when "Privatpersonen"
                             html_string = html_string + link_to(users_path(:filter_id => item.id)) do
-                              content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
+                              #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
+                              content_tag(:i, nil, class:"glyphicon glyphicon-question-sign", style:"font-size:8em") 
                               #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
                             end
                           when "Tickets"
                               #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
+                              content_tag(:i, nil, class:"glyphicon glyphicon-question-sign", style:"font-size:8em") 
                               html_string = html_string + image_tag(image_def("Privatpersonen", item.mtype, item.msubtype))
                           when "Institutionen"
                             html_string = html_string + link_to(companies_path(:filter_id => item.id)) do
-                              content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
+                              #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
+                              content_tag(:i, nil, class:"glyphicon glyphicon-question-sign", style:"font-size:8em") 
                               #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
                             end
                           when "Objekte"
                             html_string = html_string + link_to(mobjects_path(:filter_id => item.id)) do
-                              content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.mtype), style:"font-size:8em") 
+                              #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.mtype), style:"font-size:8em") 
+                              content_tag(:i, nil, class:"glyphicon glyphicon-question-sign", style:"font-size:8em") 
                               #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
                             end
                         end
+                        html_string = html_string + "</soft_padding>"
                       end
                   when "transactions"
                     html_string = html_string + showImage2(:medium, @ac_ver.customer.owner, true)
@@ -425,6 +433,7 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + @item.geo_address + '<br>'
     
                     when "searches"
+                      html_string = html_string + "<anzeigetext>" + item.name + "</anzeigetext><br>"
                       if item.search_domain == "Object"
                         html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
                         html_string = html_string + item.mtype + "<br>" 
