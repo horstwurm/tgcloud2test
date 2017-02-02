@@ -317,7 +317,7 @@ def build_medialist2(items, cname, par)
                               html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '+"angemeldet<br>"
                             end
                           else
-                            #html_string = html_string + '<i class="glyphicon glyphicon-info-sign"></i> '+"keine Anmeldung erforderlich"<br>
+                            html_string = html_string + '<i class="glyphicon glyphicon-info-sign"></i> '+"keine Anmeldung erforderlich<br>"
                           end
                           html_string = html_string + '<i class="glyphicon glyphicon-calendar"></i> '
                           html_string = html_string +  item.date_from.strftime("%d.%m.%Y") + " - " + item.date_to.strftime("%d.%m.%Y") + '<br>'
@@ -475,9 +475,23 @@ def build_medialist2(items, cname, par)
                     access=true
                   end 
                 when "mobjects", "partners", "mstats", "transactions"
-                  if (item.owner_type == "User"and item.owner_id == current_user.id) or (item.owner_type == "Company"and item.owner.user_id == current_user.id)
+                  if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                     access = true
                   end
+                  if item.mtype == "Veranstaltungen" 
+                    if item.eventpart
+                      if @angemeldet
+          	            html_string = html_string + link_to(mobjects_path(:del_part_id => item.id, :topic => item.mtype)) do 
+                          content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-pencil")
+                        end
+                      else
+          	            html_string = html_string + link_to(mobjects_path(:set_part_id => item.id, :topic => item.mtype)) do 
+                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+                        end
+                      end
+                    end
+                  end
+                  
                 when "nopartners"
                   access = true
                 when "madvisors"
@@ -498,21 +512,7 @@ def build_medialist2(items, cname, par)
                     access = true
                   end
                  
-                when "mobjects"
-                  if item.mtype == "Veranstaltungen" 
-                    if item.eventpart
-                      if @angemeldet
-          	            html_string = html_string + link_to(mobjects_path(:del_part_id => item.id, :topic => item.mtype)) do 
-                          content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-pencil")
-                        end
-                      else
-          	            html_string = html_string + link_to(mobjects_path(:set_part_id => item.id, :topic => item.mtype)) do 
-                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
-                        end
-                      end
-                    end
-                  end
-              end
+               end
             end
 
             #html_string = html_string + link_to(item, :topic => "Info") do 
