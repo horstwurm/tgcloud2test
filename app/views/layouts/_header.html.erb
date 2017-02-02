@@ -4,60 +4,30 @@
 		<div class="row">
 			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-left">
 				<%= link_to home_index3_path do %>
-			            <i class="glyphicon glyphicon-home" style="font-size:2em"></i>
-				<% end %>
-				<% if false %>
-				<% if user_signed_in? and $controller_list.include?(controller_name) and action_name == "index" %>
-					<% case controller_name %>
-						<% when "users" %>
-			  		        <%= link_to searches_path :search_domain => "Privatpersonen", :controller_name => controller_name do %>
-			  		          <i class="glyphicon glyphicon-filter" style="font-size:2em"></i>
-		            		<% end %>
-						<% when "companies" %>
-			  		        <%= link_to searches_path :search_domain => "Institutionen", :controller_name => controller_name do %>
-			  		          <i class="glyphicon glyphicon-filter" style="font-size:2em"></i>
-			  		        <% end %>
-						<% when "mobjects", "showcal" %>
-			  		        <%= link_to searches_path :search_domain => "Objekte", :mtype => session[:mtype], :msubtype => session[:msubtype], :controller_name => controller_name do %>
-			  		          <i class="glyphicon glyphicon-filter" style="font-size:2em"></i>
-			  		        <% end %>
-					<% end %>
-				<% end %>
+			            <i class="glyphicon glyphicon-home" style="font-size:3em"></i>
 				<% end %>
 			</div>
 
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-left">
-				<% if $controller_list.include?(controller_name) and (action_name == "index") %>
-					<% @items = url_for(action: action_name, controller: controller_name) %>
-					<%= form_tag @items, method: 'get' do %>
-						<div class="form-inline pull-right nopadding">
-							<div class="form-group">
-								<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-								  <%= search_field_tag 'search', nil, class: 'form-control pull-right', placeholder: 'Suchen...' %>
-								</div>
-								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-								  <%= button_tag "", type: 'submit', class: "btn btn-nav btn-xs glyphicon glyphicon-search" %>
-								</div>
-							</div>
-						</div>
+				<% if user_signed_in? %>
+					<%= link_to current_user do %>
+						<i class="glyphicon glyphicon-user" style="font-size:3em"></i>
+						<user_logged_in><%= current_user.name[0] + "." + current_user.lastname %></user_logged_in>
 					<% end %>
+				<% else %>
+					<i class="glyphicon glyphicon-user" style="font-size:3em"></i>
+					<user_logged_in>kein Benutzer angemeldet!</user_logged_in>
 				<% end %>
 			</div>
 			
 			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
 				<% if user_signed_in? %>
-					<%= link_to current_user do %>
-				            <i class="glyphicon glyphicon-user" style="font-size:2em"></i>
-				            <!--<span><i class="glyphicon glyphicon-user" style="font-size:2em"></i> <%= current_user.name[0] + "." + current_user.lastname %></span>-->
-					<% end %>
-					<% if false %>
 					<%= link_to(destroy_user_session_path, method: :delete) do %>
-				            <i class="glyphicon glyphicon-log-out" style="font-size:2em"></i>
-					<% end %>
+				    	<i class="glyphicon glyphicon-log-out pull-right" style="font-size:3em"></i>
 					<% end %>
 				<% else %>
 					<%= link_to new_user_session_path do %>
-			            <i class="glyphicon glyphicon-log-in" style="font-size:2em"></i>
+			            <i class="glyphicon glyphicon-log-in pull-right" style="font-size:3em"></i>
 					<% end %> 
 				<% end %>
 			</div>
@@ -65,10 +35,16 @@
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<% if user_signed_in? %>
-					<user_logged_in><%= current_user.name + " " + current_user.lastname %></user_logged_in>
-				<% else %>
-					<user_logged_in>kein Benutzer angemeldet!</user_logged_in>
+				<% if $controller_list.include?(controller_name) and (action_name == "index") %>
+					<% @items = url_for(action: action_name, controller: controller_name) %>
+					<%= form_tag @items, method: 'get' do %>
+						<div class="form-inline">
+							<div class="form-group">
+								  <%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'Suchen...' %>
+								  <% button_tag "", type: 'submit', class: "btn btn-nav btn-xs glyphicon glyphicon-search" %>
+							</div>
+						</div>
+					<% end %>
 				<% end %>
 				<% if !flash.empty? %>
 				    <% flash.each do |name, msg| %>
@@ -83,7 +59,7 @@
 </div>
 <br><br><br><br>
 
-<% if false %>
+<% if true %>
 <%= render ("layouts/header2") %>
 <% end %>
 
