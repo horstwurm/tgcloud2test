@@ -1556,52 +1556,47 @@ def build_hauptmenue
     end
     
     if creds.include?("Hauptmenue"+"Kalender")
-        #domain = "Kalender"
-        #path = showcal_index_path
-        #path = home_index7_path
-        #html_string = html_string + simple_menue(domain, path)
-        
       hasharray = []
       domain = "Kalender"
       domain_text = domain
-      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+      if creds.include?("Hauptmenue"+"KalenderGeburtstage")
         if user_signed_in?
           path = showcal_index_path + "?dom=Geburtstage"
           hash = Hash.new
           hash = {"path" => path, "text" => "Geburtstage Favoriten", "icon" => "Privatpersonen" }
           hasharray << hash
         end
-      #end
-      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+      end
+      if creds.include?("Hauptmenue"+"KalenderAktionen")
         path = showcal_index_path + "?dom=Aktionen"
         hash = Hash.new
         hash = {"path" => path, "text" => "Aktionen", "icon" => "Aktionen" }
         hasharray << hash
-      #end
-      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+      end
+      if creds.include?("Hauptmenue"+"KalenderAusschreibungen")
         path = showcal_index_path + "?dom=Ausschreibungen"
         hash = Hash.new
         hash = {"path" => path, "text" => "Ausschreibungen", "icon" => "Ausschreibungen" }
         hasharray << hash
-      #end
-      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+      end
+      if creds.include?("Hauptmenue"+"KalenderVeranstaltungen")
         path = showcal_index_path + "?dom=Veranstaltungen"
         hash = Hash.new
         hash = {"path" => path, "text" => "Veranstaltungen", "icon" => "Veranstaltungen" }
         hasharray << hash
-      #end
-      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+      end
+      if creds.include?("Hauptmenue"+"KalenderStellenanzeigen")
         path = showcal_index_path + "?dom=Stellenanzeigen"
         hash = Hash.new
         hash = {"path" => path, "text" => "Stellenanzeigen", "icon" => "Stellenanzeigen" }
         hasharray << hash
-      #end
-      #if creds.include?("Hauptmenue"+"CrowdfundingSpenden")
+      end
+      if creds.include?("Hauptmenue"+"KalenderCrowdfunding")
         path = showcal_index_path + "?dom=Crowdfunding"
         hash = Hash.new
         hash = {"path" => path, "text" => "Crowdfunding", "icon" => "Crowdfunding" }
         hasharray << hash
-      #end
+      end
       html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
     
@@ -1888,6 +1883,24 @@ def init_apps
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Hauptmenue", "right" => "Kalender"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderGeburtstage"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderAktionen"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderCrowdfunding"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderStellenanzeigen"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderVeranstaltungen"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderAusschreibungen"}
     @array << hash
 
     hash = Hash.new
