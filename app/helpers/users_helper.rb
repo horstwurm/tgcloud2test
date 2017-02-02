@@ -481,15 +481,17 @@ def build_medialist2(items, cname, par)
                   if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                     access = true
                   end
-                  if item.mtype == "Veranstaltungen" 
-                    if item.eventpart
-                      if @angemeldet
-          	            html_string = html_string + link_to(mobjects_path(:del_part_id => item.id, :topic => item.mtype)) do 
-                          content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-pencil")
-                        end
-                      else
-          	            html_string = html_string + link_to(mobjects_path(:set_part_id => item.id, :topic => item.mtype)) do 
-                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+                  if cname == "mobjects"
+                    if item.mtype == "Veranstaltungen" 
+                      if item.eventpart
+                        if @angemeldet
+            	            html_string = html_string + link_to(mobjects_path(:del_part_id => item.id, :topic => item.mtype)) do 
+                            content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-pencil")
+                          end
+                        else
+            	            html_string = html_string + link_to(mobjects_path(:set_part_id => item.id, :topic => item.mtype)) do 
+                            content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+                          end
                         end
                       end
                     end
@@ -1117,6 +1119,37 @@ end
 
 def getIcon(iconstring)
     case iconstring
+
+      when "AngeboteStandard"
+        icon = "info-sign"
+      when "AngeboteAktionen"
+        icon = "exclamation-sign"
+      when "StellenanzeigenSuchen"
+        icon = "search"
+      when "StellenanzeigenAnbieten"
+        icon = "filter"
+      when "KleinanzeigenSuchen"
+        icon = "search"
+      when "KleinanzeigenAnbieten"
+        icon = "filter"
+      when "CrowdfundingSpenden"
+        icon = "gift"
+      when "CrowdfundingBelohnungen"
+        icon = "qrcode"
+      when "CrowdfundingZinsen"
+        icon = "signal"
+      when "KalenderGeburtstage"
+        icon = "user"
+      when "KalenderAktionen"
+        icon = "shopping-cart"
+      when "KalenderAusschreibungen"
+        icon = "pencil"
+      when "KalenderVeranstaltungen"
+        icon = "glass"
+      when "KalenderStellenanzeigen"
+        icon = "briefcase"
+      when "KalenderCrowdfunding"
+        icon = "grain"
 
       when "Kalender"
         icon = "calendar"

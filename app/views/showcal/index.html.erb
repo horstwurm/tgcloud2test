@@ -89,7 +89,7 @@
   
   <div class="row">
     <header>
-    <%= header("<queryshow><i class='glyphicon glyphicon-filter'></i></queryshow> Kalender " + @domain + " <span class='badge'>" + @anz.to_s + "</span><queryhide><i class='glyphicon glyphicon-menu-up pull-right'></i></queryhide>", true) %>
+    <%= header("<queryshow><i class='glyphicon glyphicon-filter', style='font-size:2em'></i></queryshow> Kalender " + @domain + " <span class='badge'>" + @anz.to_s + "</span><queryhide><i class='glyphicon glyphicon-menu-up pull-right'></i></queryhide>", true) %>
     <query>
       <% if user_signed_in? and @domain != "Geburtstage" %>
         <div class='col-xs-12'>

@@ -208,8 +208,10 @@ message {
  }
 
 user_logged_in {
+    font-size: 150%;
     background: black!important;
     color: $blaugruen!important;
+    color: $color5!important;
  }
 
 list {
@@ -220,6 +222,7 @@ list {
 li_header {
     background: $color1;
     color: $color2;
+    color: white;
     font-size: 120%;
 }
 

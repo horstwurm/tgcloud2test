@@ -6,7 +6,7 @@
   
   <div class="row">
     <header>
-    <%= header("<queryshow><i class='glyphicon glyphicon-filter'></i></queryshow> Institutionen <span class='badge'>" + @compsanz.to_s + "</span><queryhide><i class='glyphicon glyphicon-menu-up pull-right'></i></queryhide>", true) %>
+    <%= header("<queryshow><i class='glyphicon glyphicon-filter', style='font-size:2em'></i></queryshow> Institutionen <span class='badge'>" + @compsanz.to_s + "</span><queryhide><i class='glyphicon glyphicon-menu-up pull-right'></i></queryhide>", true) %>
     <query>
     <% if user_signed_in? %>
       <div class='col-xs-12'>
