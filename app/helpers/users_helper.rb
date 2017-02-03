@@ -239,7 +239,7 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
                       html_string = html_string + item.description + '<br>'
                     when "users"
-    html_string = html_string + "<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
+    #html_string = html_string + "<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
                       html_string = html_string + '<i class="glyphicon glyphicon-home"></i> '
                       if item.address1 and item.address1.length > 0 
                         html_string = html_string + item.address1 + '<br>' 
