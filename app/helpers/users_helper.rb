@@ -84,7 +84,7 @@ def build_medialist2(items, cname, par)
 
             case items.table_name
                 when "users"
-                  html_string = html_string + item.name + " " + item.lastname
+                  html_string = html_string + showImage2(:medium, item, true)+ item.name + " " + item.lastname
                     #item.name + content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign")
                   #end  
                   #"<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
