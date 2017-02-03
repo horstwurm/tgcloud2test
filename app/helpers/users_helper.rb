@@ -66,7 +66,7 @@ def build_medialist2(items, cname, par)
     end
     
     if items.table_name == "users"
-    html_string = html_string + "<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
+    html_string = html_string + "<a href=/users/" + item.id.to_s + "> " + showImage2(:medium, item, true) + item.name + " " + item.lastname + "</a>"
     end
     if items.table_name == "companies"
     html_string = html_string + "<a href=/companies/" + item.id.to_s + "> " + item.name + "</a>"
