@@ -77,6 +77,11 @@ def build_medialist2(items, cname, par)
     end
     end
   
+    if cname != "searches"
+    html_string = html_string + showImage2(:medium, item, true)   
+    show = false 
+    end  
+    
     if item and show
       
       html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">'
@@ -239,7 +244,6 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
                       html_string = html_string + item.description + '<br>'
                     when "users"
-    #html_string = html_string + "<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
                       html_string = html_string + '<i class="glyphicon glyphicon-home"></i> '
                       if item.address1 and item.address1.length > 0 
                         html_string = html_string + item.address1 + '<br>' 
@@ -698,11 +702,10 @@ def showImage2(size, item, linkit)
     #    when :big
     #        si = "500x500"
     #end
-    html_string = "<a href=/users/"+item.id.to_s+">Link</a>"
     if linkit
-      html_string = html_string + link_to(item) do
+      html_string = link_to(item) do
         if item.avatar_file_name
-            image_tag item.avatar(size), class:"card-img-top img-responsive"
+            image_tag(item.avatar(size), class:"card-img-top img-responsive")
         else
           case item.class.name
             when "User"
@@ -716,7 +719,7 @@ def showImage2(size, item, linkit)
       end
     else
       if item.avatar_file_name
-          html_string = html_string + image_tag(item.avatar(size), class:"card-img-top img-responsive")
+          html_string = image_tag(item.avatar(size), class:"card-img-top img-responsive")
       else
         case item.class.name
           when "User"
