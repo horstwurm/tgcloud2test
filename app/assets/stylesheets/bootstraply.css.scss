@@ -477,6 +477,11 @@ td {
 .thumbnail:hover {
     border-color: $color1!important;
     box-shadow: 2px 2px 10px $color1;
+    .panel-listhead {
+        color:white!important;
+        font-size:200%!important;
+        background:$color1!important;
+    }
 }
 
 .thumbnail-navnav {
@@ -485,10 +490,10 @@ td {
    padding: 0px!important;
 }
 
-// .thumbnail-list {
-//     margin: 5px!important;
-//     padding: 0px!important;
-// }
+.thumbnail-list {
+    margin: 5px!important;
+    padding: 0px!important;
+}
 
 .thumbnail-active {
     color: $color1!important;
