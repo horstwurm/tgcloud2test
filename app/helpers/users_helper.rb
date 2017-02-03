@@ -84,7 +84,7 @@ def build_medialist2(items, cname, par)
     
     if item and show
       
-      #html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">'
+      html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">'
         html_string = html_string + '<div class="thumbnail thumbnail-list">'
         
           html_string = html_string + '<div class="panel-body panel-listhead">'
@@ -655,7 +655,7 @@ def build_medialist2(items, cname, par)
           html_string = html_string + '</div>'
 
         html_string = html_string + '</div>'
-      #html_string = html_string + '</div>'
+      html_string = html_string + '</div>'
 
     end
   end
