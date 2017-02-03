@@ -82,11 +82,11 @@ def build_medialist2(items, cname, par)
       html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">'
         html_string = html_string + '<div class="thumbnail thumbnail-list">'
         
-          html_string = html_string + '<div class="panel-body panel-listhead">'
+          #html_string = html_string + '<div class="panel-body panel-listhead">'
 
             case items.table_name
                 when "users"
-                  html_string = html_string + showImage2(:medium, item, true)+ item.name + " " + item.lastname
+                  html_string = html_string + item.name + " " + item.lastname
                     #item.name + content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign")
                   #end  
                   #"<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
@@ -144,7 +144,7 @@ def build_medialist2(items, cname, par)
                   end
             end
 
-          html_string = html_string + '</div>'
+          #html_string = html_string + '</div>'
 
           html_string = html_string + '<div class="row">'
             html_string = html_string + '<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">'
