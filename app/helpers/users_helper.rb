@@ -82,7 +82,7 @@ def build_medialist2(items, cname, par)
       html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">'
         html_string = html_string + '<div class="thumbnail thumbnail-list">'
         
-          #html_string = html_string + '<div class="panel-body panel-listhead">'
+          html_string = html_string + '<div class="panel-body panel-listhead">'
 
             case items.table_name
                 when "users"
@@ -144,7 +144,7 @@ def build_medialist2(items, cname, par)
                   end
             end
 
-          #html_string = html_string + '</div>'
+          html_string = html_string + '</div>'
 
           html_string = html_string + '<div class="row">'
             html_string = html_string + '<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">'
@@ -698,8 +698,9 @@ def showImage2(size, item, linkit)
     #    when :big
     #        si = "500x500"
     #end
+    html_string = "<a href=/users/"+item.id.to_s+">Link</a>"
     if linkit
-      html_string = link_to(item) do
+      html_string = html_string + link_to(item) do
         if item.avatar_file_name
             image_tag item.avatar(size), class:"card-img-top img-responsive"
         else
@@ -715,7 +716,7 @@ def showImage2(size, item, linkit)
       end
     else
       if item.avatar_file_name
-          html_string = image_tag item.avatar(size), class:"card-img-top img-responsive"
+          html_string = html_string + image_tag(item.avatar(size), class:"card-img-top img-responsive")
       else
         case item.class.name
           when "User"
