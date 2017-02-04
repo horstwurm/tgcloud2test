@@ -1,0 +1,32 @@
+I"Ý(function() {
+  jQuery(document).on('turbolinks:load', function() {
+    var $this, messages, messages_to_bottom, textarea;
+    messages_to_bottom = function() {
+      return messages.scrollTop(messages.prop("scrollHeight"));
+    };
+    messages = $('#conversation-body');
+    if ($('#current-user').size() > 0) {
+      App.personal_chat = App.cable.subscriptions.create({
+        channel: "NotificationsChannel"
+      }, {
+        connected: function() {},
+        disconnected: function() {},
+        received: function(data) {}
+      });
+    }
+    if (messages.length > 0) {
+      messages_to_bottom();
+      $('#new_personal_message').submit(function(e) {});
+      $this = $(this);
+      textarea = $this.find('#personal_message_body');
+      if ($.trim(textarea.val()).length > 1) {
+        App.personal_chat.send_message(textarea.val(), $this.find('#conversation_id').val());
+        textarea.val('');
+      }
+      e.preventDefault();
+      return false;
+    }
+  });
+
+}).call(this);
+:ET

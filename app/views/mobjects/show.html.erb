@@ -271,7 +271,7 @@
         <% when "Bewertungen" %>
           <%= header("Bewertungen", false) %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.mratings, "mratings", hash) %>
+            <%= build_medialist2(@mobject.mratings, "mratings", "User") %>
           </div>
 
         <% when "Ansprechpartner" %>
@@ -287,6 +287,8 @@
           </div>
 
         <% when "Kalender (Vermietungen)" %>
+
+          <% if false %>
           <%= header("Kalender KW "+ session[:cw].to_s, false) %>
           <div class="panel-body">
         		<table class="table table-striped">
@@ -335,6 +337,10 @@
               </tbody>
             </table>
           </div>
+          <% end %>
+
+          <div id='calendar'></div>
+
           <div class="panel-body">
           	<table class="table table-striped">
               <thead>
@@ -348,6 +354,17 @@
                   <tr>
                     <td>
           				    <% if user_signed_in? %>
+          				      <% if (ca.mobject.owner_type == "User" and ca.mobject.owner_id == current_user.id) or (ca.mobject.owner_type == "Company" and ca.mobject.owner.user_id == current_user.id) %>
+          				        <% if !ca.confirmed %>
+                            <%= link_to mobject_path(:id => ca.mobject_id, :confirm_id => ca.id, :topic => "Kalender (Vermietungen)") do %>
+                              <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
+                            <% end %>
+                          <% else %>
+                            <%= link_to mobject_path(:id => ca.mobject_id, :noconfirm_id => ca.id, :topic => "Kalender (Vermietungen)") do %>
+                              <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
+                            <% end %>
+                          <% end %>
+          				      <% end %>
             				    <% if ca.user_id == current_user.id %>
                           <%= link_to listaccount_index_path :user_id => current_user.id, :user_id_ver => ca.mobject.owner_id, :company_id_ver => ca.mobject.owner_id, :ref => "Vergütung an "+ ca.mobject.name + " " + ca.date_from.strftime("%d.%m.%Y") + " " + ca.time_from.to_s + "Uhr -" + ca.date_to.strftime("%d.%m.%Y") + " " + ca.time_to.to_s + " Uhr", :object_name => "Mobject", :object_id => ca.mobject.id, :amount => 0 do %>
                             <i class="btn btn-primary btn-xs glyphicon glyphicon-euro"></i>
@@ -517,6 +534,25 @@ $(document).ready(function(){
         $("navshow").show();
         $("navhide").hide();
     });
+
+    $('#calendar').fullCalendar({
+        defaultView: 'basicWeek',
+        defaultView: 'basicDay',
+        defaultView: 'basicWeek',
+        defaultView: 'listYear',
+        defaultView: 'month',
+        defaultView: 'agendaWeek',
+        slotDuration: '1:00:00',
+        <% if @mobject.time_from and @mobject.time_to and false %>
+          minTime: '<%= @mobject.time_from %>',
+          maxTime: '<%= @mobject.time_to %>',
+        <% end %>
+        textColor: 'white',
+        firstDay: 1,
+        weekNumbers: true,
+        events: [<%= raw @array %> ]
+    })
   
 });
 </script>
+

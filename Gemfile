@@ -44,7 +44,7 @@ gem 'rqrcode_png'
 gem 'redis'
 
 gem 'fullcalendar-rails'
-gem 'momentjs-rails'
+#gem 'momentjs-rails'
 
 group :development, :test do
 

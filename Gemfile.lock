@@ -237,7 +237,6 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   listen (~> 3.0.5)
-  momentjs-rails
   owlcarousel-rails
   paperclip
   pg

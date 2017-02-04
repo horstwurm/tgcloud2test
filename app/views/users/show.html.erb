@@ -144,7 +144,7 @@
           <%= build_medialist2(@user.mstats, "mstats", "CF") %>
         <% when "Bewertungen" %>
             <%= header("Bewertungen", false) %>
-            <%= build_medialist2(@user.mratings, "mratings", nil) %>
+            <%= build_medialist2(@user.mratings, "mratings", "Object") %>
         <% when "Veranstaltungen (angemeldet)" %>
             <%= header("Veranstaltungen (angemeldet)", false) %>
             <%= build_medialist2(@user.participants, "participants", "Object") %>

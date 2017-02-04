@@ -71,4 +71,9 @@ class User < ActiveRecord::Base
       end
       return array_s
     end
+    
+    def online?
+      !Redis.new.get("user_#{self.id}_online").nil?
+    end    
+    
 end

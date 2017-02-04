@@ -66,23 +66,6 @@ def build_medialist2(items, cname, par)
       end
     end
     
-    if false
-    if items.table_name == "users"
-    html_string = html_string + "<a href=/users/" + item.id.to_s + "> " + showImage2(:medium, item, true) + item.name + " " + item.lastname + "</a>"
-    end
-    if items.table_name == "companies"
-    html_string = html_string + "<a href=/companies/" + item.id.to_s + "> " + item.name + "</a>"
-    end
-    if items.table_name == "mobjects"
-    html_string = html_string + "<a href=/mobjects/" + item.id.to_s + "> " + item.name + "</a>"
-    end
-    end
-  
-    if cname != "searches" and false
-    html_string = html_string + showImage2(:medium, item, true)   
-    show = false 
-    end  
-    
     if item and show
       
       html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">'
@@ -93,9 +76,6 @@ def build_medialist2(items, cname, par)
             case items.table_name
                 when "users"
                   html_string = html_string + item.name + " " + item.lastname
-                    #item.name + content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign")
-                  #end  
-                  #"<a href=/users/" + item.id.to_s + "> " + item.name + " " + item.lastname + "</a>"
                 when "companies", "mobjects", "mdetails"
                   html_string = html_string + item.name
                 when "searches"
@@ -103,7 +83,7 @@ def build_medialist2(items, cname, par)
                 when "customers"
                   @comp = Company.find(item.partner_id)
                   html_string = html_string + @comp.name
-                when "madvisors", "participants"
+                when "madvisors", "participants", "mratings"
                   if par == "User"
                     html_string = html_string + item.user.name + " " + item.user.lastname
                   end
@@ -117,8 +97,6 @@ def build_medialist2(items, cname, par)
                   if par == "Object"
                     html_string = html_string + item.mobject.name
                   end
-                when "mratings"
-                  html_string = html_string + item.user.name + " " + item.user.lastname
                 when "favourits"
                   @item = Object.const_get(item.object_name).find(item.object_id)
                   if Object.const_get(item.object_name).to_s == "User"
@@ -168,12 +146,8 @@ def build_medialist2(items, cname, par)
                     if par == "Object"
                       html_string = html_string + showFirstImage2(:medium, item.mobject, item.mobject.mdetails)
                     end
-                  when "mratings"
-                    html_string = html_string + showImage2(:medium, item.user, true)
                   when "mobjects"
                     html_string = html_string + showFirstImage2(:medium, item, item.mdetails)
-                  when "mratings"
-                    html_string = html_string + showFirstImage2(:medium, item.mobject, item.mobject.mdetails)
                   when "mstats"
                     if par == "CF"
                       html_string = html_string + showFirstImage2(:medium, item.mobject, item.mobject.mdetails)
@@ -181,7 +155,7 @@ def build_medialist2(items, cname, par)
                     if par == "Owner"
                       html_string = html_string + showImage2(:medium, item.owner, true)
                     end
-                  when "madvisors", "participants"
+                  when "madvisors", "participants", "mratings"
                     if par == "Object"
                       html_string = html_string + showFirstImage2(:medium, item.mobject, item.mobject.mdetails)
                     end
@@ -1194,7 +1168,7 @@ def getIcon(iconstring)
       when "Transaktionen"
         icon = "euro"
       when "eMail"
-        icon = "list"
+        icon = "envelope"
       when "Positionen (Privatpersonen)"
         icon = "map-marker"
       when "Positionen (Favoriten)"

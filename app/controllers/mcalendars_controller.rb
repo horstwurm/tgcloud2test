@@ -22,6 +22,7 @@ class McalendarsController < ApplicationController
     @mcalendar.time_from = 8
     @mcalendar.time_to = 12
     @mcalendar.status = "new"
+    @mcalendar.confirmed = false
   end
 
   # GET /mcalendars/1/edit

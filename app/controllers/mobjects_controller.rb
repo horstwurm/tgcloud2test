@@ -86,6 +86,20 @@ class MobjectsController < ApplicationController
 
   # GET /mobjects/1
   def show
+    if params[:confirm_id]
+      calEntry = Mcalendar.find(params[:confirm_id])
+      if calEntry
+        calEntry.confirmed = true
+        calEntry.save
+      end
+    end
+    if params[:noconfirm_id]
+      calEntry = Mcalendar.find(params[:noconfirm_id])
+      if calEntry
+        calEntry.confirmed = false
+        calEntry.save
+      end
+    end
     if !params[:topic]
       @topic = "Info"
     else
@@ -132,7 +146,36 @@ class MobjectsController < ApplicationController
     @mobjects_bet.each do |i|
       @bet_s = @bet_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
     end
-    @bet_s = @bet_s[0, @bet_s.length - 1]    
+    @bet_s = @bet_s[0, @bet_s.length - 1]
+    
+   counter = 0 
+   @array = ""
+   @cals = @mobject.mcalendars
+   @anz = @cals.count
+   @cals.each do |c|
+
+      @calstart = c.date_from.strftime("%Y-%m-%d")+"T"+c.time_from.to_s+":00"
+      @calend = c.date_to.strftime("%Y-%m-%d")+"T"+c.time_to.to_s+":00"
+      
+      counter = counter + 1
+      @array = @array + "{"
+      if c.confirmed
+        @array = @array + "color: '#ACC550',"
+      else
+        @array = @array + "color: '#61A6A7',"
+      end
+      @array = @array + "textColor: 'white',"
+      @array = @array + "title: '" + c.user.name + " " + c.user.lastname + "', "
+      @array = @array + "start: '" + @calstart + "', "
+      @array = @array + "end: '" + @calend + "', "
+      @array = @array + "url: '" + user_path(:id => c.user.id, :topic => "Info") +"'" 
+      @array = @array + "}"
+      if @cals.count >= counter
+        @array = @array + ", "
+      end
+      
+   end
+    
   end
 
   # GET /mobjects/new

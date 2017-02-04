@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 20170106164536) do
     t.integer  "time_from"
     t.date     "date_to"
     t.integer  "time_to"
+    t.boolean  "confirmed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
