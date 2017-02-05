@@ -105,6 +105,7 @@ class MobjectsController < ApplicationController
     else
       @topic = params[:topic]
     end
+    if false
     if !session[:cw]
       session[:cw] = Date.today.cweek.to_i
     end
@@ -132,6 +133,7 @@ class MobjectsController < ApplicationController
     @start = Date.commercial(session[:year],session[:cw],1)
     @calendars = Mcalendar.search(@mobject.id, session[:cw], session[:year]).order(date_from: :asc)
     @calanz = @calendars.count
+    end
     
     @mobjects_anz = Mstat.select("date(created_at) as datum, count(amount) as summe").where('mobject_id = ?', @mobject.id).group("date(created_at)")
     @mobjects_bet = Mstat.select("date(created_at) as datum, sum(amount) as summe").where('mobject_id = ?', @mobject.id).group("date(created_at)")
@@ -154,8 +156,16 @@ class MobjectsController < ApplicationController
    @anz = @cals.count
    @cals.each do |c|
 
-      @calstart = c.date_from.strftime("%Y-%m-%d")+"T"+c.time_from.to_s+":00"
-      @calend = c.date_to.strftime("%Y-%m-%d")+"T"+c.time_to.to_s+":00"
+      time_from = c.time_from.to_s
+      if c.time_from.to_s.length == 1
+        time_from = "0"+c.time_from.to_s
+      end
+      time_to = c.time_to.to_s
+      if c.time_to.to_s.length == 1
+        time_to = "0"+c.time_to.to_s
+      end
+      @calstart = c.date_from.strftime("%Y-%m-%d")+"T"+time_from+":00"
+      @calend = c.date_to.strftime("%Y-%m-%d")+"T"+time_to+":00"
       
       counter = counter + 1
       @array = @array + "{"

@@ -150,6 +150,7 @@
             <%= build_medialist2(@user.participants, "participants", "Object") %>
   
         <% when "Kalendereintraege" %>
+          <% if false %>
           <%= header("Kalender KW " + session[:cw].to_s, false) %>
           <!--<div class='col-xs-12'><div class="panel-body">-->
           <div class="panel-body">
@@ -178,13 +179,18 @@
             <angefragt>?</angefragt><abgelehnt>NOK</abgelehnt><bestaetigt>OK</bestaetigt><geblockt>N/A</geblockt><br><br>
           <!--</div></div>-->
           </div>
-          <%= header("Details", false) %>
+          <% end %>
+
+          <div id='calendar'></div>
+          
+          <%= header("Terminübersicht", false) %>
           <div class="panel-body">
           	<table class="table table-striped">
               <thead>
                 <tr>
           	      <small_cal>
-                  <th colspan=2>Termin/Status</th>
+          	      <th></th>
+                  <th>wie</th>
                   <th colspan=2>Doks</th>
                   <th colspan=2>wer/wann</th>
                   </small_cal>
@@ -192,29 +198,30 @@
               </thead>
               <body>
               	<% if user_signed_in? %>
-                  <% @appointments.each do |ca| %>
+                  <% @cals.each do |ca| %>
               			<% if true or (ca.user_id1 == current_user.id or ca.user_id2 == current_user.id) %>
                       <tr>
                         <td>
+                				  <% if ca.user_id1 == current_user.id %>
+                				      <% if !ca.confirmed %>
+                                <%= link_to user_path(:id => @user.id, :confirm_id => ca.id, :subject => @subject, :topic => "Kalendereintraege") do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
+                                <% end %>
+                              <% else %>
+                                <%= link_to user_path(:id => @user.id, :noconfirm_id => ca.id, :subject => @subject, :topic => "Kalendereintraege") do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
+                                <% end %>
+                              <% end %>
+                          <% end %>
                           <%= link_to edit_appointment_path(ca) do %>
                             <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
-                          <% end %>
-                				  <% if ca.user_id1 == current_user.id and ca.status == "?" %>
-                              <%= link_to user_path(:id => @user.id, :confirm_id => ca.id, :subject => @subject, :topic => "Kalendereintraege") do %>
-                                <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
-                              <% end %>
-                              <%= link_to user_path(:id => @user.id, :deny_id => ca.id, :subject => @subject, :topic => "Kalendereintraege") do %>
-                                <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
-                              <% end %>
-                          <% end %>
-          				        <% link_to edit_appointment_path(ca) do %>
-                            <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                           <% end %>
           				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
                             <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
                           <% end %>
                         </td>
                         <td>
+                          <% if false %>
                           <% case ca.status %>
                             <% when "?" %>
                                <angefragt>
@@ -225,6 +232,7 @@
                             <% when "N/A" %>
                                <geblockt>
                             <% else %>
+                          <% end %>
                           <% end %>
                           <% if ca.status != "N/A" %>
                               <% case ca.channel %>
@@ -570,6 +578,28 @@ $(document).ready(function(){
         $("navshow").show();
         $("navhide").hide();
     });
+
+    $('#calendar').fullCalendar({
+        now: '<%= DateTime.now %>',
+        allDaySlot: false,
+        timeFormat: 'H(:mm)',
+        defaultView: 'basicWeek',
+        defaultView: 'basicDay',
+        defaultView: 'basicWeek',
+        defaultView: 'listYear',
+        defaultView: 'month',
+        defaultView: 'agendaWeek',
+        slotDuration: '1:00:00',
+        contentHeight: 'auto',
+        <% if @user.time_from and @user.time_to %>
+          minTime: '<%= @user.time_from %>:00',
+          maxTime: '<%= @user.time_to %>:00',
+        <% end %>
+        textColor: 'white',
+        firstDay: 1,
+        weekNumbers: true,
+        events: [<%= raw @array %> ]
+    })
   
 });
 </script>

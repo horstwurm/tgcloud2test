@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20170106164536) do
     t.date     "app_date"
     t.integer  "time_from"
     t.integer  "time_to"
+    t.boolean  "confirmed"
     t.string   "channel"
     t.string   "channel_detail"
     t.boolean  "reminder"

@@ -341,11 +341,13 @@
 
           <div id='calendar'></div>
 
+          <%= header("Terminübersicht", false) %>
           <div class="panel-body">
           	<table class="table table-striped">
               <thead>
                 <tr>
-                  <th colspan=3>gemietet von</th>
+                  <th></th>
+                  <th colspan=2>gemietet von</th>
                   <th colspan=2>wann</th>
                 </tr>
               </thead>
@@ -536,6 +538,9 @@ $(document).ready(function(){
     });
 
     $('#calendar').fullCalendar({
+        now: '<%= DateTime.now %>',
+        allDaySlot: false,
+        timeFormat: 'H(:mm)',
         defaultView: 'basicWeek',
         defaultView: 'basicDay',
         defaultView: 'basicWeek',
@@ -543,9 +548,10 @@ $(document).ready(function(){
         defaultView: 'month',
         defaultView: 'agendaWeek',
         slotDuration: '1:00:00',
-        <% if @mobject.time_from and @mobject.time_to and false %>
-          minTime: '<%= @mobject.time_from %>',
-          maxTime: '<%= @mobject.time_to %>',
+        contentHeight: 'auto',
+        <% if @mobject.time_from and @mobject.time_to %>
+          minTime: '<%= @mobject.time_from %>:00',
+          maxTime: '<%= @mobject.time_to %>:00',
         <% end %>
         textColor: 'white',
         firstDay: 1,

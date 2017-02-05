@@ -860,11 +860,13 @@ def action_buttons2(object, item, topic)
         
         case topic
             when "Kalendereintraege"
+              if false
               html_string = html_string + link_to(user_path(:user_id => item.id, :dir => "<", :topic => topic)) do
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-left")
               end
               html_string = html_string + link_to(user_path(:user_id => item.id, :dir => ">", :topic => topic)) do
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-right")
+              end
               end
         end
         
@@ -1065,11 +1067,13 @@ def action_buttons2(object, item, topic)
                 end
               end
             when "Kalender (Vermietungen)"
+              if false
               html_string = html_string + link_to(mobject_path(:mobject_id => item.id, :dir => "<", :topic => topic)) do
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-left")
               end
               html_string = html_string + link_to(mobject_path(:mobject_id => item.id, :dir => ">", :topic => topic)) do
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-right")
+              end
               end
               if user_signed_in?
                 html_string = html_string + link_to(new_mcalendar_path(:user_id => current_user.id, :mobject_id => item.id)) do

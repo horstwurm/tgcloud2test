@@ -99,6 +99,7 @@ class UsersController < ApplicationController
      end 
 
     if params[:topic] == "Kalendereintraege"
+     if false
      if !session[:cw]
         session[:cw] = Date.today.cweek.to_i
       end
@@ -123,24 +124,93 @@ class UsersController < ApplicationController
             end
         end
       end
+      end
+      
       if params[:confirm_id]
         @appoint = Appointment.find(params[:confirm_id])
         if @appoint
-          @appoint.status = "bestaetigt"
+          @appoint.confirmed = true
           @appoint.save
         end
       end
-      if params[:deny_id]
-        @appoint = Appointment.find(params[:deny_id])
+      if params[:noconfirm_id]
+        @appoint = Appointment.find(params[:noconfirm_id])
         if @appoint
-          @appoint.status = "leider nicht möglich"
+          @appoint.confirmed = false
           @appoint.save
         end
       end
+      if false
       @start = Date.commercial(session[:year],session[:cw],1)
       @appointments = Appointment.search(@user.id, session[:cw], session[:year]).order(app_date: :asc)
       @appanz = @appointments.count
       @subject = params[:subject]
+      end
+
+      counter = 0 
+      @array = ""
+      @cals = Appointment.where('user_id1=? and active=?', @user.id, true)
+      @anz = @cals.count
+      @cals.each do |c|
+
+      time_from = c.time_from.to_s
+      if c.time_from.to_s.length == 1
+        time_from = "0"+c.time_from.to_s
+      end
+      time_to = c.time_to.to_s
+      if c.time_to.to_s.length == 1
+        time_to = "0"+c.time_to.to_s
+      end
+      @calstart = c.app_date.strftime("%Y-%m-%d")+"T"+time_from+":00"
+      @calend = c.app_date.strftime("%Y-%m-%d")+"T"+time_to+":00"
+      
+      counter = counter + 1
+      @array = @array + "{"
+      if c.user_id1 == c.user_id2
+        @array = @array + "color: '#E0E0E0',"
+      else
+        if c.confirmed
+          @array = @array + "color: '#ACC550',"
+        else
+          @array = @array + "color: '#61A6A7',"
+        end
+      end
+      @array = @array + "textColor: 'white',"
+      user = User.find(c.user_id2)
+      case c.channel
+        when "Geschäftsstelle"
+           icon = '<i class="glyphicon glyphicon-briefcase"></i>'
+        when "Treffpunkt"
+           icon = '<i class="glyphicon glyphicon-map-marker"></i>'
+        when "Wohnort Berater"
+           icon = '<i class="glyphicon glyphicon-home"></i>'
+        when "Wohnort Kunde"
+           icon = '<i class="glyphicon glyphicon-home"></i>'
+        when "Telefon"
+           icon = '<i class="glyphicon glyphicon-phone-alt"></i>'
+        when "VideoChat"
+           icon = '<i class="glyphicon glyphicon-facetime-video"></i>'
+        else
+           icon = '<i class="glyphicon glyphicon-question-sign"></i>'
+      end
+      @array = @array + "icon: '" + icon + "', "
+      if user
+        @array = @array + "title: '" + user.name + " " + user.lastname + "', "
+      else
+        @array = @array + "title: 'unknown', "
+      end
+      @array = @array + "start: '" + @calstart + "', "
+      @array = @array + "end: '" + @calend + "', "
+      @array = @array + "url: '" + user_path(:id => c.user_id2, :topic => "Info") +"'" 
+      @array = @array + "}"
+      if @cals.count >= counter
+        @array = @array + ", "
+      end
+      
+   end
+      
+      
+      
     end
 
     if params[:topic] == "Favoriten"

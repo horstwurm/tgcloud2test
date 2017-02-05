@@ -43,8 +43,8 @@ gem 'rqrcode-with-patches', '~> 0.5.4'
 gem 'rqrcode_png'
 gem 'redis'
 
-gem 'fullcalendar-rails'
-#gem 'momentjs-rails'
+gem 'fullcalendar.io-rails'
+gem 'momentjs-rails'
 
 group :development, :test do
 
