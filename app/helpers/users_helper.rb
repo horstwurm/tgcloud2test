@@ -1465,7 +1465,7 @@ def build_hauptmenue
     #   html_string = html_string + simple_menue(domain, path)
     # end
 
-    if creds.include?("Hauptmenue"+"News")
+    if creds.include?("Hauptmenue"+"News") and user_signed_in?
         domain = "News"
         path = home_index10_path
         html_string = html_string + simple_menue(domain, path)
