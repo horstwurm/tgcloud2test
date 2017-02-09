@@ -94,21 +94,27 @@ listh3 {
         height:100%;
         font-weight:bold;
     }
+    
     footer_header {
         font-size:150%;
-        color:$color5;
+        color:$color5!important;
+        background:$color4!important;
         font-weight:bold;
     }
+    
     input#search {
         border-color: $color4!important;
         color: $color5!important;
     }
+    
     input#search:hover {
         border-color: $color1!important;
     }
+    
     input#search:focus {
         color: $color1!important;
     }
+    
     user_logged_in {
         font-size: 150%;
         color: $blaugruen!important;
