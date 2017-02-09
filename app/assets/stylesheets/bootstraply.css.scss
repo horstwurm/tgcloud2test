@@ -68,46 +68,52 @@ listh3 {
 }
 
 /*******************************************************************************************************/
-/* Navigation */
+/* Navigation Header Footer */
 /*******************************************************************************************************/
 .nav-panel-black {
    background-color: black!important;
+   background:$color4!important;
    border-color: black!important;
    border-radius: 0px!important;
    :hover {
        border-color: black!important;
    }
-}
+   a:link, a:hover {
+    background:$color4!important;
+    color:$color1!important;
+   }
+   a:visited {
+    background:$color4!important;
+   }
 
-/*******************************************************************************************************/
-/* Footer */
-/*******************************************************************************************************/
-footer {
-    font-size:100%!important;
-    background: black!important;
-    color: $color5!important;
-    .panel-body {
-        background: black!important;
-        border-color: black!important;
-        box-shadow: 0px 0px 0px black!important;
+   marquee {
+        background: black;
+        background:$color4!important;  
+        color: $blaugruen;
+        font-size:100%;
+        height:100%;
+        font-weight:bold;
     }
- }
- 
-footer_header {
-    font-size:150%!important;
-    background: black!important;
-    color: $color5!important;
-    font-weight: bold;
-}
- 
-footer_text {
-    background: black!important;
-    color: $color5!important;
-}
-
-footer_text:hover {
-    background: black!important;
-    color: $color1!important;
+    footer_header {
+        font-size:150%;
+        color:$color5;
+        font-weight:bold;
+    }
+    input#search {
+        border-color: $color4!important;
+        color: $color5!important;
+    }
+    input#search:hover {
+        border-color: $color1!important;
+    }
+    input#search:focus {
+        color: $color1!important;
+    }
+    user_logged_in {
+        font-size: 150%;
+        color: $blaugruen!important;
+        // color: $color5!important;
+     }
 }
 
 /*******************************************************************************************************/
@@ -188,30 +194,10 @@ a:active {
 /*******************************************************************************************************/
 /* Text Elements */
 /*******************************************************************************************************/
-input#search {
-    background-color: black!important;
-    border-color: $color5!important;
-    color: $color1!important;
-    border-color: black!important;
-}
-input#search:hover {
-    border-color: $color1!important;
-}
-
-input#search:focus {
-    color: $color1!important;
-}
 
 message {
-    background: black!important;
-    color: $color1!important;
- }
-
-user_logged_in {
-    font-size: 150%;
-    background: black!important;
-    color: $blaugruen!important;
-    color: $color5!important;
+    background: $color4!important;
+    color: $orange!important;
  }
 
 list {
@@ -256,13 +242,6 @@ angebote_options, stellenanzeigen_options, kleinanzeigen_options, crowdfunding_o
 .color_today {
     background-color:$blaugruen;
     color: white;
-}
-
-marquee {
-    background: black;
-    color: $color1;
-    font-size:100%;
-    height:100%;
 }
 
 .form-control {

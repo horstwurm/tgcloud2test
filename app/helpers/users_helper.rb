@@ -655,10 +655,10 @@ def showFirstImage2(size, item, details)
         if pic.avatar_file_name
           image_tag pic.avatar(size), class:"img-rounded"
         else
-          image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => size, class:"card-img-top img-responsive" )
+          image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
         end
       else
-        image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => size, class:"card-img-top img-responsive" )
+        image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
       end
     end
     return html_string.html_safe
@@ -1114,6 +1114,8 @@ end
 def getIcon(iconstring)
     case iconstring
 
+      when "News"
+        icon = "alert"
       when "AngeboteStandard"
         icon = "info-sign"
       when "AngeboteAktionen"
@@ -1462,6 +1464,12 @@ def build_hauptmenue
     #   path = home_index6_path
     #   html_string = html_string + simple_menue(domain, path)
     # end
+
+    if creds.include?("Hauptmenue"+"News")
+        domain = "News"
+        path = home_index10_path
+        html_string = html_string + simple_menue(domain, path)
+    end
 
     if creds.include?("Hauptmenue"+"Privatpersonen")
         domain = "Privatpersonen"
@@ -1849,7 +1857,7 @@ def init_apps
     @array = []
 
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "meine Abfragen"}
+    hash = {"domain" => "Hauptmenue", "right" => "News"}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Hauptmenue", "right" => "Privatpersonen"}

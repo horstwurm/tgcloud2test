@@ -1,4 +1,16 @@
 
+    <div class='panel-body'>
+      <%= link_to home_index10_path(:day => 1) do %>
+        <span><i class="btn btn-primary glyphicon glyphicon-calendar"> -1</i></span>
+      <% end %>
+      <%= link_to home_index10_path(:day => 3) do %>
+        <span><i class="btn btn-primary glyphicon glyphicon-calendar"> -3</i></span>
+      <% end %>
+      <%= link_to home_index10_path(:day => 5) do %>
+        <span><i class="btn btn-primary glyphicon glyphicon-calendar"> -5</i></span>
+      <% end %>
+    </div>
+    
     <div class="row">
       <header>
       <%= header("myNews", true) %>
@@ -19,6 +31,9 @@
                 <div class="row">
                   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <header><%= ut.created_at.strftime("%d.%m.%Y") %></header>
+                    <%= link_to user_path(:id => ut.user_id, :topic => "Tickets") do %>
+                      <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                    <% end %>
                   </div>
                   <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                     <header><%= ut.ticket.name + " " + ut.ticket.msponsor.mobject.name %></header>
@@ -41,13 +56,13 @@
     
     <div class="row">
     <% @favourits.each do |f| %>
-      <% if f.object_name == "User" %>
-        <% it = User.find(f.object_id) %>
-        <% name = it.name + " " + it.lastname %>
-      <% else %>
-        <% it = Company.find(f.object_id) %>
-        <% name = it.name %>
-      <% end %>
+        <% if f.object_name == "User" %>
+          <% it = User.find(f.object_id) %>
+          <% name = it.name + " " + it.lastname %>
+        <% else %>
+          <% it = Company.find(f.object_id) %>
+          <% name = it.name %>
+        <% end %>
       
         <% it.mobjects.where('created_at>=?', @n.day.ago).each do |fo| %>
         
@@ -56,6 +71,9 @@
                 <div class="row">
                   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <header><%= fo.created_at.strftime("%d.%m.%Y") %></header>
+                    <%= link_to mobject_path(:id => fo.id, :topic => "Info") do %>
+                      <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                    <% end %>
                   </div>
                   <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                     <header><%= "Neue " + fo.mtype + " " + fo.name + " " + fo.mcategory.name %></header>
@@ -93,6 +111,15 @@
                 <div class="row">
                   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <header><%= fav.created_at.strftime("%d.%m.%Y") %></header>
+                    <% if fav.object_name == "User" %>
+                      <%= link_to user_path(:id => fav.object_id, :topic => "Info") do %>
+                        <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                      <% end %>
+                    <% else %>
+                      <%= link_to company_path(:id => fav.object_id, :topic => "Info") do %>
+                        <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                      <% end %>
+                    <% end %>
                   </div>
                   <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                     <% if fav.object_name == "User" %>
@@ -122,6 +149,9 @@
                 <div class="row">
                   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <header><%= s.created_at.strftime("%d.%m.%Y") %></header>
+                    <%= link_to s.mobject do %>
+                      <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                    <% end %>
                   </div>
                   <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                     <header><%= "Neues Sponsoring von " + s.company.name %></header>
@@ -141,6 +171,9 @@
               <div class="row">
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                   <header><%= s.created_at.strftime("%d.%m.%Y") %></header>
+                    <%= link_to mobject_path(:id => s.mobject_id, :topic => "CF Transaktionen") do %>
+                      <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                    <% end %>
                 </div>
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                   <header><%= "Neue Finanzierung von " + s.owner.name  %></header>
@@ -160,11 +193,14 @@
                 <div class="row">
                   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <header><%= p.created_at.strftime("%d.%m.%Y") %></header>
+                    <%= link_to mobject_path(:id => p.object_id, :topic => "Teilnehmer (Veranstaltungen)") do %>
+                      <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                    <% end %>
                   </div>
                   <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-                    <header><%= p.owner.name + " hat sich angemeldet für " + p.mobject.name  %></header>
+                    <header><%= p.user.name + " " + p.user.lastname  %></header>
                     <small_cal><%= p.mobject.name %></small_cal><br>
-                    <%= showFirstImage2(:small, p.mobject, p.mobject.mdetails) %>
+                    <%= showImage2(:small, p.user, true) %>
                   </div>
                 </div>
               </div>
@@ -180,6 +216,9 @@
                 <div class="row">
                   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <header><%= p.created_at.strftime("%d.%m.%Y") %></header>
+                    <%= link_to user_path(:id => it.id, :topic => "Info") do %>
+                      <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                    <% end %>
                   </div>
                   <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                     <header><%= "Neue Position von " + p.user.name + " " + p.user.lastname %></header>
@@ -214,6 +253,9 @@
             <div class="row">
               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <header><%= a.created_at.strftime("%d.%m.%Y") %></header>
+                <%= link_to user_path(:id => current_user.id, :topic => "Kalendereintraege") do %>
+                  <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                <% end %>
               </div>
               <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                 <header><%= "Neuer Kalendereintrag von " + @user.name + " " + @user.lastname %></header>
@@ -244,6 +286,9 @@
                 <div class="row">
                   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <header><%= t.created_at.strftime("%d.%m.%Y") %></header>
+                    <%= link_to statement_index_path(:account_id => a.id) do %>
+                      <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                    <% end %>
                   </div>
                   <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                     <header><%= "Neuer Zahlungseingang von " + t.owner.name %></header>
@@ -274,6 +319,9 @@
             <div class="row">
               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <header><%= e.created_at.strftime("%d.%m.%Y") %></header>
+                <%= link_to user_path(:id => current_user.id, :topic => "eMail") do %>
+                  <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                <% end %>
               </div>
               <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                 <% @user = User.find(e.m_to) %>
@@ -303,6 +351,9 @@
               <div class="row">
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                   <header><%= r.created_at.strftime("%d.%m.%Y") %></header>
+                  <%= link_to mobject_path(:id => r.mobject_id, :topic => "Bewertungen") do %>
+                    <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                  <% end %>
                 </div>
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                   <header><%= "Neue Bewertung von " + r.user.name + " " + r.user.lastname %></header>
@@ -344,17 +395,35 @@
               <div class="row">
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                   <header><%= su.created_at.strftime("%d.%m.%Y") %></header>
-                </div>
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-                  <header><%= "Neuer Eintrag " + su.name %></header>
                   <% case @suche.table_name %>
                     <% when "mobjects" %>
+                      <%= link_to mobject_path(:id => su.id, :topic => "Info") do %>
+                        <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                      <% end %>
+                    <% when "users" %>
+                      <%= link_to user_path(:id => su.id, :topic => "Info") do %>
+                        <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                      <% end %>
+                    <% when "companies" %>
+                      <%= link_to company_path(:id => su.id, :topic => "Info") do %>
+                        <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                      <% end %>
+                  <% end %>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                  <% case @suche.table_name %>
+                    <% when "mobjects" %>
+                      <header><%= "Neuer Eintrag " + su.name %></header>
                       <small_cal>
                         <%= su.mtype + " " + su.owner.name %>
                       </small_cal><br>
                       <%= showFirstImage2(:small, su, su.mdetails) %>
                     <% when "users" %>
-                    <% when "company" %>
+                      <header><%= "Neuer Eintrag " + su.name + " " + su.lastname %></header>
+                      <%= showImage2(:small, su, true) %>
+                    <% when "companies" %>
+                      <header><%= "Neuer Eintrag " + su.name %></header>
+                      <%= showImage2(:small, su, true) %>
                   <% end %>
                 </div>
               </div>

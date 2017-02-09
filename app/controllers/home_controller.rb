@@ -203,7 +203,11 @@ end
 def index10
   if user_signed_in?
     
-    @n=1
+    if params[:day]
+      @n = params[:day].to_i
+    else
+      @n=1
+    end
     
     # follow Tickets
     @usertickets = UserTicket.where('user_id=? and (status=? or status=?) and created_at>=?', current_user.id, "übergeben", "persönlich", @n.day.ago)

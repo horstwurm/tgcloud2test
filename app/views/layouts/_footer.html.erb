@@ -18,9 +18,9 @@
                 </footer_header>
                 <br>
                 <footer_text>
-                    <%= link_to "Info", home_index_path %><br>
-                    <%= link_to "Über uns", url_with_protocol("xConnect_ueber_uns.html"), :target => '_blank' %><br>
-                    <%= link_to "Rechtliches & Impressum", url_with_protocol("xConnect_rechtliches_und.impressum"), :target => '_blank' %><br>
+                    <%= link_to("Info", home_index_path) %><br>
+                    <%= link_to("Über uns", url_with_protocol("xConnect_ueber_uns.html"), :target => '_blank') %><br>
+                    <%= link_to("Rechtliches & Impressum", url_with_protocol("xConnect_rechtliches_und.impressum"), :target => '_blank') %><br>
                     <br>
                 </footer_text>
             </div>
@@ -35,7 +35,7 @@
                         <%= link_to "Anmelden", new_user_session_path %><br>
                         <%= link_to "Registrieren", new_user_registration_path %><br>
                     <% else %>
-                       <%= link_to "Einstellungen", credentials_path(current_user.id) %><br><br>
+                       <% link_to "Einstellungen", credentials_path(current_user.id) %>
                        <%= link_to "Abmelden", destroy_user_session_path, method: :delete %><br>
     		           <%= link_to "Passwort ändern", edit_user_registration_path %><br><br>
     		           <%= link_to "Account löschen", registration_path(current_user), data: { confirm: "Are you sure?" }, method: :delete, class:"btn btn-danger btn-xs" %><br>
