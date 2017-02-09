@@ -200,4 +200,35 @@ def index9
   @array << "Ticket"
 end
 
+def index10
+  if user_signed_in?
+    
+    @n=1
+    
+    # follow Tickets
+    @usertickets = UserTicket.where('user_id=? and (status=? or status=?) and created_at>=?', current_user.id, "übergeben", "persönlich", @n.day.ago)
+
+    # follow Favoriten
+    @favourits = current_user.favourits.where('created_at>=?',@n.day.ago)
+
+    # follow Termine
+    @appointments = Appointment.where('user_id1=? and created_at>=?', current_user.id, @n.day.ago )
+    
+    # follow Transaktionen
+    @transactions = current_user.transactions.where('created_at>=?', @n.day.ago )
+    
+    @customers = current_user.customers
+
+    # follow eMails
+    @emails  = Email.where('m_to=? and created_at>=?', current_user.id, @n.day.ago )
+    
+    # follow Objects from Favouriten
+    @mobjects = current_user.mobjects
+
+    # follow Searches
+    @searches = current_user.searches
+
+  end    
+end
+
 end

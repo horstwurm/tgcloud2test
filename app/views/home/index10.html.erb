@@ -1,6 +1,365 @@
 
-  <div class="row">
-    <header>
-    <%= header("Angebot", true) %>
-    </header>
+    <div class="row">
+      <header>
+      <%= header("myNews", true) %>
+      </header>
+    </div>
+  
+    <% if false %>
+    <div class="row">
+      <header>
+      <%= header("Neue Tickets", true) %>
+      </header>
+    </div>
+    <% end %>
+    <div class="row">
+        <% @usertickets.each do |ut| %>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+              <div class="panel-body panel-nav">
+                <div class="row">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <header><%= ut.created_at.strftime("%d.%m.%Y") %></header>
+                  </div>
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <header><%= ut.ticket.name + " " + ut.ticket.msponsor.mobject.name %></header>
+                    <small_cal><%= ut.ticket.msponsor.company.name %></small_cal><br>
+                    <%= showFirstImage2(:small, ut.ticket.msponsor.mobject, ut.ticket.msponsor.mobject.mdetails) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <% end %>
+    </div>
+
+    <% if false %>
+    <div class="row">
+      <header>
+      <%= header("Neues von meinen Favoriten", true) %>
+      </header>
+    </div>
+    <% end %>
+    
+    <div class="row">
+    <% @favourits.each do |f| %>
+      <% if f.object_name == "User" %>
+        <% it = User.find(f.object_id) %>
+        <% name = it.name + " " + it.lastname %>
+      <% else %>
+        <% it = Company.find(f.object_id) %>
+        <% name = it.name %>
+      <% end %>
+      
+        <% it.mobjects.where('created_at>=?', @n.day.ago).each do |fo| %>
+        
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+              <div class="panel-body panel-nav">
+                <div class="row">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <header><%= fo.created_at.strftime("%d.%m.%Y") %></header>
+                  </div>
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <header><%= "Neue " + fo.mtype + " " + fo.name + " " + fo.mcategory.name %></header>
+                    <small_cal><%= name %></small_cal><br>
+                    <%= showFirstImage2(:small, fo, fo.mdetails) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <% @sponsors = fo.msponsors.where('created_at>=?', @n.day.ago) %>
+            <% @sponsors.each do |s| %>
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="panel-body panel-nav">
+                  <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                      <header><%= s.created_at.strftime("%d.%m.%Y") %></header>
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                      <header><%= s.company.name %></header>
+                      <small_cal><%=  %></small_cal><br>
+                      <%= showImage2(:small, s.company, true) %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+        <% end %>
+
+        <% if f.object_name == "User" %>
+          <% @fav = it.favourits.where('created_at>=?', @n.day.ago) %>
+          <% @fav.each do |fav| %>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+              <div class="panel-body panel-nav">
+                <div class="row">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <header><%= fav.created_at.strftime("%d.%m.%Y") %></header>
+                  </div>
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <% if fav.object_name == "User" %>
+                      <% @owner = User.find(fav.object_id) %>
+                      <% @name = @owner.name + " " +@owner.lastname %>
+                    <% else %>
+                      <% @owner = Company.find(fav.object_id) %>
+                      <% @name = @owner.name %>
+                    <% end %>
+                    <header><%= "Neuer Favorit von " + it.name + " " + it.lastname %></header>
+                    <small_cal>
+                      <%=  @name %>
+                    </small_cal><br>
+                    <%= showImage2(:small, fav.user, true) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+        <% if f.object_name == "Company" %>
+          <% @sponsors = it.msponsors.where('created_at>=?', @n.day.ago) %>
+          <% @sponsors.each do |s| %>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+              <div class="panel-body panel-nav">
+                <div class="row">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <header><%= s.created_at.strftime("%d.%m.%Y") %></header>
+                  </div>
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <header><%= "Neues Sponsoring von " + s.company.name %></header>
+                    <small_cal><%= s.mobject.name %></small_cal><br>
+                    <%= showImage2(:small, s.company, true) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+        <% @stats = it.mstats.where('created_at>=?', @n.day.ago) %>
+        <% @stats.each do |s| %>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="panel-body panel-nav">
+              <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <header><%= s.created_at.strftime("%d.%m.%Y") %></header>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                  <header><%= "Neue Finanzierung von " + s.owner.name  %></header>
+                  <small_cal><%=  s.mobject.name + " " + sprintf("%05.2f CHF",s.amount) %></small_cal><br>
+                  <%= showImage2(:small, s.owner, true) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <% if f.object_name == "User" %>
+          <% @participants = it.participants.where('created_at>=?', @n.day.ago) %>
+          <% @participants.each do |p| %>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+              <div class="panel-body panel-nav">
+                <div class="row">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <header><%= p.created_at.strftime("%d.%m.%Y") %></header>
+                  </div>
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <header><%= p.owner.name + " hat sich angemeldet für " + p.mobject.name  %></header>
+                    <small_cal><%= p.mobject.name %></small_cal><br>
+                    <%= showFirstImage2(:small, p.mobject, p.mobject.mdetails) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+        <% if f.object_name == "User" %>
+          <% @ups = it.user_positions.where('created_at>=?', @n.day.ago) %>
+          <% @ups.each do |p| %>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+              <div class="panel-body panel-nav">
+                <div class="row">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <header><%= p.created_at.strftime("%d.%m.%Y") %></header>
+                  </div>
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <header><%= "Neue Position von " + p.user.name + " " + p.user.lastname %></header>
+                    <small_cal><%= p.geo_address %></small_cal><br>
+                    <%= showImage2(:small, p.user, true) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+        
+      <% end %>
+    </div>
+    
+    <% if false %>
+    <div class="row">
+      <header>
+      <%= header("Neue Kalendereinträge", true) %>
+      </header>
+    </div>
+    <% end %>
+    <div class="row">
+      <% @appointments.each do |a| %>
+         <% if a.user_id1 == current_user.id %>
+            <% @user = User.find(a.user_id2) %>
+         <% else %>
+            <% @user = User.find(a.user_id1) %>
+        <% end %>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <div class="panel-body panel-nav">
+            <div class="row">
+              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <header><%= a.created_at.strftime("%d.%m.%Y") %></header>
+              </div>
+              <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                <header><%= "Neuer Kalendereintrag von " + @user.name + " " + @user.lastname %></header>
+                <small_cal><%= a.app_date.strftime("%d.%m.%Y") + " " + a.time_from.to_s + " Uhr" %></small_cal><br>
+                <%= showImage2(:small, @user, true) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <% if false %>
+    <div class="row">
+      <header>
+      <%= header("Neue Zahlungseingänge", true) %>
+      </header>
+    </div>
+    <% end %>
+    <div class="row">
+      <% @customers.each do |c| %>
+        <% c.accounts.each do |a| %>
+          <% @transactions = Transaction.where('account_ver=? and created_at>=?',a.id, @n.day.ago) %>
+          <% @transactions.each do |t| %>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+              <div class="panel-body panel-nav">
+                <div class="row">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <header><%= t.created_at.strftime("%d.%m.%Y") %></header>
+                  </div>
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <header><%= "Neuer Zahlungseingang von " + t.owner.name %></header>
+                    <small_cal><%= sprintf("%05.2f CHF",t.amount) %></small_cal><br>
+                    <%= showImage2(:small, t.owner, true) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <% end %>
+
+        <% end %>
+      <% end %>
+    </div>
+    
+    <% if false %>
+    <div class="row">
+      <header>
+      <%= header("Neue eMails", true) %>
+      </header>
+    </div>
+    <% end %>
+    <div class="row">
+      <% @emails.each do |e| %>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <div class="panel-body panel-nav">
+            <div class="row">
+              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <header><%= e.created_at.strftime("%d.%m.%Y") %></header>
+              </div>
+              <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                <% @user = User.find(e.m_to) %>
+                <header><%= "Neue eMail von " + @user.name + " " + @user.lastname %></header>
+                <small_cal><%= e.header %></small_cal><br>
+                <%= showImage2(:small, @user, true) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <% if false %>
+    <div class="row">
+      <header>
+      <%= header("Neue Bewertungen", true) %>
+      </header>
+    </div>
+    <% end %>
+    <div class="row">
+      <% @mobjects.each do |m| %>
+        <% @ratings = m.mratings.where('created_at>=?', @n.day.ago) %>
+        <% @ratings.each do |r| %>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="panel-body panel-nav">
+              <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <header><%= r.created_at.strftime("%d.%m.%Y") %></header>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                  <header><%= "Neue Bewertung von " + r.user.name + " " + r.user.lastname %></header>
+                  <small_cal>
+                    <% r.rating.times do %>
+                      <i class="glyphicon glyphicon-star"></i>
+                    <% end %>
+                    <%= r.mobject.name %>
+                  </small_cal><br>
+                  <%= showImage2(:small, r.user, true) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %> 
+    </div>
+    
+    <% if false %>
+    <div class="row">
+      <header>
+      <%= header("Neues im Kontext Ihrer Suchen", true) %>
+      </header>
+    </div>
+    <% end %>
+    <div class="row">
+      <% @searches.each do |s| %>
+      <% case s.search_domain %>
+        <% when "Privatpersonen" %>
+          <% @suche = User.where(s.sql_string) %>
+        <% when "Institutionen" %>
+          <% @suche = Company.where(s.sql_string) %>
+        <% when "Objekte" %>
+          <% @suche = Mobject.where(s.sql_string) %>
+      <% end %>
+      <% @suche.where('created_at>=?',@n.day.ago).each do |su| %>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="panel-body panel-nav">
+              <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <header><%= su.created_at.strftime("%d.%m.%Y") %></header>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                  <header><%= "Neuer Eintrag " + su.name %></header>
+                  <% case @suche.table_name %>
+                    <% when "mobjects" %>
+                      <small_cal>
+                        <%= su.mtype + " " + su.owner.name %>
+                      </small_cal><br>
+                      <%= showFirstImage2(:small, su, su.mdetails) %>
+                    <% when "users" %>
+                    <% when "company" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+      <% end %>
+    <% end %> 
   </div>

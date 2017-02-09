@@ -213,7 +213,7 @@ class UsersController < ApplicationController
       
     end
 
-    if params[:topic] == "Favoriten"
+    if @topic == "Favoriten"
      counter = 0 
      @locs = "["
      @wins = "["
@@ -247,7 +247,7 @@ class UsersController < ApplicationController
       @wins = @wins + "]"
     end
 
-    if params[:topic] == "Info"
+    if @topic == "Info"
      counter = 0 
      @locs = "["
      @wins = "["

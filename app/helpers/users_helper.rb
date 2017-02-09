@@ -2067,6 +2067,9 @@ def init_apps
     hash = {"domain" => "Institutionen", "right" => "eMail"}
     @array << hash
     hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Favoriten"}
+    @array << hash
+    hash = Hash.new
     hash = {"domain" => "Institutionen", "right" => "Links (Partner)"}
     @array << hash
     hash = Hash.new
