@@ -685,11 +685,11 @@ def showImage2(size, item, linkit)
         else
           case item.class.name
             when "User"
-              image_tag(image_def("Privatpersonen", nil, nil), :size => size, class:"card-img-top img-responsive" )
+              image_tag(image_def("Privatpersonen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
             when "Company"
-              image_tag(image_def("Institutionen", nil, nil), :size => size, class:"card-img-top img-responsive" )
+              image_tag(image_def("Institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
             else
-              image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive" )
+              image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
           end
         end
       end
@@ -699,11 +699,11 @@ def showImage2(size, item, linkit)
       else
         case item.class.name
           when "User"
-            html_string = image_tag(image_def("Privatpersonen", nil, nil), :size => size, class:"card-img-top img-responsive" )
+            html_string = image_tag(image_def("Privatpersonen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
           when "Company"
-            html_string = image_tag(image_def("Institutionen", nil, nil), :size => size, class:"card-img-top img-responsive" )
+            html_string = image_tag(image_def("Institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
           else
-            html_string = image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive" )
+            html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
         end
       end
     end
