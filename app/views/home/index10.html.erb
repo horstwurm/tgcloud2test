@@ -36,7 +36,7 @@
                     <% end %>
                   </div>
                   <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-                    <header><%= ut.ticket.name + " " + ut.ticket.msponsor.mobject.name %></header>
+                    <header><%= "Neues Ticket " + ut.ticket.name + " " + ut.ticket.msponsor.mobject.name %></header>
                     <small_cal><%= ut.ticket.msponsor.company.name %></small_cal><br>
                     <%= showFirstImage2(:small, ut.ticket.msponsor.mobject, ut.ticket.msponsor.mobject.mdetails) %>
                   </div>
@@ -364,6 +364,40 @@
                     <%= r.mobject.name %>
                   </small_cal><br>
                   <%= showImage2(:small, r.user, true) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %> 
+    </div>
+
+    <% if false %>
+    <div class="row">
+      <header>
+      <%= header("Neue Anmeldungen", true) %>
+      </header>
+    </div>
+    <% end %>
+    <div class="row">
+      <% @mobjects.each do |m| %>
+        <% @pants = m.participants.where('created_at>=?', @n.day.ago) %>
+        <% @pants.each do |p| %>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="panel-body panel-nav">
+              <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <header><%= r.created_at.strftime("%d.%m.%Y") %></header>
+                  <%= link_to mobject_path(:id => p.mobject_id, :topic => "Anmeldungen") do %>
+                    <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                  <% end %>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                  <header><%= "Neue Anmeldung von " + p.user.name + " " + p.user.lastname %></header>
+                  <small_cal>
+                    <%= p.mobject.name %>
+                  </small_cal><br>
+                  <%= showImage2(:small, p.user, true) %>
                 </div>
               </div>
             </div>
