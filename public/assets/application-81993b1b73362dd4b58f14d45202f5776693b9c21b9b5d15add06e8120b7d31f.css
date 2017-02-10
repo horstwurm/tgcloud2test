@@ -2608,74 +2608,81 @@ listh3 {
 }
 
 /*******************************************************************************************************/
-/* Navigation */
+/* Navigation Header Footer */
 /*******************************************************************************************************/
 /* line 74, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .nav-panel-black {
   background-color: black !important;
+  background: #F5F5F5 !important;
   border-color: black !important;
   border-radius: 0px !important;
 }
-/* line 78, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 79, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .nav-panel-black :hover {
   border-color: black !important;
 }
-
-/*******************************************************************************************************/
-/* Footer */
-/*******************************************************************************************************/
+/* line 82, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+.nav-panel-black a:link, .nav-panel-black a:hover {
+  background: #F5F5F5 !important;
+  color: #ACC550 !important;
+}
 /* line 86, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-footer {
-  font-size: 100% !important;
-  background: black !important;
-  color: grey !important;
+.nav-panel-black a:visited {
+  background: #F5F5F5 !important;
 }
 /* line 90, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-footer .panel-body {
-  background: black !important;
-  border-color: black !important;
-  box-shadow: 0px 0px 0px black !important;
+.nav-panel-black marquee {
+  background: black;
+  background: #F5F5F5 !important;
+  color: #61A6A7;
+  font-size: 100%;
+  height: 100%;
+  font-weight: bold;
 }
-
-/* line 97, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-footer_header {
-  font-size: 150% !important;
-  background: black !important;
+/* line 99, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+.nav-panel-black footer_header {
+  font-size: 150%;
   color: grey !important;
   font-weight: bold;
 }
-
-/* line 104, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-footer_text {
-  background: black !important;
+/* line 105, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+.nav-panel-black input#search {
+  border-color: #F5F5F5 !important;
   color: grey !important;
 }
-
-/* line 109, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-footer_text:hover {
-  background: black !important;
+/* line 110, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+.nav-panel-black input#search:hover {
+  border-color: #ACC550 !important;
+}
+/* line 114, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+.nav-panel-black input#search:focus {
   color: #ACC550 !important;
+}
+/* line 118, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+.nav-panel-black user_logged_in {
+  font-size: 150%;
+  color: #61A6A7 !important;
 }
 
 /*******************************************************************************************************/
 /* Links */
 /*******************************************************************************************************/
-/* line 117, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 128, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 a:link {
   color: grey !important;
 }
 
-/* line 120, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 131, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 a:visitied {
   color: grey !important;
 }
 
-/* line 123, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 134, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 a:hover {
   color: #ACC550 !important;
 }
 
-/* line 126, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 137, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 a:active {
   color: #ACC550 !important;
 }
@@ -2683,14 +2690,14 @@ a:active {
 /*******************************************************************************************************/
 /* Button */
 /*******************************************************************************************************/
-/* line 133, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 144, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .btn-nav {
   background-color: black !important;
   border-color: black !important;
   color: #ACC550 !important;
 }
 
-/* line 138, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 149, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .btn-nav:hover {
   background-color: #ACC550 !important;
   color: black !important;
@@ -2698,7 +2705,7 @@ a:active {
   box-shadow: 2px 2px 10px #ACC550;
 }
 
-/* line 145, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 156, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .btn-primary {
   background-color: white !important;
   border-color: #F5F5F5 !important;
@@ -2706,7 +2713,7 @@ a:active {
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 151, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 162, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .btn-warning {
   background-color: white !important;
   border-color: #F5F5F5 !important;
@@ -2714,7 +2721,7 @@ a:active {
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 157, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 168, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .btn-danger {
   background-color: white !important;
   border-color: #F5F5F5 !important;
@@ -2722,14 +2729,14 @@ a:active {
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 164, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 175, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .btn-primary:hover, .btn-warning:hover, .btn-danger:hover {
   border-color: #ACC550 !important;
   color: #ACC550 !important;
   box-shadow: 2px 2px 10px #ACC550;
 }
 
-/* line 170, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 181, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .btn-active {
   background-color: white !important;
   border-color: white !important;
@@ -2737,7 +2744,7 @@ a:active {
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 177, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 188, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .btn-inactive {
   background-color: white !important;
   border-color: white !important;
@@ -2745,7 +2752,7 @@ a:active {
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 183, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 194, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .btn-inactive:hover, .btn-active:hover {
   border-color: #ACC550 !important;
   color: #ACC550 !important;
@@ -2755,45 +2762,19 @@ a:active {
 /*******************************************************************************************************/
 /* Text Elements */
 /*******************************************************************************************************/
-/* line 192, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-input#search {
-  background-color: black !important;
-  border-color: grey !important;
-  color: #ACC550 !important;
-  border-color: black !important;
-}
-
-/* line 198, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-input#search:hover {
-  border-color: #ACC550 !important;
-}
-
-/* line 202, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-input#search:focus {
-  color: #ACC550 !important;
-}
-
-/* line 206, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 204, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 message {
-  background: black !important;
-  color: #ACC550 !important;
+  background: #F5F5F5 !important;
+  color: #E0633B !important;
 }
 
-/* line 211, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-user_logged_in {
-  font-size: 150%;
-  background: black !important;
-  color: #61A6A7 !important;
-  color: grey !important;
-}
-
-/* line 218, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 209, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 list {
   color: grey !important;
   font-size: 80%;
 }
 
-/* line 223, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 214, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 li_header {
   background: #ACC550;
   color: #2E6B33;
@@ -2801,106 +2782,98 @@ li_header {
   font-size: 120%;
 }
 
-/* line 230, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 221, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 small_cal {
   font-size: 50%;
 }
 
-/* line 234, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 225, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 home_nav {
   font-size: 150%;
 }
 
-/* line 238, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 229, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 angebote, stellenanzeigen, kleinanzeigen, crowdfunding {
   color: grey;
 }
-/* line 240, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 231, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 angebote :hover, stellenanzeigen :hover, kleinanzeigen :hover, crowdfunding :hover {
   color: #ACC550;
 }
 
-/* line 245, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 236, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 angebote_options, stellenanzeigen_options, kleinanzeigen_options, crowdfunding_options {
   color: grey;
 }
-/* line 247, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 238, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 angebote_options a, stellenanzeigen_options a, kleinanzeigen_options a, crowdfunding_options a {
   color: grey !important;
   background: white !important;
 }
-/* line 251, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 242, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 angebote_options :hover, stellenanzeigen_options :hover, kleinanzeigen_options :hover, crowdfunding_options :hover {
   color: #ACC550 !important;
   background: white !important;
 }
 
-/* line 257, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 248, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .color_today {
   background-color: #61A6A7;
   color: white;
 }
 
-/* line 262, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-marquee {
-  background: black;
-  color: #ACC550;
-  font-size: 100%;
-  height: 100%;
-}
-
-/* line 269, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 253, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .form-control {
   border-color: #ACC550 !important;
 }
 
-/* line 272, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 256, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .form-control :focus {
   border-color: #ACC550 !important;
   box-shadow: 2px 2px 10px #ACC550 !important;
 }
 
-/* line 277, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 261, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 input#email {
   background-color: white !important;
   color: #ACC550 !important;
   border-color: #ACC550 !important;
 }
 
-/* line 282, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 266, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 input#email:focus {
   border-color: #ACC550 !important;
 }
 
-/* line 286, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 270, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .badge {
   background: #F5F5F5 !important;
   color: grey !important;
 }
 
-/* line 291, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 275, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 restlaufzeit, preis {
   font-size: 200%;
   color: red;
 }
 
-/* line 295, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 279, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 restlaufzeits, preiss, ticketstatuss, betrag {
   color: red;
 }
 
-/* line 299, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 283, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 anzeigetext {
   font-size: 150%;
   color: grey;
 }
 
-/* line 303, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 287, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 ntext {
   color: grey;
 }
 
-/* line 307, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 291, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 senior_berater {
   color: white;
   background: #2E6B33;
@@ -2908,13 +2881,13 @@ senior_berater {
   padding-right: 1em;
 }
 
-/* line 314, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 298, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 soft_padding {
   padding: 1em;
   border: 1em;
 }
 
-/* line 319, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 303, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 berater {
   color: white;
   background: #ACC550;
@@ -2922,7 +2895,7 @@ berater {
   padding-right: 1em;
 }
 
-/* line 326, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 310, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 angefragt {
   color: white;
   background: #F7E388;
@@ -2930,7 +2903,7 @@ angefragt {
   padding-right: 1em;
 }
 
-/* line 333, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 317, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 abgelehnt {
   color: white;
   background: red;
@@ -2938,7 +2911,7 @@ abgelehnt {
   padding-right: 1em;
 }
 
-/* line 340, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 324, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 bestaetigt {
   color: white;
   background: #ACC550;
@@ -2946,7 +2919,7 @@ bestaetigt {
   padding-right: 1em;
 }
 
-/* line 346, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 330, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 geblockt {
   color: white;
   background: #D0D7DB;
@@ -2954,18 +2927,18 @@ geblockt {
   padding-right: 1em;
 }
 
-/* line 352, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 336, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .blocked {
   background: #EF8B8B !important;
 }
 
-/* line 355, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 339, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .Spendenbetrag_IST {
   font-size: 200%;
   color: #2E6B33;
 }
 
-/* line 359, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 343, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .Spendenbetrag_SOLL {
   color: #ACC550;
 }
@@ -2973,7 +2946,7 @@ geblockt {
 /*******************************************************************************************************/
 /* PANELS */
 /*******************************************************************************************************/
-/* line 366, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 350, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-nav {
   border-color: grey !important;
   padding: 3px !important;
@@ -2981,13 +2954,13 @@ geblockt {
   box-shadow: 1px 1px 1px #B1B1B1;
 }
 
-/* line 373, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 357, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-media {
   padding: 3px !important;
   margin: 3px !important;
 }
 
-/* line 378, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 362, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-black {
   background: black !important;
   border-color: black !important;
@@ -2995,7 +2968,7 @@ geblockt {
   margin: 5px !important;
 }
 
-/* line 385, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 369, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-top {
   background: transparent !important;
   border-color: #ACC550 !important;
@@ -3005,53 +2978,53 @@ geblockt {
   background-size: cover;
 }
 
-/* line 394, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 378, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-heading {
   background: #ACC550 !important;
   border-color: #ACC550 !important;
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 399, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 383, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-body {
   background: white !important;
   border-color: #ACC550 !important;
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 405, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 389, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-info {
   background: white !important;
   border-color: #ACC550 !important;
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 410, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 394, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-text {
   background: white !important;
   border-color: #ACC550 !important;
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 416, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 400, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-neutral {
   background: white !important;
   border-color: white !important;
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 422, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 406, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-title {
   color: grey !important;
 }
 
-/* line 426, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 410, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-title:hover {
   color: #ACC550 !important;
   background: #ACC550 !important;
 }
 
-/* line 431, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 415, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-listhead {
   background: grey !important;
   border-color: grey !important;
@@ -3062,7 +3035,7 @@ geblockt {
   font-weight: bold;
 }
 
-/* line 441, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 425, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .panel-listfoot {
   background: #F5F5F5 !important;
   border-color: #F5F5F5 !important;
@@ -3076,28 +3049,28 @@ geblockt {
 /*******************************************************************************************************/
 /* TABLES */
 /*******************************************************************************************************/
-/* line 454, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 438, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 table {
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 458, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 442, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 th {
   color: #2E6B33;
 }
 
-/* line 461, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 445, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 tbody {
   color: #2E6B33;
 }
 
-/* line 464, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 448, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 thead {
   color: #2E6B33 !important;
   border-color: #2E6B33 !important;
 }
 
-/* line 468, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 452, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 td {
   padding: 0px !important;
 }
@@ -3105,50 +3078,50 @@ td {
 /*******************************************************************************************************/
 /* THUMBNAILS*/
 /*******************************************************************************************************/
-/* line 475, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 459, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .thumbnail {
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 478, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 462, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .thumbnail:hover {
   border-color: #ACC550 !important;
   box-shadow: 2px 2px 10px #ACC550;
 }
-/* line 481, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 465, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .thumbnail:hover .panel-listhead {
   color: white !important;
-  font-size: 200% !important;
+  font-size: 150% !important;
   background: #ACC550 !important;
 }
 
-/* line 488, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 472, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .thumbnail-navnav {
   background: transparent !important;
   margin: 0px !important;
   padding: 0px !important;
 }
 
-/* line 494, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 478, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .thumbnail-list {
   margin: 5px !important;
   padding: 0px !important;
 }
 
-/* line 499, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 483, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .thumbnail-active {
   color: #ACC550 !important;
   margin: 5px !important;
   padding: 0px !important;
 }
 
-/* line 504, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 488, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .thumbnail-inactive {
   margin: 5px !important;
   padding: 0px !important;
 }
 
-/* line 509, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 493, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .thumbnail-inactive:hover {
   color: grey !important;
   box-shadow: 2px 2px 10px #ACC550;
@@ -3157,7 +3130,7 @@ td {
 /*******************************************************************************************************/
 /* JUMBOTRONS */
 /*******************************************************************************************************/
-/* line 517, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 501, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .jumbotron {
   box-shadow: 2px 2px 10px #B1B1B1;
   background: transparent !important;
@@ -3167,7 +3140,7 @@ td {
 /*******************************************************************************************************/
 /* CAROUSEL */
 /*******************************************************************************************************/
-/* line 526, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 510, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .carousel-caption {
   background-color: transparent !important;
   position: relative !important;
@@ -3179,31 +3152,31 @@ td {
 /*******************************************************************************************************/
 /* Rest?? */
 /*******************************************************************************************************/
-/* line 537, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 521, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 media-body {
   color: white !important;
 }
 
-/* line 541, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 525, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .list-banner {
   padding: 15px;
   color: white !important;
   font-size: 100% !important;
 }
 
-/* line 547, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 531, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .nopadding {
   padding: 1px !important;
   margin: 1px !important;
 }
 
-/* line 552, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 536, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .row-black {
   background: black !important;
   border-color: black !important;
 }
 
-/* line 557, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 541, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .header {
   background: #ACC550 !important;
   color: white;
@@ -3211,7 +3184,7 @@ media-body {
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-/* line 564, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 548, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .media-body:hover {
   color: #ACC550 !important;
 }
@@ -3219,7 +3192,7 @@ media-body {
 /*******************************************************************************************************/
 /* GOOGLE MAPs */
 /*******************************************************************************************************/
-/* line 571, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 555, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 #map, #map2, #map3 {
   height: 750px;
   border-radius: 16px 16px;
@@ -3230,20 +3203,20 @@ media-body {
   border-width: 7px;
 }
 
-/* line 580, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 564, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 #map-canvas, #map-canvas2, #map-canvas3 {
   height: 384px;
   width: 100%;
 }
 
 /* Bootstrap Css Map Fix*/
-/* line 586, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 570, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 #map-container #map-canvas img {
   max-width: none;
 }
 
 /* Bootstrap Css Map Fix*/
-/* line 590, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 574, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 #map-container #map-canvas label {
   width: auto;
   display: inline;
@@ -3252,7 +3225,7 @@ media-body {
 /*******************************************************************************************************/
 /* PAGINATION */
 /*******************************************************************************************************/
-/* line 597, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 581, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .digg_pagination {
   background: white;
   cursor: default;
@@ -3260,7 +3233,7 @@ media-body {
   /* self-clearing method: */
 }
 
-/* line 602, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 586, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .digg_pagination a, .digg_pagination span, .digg_pagination em {
   padding: 0.2em 0.5em;
   display: block;
@@ -3268,13 +3241,13 @@ media-body {
   margin-right: 1px;
 }
 
-/* line 607, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 591, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .digg_pagination .disabled {
   color: #999999;
   border: 0px solid #dddddd;
 }
 
-/* line 610, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 594, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .digg_pagination .current {
   font-style: normal;
   font-weight: bold;
@@ -3284,21 +3257,21 @@ media-body {
   border: 0px solid #2e6ab1;
 }
 
-/* line 617, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 601, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .digg_pagination a {
   text-decoration: none;
   color: #105cb6;
   border: 0px solid #9aafe5;
 }
 
-/* line 621, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 605, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .digg_pagination a:hover, .digg_pagination a:focus {
   color: #000033;
   background: white;
   border-color: #000033;
 }
 
-/* line 625, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 609, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .digg_pagination .page_info {
   background: #2e6ab1;
   color: white;
@@ -3308,14 +3281,14 @@ media-body {
   text-align: center;
 }
 
-/* line 632, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 616, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .digg_pagination .page_info b {
   color: #000033;
   background: #6aa6ed;
   padding: 0.1em 0.25em;
 }
 
-/* line 636, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 620, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .digg_pagination:after {
   content: ".";
   display: block;
@@ -3324,47 +3297,24 @@ media-body {
   visibility: hidden;
 }
 
-/* line 642, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 626, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 * html .digg_pagination {
   height: 1%;
 }
 
-/* line 644, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+/* line 628, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 *:first-child + html .digg_pagination {
   overflow: hidden;
 }
 
 /*******************************************************************************************************/
-/* QR */
+/* Calendar */
 /*******************************************************************************************************/
-/* line 650, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-table.qr-code {
-  border-width: 0;
-  border-style: none;
-  border-color: #0000ff;
-  border-collapse: collapse;
-}
-
-/* line 656, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-table.qr-code td {
-  border-width: 0;
-  border-style: none;
-  border-color: #0000ff;
-  border-collapse: collapse;
-  padding: 0;
-  margin: 0;
-  width: 15px;
-  height: 15px;
-}
-
-/* line 666, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-table.qr-code td.black {
-  background-color: #000;
-}
-
-/* line 667, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
-table.qr-code td.white {
-  background-color: #fff;
+/* line 635, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
+.fc-toolbar .fc-left {
+  color: #ACC550 !important;
+  color: black !important;
+  background: #ACC550 !important;
 }
 
 /* line 1, /home/ubuntu/workspace/app/assets/stylesheets/scaffolds.scss */
