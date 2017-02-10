@@ -1530,8 +1530,8 @@ def build_hauptmenue
           hash = Hash.new
           hash = {"path" => path, "text" => "Anbieten", "icon" => "Anbieten" }
           hasharray << hash
-       end
-       html_string = html_string + complex_menue(domain, domain_text, hasharray)
+        end
+        html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
 
     if creds.include?("Hauptmenue"+"Veranstaltungen")

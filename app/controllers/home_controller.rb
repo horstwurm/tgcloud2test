@@ -231,7 +231,7 @@ def index10
 
     # follow Searches
     @searches = current_user.searches
-
+    
   end    
 end
 
