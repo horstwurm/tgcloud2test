@@ -387,8 +387,8 @@
             <div class="panel-body panel-nav">
               <div class="row">
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                  <header><%= r.created_at.strftime("%d.%m.%Y") %></header>
-                  <%= link_to mobject_path(:id => p.mobject_id, :topic => "Anmeldungen") do %>
+                  <header><%= p.created_at.strftime("%d.%m.%Y") %></header>
+                  <%= link_to mobject_path(:id => p.mobject_id, :topic => "Teilnehmer (Veranstaltungen)") do %>
                     <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
                   <% end %>
                 </div>
