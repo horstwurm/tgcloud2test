@@ -65,7 +65,6 @@
         <% end %>
       
         <% it.mobjects.where('created_at>=?', @n.day.ago).each do |fo| %>
-        
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
               <div class="panel-body panel-nav">
                 <div class="row">
@@ -83,24 +82,29 @@
                 </div>
               </div>
             </div>
+        <% end %>
 
-            <% @sponsors = fo.msponsors.where('created_at>=?', @n.day.ago) %>
-            <% @sponsors.each do |s| %>
-              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                <div class="panel-body panel-nav">
-                  <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                      <header><%= s.created_at.strftime("%d.%m.%Y") %></header>
-                    </div>
-                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-                      <header><%= s.company.name %></header>
-                      <small_cal><%=  %></small_cal><br>
-                      <%= showImage2(:small, s.company, true) %>
-                    </div>
+        <% if f.object_name == "Company" %>
+          <% @sponsors = it.msponsors.where('created_at>=?', @n.day.ago) %>
+          <% @sponsors.each do |s| %>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+              <div class="panel-body panel-nav">
+                <div class="row">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <header><%= s.created_at.strftime("%d.%m.%Y") %></header>
+                    <%= link_to mobject_path(:id => s.mobject_id, :topic => "Sponsorenengagements") do %>
+                      <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
+                    <% end %>
+                  </div>
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <header><%= "Neues Sponsorenengagement von " + s.company.name %></header>
+                    <small_cal><%=  s.mobject.name %></small_cal><br>
+                    <%= showImage2(:small, s.company, true) %>
                   </div>
                 </div>
               </div>
-            <% end %>
+            </div>
+          <% end %>
         <% end %>
 
         <% if f.object_name == "User" %>
@@ -141,29 +145,6 @@
           <% end %>
         <% end %>
 
-        <% if f.object_name == "Company" %>
-          <% @sponsors = it.msponsors.where('created_at>=?', @n.day.ago) %>
-          <% @sponsors.each do |s| %>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-              <div class="panel-body panel-nav">
-                <div class="row">
-                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                    <header><%= s.created_at.strftime("%d.%m.%Y") %></header>
-                    <%= link_to s.mobject do %>
-                      <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
-                    <% end %>
-                  </div>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-                    <header><%= "Neues Sponsoring von " + s.company.name %></header>
-                    <small_cal><%= s.mobject.name %></small_cal><br>
-                    <%= showImage2(:small, s.company, true) %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-
         <% @stats = it.mstats.where('created_at>=?', @n.day.ago) %>
         <% @stats.each do |s| %>
           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
@@ -183,29 +164,6 @@
               </div>
             </div>
           </div>
-        <% end %>
-
-        <% if f.object_name == "User" %>
-          <% @participants = it.participants.where('created_at>=?', @n.day.ago) %>
-          <% @participants.each do |p| %>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-              <div class="panel-body panel-nav">
-                <div class="row">
-                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                    <header><%= p.created_at.strftime("%d.%m.%Y") %></header>
-                    <%= link_to mobject_path(:id => p.object_id, :topic => "Teilnehmer (Veranstaltungen)") do %>
-                      <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
-                    <% end %>
-                  </div>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-                    <header><%= p.user.name + " " + p.user.lastname  %></header>
-                    <small_cal><%= p.mobject.name %></small_cal><br>
-                    <%= showImage2(:small, p.user, true) %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
         <% end %>
 
         <% if f.object_name == "User" %>
