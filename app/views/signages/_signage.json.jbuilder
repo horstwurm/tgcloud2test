@@ -1,0 +1,2 @@
+json.extract! signage, :id, :owner_id, :owner_type, :status, :header, :description, :avatar_file_name, :avatar_content_type, :avatar_file_size, :avatar_updated_at, :created_at, :updated_at
+json.url signage_url(signage, format: :json)

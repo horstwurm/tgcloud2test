@@ -1,0 +1,2 @@
+json.extract! signage_loc, :id, :status, :public, :owner_id, :owner_type, :geo_address, :address1, :address2, :address3, :res_v, :res_h, :created_at, :updated_at
+json.url signage_loc_url(signage_loc, format: :json)

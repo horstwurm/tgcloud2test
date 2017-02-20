@@ -52,6 +52,10 @@ class CompaniesController < ApplicationController
     else
       @topic = "Info"
     end
+    
+    if params[:camp_id]
+      @campaign = SignageCamp.find(params[:camp_id])
+    end
 
     @array_s = ""
     @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Angebote'), "Angebote" )
@@ -69,6 +73,8 @@ class CompaniesController < ApplicationController
     @array_s = @company.build_stats(@array_s, Email.where('m_to=? or m_from=?', @company.user.id, @company.user.id), "Nachrichten" )
     #@array_s = @company.build_stats(@array_s, @company.user.searches, "Abfragen" )
     @array_s = @array_s[0, @array_s.length - 1]
+
+
 
   end
 

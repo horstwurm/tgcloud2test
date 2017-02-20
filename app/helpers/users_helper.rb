@@ -1,5 +1,35 @@
 module UsersHelper
-  
+
+def small_carousel(company, size)
+
+    html = ""
+    html = html +  '<div class="owl-show2">'
+    mobjects = company.mobjects
+    mobjects.each do |m|
+      m.mdetails.each do |s|
+        if s.avatar_file_name
+          html = html + "<div align=center>"+ (image_tag s.avatar(:medium), class:"img-rounded") + "<h3>" + m.mtype + " " + m.name + "</h3><p>" + s.description + "</p></div>"
+        end
+      end
+    end
+    html = html +  "</div>"
+    return html.html_safe
+end
+
+def carousel(signages, size, text)
+    html = ""
+    html = html +  '<div class="owl-show">'
+    signages.each do |s|
+      if s.avatar_file_name == nil
+        html = html + "<div>" + image_tag(image_def("Signage", "", ""), :size => size, class:"card-img-top img-responsive" ) + "</div>"
+      else
+        html = html + "<div align=center>"+ (image_tag s.avatar(:native), class:"img-rounded") + "<h2>" + s.header + "</h2><p>" + s.description + "</p></div>"
+      end
+    end
+    html = html +  "</div>"
+    return html.html_safe
+end
+
 def carousel2(mobject, size)
 
     #case size
@@ -74,9 +104,13 @@ def build_medialist2(items, cname, par)
           html_string = html_string + '<div class="panel-body panel-listhead">'
 
             case items.table_name
+                when "signages"
+                  html_string = html_string + " " + item.header
+                when "signage_locs"
+                  html_string = html_string + item.geo_address
                 when "users"
                   html_string = html_string + item.name + " " + item.lastname
-                when "companies", "mobjects", "mdetails"
+                when "companies", "mobjects", "mdetails", "signage_camps"
                   html_string = html_string + item.name
                 when "searches"
                   html_string = html_string + "Abfrage"
@@ -135,7 +169,9 @@ def build_medialist2(items, cname, par)
               html_string = html_string + '<div class="panel-header">'
 
                 case items.table_name
-                  when "users", "companies"
+                  when "signage_camps"
+                    html_string = html_string + showFirstImage2(:medium, item, item.signages)
+                  when "users", "companies", "signages", "signage_locs"
                     html_string = html_string + showImage2(:medium, item, true)
                   when "mdetails"
                     html_string = html_string + showImage2(:medium, item, false)
@@ -215,6 +251,21 @@ def build_medialist2(items, cname, par)
             html_string = html_string + '<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">'
               html_string = html_string + '<div class="panel-header panel-media"><list>'
                 case items.table_name
+                    when "signage_locs"
+                      html_string = html_string + "<h3>" + item.owner.name + '</h3><br>'
+                      html_string = html_string + '<i class="glyphicon glyphicon-home"></i> '
+                      if item.address1 and item.address1.length > 0 
+                        html_string = html_string + item.address1 + '<br>' 
+                      end
+                      if item.address2 and item.address2.length > 0 
+                        html_string = html_string + item.address2 + '<br>' 
+                      end
+                      if item.address3 and item.address3.length > 0 
+                        html_string = html_string + item.address3 + '<br>' 
+                      end
+                     when "signages", "signage_camps"
+                      html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
+                      html_string = html_string + item.description + '<br>'
                     when "mdetails"
                       html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
                       html_string = html_string + item.description + '<br>'
@@ -458,6 +509,10 @@ def build_medialist2(items, cname, par)
             access = false
             if user_signed_in?
               case cname
+                when "signages" 
+                  if item.signage_camp.owner.user_id == current_user.id
+                    access=true
+                  end 
                 when "users"
                   if item.id == current_user.id or current_user.superuser
                     access=true
@@ -466,7 +521,12 @@ def build_medialist2(items, cname, par)
                   if item.user_id == current_user.id
                     access=true
                   end 
-                when "mobjects", "partners", "mstats", "transactions"
+                when "mobjects", "partners", "mstats", "transactions", "signage_camps", "signage_locs"
+                  if cname == "signage_locs"
+      	            html_string = html_string + link_to(home_index11_path(:loc_id => item.id)) do 
+                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-film")
+                    end
+                  end
                   if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                     access = true
                   end
@@ -515,6 +575,36 @@ def build_medialist2(items, cname, par)
  
             if access
               case cname 
+                when "signages"
+    	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                    content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                  end
+    	            html_string = html_string + link_to(edit_signage_path(:id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+                  end
+                when "signage_camps"
+    	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                    content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                  end
+    	            html_string = html_string + link_to(edit_signage_camp_path(:id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+                  end
+    	           # html_string = html_string + link_to(signage_locs_path(:camp_id => item.id)) do 
+                #     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-map-marker")
+                #   end
+    	           # html_string = html_string + link_to(company_path(:id => item.owner_id, :camp_id => item.id, :topic => "Signages")) do 
+                #     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-picture")
+                #   end
+    	           # html_string = html_string + link_to(home_index11_path(:camp_id => item.id)) do 
+                #     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-film")
+                #   end
+                when "signage_locs"
+    	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                    content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                  end
+    	            html_string = html_string + link_to(edit_signage_loc_path(:id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+                  end
                 when "favourits"
     	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
                     content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
@@ -639,72 +729,53 @@ def build_medialist2(items, cname, par)
 end
 
 def showFirstImage2(size, item, details)
-      #case size
-      #  when :small
-      #      si = "50x50"
-      #  when :thumb
-      #      si = "100x100"
-      #  when :medium
-      #      si = "250x250"
-      #  when :big
-      #      si = "500x500"
-      #end
     html_string = link_to item do
       if details.count > 0
         pic = details.first
         if pic.avatar_file_name
           image_tag pic.avatar(size), class:"img-rounded"
         else
-          image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
+          image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive")
+          #image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
         end
       else
-        image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
+        image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive")
+        #image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
       end
     end
     return html_string.html_safe
 end
 
 def showImage2(size, item, linkit)
-  
-   #html_string = "<a href=/users/" + item.id.to_s + "> test </a>"
-   #return html_string.html_safe
-    #case size
-    #    when :small
-    #        si = "50x50"
-    #    when :thumb
-    #        si = "100x100"
-    #    when :medium
-    #        si = "250x250"
-    #    when :big
-    #        si = "500x500"
-    #end
     if linkit
       html_string = link_to(item) do
         if item.avatar_file_name
             image_tag(item.avatar(size), class:"card-img-top img-responsive")
         else
-          case item.class.name
-            when "User"
-              image_tag(image_def("Privatpersonen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
-            when "Company"
-              image_tag(image_def("Institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
-            else
-              image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
-          end
+          image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive")
+          # case item.class.name
+          #   when "User"
+          #     image_tag(image_def("Privatpersonen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
+          #   when "Company"
+          #     image_tag(image_def("Institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
+          #   else
+          #     image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
+          # end
         end
       end
     else
       if item.avatar_file_name
           html_string = image_tag(item.avatar(size), class:"card-img-top img-responsive")
       else
-        case item.class.name
-          when "User"
-            html_string = image_tag(image_def("Privatpersonen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
-          when "Company"
-            html_string = image_tag(image_def("Institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
-          else
-            html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
-        end
+        image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive")
+        # case item.class.name
+        #   when "User"
+        #     html_string = image_tag(image_def("Privatpersonen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
+        #   when "Company"
+        #     html_string = image_tag(image_def("Institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
+        #   else
+        #     html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
+        # end
       end
     end
     return html_string.html_safe
@@ -766,6 +837,8 @@ def navigate(object,item)
         html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Belohnungen)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Zinsen)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Beitraege)", item.mstats.count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Digital Signage (Kampagnen)", item.signage_camps.count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Digital Signage (Standorte)", item.signage_locs.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Kundenbeziehungen", item.customers.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Transaktionen",item.transactions.where('ttype=?', "Payment").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"eMail", Email.where('m_to=? or m_from=?', item.user.id, item.user.id).count > 0)
@@ -797,6 +870,11 @@ def navigate(object,item)
         end
         html_string = html_string + build_nav("Objekte",item,"Bewertungen",item.mratings.count > 0)
 
+      when "Kampagnen"
+        html_string = html_string + build_nav("Kampagnen",item, "Info",item)
+        html_string = html_string + build_nav("Kampagnen",item,"Details",item.signages.count > 0)
+        html_string = html_string + build_nav("Kampagnen",item,"Standorte",item.signage_cals.count > 0)
+        html_string = html_string + build_nav("Kampagnen",item,"Kalender",item.signage_cals.count > 0)
     end
     
     #html_string = html_string + "</div></div></navigate>"
@@ -828,6 +906,10 @@ def build_nav(object, item, topic, condition)
         end
       when "Objekte"
         html_string = link_to(mobject_path(:id => item.id, :topic => topic)) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
+        end
+      when "Kampagnen"
+        html_string = link_to(signage_camp_path(:id => item.id, :topic => topic)) do
           content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
         end
     end
@@ -1001,6 +1083,14 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(new_partner_link_path :company_id => item.id) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
+            when "Digital Signage (Kampagnen)"
+              html_string = html_string + link_to(new_signage_camp_path :company_id => item.id) do
+                content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+              end
+            when "Digital Signage (Standorte)"
+              html_string = html_string + link_to(new_signage_loc_path :company_id => item.id) do
+                content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+              end
           end
         end
         
@@ -1092,6 +1182,34 @@ def action_buttons2(object, item, topic)
               #end
             when "Standort"
          end
+
+      when "Kampagnen"
+         html_string = html_string + link_to(company_path(:id => item.owner_id, :topic => "Digital Signage (Kampagnen)")) do
+          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+         end
+         html_string = html_string + link_to(home_index11_path(:camp_id => item.id)) do
+          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-film")
+         end
+         case topic
+            when "Info"
+            when "Details"
+              if user_signed_in?
+                if current_user.id == item.owner.user_id 
+                  html_string = html_string + link_to(new_signage_path(:camp_id => item.id)) do
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                  end
+                end
+              end
+            when "Kalender"
+              if user_signed_in?
+                if current_user.id == item.owner.user_id 
+                  html_string = html_string + link_to(new_signage_cal_path(:camp_id => item.id)) do
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                  end
+                end
+              end
+            when "Standorte"
+         end
         
     end
     html_string = html_string + "</div></div>"
@@ -1114,6 +1232,14 @@ end
 def getIcon(iconstring)
     case iconstring
 
+      when "Digital Signage Standorte"
+        icon = "film"
+      when "Digital Signage (Kampagnen)"
+        icon = "film"
+      when "Digital Signage (Standorte)"
+        icon = "film"
+      when "Digital Signage (Show)"
+        icon = "film"
       when "News"
         icon = "alert"
       when "AngeboteStandard"
@@ -1149,6 +1275,8 @@ def getIcon(iconstring)
 
       when "Kalender"
         icon = "calendar"
+      when "Standorte"
+        icon = "map-marker"
       when "Info"
         icon = "info-sign"
       when "Kalendereintraege"
@@ -1293,7 +1421,7 @@ end
 def build_kachel_color(domain, name, path_param, user_id, company_id)
     case domain
     
-      when "Einstellungen"
+     when "Einstellungen"
         path = credentials_path(:user_id => current_user.id)
         pic = image_def(domain, domain, nil)
 
@@ -1588,6 +1716,12 @@ def build_hauptmenue
         hasharray << hash
       end
       html_string = html_string + complex_menue(domain, domain_text, hasharray)
+    end
+    
+    if creds.include?("Hauptmenue"+"Digital Signage (Standorte)")
+        domain = "Digital Signage Standorte"
+        path = signage_locs_path
+        html_string = html_string + simple_menue(domain, path)
     end
     
     if creds.include?("Hauptmenue"+"Kalender")
@@ -1917,6 +2051,9 @@ def init_apps
     hash = {"domain" => "Hauptmenue", "parent_domain" => "Crowdfunding", "right" => "CrowdfundingZinsen"}
     @array << hash
     hash = Hash.new
+    hash = {"domain" => "Hauptmenue", "right" => "Digital Signage (Standorte)"}
+    @array << hash
+    hash = Hash.new
     hash = {"domain" => "Hauptmenue", "right" => "Kalender"}
     @array << hash
     hash = Hash.new
@@ -2083,7 +2220,13 @@ def init_apps
     hash = Hash.new
     hash = {"domain" => "Institutionen", "right" => "Aktivitaeten"}
     @array << hash
-    
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Digital Signage (Kampagnen)"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Digital Signage (Standorte)"}
+    @array << hash
+
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "Info"}
     @array << hash
@@ -2115,6 +2258,19 @@ def init_apps
     hash = {"domain" => "Objekte", "right" => "CF Transaktionen"}
     @array << hash
     
+    hash = Hash.new
+    hash = {"domain" => "Kampagnen", "right" => "Info"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Kampagnen", "right" => "Details"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Kampagnen", "right" => "Kalender"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Kampagnen", "right" => "Standorte"}
+    @array << hash
+
     for i in 0..@array.length-1
       c = Appparam.new
       c.domain = @array[i]["domain"]

@@ -1,0 +1,1 @@
+json.array! @signage_locs, partial: 'signage_locs/signage_loc', as: :signage_loc

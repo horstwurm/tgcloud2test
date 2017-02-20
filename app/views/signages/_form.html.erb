@@ -1,0 +1,53 @@
+  <%= form_for @signage, html: {multipart: true}  do |f| %>
+     <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading header">
+                <li_header>
+                <%= link_to company_path(:id => @signage.signage_camp_id, :camp_id => @signage.signage_camp_id, :topic => "Signages") do %>
+                  <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                <% end %>
+                  DIGITAL SIGNAGE <%= @signage.header %>
+                </li_header>
+                </div>
+                <div class="panel-body">
+                  <% if @signage.errors.any? %>
+                    <div id="error_explanation">
+                      <h2><%= pluralize(@signage.errors.count, "error") %> prohibited this workorder from being saved:</h2>
+                      <ul>
+                        <% @signage.errors.full_messages.each do |message| %>
+                          <li><%= message %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  <% end %>
+                  <div class="form-group">
+                     <%= f.label @signage.avatar_file_name if @signage.avatar_file_name %><br/>
+                     <%= image_tag @signage.avatar.url(:native) %>
+                  </div>
+                  <div class="form-group">
+                     <%= f.file_field :avatar, class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label "Titel Text" %><br/>
+                    <%= f.text_field :header, autofocus: true, class:"form-control"%>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label "Untertitel Text" %><br/>
+                    <%= f.text_area :description, rows: 5, class:"form-control"%>
+                  </div>
+                      <%= f.hidden_field :signage_camp_id, class:"form-control" %>
+                  </div>
+                </div>
+            </div>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-6">
+            <div class="actions">
+              <%= f.submit "Speichern", class:"btn btn-primary btn-lg"%>
+            </div>
+        </div>
+      </div>
+    </div>
+  <% end %>

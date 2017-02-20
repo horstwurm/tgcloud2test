@@ -1,0 +1,165 @@
+<% if !@signages %>
+
+  <!--find campaign if more than one-->
+  <% if @campaigns %>
+  
+    <% @campanz = @campaigns.count %>
+    <% if !session[:campaign_nr] %>
+      <% session[:campaign_nr] = 1 %>
+    <% else %>
+      <% session[:campaign_nr] = session[:campaign_nr] + 1 %>
+      <% if session[:campaign_nr] > @campanz %>
+        <% session[:campaign_nr] = 1 %>
+      <% end %>
+    <% end %>
+    
+    <% nr = 0 %>
+    <% @campaigns.each do |camp| %>
+      <% nr = nr + 1 %>
+      <% if nr == session[:campaign_nr] %>
+        <% @signages = camp.signages %>
+        <% @company = camp.owner %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if @signages %>
+<div class="signage">
+  <div class="panel-signage">
+
+   	<div class="row">
+   	  <br>
+  		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 pull-left">
+        <%= carousel(@signages, :big, "hello") %>
+      </div>
+  		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pull-right">
+  		  <div class="row">
+      		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <%= small_carousel(@company, :medium) %>
+          </div>
+      		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      		  <div class="row">
+          		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        		    <div class="panel panel-signage">
+                  <%= showImage2(:small, @company, true) %>
+                </div>
+              </div>
+          		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        		    <div class="panel panel-signage">
+                  <h3><%= @company.name %></h3>
+                  <%= (@company.address1 + "<br>").html_safe if @company.address1 %>
+                  <%= (@company.address2 + "<br>").html_safe if @company.address2 %>
+                  <%= (@company.address3 + "<br>").html_safe if @company.address3 %>
+                  <%= ("<br>"+@company.mcategory.name).html_safe %>
+                </div>
+              </div>
+            </div>
+
+      		  <div class="row">
+          		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+        		    <div class="panel panel-signage">
+        		      <div align=right>
+                    <br><br><p><visit-us>besuchen Sie uns...</visit-us></p>
+                  </div>
+                </div>
+              </div>
+          		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        		    <div class="panel panel-signage">
+                  <% content = "http://tkbmarkt.herokuapp.com/companies/"+@company.id.to_s %>
+                  <% qr = RQRCode::QRCode.new(content, size: 12, :level => :h) %>
+                  <% qr_img = qr.to_img %>
+                  <% path=File.join(Rails.root, "/app/assets/images/") %>
+                  <% qr_img.resize(200, 200).save(path+"app_qrcode.png") %>
+                  <%= image_tag("app_qrcode.png", :size => "100x100") %>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+  	<div class="row">
+  		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 pull-left">
+        <div id=campaign_info style=position:relative;>
+          <div class="panel panel-black pullright">
+            <%= "Standort " + @location.name if @location %>
+            <%= "(" + @location.owner.name + ")" if @location %>
+            <%= " Kampagne " + @signages.first.signage_camp.name + " (" + @signages.first.signage_camp.owner.name + ")" %>
+          </div>
+        </div>
+      </div>
+  		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pull-right">
+        <div id=powered style=position:relative;>
+          <div class="panel panel-black pull-right">
+            <tkb_green>powered by <i class="glyphicon glyphicon-copyright-mark"></i> Thurgauer Kantonalbank</tkb_green>
+          </div>
+          <% image_tag("TKB_Logo_rgb.jpg", :size => "100x20", class:"pull-right") %>
+        </div>
+      </div>
+  	</div>
+
+  </div>
+</div>
+<% end %>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.owl-show').owlCarousel({  
+    
+    itemsCustom : false,
+    itemsDesktop : [1199,4],
+    itemsDesktopSmall : [980,3],
+    itemsTablet: [768,2],
+    itemsTabletSmall: false,
+    itemsMobile : [479,1],
+    afterMove : afterMove,
+    singleItem: true,
+    autoHeight: true,
+    autoPlay: 50000,
+    pagination: false
+  
+  });
+  
+    $('.owl-show2').owlCarousel({  
+    
+    itemsCustom : false,
+    itemsDesktop : [1199,4],
+    itemsDesktopSmall : [980,3],
+    itemsTablet: [768,2],
+    itemsTabletSmall: false,
+    itemsMobile : [479,1],
+    afterMove : afterMove,
+    singleItem: true,
+    autoHeight: true,
+    autoPlay: 5000,
+    pagination: false
+  
+  });
+
+    function afterMove(){
+      $("#powered").fadeIn(5000);
+      $("#powered").fadeOut(5000);
+    }
+    
+    setInterval(function(){cache_clear()},100000);
+    
+    function cache_clear(){
+     window.location.reload(true);
+    }
+
+});
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {wait()})
+</script>
+
+<script>
+  function wait() {
+    await sleep(100);
+    location.reload(true);
+  }
+</script>

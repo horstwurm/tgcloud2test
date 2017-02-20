@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Signages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Owner</th>
+      <th>Owner type</th>
+      <th>Status</th>
+      <th>Header</th>
+      <th>Description</th>
+      <th>Avatar file name</th>
+      <th>Avatar content type</th>
+      <th>Avatar file size</th>
+      <th>Avatar updated at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @signages.each do |signage| %>
+      <tr>
+        <td><%= signage.owner_id %></td>
+        <td><%= signage.owner_type %></td>
+        <td><%= signage.status %></td>
+        <td><%= signage.header %></td>
+        <td><%= signage.description %></td>
+        <td><%= signage.avatar_file_name %></td>
+        <td><%= signage.avatar_content_type %></td>
+        <td><%= signage.avatar_file_size %></td>
+        <td><%= signage.avatar_updated_at %></td>
+        <td><%= link_to 'Show', signage %></td>
+        <td><%= link_to 'Edit', edit_signage_path(signage) %></td>
+        <td><%= link_to 'Destroy', signage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Signage', new_signage_path %>

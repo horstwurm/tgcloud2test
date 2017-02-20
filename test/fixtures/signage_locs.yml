@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  public: false
+  owner_id: 1
+  owner_type: MyString
+  geo_address: MyString
+  address1: 
+  address2: MyString
+  address3: MyString
+  res_v: 1
+  res_h: 1
+
+two:
+  status: MyString
+  public: false
+  owner_id: 1
+  owner_type: MyString
+  geo_address: MyString
+  address1: 
+  address2: MyString
+  address3: MyString
+  res_v: 1
+  res_h: 1

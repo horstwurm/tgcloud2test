@@ -1,0 +1,2 @@
+module SignagesHelper
+end

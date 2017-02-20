@@ -56,6 +56,18 @@ listh3 {
     font-size: 80%!important;
 }
 
+tkb_green {
+    color:$color1!important;
+    opacity: 0.4
+}
+
+.bottomright {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    font-size: 18px;
+}
+
 /*******************************************************************************************************/
 /* ICON Kachel */
 /*******************************************************************************************************/
@@ -412,9 +424,9 @@ geblockt {
 }
 
 .panel-listhead {
-  background: $color5!important;
-  border-color: $color5!important;
-  color: white!important;
+  background: $color4!important;
+  border-color: $color4!important;
+  color: $color5!important;
   padding: 5px!important;
   margin: 0px!important;
   font-size: 100%!important;
@@ -463,7 +475,6 @@ td {
     box-shadow: 2px 2px 10px $color1;
     .panel-listhead {
         color:white!important;
-        font-size:150%!important;
         background:$color1!important;
     }
 }
@@ -636,6 +647,51 @@ media-body{
         color: black!important;
         background:$color1!important;
     }
+}
+
+/*******************************************************************************************************/
+/* Owl */
+/*******************************************************************************************************/
+.owl-wrapper-outer {
+    height: 100% !important;    
+}
+
+.owl-wrapper {
+     height: 100%;   
+}
+
+.owl-item {
+    height: 100%;
+}
+
+.b-Amarelo {
+    height: 100%;
+}
+
+.owl-item h1 {
+    margin: 0;
+}
+
+.signage {
+     color:$color5!important;
+    .panel-signage {
+        background:black!important;
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+visit-us {
+    color: red;
+    font-style: italic;
+} 
+
+#moveup {
+    padding: 50px;
+    display: none;
 }
 
 @import "*";

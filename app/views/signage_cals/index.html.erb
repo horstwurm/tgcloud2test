@@ -1,0 +1,98 @@
+
+  <div class="panel-header">
+    <% if user_signed_in? %>
+      <%= link_to new_signage_cal_path(:loc_id => @loc_id) do %>
+        <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+      <% end %>
+    <% end %>
+  </div>
+  
+  <div class="row">
+    <%= header("Kalender " + "<span class='badge'>" + @anz.to_s + "</span>", true) %>
+  </div>
+
+  <div id='calendar'></div>
+  
+  <%= header("Terminübersicht", false) %>
+  <div class="panel-body">
+  	<table class="table table-striped">
+      <thead>
+        <tr>
+  	      <small_cal>
+  	      <th></th>
+          <th colspan=2>wer</th>
+          <th colspan=2>von-bis</th>
+          </small_cal>
+        </tr>
+      </thead>
+      <body>
+      	<% if user_signed_in? and @cals %>
+          <% @cals.each do |ca| %>
+      			<% if ca.signage_loc.owner.user_id == current_user.id %>
+              <tr>
+                <td>
+    				      <% if !ca.confirmed %>
+                    <%= link_to signage_cals_path(:confirm_id => ca.id, :loc_id => ca.signage_loc_id) do %>
+                      <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
+                    <% end %>
+                  <% else %>
+                    <%= link_to signage_cals_path(:noconfirm_id => ca.id, :loc_id => ca.signage_loc_id) do %>
+                      <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
+                    <% end %>
+                  <% end %>
+                  <%= link_to edit_signage_cal_path(ca) do %>
+                    <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
+                  <% end %>
+  				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                  <% end %>
+                </td>
+                <td>
+                  <%= showImage2(:small, @ca.owner, true) %>
+                  <%= ca.owner.name %>
+                </td>
+                <td>
+                  <small_cal>
+                    <%= ca.date_from.strftime("%d.%m.%Y") + ca.time_from.to_s + " Uhr" %>
+                  </small_cal>
+                </td>
+                <td>
+                  <small_cal>
+                    <%= ca.date_to.strftime("%d.%m.%Y") + ca.time_to.to_s + " Uhr" %>
+                  </small_cal>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        <% end %>          
+      </body>
+   	</table>
+  </div>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {init_map(0);initialize();drawChart()})
+</script>
+
+<script>
+$(document).ready(function(){
+
+    $('#calendar').fullCalendar({
+        now: '<%= DateTime.now %>',
+        allDaySlot: false,
+        timeFormat: 'H(:mm)',
+        defaultView: 'basicWeek',
+        defaultView: 'basicDay',
+        defaultView: 'basicWeek',
+        defaultView: 'listYear',
+        defaultView: 'month',
+        defaultView: 'agendaWeek',
+        slotDuration: '1:00:00',
+        contentHeight: 'auto',
+        textColor: 'white',
+        firstDay: 1,
+        weekNumbers: true,
+        events: [<%= raw @array %> ]
+    })
+  
+});
+</script>

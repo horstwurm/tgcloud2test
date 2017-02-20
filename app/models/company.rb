@@ -9,7 +9,9 @@ class Company < ActiveRecord::Base
     has_many :mstats, as: :owner, dependent: :destroy 
     has_many :customers, as: :owner, dependent: :destroy 
     has_many :transactions, as: :owner, dependent: :destroy 
-    
+    has_many :signage_camps, as: :owner, dependent: :destroy 
+    has_many :signage_locs, as: :owner, dependent: :destroy 
+
     has_many :partner_links, dependent: :destroy 
     has_many :msponsors, dependent: :destroy 
     belongs_to :user

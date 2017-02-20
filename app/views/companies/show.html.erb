@@ -111,6 +111,13 @@
         <% when "Crowdfunding (Beitraege)" %>
           <%= header("Crowdfunding Beitraege", false) %>
           <%= build_medialist2(@company.mstats, "mstats", nil) %>
+        <% when "Digital Signage (Kampagnen)" %>
+          <%= header("Digital Signage Kampagnen", false) %>
+          <%= build_medialist2(@company.signage_camps, "signage_camps", nil) %>
+        <% when "Digital Signage (Standorte)" %>
+          <%= header("Digital Signage Standorte", false) %>
+          <%= build_medialist2(@company.signage_locs, "signage_locs", nil) %>
+          <%= build_medialist2(SignageLoc.where('privateonly=? and owner_id!=?', true, @company.id), "signage_locs", @company) %>
 
         <% when "Favoriten" %>
           <%= header("Favoriten", false) %>

@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @signage_loc.status %>
+</p>
+
+<p>
+  <strong>Public:</strong>
+  <%= @signage_loc.public %>
+</p>
+
+<p>
+  <strong>Owner:</strong>
+  <%= @signage_loc.owner_id %>
+</p>
+
+<p>
+  <strong>Owner type:</strong>
+  <%= @signage_loc.owner_type %>
+</p>
+
+<p>
+  <strong>Geo address:</strong>
+  <%= @signage_loc.geo_address %>
+</p>
+
+<p>
+  <strong>Address1:</strong>
+  <%= @signage_loc.address1 %>
+</p>
+
+<p>
+  <strong>Address2:</strong>
+  <%= @signage_loc.address2 %>
+</p>
+
+<p>
+  <strong>Address3:</strong>
+  <%= @signage_loc.address3 %>
+</p>
+
+<p>
+  <strong>Res v:</strong>
+  <%= @signage_loc.res_v %>
+</p>
+
+<p>
+  <strong>Res h:</strong>
+  <%= @signage_loc.res_h %>
+</p>
+
+<%= link_to 'Edit', edit_signage_loc_path(@signage_loc) %> |
+<%= link_to 'Back', signage_locs_path %>

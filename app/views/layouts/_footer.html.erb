@@ -1,3 +1,7 @@
+<% controller_name + action_name %>
+<% if controller_name == "home" and action_name == "index11" %>
+    <%= %>
+<% else %>
 <br>
 <div class="nav-panel-black">
 
@@ -58,7 +62,7 @@
         						<%= link_to "Superuser (Funktionen)", appparams_path %><br>
         						<%= link_to "Superuser (Tabellen)", home_index9_path  %><br><br>
         						<%= link_to "Superuser (Statistik)", home_index2_path %><br><br>
-        						<%= link_to "Superuser (myNews)", home_index10_path %><br><br>
+        						<%= link_to "Superuser (digitalSignage)", home_index11_path %><br><br>
     					   <% end %>
                         <% end %>
                     </footer_text>
@@ -90,3 +94,4 @@
     </div>
 
 </div>
+<% end %>

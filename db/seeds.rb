@@ -195,6 +195,29 @@ companies = Company.create({status:"OK", active:true, user_id:14, name:"Graubün
 companies = Company.create({status:"OK", active:true, user_id:14, name:"Sonderegger publish", partner:false, mcategory_id:22 ,stichworte: "Copyshop Drucken Druckerei Publish Webdesign", address1:"Marktstrasse 26", address2:"8570 Weinfelden", address3:"Thurgau", avatar:File.open(path+'sonderegger.tiff', 'rb')}) 
 companies = Company.create({status:"OK", active:true, user_id:34, name:"Amt für Wirtschaft und Arbeit", partner:false, mcategory_id:25 ,stichworte: "Wirtschaft Arbeit Amt Kanton", address1:"Promenadenstrasse", address2:"8510 Frauenfeld", address3:"Thurgau", avatar:File.open(path+'awalogo.jpg', 'rb')}) 
 
+signage_camps = SignageCamp.create({name:"Kampagne Fit", description:"Beschreibung", owner_type:"Company", owner_id:11})
+signages = Signage.create({signage_camp_id:1, header:"Fit halten durch Sport", description:"rufen Sie uns an", avatar:File.open(path+'fit1.jpg', 'rb')})
+signages = Signage.create({signage_camp_id:1, header:"Individuelle Programme", description:"lassen Sie sich beraten", avatar:File.open(path+'fit2.jpg', 'rb')})
+signages = Signage.create({signage_camp_id:1, header:"modernste Geräte", description:"probieren Sie es aus", avatar:File.open(path+'fit3.jpg', 'rb')})
+signages = Signage.create({signage_camp_id:1, header:"Gruppentraining", description:"der Spass kommt nicht zu kurz", avatar:File.open(path+'fit4.jpg', 'rb')})
+
+signage_camps = SignageCamp.create({name:"Kampagne Finanzieren", description:"Beschreibung", owner_type:"Company", owner_id:4})
+signages = Signage.create({signage_camp_id:2, header:"gemeinsam an's Ziel", description:"rufen Sie uns an", avatar:File.open(path+'TKB_Finanzieren1.jpg', 'rb')})
+signages = Signage.create({signage_camp_id:2, header:"wir unterstützen Sie", description:"rufen Sie uns an", avatar:File.open(path+'TKB_Finanzieren2.jpg', 'rb')})
+signages = Signage.create({signage_camp_id:2, header:"wir freuen uns auf Sie", description:"rufen Sie uns an", avatar:File.open(path+'TKB_Finanzieren3.jpg', 'rb')})
+
+signage_locs = SignageLoc.create({name: "Bahnhof Weinfelden", privateonly: true, owner_type:"Company", owner_id:16, address1:"Bahnhof", address2:"Weinfelden", address3:"Thurgau", res_h:800, res_v:600, avatar:File.open(path+'signage_bahnhof.jpg', 'rb')})
+signage_locs = SignageLoc.create({name: "Bistro Frauenfeld", privateonly: true, owner_type:"Company", owner_id:16, address1:"Marktplatz", address2:"Frauenfeld", address3:"Thurgau", res_h:800, res_v:600, avatar:File.open(path+'signage_bistro.jpg', 'rb')})
+signage_locs = SignageLoc.create({name: "Geschäftsstelle Weinfelden", privateonly: true, owner_type:"Company", owner_id:4, address1:"Bankplatz 1", address2:"Weinfelden", address3:"Thurgau", res_h:800, res_v:600, avatar:File.open(path+'signage_tkb.jpg', 'rb')})
+signage_locs = SignageLoc.create({name: "Kosmetikstudio", privateonly: true, owner_type:"Company", owner_id:11, address1:"Gartenstrasse 2", address2:"Bürglen", address3:"Thurgau", res_h:800, res_v:600, avatar:File.open(path+'signage_tkb.jpg', 'rb')})
+
+signage_cals = SignageCal.create({signage_loc_id:1, signage_camp_id:1, date_from: Date.today, date_to: Date.today + 20, confirmed:true})
+signage_cals = SignageCal.create({signage_loc_id:1, signage_camp_id:2, date_from: Date.today, date_to: Date.today + 20, confirmed:true})
+signage_cals = SignageCal.create({signage_loc_id:2, signage_camp_id:1, date_from: Date.today, date_to: Date.today + 20, confirmed:true})
+signage_cals = SignageCal.create({signage_loc_id:3, signage_camp_id:1, date_from: Date.today+5, date_to: Date.today + 20, confirmed:true})
+signage_cals = SignageCal.create({signage_loc_id:4, signage_camp_id:1, date_from: Date.today, date_to: Date.today + 20, confirmed:true})
+signage_cals = SignageCal.create({signage_loc_id:4, signage_camp_id:2, date_from: Date.today + 10, date_to: Date.today + 20, confirmed:true})
+
 #create Links for TKB
 @comp = Company.where('name=?',"Thurgauer Kantonalbank").first
 if @comp

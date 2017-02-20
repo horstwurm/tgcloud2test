@@ -1,0 +1,1 @@
+json.array! @signage_cals, partial: 'signage_cals/signage_cal', as: :signage_cal

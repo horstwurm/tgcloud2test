@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :signage_camps
+  resources :signage_cals
+  resources :signage_locs
+  resources :signages
   get 'rooms/show'
 
   resources :participants
@@ -27,6 +31,7 @@ Rails.application.routes.draw do
   get 'home/index8'
   get 'home/index9'
   get 'home/index10'
+  get 'home/index11'
   
   resources :searches
   resources :partner_links

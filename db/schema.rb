@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170106164536) do
+ActiveRecord::Schema.define(version: 20170217093943) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 20170106164536) do
     t.string   "parent_domain"
     t.string   "right"
     t.boolean  "access"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "companies", force: :cascade do |t|
@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(version: 20170106164536) do
     t.integer  "appparam_id"
     t.integer  "user_id"
     t.boolean  "access"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "customers", force: :cascade do |t|
@@ -322,6 +322,62 @@ ActiveRecord::Schema.define(version: 20170106164536) do
     t.integer  "counter"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "signage_cals", force: :cascade do |t|
+    t.integer  "signage_loc_id"
+    t.integer  "signage_camp_id"
+    t.date     "date_from"
+    t.date     "date_to"
+    t.integer  "time_from"
+    t.integer  "time_to"
+    t.boolean  "confirmed"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "signage_camps", force: :cascade do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "signage_locs", force: :cascade do |t|
+    t.string   "status"
+    t.string   "name"
+    t.boolean  "privateonly"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "geo_address"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "address3"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "res_v"
+    t.integer  "res_h"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  create_table "signages", force: :cascade do |t|
+    t.integer  "signage_camp_id"
+    t.string   "status"
+    t.string   "header"
+    t.text     "description"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "tickets", force: :cascade do |t|

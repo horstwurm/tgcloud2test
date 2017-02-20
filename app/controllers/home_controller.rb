@@ -235,4 +235,24 @@ def index10
   end    
 end
 
+def index11
+  if params[:camp_id]
+    @campaign = SignageCamp.find(params[:camp_id])
+    @company = @campaign.owner
+    @signages = @campaign.signages
+    @location = nil
+  end
+  if params[:loc_id]
+    @location = SignageLoc.find(params[:loc_id])
+    @cals = SignageCal.where('signage_loc_id=?',params[:loc_id])
+    campaigns = []
+    @cals.each do |c|
+        campaigns << c.signage_camp_id
+    end
+    @campaigns = SignageCamp.where('id IN (?)', campaigns)
+    @signages = nil
+  end
+  
+end
+
 end

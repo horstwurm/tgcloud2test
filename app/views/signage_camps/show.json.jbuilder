@@ -1,0 +1,1 @@
+json.partial! "signage_camps/signage_camp", signage_camp: @signage_camp

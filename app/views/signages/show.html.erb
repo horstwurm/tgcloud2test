@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Owner:</strong>
+  <%= @signage.owner_id %>
+</p>
+
+<p>
+  <strong>Owner type:</strong>
+  <%= @signage.owner_type %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @signage.status %>
+</p>
+
+<p>
+  <strong>Header:</strong>
+  <%= @signage.header %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @signage.description %>
+</p>
+
+<p>
+  <strong>Avatar file name:</strong>
+  <%= @signage.avatar_file_name %>
+</p>
+
+<p>
+  <strong>Avatar content type:</strong>
+  <%= @signage.avatar_content_type %>
+</p>
+
+<p>
+  <strong>Avatar file size:</strong>
+  <%= @signage.avatar_file_size %>
+</p>
+
+<p>
+  <strong>Avatar updated at:</strong>
+  <%= @signage.avatar_updated_at %>
+</p>
+
+<%= link_to 'Edit', edit_signage_path(@signage) %> |
+<%= link_to 'Back', signages_path %>

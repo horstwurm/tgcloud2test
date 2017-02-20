@@ -1,3 +1,6 @@
+<% controller_name + action_name %>
+<% if controller_name == "home" and action_name == "index11" %>
+<% else %>
 <div class="nav-panel-black navbar-fixed-top">
 	<div class="container-fluid">
 		<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>	
@@ -60,6 +63,7 @@
 	</div>
 </div>
 <br><br><br><br><br><br>
+<% end %>
 
 <% if false %>
 	<%= render ("layouts/header2") %>

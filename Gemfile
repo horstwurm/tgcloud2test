@@ -36,6 +36,7 @@ gem 'will_paginate'
 gem 'bootstrap-slider-rails'
 gem "bootstrap-switch-rails"
 gem 'owlcarousel-rails'
+#gem 'owlcarousel-rails', github: 'acrogenesis/owlcarousel-rails', branch: 'OwlCarousel2'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-turbolinks'
 gem 'aws-sdk', '~>2.3'
