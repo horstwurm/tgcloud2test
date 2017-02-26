@@ -170,6 +170,7 @@ $(document).ready(function(){
 });
 </script>
 
+<% if @topic == "Kampagnen" %>
 <script type="text/javascript">
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart1);
@@ -209,6 +210,7 @@ $(document).ready(function(){
     chart.draw(data, options);
   }
 </script>
+<% end %>
 
 <script>
   document.addEventListener("turbolinks:load", function() {drawChart1();drawChart2();})

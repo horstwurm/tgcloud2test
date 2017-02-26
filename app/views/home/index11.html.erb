@@ -44,71 +44,103 @@
         <%= carousel(@signages, :big, "hello") %>
       </div>
   		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pull-right">
+
   		  <div class="row">
       		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <%= small_carousel(@company, :medium) %>
           </div>
+        </div>
+
+  		  <div class="row">
       		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      		  <div class="row">
-          		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-        		    <div class="panel panel-signage">
-                  <%= showImage2(:small, @company, true) %>
-                </div>
-              </div>
-          		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-        		    <div class="panel panel-signage">
-                  <h3><%= @company.name %></h3>
-                  <%= (@company.address1 + "<br>").html_safe if @company.address1 %>
-                  <%= (@company.address2 + "<br>").html_safe if @company.address2 %>
-                  <%= (@company.address3 + "<br>").html_safe if @company.address3 %>
-                  <%= ("<br>"+@company.mcategory.name).html_safe %>
-                </div>
+
+    		    <div class="panel panel-signage">
+              <div align="center">
+                <%= showImage2(:medium, @company, true) %>
               </div>
             </div>
 
-      		  <div class="row">
-          		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-        		    <div class="panel panel-signage">
-        		      <div align=right>
-                    <br><br><p><visit-us>besuchen Sie uns...</visit-us></p>
-                  </div>
-                </div>
-              </div>
-          		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        		    <div class="panel panel-signage">
-                  <% content = "http://tkbmarkt.herokuapp.com/companies/"+@company.id.to_s %>
-                  <% qr = RQRCode::QRCode.new(content, size: 12, :level => :h) %>
-                  <% qr_img = qr.to_img %>
-                  <% path=File.join(Rails.root, "/app/assets/images/") %>
-                  <% qr_img.resize(200, 200).save(path+"app_qrcode"+@company.id.to_s+".png") %>
-                  <%= image_tag("app_qrcode.png", :size => "100x100") %>
-                </div>
-              </div>
-            </div>
-            
           </div>
         </div>
+        <br>
+        <br>
+
+  		  <div class="row">
+      		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    		    <div class="panel panel-signage">
+              <h3><%= @company.name %></h3>
+              <%= (@company.address1 + "<br>").html_safe if @company.address1 %>
+              <%= (@company.address2 + "<br>").html_safe if @company.address2 %>
+              <%= (@company.address3 + "<br>").html_safe if @company.address3 %>
+              <%= ("<br>"+@company.mcategory.name).html_safe %>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
 
   	<div class="row">
-  		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 pull-left">
+  		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pull-left">
         <div id=campaign_info style=position:relative;>
           <div class="panel panel-black pullright">
-            <%= "Standort " + @location.name if @location %>
-            <%= "(" + @location.owner.name + ")" if @location %>
-            <%= " Kampagne " + @signages.first.signage_camp.name + " (" + @signages.first.signage_camp.owner.name + ")" %>
+  
+            <% content1 = "http://tkbmarkt.herokuapp.com/companies/"+@location.owner.id.to_s %>
+            <% qr = RQRCode::QRCode.new(content1, size: 12, :level => :h) %>
+            <% qr_img = qr.to_img %>
+            <% path=File.join(Rails.root, "/app/assets/images/") %>
+            <% qr_img.resize(200, 200).save(path+"app_qrcode"+@location.owner.id.to_s+".png") %>
+            <%= image_tag("app_qrcode"+@location.owner.id.to_s+".png", :size => "100x100") %>
+
           </div>
         </div>
       </div>
-  		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pull-right">
-        <div id=powered style=position:relative;>
+
+  		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-left">
+        <div id=campaign_info style=position:relative;>
+          <div class="panel panel-black pullright">
+
+            <visit-us>hier könnte Ihre Werbung laufen...</visit-us><br><br>
+            <%= "Standort " + @location.name if @location %><br>
+            <%= "(" + @location.owner.name + ")" if @location %><br><br>
+            <% if false %>
+              <%= " Kampagne " + @signages.first.signage_camp.name + " (" + @signages.first.signage_camp.owner.name + ")" %><br><br>
+            <% end %>
+            <%= content1 %>
+
+          </div>
+        </div>
+      </div>
+
+  		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pull-left">
+        <div id=campaign_info style=position:relative;>
+          <div class="panel panel-black pullright">
+            <visit-us>besuchen Sie uns...</visit-us><br><br>
+            <%= content1 %>
+          </div>
+        </div>
+      </div>
+      
+  		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pull-right">
+        <div id=campaign_info style=position:relative;>
           <div class="panel panel-black pull-right">
+
+            <% content2 = "http://tkbmarkt.herokuapp.com/companies/"+@company.id.to_s %>
+            <% qr = RQRCode::QRCode.new(content2, size: 12, :level => :h) %>
+            <% qr_img = qr.to_img %>
+            <% path=File.join(Rails.root, "/app/assets/images/") %>
+            <% qr_img.resize(200, 200).save(path+"app_qrcode"+@company.id.to_s+".png") %>
+            <%= image_tag("app_qrcode"+@company.id.to_s+".png", :size => "100x100") %>
+
+            <% if false %>
             <tkb_green>powered by <i class="glyphicon glyphicon-copyright-mark"></i> Thurgauer Kantonalbank</tkb_green>
+            <% end %>
+            
           </div>
           <% image_tag("TKB_Logo_rgb.jpg", :size => "100x20", class:"pull-right") %>
         </div>
       </div>
+      
   	</div>
 
   </div>
