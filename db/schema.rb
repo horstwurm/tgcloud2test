@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170217093943) do
+ActiveRecord::Schema.define(version: 20170223160302) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -332,8 +332,8 @@ ActiveRecord::Schema.define(version: 20170217093943) do
     t.integer  "time_from"
     t.integer  "time_to"
     t.boolean  "confirmed"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "signage_camps", force: :cascade do |t|
@@ -341,13 +341,22 @@ ActiveRecord::Schema.define(version: 20170217093943) do
     t.string   "owner_type"
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "signage_hits", force: :cascade do |t|
+    t.integer  "signage_camp_id"
+    t.integer  "signage_loc_id"
+    t.datetime "datetime_from"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "signage_locs", force: :cascade do |t|
     t.string   "status"
     t.string   "name"
+    t.text     "description"
     t.boolean  "privateonly"
     t.integer  "owner_id"
     t.string   "owner_type"
@@ -359,6 +368,7 @@ ActiveRecord::Schema.define(version: 20170217093943) do
     t.float    "longitude"
     t.integer  "res_v"
     t.integer  "res_h"
+    t.float    "price"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"

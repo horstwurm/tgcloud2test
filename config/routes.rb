@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :signage_hits
   resources :signage_camps
   resources :signage_cals
   resources :signage_locs

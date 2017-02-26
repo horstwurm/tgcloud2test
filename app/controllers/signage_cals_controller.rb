@@ -63,11 +63,24 @@ class SignageCalsController < ApplicationController
   # GET /signage_cals/new
   def new
     @signage_cal = SignageCal.new
-    @signage_cal.signage_camp_id = params[:camp_id]
+    if params[:camp_id]
+      @signage_cal.signage_camp_id = params[:camp_id]
+      @mode = "camp"
+    end
+    if params[:loc_id]
+      @signage_cal.signage_loc_id = params[:loc_id]
+      @mode = "loc"
+    end
   end
 
   # GET /signage_cals/1/edit
   def edit
+    if params[:camp_id]
+      @mode = "camp"
+    end
+    if params[:loc_id]
+      @mode = "loc"
+    end
   end
 
   # POST /signage_cals

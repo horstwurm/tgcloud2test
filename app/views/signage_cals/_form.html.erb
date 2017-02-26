@@ -16,8 +16,15 @@
                 <div class="panel panel-default">
                     <div class="panel-heading header">
                       <li_header>
-                      <%= link_to signage_cals_path(:camp_id => @signage_cal.signage_camp_id, :topic => "Kalender") do %>
-                        <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                      <% if @mode == "camp" %>
+                        <%= link_to signage_camp_path(:id => @signage_cal.signage_camp_id, :topic => "Kalender") do %>
+                          <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                        <% end %>
+                      <% end %>
+                      <% if @mode == "loc" %>
+                        <%= link_to signage_loc_path(:id => @signage_cal.signage_loc_id, :topic => "Kalender") do %>
+                          <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                        <% end %>
                       <% end %>
                       </li_header>
                     </div>
@@ -27,10 +34,23 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="panel-body">
-                    <div class="form-group">
-                      <%= f.label "Standort" %><br/>
-                      <%= f.collection_select :signage_loc_id, SignageLoc.all, :id, :name, {}, class:"form-control" %>
-                    </div>
+
+                    <% if @mode == "camp" %>
+                      <div class="form-group">
+                        <%= f.label "Standort" %><br/>
+                        <%= f.collection_select :signage_loc_id, SignageLoc.all, :id, :name, {}, class:"form-control" %>
+                      </div>
+                      <%= f.hidden_field :signage_camp_id, class:"form-control" %>
+                    <% end %>
+
+                    <% if @mode == "loc" %>
+                      <div class="form-group">
+                        <%= f.label "Kampagnge" %><br/>
+                        <%= f.collection_select :signage_camp_id, SignageCamp.all, :id, :name, {}, class:"form-control" %>
+                      </div>
+                       <%= f.hidden_field :signage_loc_id, class:"form-control" %>
+                    <% end %>
+
                     <div class="form-group">
                       <%= f.label "von" %><br/>
                       <%= f.text_field :date_from, class:"form-control"%>
@@ -39,7 +59,6 @@
                       <%= f.label "bis" %><br/>
                       <%= f.text_field :date_to, class:"form-control"%>
                     </div>
-                     <%= f.hidden_field :signage_camp_id, class:"form-control" %>
                      <%= f.hidden_field :confirmed, class:"form-control" %>
                     <div class="actions">
                        <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>

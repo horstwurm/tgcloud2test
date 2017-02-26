@@ -21,19 +21,26 @@
 
       <% case @topic %>
         <% when "Info" %>
+
           <%= header("Informationen", false) %>
           <div class="panel-body">
-            <%= carousel(@signage_camp.signages, :medium, nil) %>
-          </div>
-          <br><br>
-          <% if @signage_camp.description %>
-            <b>Beschreibung</b><br>
-        		<%= @signage_camp.description %>
+            <%= showFirstImage2(:medium, @signage_camp, @signage_camp.signages) %>
+            <% if @signage_camp.description and @signage_camp.description !="" %>
+              <br><br>
+              <b>Beschreibung</b><br>
+          		<%= @signage_camp.description %>
+              <br><br>
+            <% end %>
+        		<br><br>
+            <br>
+            <b>Verantwortlich</b><br>
+            <%= showImage2(:small, @signage_camp.owner, true) %>
+            <br>
+            <%= @signage_camp.owner.name %>
             <br><br>
-          <% end %>
-      		<br><br>
-          <%= @signage_camp.created_at.strftime("%d.%m.%Y") %>
-
+            <cite><%= @signage_camp.created_at.strftime("%d.%m.%Y") %></cite><br>
+          </div>
+          
         <% when "Details" %>
           <%= header("Details", false) %>
           <div class="panel-body">
@@ -42,8 +49,17 @@
 
         <% when "Standorte" %>
           <%= header("Standorte", false) %>
+          <!--<div class="panel-body">-->
+          <!--  <%= build_medialist2(@signage_camp.signage_cals, "signage_cals", nil) %>-->
+          <!--</div>-->
+          <%= @anz_s.to_s if false %>
           <div class="panel-body">
-            <%= build_medialist2(@signage_camp.signage_cals, "signage_cals", nil) %>
+            <div id="curve_chart1"></div>
+          </div>
+
+          <%= @anz_s2.to_s if false %>
+          <div class="panel-body">
+            <div id="curve_chart2"></div>
           </div>
 
         <% when "Kalender" %>
@@ -57,8 +73,8 @@
                 <tr>
                   <th></th>
                   <th colspan=2>Standort</th>
-                  <th colspan=2>Owner</th>
-                  <th colspan=2>wann</th>
+                  <th colspan=2>Eigentümer</th>
+                  <th colspan=2>Zeitraum</th>
                 </tr>
               </thead>
               <body>
@@ -66,7 +82,7 @@
                   <tr>
                     <td>
           				    <% if user_signed_in? %>
-          				      <% if (ca.signage_camp.owner.user_id == current_user.id) %>
+          				      <% if (ca.signage_loc.owner.user_id == current_user.id) %>
           				        <% if !ca.confirmed %>
                             <%= link_to signage_camp_path(:id => ca.signage_camp_id, :confirm_id => ca.id, :topic => "Kalender") do %>
                               <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
@@ -77,22 +93,28 @@
                             <% end %>
                           <% end %>
           				      <% end %>
-        				        <%= link_to edit_signage_cal_path(ca) do %>
-                          <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
-                        <% end %>
-        				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                          <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+          				      <% if (ca.signage_camp.owner.user_id == current_user.id) %>
+          				        <%= link_to edit_signage_cal_path(ca, :camp_id => ca.signage_camp_id) do %>
+                            <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
+                          <% end %>
+          				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                            <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                          <% end %>
                         <% end %>
               				<% end %>
                     </td>
                     <td>
                       <%= showImage2(:small, ca.signage_loc, true) %>
+                    </td>
+                    <td>
                       <smallcall>
                       <%= ca.signage_loc.name %><br>
                       </smallcal>
                     </td>
                     <td>
                       <%= showImage2(:small, ca.signage_loc.owner, true) %>
+                    </td>
+                    <td>
                       <smallcall>
                       <%= ca.signage_loc.owner.name %><br>
                       </smallcal>
@@ -129,8 +151,10 @@
 <!--});-->
 <!--</script>-->
 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <script>
-  document.addEventListener("turbolinks:load", function() {})
+  document.addEventListener("turbolinks:load", function() {drawChart1();drawChart2();})
 </script>
 
 <script>
@@ -183,5 +207,45 @@ $(document).ready(function(){
     });    
   
 });
+</script>
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart1);
+  function drawChart1() {
+    var data = google.visualization.arrayToDataTable([
+      ['Datum', 'Anzahl'],
+      <%= raw @anz_s %>
+    ]);
+    var options = {
+      title: 'Kampagne <%= @signage_camp.name %>',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+
+    chart.draw(data, options);
+  }
+</script>
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart2);
+  function drawChart2() {
+    var data = google.visualization.arrayToDataTable([
+      <%= raw @anz_s2 %>
+    ]);
+    var options = {
+      title: 'Kampagne <%= @signage_camp.name %>',
+      curveType: 'function',
+      legend: { position: 'bottom' },
+      isStacked: true
+    };
+
+    var chart = new google.visualization.ColumnChart(document.getElementById('curve_chart2'));
+
+    chart.draw(data, options);
+  }
 </script>
 

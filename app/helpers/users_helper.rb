@@ -8,7 +8,7 @@ def small_carousel(company, size)
     mobjects.each do |m|
       m.mdetails.each do |s|
         if s.avatar_file_name
-          html = html + "<div align=center>"+ (image_tag s.avatar(:medium), class:"img-rounded") + "<h3>" + m.mtype + " " + m.name + "</h3><p>" + s.description + "</p></div>"
+          html = html + "<div align=center>"+ (image_tag s.avatar(:medium), class:"img-rounded") + "<h4>" + m.mtype + ": " + m.name + "</h4><p>" + s.description + "</p></div>"
         end
       end
     end
@@ -63,6 +63,25 @@ def carousel2(mobject, size)
     return html.html_safe
 end
 
+def sigcar(mobject)
+    html = ""
+    if mobject.signages == nil
+    else
+      if mobject.signages.count == 0
+      else
+        html = html +  '<div class="owl-show">'
+        mobject.signages.each do |p|
+          if p.avatar_file_name == nil
+          else
+            html = html + "<div>"+ (image_tag p.avatar(:medium), class:"img-rounded") + "</div>"
+          end
+        end
+        html = html +  "</div>"
+      end
+    end
+    return html.html_safe
+end
+
 def align_text(txt)
     len = 30
     if txt == nil
@@ -107,7 +126,7 @@ def build_medialist2(items, cname, par)
                 when "signages"
                   html_string = html_string + " " + item.header
                 when "signage_locs"
-                  html_string = html_string + item.geo_address
+                  html_string = html_string + item.name
                 when "users"
                   html_string = html_string + item.name + " " + item.lastname
                 when "companies", "mobjects", "mdetails", "signage_camps"
@@ -524,7 +543,7 @@ def build_medialist2(items, cname, par)
                 when "mobjects", "partners", "mstats", "transactions", "signage_camps", "signage_locs"
                   if cname == "signage_locs"
       	            html_string = html_string + link_to(home_index11_path(:loc_id => item.id)) do 
-                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-film")
+                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-blackboard")
                     end
                   end
                   if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
@@ -875,6 +894,11 @@ def navigate(object,item)
         html_string = html_string + build_nav("Kampagnen",item,"Details",item.signages.count > 0)
         html_string = html_string + build_nav("Kampagnen",item,"Standorte",item.signage_cals.count > 0)
         html_string = html_string + build_nav("Kampagnen",item,"Kalender",item.signage_cals.count > 0)
+
+      when "Standorte"
+        html_string = html_string + build_nav("Standorte",item, "Info",item)
+        html_string = html_string + build_nav("Standorte",item,"Kampagnen",item.signage_cals.count > 0)
+        html_string = html_string + build_nav("Standorte",item,"Kalender",item.signage_cals.count > 0)
     end
     
     #html_string = html_string + "</div></div></navigate>"
@@ -899,6 +923,7 @@ def build_nav(object, item, topic, condition)
       when "Privatpersonen"
         html_string = link_to(user_path(:id => item.id, :topic => topic)) do
           content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
+          #content_tag(:span, content_tag(:i, topic), class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
         end
       when "Institutionen"
         html_string = link_to(company_path(:id => item.id, :topic => topic)) do
@@ -910,6 +935,10 @@ def build_nav(object, item, topic, condition)
         end
       when "Kampagnen"
         html_string = link_to(signage_camp_path(:id => item.id, :topic => topic)) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
+        end
+      when "Standorte"
+        html_string = link_to(signage_loc_path(:id => item.id, :topic => topic)) do
           content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
         end
     end
@@ -1210,6 +1239,26 @@ def action_buttons2(object, item, topic)
               end
             when "Standorte"
          end
+
+      when "Standorte"
+         html_string = html_string + link_to(company_path(:id => item.owner_id, :topic => "Digital Signage (Standorte)")) do
+          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+         end
+         html_string = html_string + link_to(home_index11_path(:loc_id => item.id)) do
+          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-film")
+         end
+         case topic
+            when "Info"
+            when "Kalender"
+              if user_signed_in?
+                if current_user.id == item.owner.user_id 
+                  html_string = html_string + link_to(new_signage_cal_path(:loc_id => item.id)) do
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                  end
+                end
+              end
+            when "Standorte"
+         end
         
     end
     html_string = html_string + "</div></div>"
@@ -1232,8 +1281,10 @@ end
 def getIcon(iconstring)
     case iconstring
 
-      when "Digital Signage Standorte"
+      when "Digital Signage Standorte", "Werbeflächen"
         icon = "film"
+      when "Kampagnen"
+        icon = "signal"
       when "Digital Signage (Kampagnen)"
         icon = "film"
       when "Digital Signage (Standorte)"
@@ -1276,7 +1327,7 @@ def getIcon(iconstring)
       when "Kalender"
         icon = "calendar"
       when "Standorte"
-        icon = "map-marker"
+        icon = "signal"
       when "Info"
         icon = "info-sign"
       when "Kalendereintraege"
@@ -1719,7 +1770,7 @@ def build_hauptmenue
     end
     
     if creds.include?("Hauptmenue"+"Digital Signage (Standorte)")
-        domain = "Digital Signage Standorte"
+        domain = "Werbeflächen"
         path = signage_locs_path
         html_string = html_string + simple_menue(domain, path)
     end
@@ -2269,6 +2320,16 @@ def init_apps
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Kampagnen", "right" => "Standorte"}
+    @array << hash
+
+    hash = Hash.new
+    hash = {"domain" => "Standorte", "right" => "Info"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Standorte", "right" => "Kampagnen"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Standorte", "right" => "Kalender"}
     @array << hash
 
     for i in 0..@array.length-1

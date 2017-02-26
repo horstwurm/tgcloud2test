@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  signage_camp_id: 1
+  signage_loc_id: 1
+  datetime_from: 
+
+two:
+  signage_camp_id: 1
+  signage_loc_id: 1
+  datetime_from: 

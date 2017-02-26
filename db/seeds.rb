@@ -206,9 +206,16 @@ signages = Signage.create({signage_camp_id:2, header:"gemeinsam an's Ziel", desc
 signages = Signage.create({signage_camp_id:2, header:"wir unterstützen Sie", description:"rufen Sie uns an", avatar:File.open(path+'TKB_Finanzieren2.jpg', 'rb')})
 signages = Signage.create({signage_camp_id:2, header:"wir freuen uns auf Sie", description:"rufen Sie uns an", avatar:File.open(path+'TKB_Finanzieren3.jpg', 'rb')})
 
+signage_camps = SignageCamp.create({name:"Kampagne Anlegen", description:"Beschreibung", owner_type:"Company", owner_id:4})
+signages = Signage.create({signage_camp_id:3, header:"Anlegen ist Vertrauenssache", description:"rufen Sie uns an", avatar:File.open(path+'anlegen1.jpg', 'rb')})
+signages = Signage.create({signage_camp_id:3, header:"Anlegen leicht gemacht", description:"lassen Sie sich beraten", avatar:File.open(path+'anlegen2.jpg', 'rb')})
+signages = Signage.create({signage_camp_id:3, header:"Anlegen jetzt oder nie", description:"probieren Sie es aus", avatar:File.open(path+'anlegen3.jpg', 'rb')})
+signages = Signage.create({signage_camp_id:3, header:"Anlegen die Alternative", description:"kommen Sie zu uns", avatar:File.open(path+'anlegen4.jpg', 'rb')})
+
 signage_locs = SignageLoc.create({name: "Bahnhof Weinfelden", privateonly: true, owner_type:"Company", owner_id:16, address1:"Bahnhof", address2:"Weinfelden", address3:"Thurgau", res_h:800, res_v:600, avatar:File.open(path+'signage_bahnhof.jpg', 'rb')})
 signage_locs = SignageLoc.create({name: "Bistro Frauenfeld", privateonly: true, owner_type:"Company", owner_id:16, address1:"Marktplatz", address2:"Frauenfeld", address3:"Thurgau", res_h:800, res_v:600, avatar:File.open(path+'signage_bistro.jpg', 'rb')})
-signage_locs = SignageLoc.create({name: "Geschäftsstelle Weinfelden", privateonly: true, owner_type:"Company", owner_id:4, address1:"Bankplatz 1", address2:"Weinfelden", address3:"Thurgau", res_h:800, res_v:600, avatar:File.open(path+'signage_tkb.jpg', 'rb')})
+signage_locs = SignageLoc.create({name: "TKB Geschäftsstelle Weinfelden", privateonly: true, owner_type:"Company", owner_id:4, address1:"Bankplatz 1", address2:"Weinfelden", address3:"Thurgau", res_h:800, res_v:600, avatar:File.open(path+'signage_tkb.jpg', 'rb')})
+signage_locs = SignageLoc.create({name: "TKB Geschäftsstelle Frauenfeld", privateonly: true, owner_type:"Company", owner_id:4, address1:"Bahnhof", address2:"Frauenfeld", address3:"Thurgau", res_h:800, res_v:600, avatar:File.open(path+'signage_tkb.jpg', 'rb')})
 signage_locs = SignageLoc.create({name: "Kosmetikstudio", privateonly: true, owner_type:"Company", owner_id:11, address1:"Gartenstrasse 2", address2:"Bürglen", address3:"Thurgau", res_h:800, res_v:600, avatar:File.open(path+'signage_tkb.jpg', 'rb')})
 
 signage_cals = SignageCal.create({signage_loc_id:1, signage_camp_id:1, date_from: Date.today, date_to: Date.today + 20, confirmed:true})
@@ -217,6 +224,21 @@ signage_cals = SignageCal.create({signage_loc_id:2, signage_camp_id:1, date_from
 signage_cals = SignageCal.create({signage_loc_id:3, signage_camp_id:1, date_from: Date.today+5, date_to: Date.today + 20, confirmed:true})
 signage_cals = SignageCal.create({signage_loc_id:4, signage_camp_id:1, date_from: Date.today, date_to: Date.today + 20, confirmed:true})
 signage_cals = SignageCal.create({signage_loc_id:4, signage_camp_id:2, date_from: Date.today + 10, date_to: Date.today + 20, confirmed:true})
+
+signage_hits = SignageHit.create({signage_loc_id:3, signage_camp_id:2, created_at: Date.today - 1.days})
+signage_hits = SignageHit.create({signage_loc_id:3, signage_camp_id:2, created_at: Date.today - 2.days})
+signage_hits = SignageHit.create({signage_loc_id:3, signage_camp_id:2, created_at: Date.today - 2.days})
+signage_hits = SignageHit.create({signage_loc_id:3, signage_camp_id:2, created_at: Date.today - 3.days})
+signage_hits = SignageHit.create({signage_loc_id:3, signage_camp_id:2, created_at: Date.today - 3.days})
+signage_hits = SignageHit.create({signage_loc_id:3, signage_camp_id:2, created_at: Date.today - 4.days})
+signage_hits = SignageHit.create({signage_loc_id:3, signage_camp_id:2, created_at: Date.today - 1.days})
+signage_hits = SignageHit.create({signage_loc_id:3, signage_camp_id:2, created_at: Date.today - 1.days})
+signage_hits = SignageHit.create({signage_loc_id:1, signage_camp_id:2, created_at: Date.today - 2.days})
+signage_hits = SignageHit.create({signage_loc_id:1, signage_camp_id:2, created_at: Date.today - 2.days})
+signage_hits = SignageHit.create({signage_loc_id:2, signage_camp_id:2, created_at: Date.today - 3.days})
+signage_hits = SignageHit.create({signage_loc_id:2, signage_camp_id:2, created_at: Date.today - 3.days})
+signage_hits = SignageHit.create({signage_loc_id:4, signage_camp_id:2, created_at: Date.today - 4.days})
+signage_hits = SignageHit.create({signage_loc_id:4, signage_camp_id:2, created_at: Date.today - 1.days})
 
 #create Links for TKB
 @comp = Company.where('name=?',"Thurgauer Kantonalbank").first

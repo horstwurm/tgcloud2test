@@ -17,6 +17,50 @@ class SignageCampsController < ApplicationController
       @topic = params[:topic]
     end
 
+    if params[:confirm_id]
+      calEntry = SignageCal.find(params[:confirm_id])
+      if calEntry
+        calEntry.confirmed = true
+        calEntry.save
+      end
+    end
+    if params[:noconfirm_id]
+      calEntry = SignageCal.find(params[:noconfirm_id])
+      if calEntry
+        calEntry.confirmed = false
+        calEntry.save
+      end
+    end
+    
+  if @topic == "Standorte"
+    @anz_s = ""
+    #@hits = @signage_camp.signage_hits
+    @hits = SignageHit.select("signage_loc_id as loc, date(created_at) as datum, count(id) as summe").where('signage_camp_id=?',@signage_camp.id).group("date(created_at, signage_loc_id)")
+    @hits = SignageHit.select("date(created_at) as datum, count(id) as summe").where('signage_camp_id=?',@signage_camp.id).group("date(created_at)")
+    @hits.each do |i|
+      @anz_s = @anz_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
+    end
+    @anz_s = @anz_s[0, @anz_s.length - 1] 
+
+    @anz_s2 = ""
+    @anz_s2 = @anz_s2 + "['Standort 1', 'Anzahl'],"
+    @locs = SignageHit.select("signage_loc_id as loc, count(id) as summe").where("signage_camp_id=?",@signage_camp.id).group("signage_loc_id")
+    @locs.each do |i|
+      @anz_s2 = @anz_s2 + "['" + SignageLoc.find(i.loc).name + "', " + i.summe.to_s + "],"
+    end
+    @anz_s2 = @anz_s2[0, @anz_s2.length - 1] 
+
+    if false
+    @anz_s2 = ""
+    @anz_s2 = @anz_s2 + "['Datum', 'Standort 1', 'Standort 2', 'Standort 3'],"
+    @anz_s2 = @anz_s2 + "['2004',  1000,      400, 340],"
+    @anz_s2 = @anz_s2 +  "['2005',  1170,      460, 200],"
+    @anz_s2 = @anz_s2 +  "['2006',  660,       1120, 345],"
+    @anz_s2 = @anz_s2 + "['2007',  1030,      540, 780]"
+    end
+  
+  end
+
    if @topic == "Kalender"
      counter = 0 
      @array = ""
@@ -80,7 +124,7 @@ class SignageCampsController < ApplicationController
 
     respond_to do |format|
       if @signage_camp.save
-        format.html { redirect_to company_path(:id => @signage_camp.owner_id, :topic => "Digital Signage (Kampangnen)"), notice: 'Signage camp was successfully created.' }
+        format.html { redirect_to company_path(:id => @signage_camp.owner_id, :topic => "Digital Signage (Kampagnen)"), notice: 'Signage camp was successfully created.' }
         format.json { render :show, status: :created, location: @signage_camp }
       else
         format.html { render :new }

@@ -54,6 +54,10 @@
                       <%= f.label "Auflösung vertikal" %><br/>
                       <%= f.number_field :res_v, class:"form-control" %>
                     </div>
+                    <div class="form-group">
+                      <%= f.label "Preis pro Kampangne" %><br/>
+                      <%= f.number_field :price, class:"form-control" %>
+                    </div>
                      <%= f.hidden_field :owner_id, class:"form-control" %>
                      <%= f.hidden_field :owner_type, class:"form-control" %>
                      <%= f.hidden_field :longitude, class:"form-control" %>

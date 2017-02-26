@@ -4,7 +4,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading header">
                 <li_header>
-                <%= link_to company_path(:id => @signage.signage_camp_id, :camp_id => @signage.signage_camp_id, :topic => "Signages") do %>
+                <%= link_to signage_camp_path(:id => @signage.signage_camp_id, :topic => "Details") do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
                   DIGITAL SIGNAGE <%= @signage.header %>

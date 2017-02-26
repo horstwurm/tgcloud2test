@@ -48,7 +48,92 @@ class SignageLocsController < ApplicationController
   # GET /signage_locs/1
   # GET /signage_locs/1.json
   def show
+    if !params[:topic]
+      @topic = "Info"
+    else
+      @topic = params[:topic]
+    end
+
+    if params[:confirm_id]
+      calEntry = SignageCal.find(params[:confirm_id])
+      if calEntry
+        calEntry.confirmed = true
+        calEntry.save
+      end
+    end
+    if params[:noconfirm_id]
+      calEntry = SignageCal.find(params[:noconfirm_id])
+      if calEntry
+        calEntry.confirmed = false
+        calEntry.save
+      end
+    end
+    
+  if @topic == "Kampagnen"
+    @anz_s = ""
+    #@hits = @signage_camp.signage_hits
+    #@hits = SignageHit.select("signage_loc_id as loc, date(created_at) as datum, count(id) as summe").where('signage_camp_id=?',@signage_camp.id).group("date(created_at, signage_loc_id)")
+    @hits = SignageHit.select("date(created_at) as datum, count(id) as summe").where('signage_loc_id=?',@signage_loc.id).group("date(created_at)")
+    @hits.each do |i|
+      @anz_s = @anz_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
+    end
+    @anz_s = @anz_s[0, @anz_s.length - 1] 
+
+    @anz_s2 = ""
+    @anz_s2 = @anz_s2 + "['Kampagne', 'Anzahl'],"
+    @locs = SignageHit.select("signage_camp_id as camp, count(id) as summe").where("signage_loc_id=?",@signage_loc.id).group("signage_camp_id")
+    @locs.each do |i|
+      @anz_s2 = @anz_s2 + "['" + SignageCamp.find(i.camp).name + "', " + i.summe.to_s + "],"
+    end
+    @anz_s2 = @anz_s2[0, @anz_s2.length - 1] 
+
+    if false
+    @anz_s2 = ""
+    @anz_s2 = @anz_s2 + "['Datum', 'Standort 1', 'Standort 2', 'Standort 3'],"
+    @anz_s2 = @anz_s2 + "['2004',  1000,      400, 340],"
+    @anz_s2 = @anz_s2 +  "['2005',  1170,      460, 200],"
+    @anz_s2 = @anz_s2 +  "['2006',  660,       1120, 345],"
+    @anz_s2 = @anz_s2 + "['2007',  1030,      540, 780]"
+    end
+  
   end
+
+   if @topic == "Kalender"
+     counter = 0 
+     @array = ""
+     @cals = @signage_loc.signage_cals
+     @anz = @cals.count
+     @cals.each do |c|
+  
+        time_from = c.time_from.to_s
+        if c.time_from.to_s.length == 1
+          time_from = "0"+c.time_from.to_s
+        end
+        time_to = c.time_to.to_s
+        if c.time_to.to_s.length == 1
+          time_to = "0"+c.time_to.to_s
+        end
+        @calstart = c.date_from.strftime("%Y-%m-%d")+"T"+time_from+":00"
+        @calend = c.date_to.strftime("%Y-%m-%d")+"T"+time_to+":00"
+        
+        counter = counter + 1
+        @array = @array + "{"
+        if c.confirmed
+          @array = @array + "color: '#ACC550',"
+        else
+          @array = @array + "color: '#61A6A7',"
+        end
+        @array = @array + "textColor: 'white',"
+        @array = @array + "title: '" + c.signage_camp.name + "', "
+        @array = @array + "start: '" + @calstart + "', "
+        @array = @array + "end: '" + @calend + "', "
+        @array = @array + "url: '" + company_path(:id => c.signage_camp.owner_id, :topic => "Digital Signage (Kampagnen)") +"'" 
+        @array = @array + "}"
+        if @cals.count >= counter
+          @array = @array + ", "
+        end
+     end
+   end  end
 
   # GET /signage_locs/new
   def new
@@ -74,7 +159,7 @@ class SignageLocsController < ApplicationController
 
     respond_to do |format|
       if @signage_loc.save
-        format.html { redirect_to company_path(:id => @signage_loc.owner_id, :topic => "Digital Signage (Standorte)"), notice: 'Signage loc was successfully created.' }
+        format.html { redirect_to signage_loc_path(:id => @signage_loc.id, :topic => "Details"), notice: 'Signage loc was successfully created.' }
         format.json { render :show, status: :created, location: @signage_loc }
       else
         format.html { render :new }
@@ -88,7 +173,7 @@ class SignageLocsController < ApplicationController
   def update
     respond_to do |format|
       if @signage_loc.update(signage_loc_params)
-        format.html { redirect_to company_path(:id => @signage_loc.owner_id, :topic => "Digital Signage (Standorte)"), notice: 'Signage loc was successfully updated.' }
+        format.html { redirect_to signage_loc(:id => @signage_loc.id, :topic => "Details"), notice: 'Signage loc was successfully updated.' }
         format.json { render :show, status: :ok, location: @signage_loc }
       else
         format.html { render :edit }
@@ -100,10 +185,10 @@ class SignageLocsController < ApplicationController
   # DELETE /signage_locs/1
   # DELETE /signage_locs/1.json
   def destroy
-    @owner_id = @signage-loc.owner_id
+    @owner_id = @signage_loc.id
     @signage_loc.destroy
     respond_to do |format|
-      format.html { redirect_to company_path(:id => @owner_id, :topic => "Digital Signage (Inhalt)"), notice: 'Signage loc was successfully destroyed.' }
+      format.html { redirect_to signage_loc_path(:id => @owner_id, :topic => "Details"), notice: 'Signage loc was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -116,6 +201,6 @@ class SignageLocsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def signage_loc_params
-      params.require(:signage_loc).permit(:name, :status, :privateonly, :owner_id, :owner_type, :geo_address, :address1, :address2, :address3, :res_v, :res_h, :avatar)
+      params.require(:signage_loc).permit(:name, :status, :privateonly, :owner_id, :owner_type, :geo_address, :address1, :address2, :address3, :res_v, :res_h, :price, :avatar)
     end
 end
