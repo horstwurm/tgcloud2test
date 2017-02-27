@@ -84,13 +84,17 @@
   		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pull-left">
         <div id=campaign_info style=position:relative;>
           <div class="panel panel-black pullright">
+
+            <% if @location %>
   
-            <% content1 = "http://tkbmarkt.herokuapp.com/companies/"+@location.owner.id.to_s %>
-            <% qr = RQRCode::QRCode.new(content1, size: 12, :level => :h) %>
-            <% qr_img = qr.to_img %>
-            <% path=File.join(Rails.root, "/app/assets/images/") %>
-            <% qr_img.resize(200, 200).save(path+"app_qrcode"+@location.owner.id.to_s+".png") %>
-            <%= image_tag("app_qrcode"+@location.owner.id.to_s+".png", :size => "100x100") %>
+              <% content1 = "http://tkbmarkt.herokuapp.com/companies/"+@location.owner.id.to_s %>
+              <% qr = RQRCode::QRCode.new(content1, size: 12, :level => :h) %>
+              <% qr_img = qr.to_img %>
+              <% path=File.join(Rails.root, "/app/assets/images/") %>
+              <% qr_img.resize(200, 200).save(path+"app_qrcode"+@location.owner.id.to_s+".png") %>
+              <%= image_tag("app_qrcode"+@location.owner.id.to_s+".png", :size => "100x100") %>
+
+            <% end %>
 
           </div>
         </div>
@@ -100,13 +104,17 @@
         <div id=campaign_info style=position:relative;>
           <div class="panel panel-black pullright">
 
-            <visit-us>hier könnte Ihre Werbung laufen...</visit-us><br><br>
-            <%= "Standort " + @location.name if @location %><br>
-            <%= "(" + @location.owner.name + ")" if @location %><br><br>
-            <% if false %>
-              <%= " Kampagne " + @signages.first.signage_camp.name + " (" + @signages.first.signage_camp.owner.name + ")" %><br><br>
+            <% if @location %>
+
+              <visit-us>hier könnte Ihre Werbung laufen...</visit-us><br><br>
+              <%= "Standort " + @location.name if @location %><br>
+              <%= "(" + @location.owner.name + ")" if @location %><br><br>
+              <% if false %>
+                <%= " Kampagne " + @signages.first.signage_camp.name + " (" + @signages.first.signage_camp.owner.name + ")" %><br><br>
+              <% end %>
+              <%= content1 %>
+
             <% end %>
-            <%= content1 %>
 
           </div>
         </div>
