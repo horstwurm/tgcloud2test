@@ -314,7 +314,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user.status = "changed"
+    #@user.status = "changed"
   end
 
   # POST /users

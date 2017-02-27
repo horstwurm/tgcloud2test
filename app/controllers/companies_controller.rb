@@ -90,7 +90,7 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1/edit
   def edit
-    @company.status = "changed"
+    #@company.status = "changed"
   end
 
   # POST /companies
