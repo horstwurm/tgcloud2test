@@ -23,7 +23,7 @@ def carousel(signages, size, text)
       if s.avatar_file_name == nil
         html = html + "<div>" + image_tag(image_def("Signage", "", ""), :size => size, class:"card-img-top img-responsive" ) + "</div>"
       else
-        html = html + "<div align=center>"+ (image_tag s.avatar(:native), class:"img-rounded") + "<h2>" + s.header + "</h2><p>" + s.description + "</p></div>"
+        html = html + "<div align=center>"+ (image_tag s.avatar(:native), class:"img-rounded img-rounded") + "<h2>" + s.header + "</h2>" + s.description + "</div>"
       end
     end
     html = html +  "</div>"
