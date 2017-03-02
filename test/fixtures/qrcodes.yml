@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mobject_id: 1
+  mobject_type: MyString
+  avatar_file_name: MyString
+  avatar_content_type: MyString
+  avatar_file_size: 1
+  avatar_updated_at: 2017-03-02 16:39:03
+
+two:
+  mobject_id: 1
+  mobject_type: MyString
+  avatar_file_name: MyString
+  avatar_content_type: MyString
+  avatar_file_size: 1
+  avatar_updated_at: 2017-03-02 16:39:03

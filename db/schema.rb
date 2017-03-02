@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223160302) do
+ActiveRecord::Schema.define(version: 20170302163903) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -282,6 +282,17 @@ ActiveRecord::Schema.define(version: 20170223160302) do
     t.datetime "avatar_updated_at"
     t.boolean  "active"
     t.string   "link"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  create_table "qrcodes", force: :cascade do |t|
+    t.integer  "mobject_id"
+    t.string   "mobject_type"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
   end

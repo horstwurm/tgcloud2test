@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Qrcodes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mobject</th>
+      <th>Mobject type</th>
+      <th>Avatar file name</th>
+      <th>Avatar content type</th>
+      <th>Avatar file size</th>
+      <th>Avatar updated at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @qrcodes.each do |qrcode| %>
+      <tr>
+        <td><%= qrcode.mobject_id %></td>
+        <td><%= qrcode.mobject_type %></td>
+        <td><%= qrcode.avatar_file_name %></td>
+        <td><%= qrcode.avatar_content_type %></td>
+        <td><%= qrcode.avatar_file_size %></td>
+        <td><%= qrcode.avatar_updated_at %></td>
+        <td><%= link_to 'Show', qrcode %></td>
+        <td><%= link_to 'Edit', edit_qrcode_path(qrcode) %></td>
+        <td><%= link_to 'Destroy', qrcode, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Qrcode', new_qrcode_path %>

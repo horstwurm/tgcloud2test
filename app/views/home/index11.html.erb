@@ -65,6 +65,7 @@
   		  <div class="row">
       		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
     		    <div class="panel panel-signage">
+    		      <% if false %>
               <% content2 = "http://tkbmarkt.herokuapp.com/companies/"+@company.id.to_s %>
               <% qr = RQRCode::QRCode.new(content2, size: 12, :level => :h) %>
               <% qr_img = qr.to_img %>
@@ -74,6 +75,10 @@
               <%= link_to @company do %>
                 <%= image_tag(path+"app_qrcode"+@company.id.to_s+".png", :size => "100x100") %>
               <% end %>
+              <% end %>
+              <% hash = qrcodeimg(@company, :small) %>
+              <%= hash["qr_code"] %>
+              <%= hash["qr_text"] %>
             </div>
           </div>
       		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">

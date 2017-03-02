@@ -1,0 +1,2 @@
+json.extract! qrcode, :id, :mobject_id, :mobject_type, :avatar_file_name, :avatar_content_type, :avatar_file_size, :avatar_updated_at, :created_at, :updated_at
+json.url qrcode_url(qrcode, format: :json)

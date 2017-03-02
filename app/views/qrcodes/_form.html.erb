@@ -1,0 +1,47 @@
+<%= form_for(qrcode) do |f| %>
+  <% if qrcode.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(qrcode.errors.count, "error") %> prohibited this qrcode from being saved:</h2>
+
+      <ul>
+      <% qrcode.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :mobject_id %>
+    <%= f.number_field :mobject_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :mobject_type %>
+    <%= f.text_field :mobject_type %>
+  </div>
+
+  <div class="field">
+    <%= f.label :avatar_file_name %>
+    <%= f.text_field :avatar_file_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :avatar_content_type %>
+    <%= f.text_field :avatar_content_type %>
+  </div>
+
+  <div class="field">
+    <%= f.label :avatar_file_size %>
+    <%= f.number_field :avatar_file_size %>
+  </div>
+
+  <div class="field">
+    <%= f.label :avatar_updated_at %>
+    <%= f.datetime_select :avatar_updated_at %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

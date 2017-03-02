@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Mobject:</strong>
+  <%= @qrcode.mobject_id %>
+</p>
+
+<p>
+  <strong>Mobject type:</strong>
+  <%= @qrcode.mobject_type %>
+</p>
+
+<p>
+  <strong>Avatar file name:</strong>
+  <%= @qrcode.avatar_file_name %>
+</p>
+
+<p>
+  <strong>Avatar content type:</strong>
+  <%= @qrcode.avatar_content_type %>
+</p>
+
+<p>
+  <strong>Avatar file size:</strong>
+  <%= @qrcode.avatar_file_size %>
+</p>
+
+<p>
+  <strong>Avatar updated at:</strong>
+  <%= @qrcode.avatar_updated_at %>
+</p>
+
+<%= link_to 'Edit', edit_qrcode_path(@qrcode) %> |
+<%= link_to 'Back', qrcodes_path %>

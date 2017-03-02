@@ -1,5 +1,31 @@
 module UsersHelper
 
+def qrcodeimg(mobject, size)
+
+  mtype = mobject.class.table_name
+  mid = mobject.id
+  
+  content = "http://tkbmarkt.herokuapp.com"+url_for(mobject)
+
+  @qr = Qrcode.where('mobject_type=? and mobject_id=?', mobject.class.table_name, mobject.id).first
+
+  if !@qr
+    qr = RQRCode::QRCode.new(content, size: 12, :level => :h)
+    qr_img = qr.to_img
+    qr_img.resize(200, 200).save("app_qrcode.png")
+    @qr = Qrcode.new
+    @qr.mobject_type= mtype
+    @qr.mobject_id = mid
+    @qr.avatar = File.open("app_qrcode.png")
+    @qr.save
+  end
+
+  hash = Hash.new
+  hash = {"qr_text" => content, "qr_code" => image_tag(@qr.avatar(:small)) }
+  return hash
+
+end
+
 def small_carousel(company, size)
 
     html = ""

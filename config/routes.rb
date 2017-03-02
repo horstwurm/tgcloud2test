@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :qrcodes
   resources :signage_hits
   resources :signage_camps
   resources :signage_cals
