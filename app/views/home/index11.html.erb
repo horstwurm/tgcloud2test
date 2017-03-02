@@ -71,7 +71,7 @@
               <% path=File.join(Rails.root, "/app/assets/images/") %>
               <% qr_img.resize(200, 200).save(path+"app_qrcode"+@company.id.to_s+".png") %>
               <%= link_to @company do %>
-                <%= image_tag("app_qrcode"+@company.id.to_s+".png", :size => "100x100") %>
+                <%= image_tag(path+"app_qrcode"+@company.id.to_s+".png", :size => "100x100") %>
               <% end %>
             </div>
           </div>
@@ -107,7 +107,7 @@
                 <% qr_img = qr.to_img %>
                 <% path=File.join(Rails.root, "/app/assets/images/") %>
                 <% qr_img.resize(200, 200).save(path+"app_qrcode"+@location.owner.id.to_s+".png") %>
-                <% image_tag("app_qrcode"+@location.owner.id.to_s+".png", :size => "100x100") %>
+                <% image_tag(path+"app_qrcode"+@location.owner.id.to_s+".png", :size => "100x100") %>
                 <%= content2 %> 
   
               <% end %>
