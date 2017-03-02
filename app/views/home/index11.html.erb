@@ -69,6 +69,7 @@
               <% qr = RQRCode::QRCode.new(content2, size: 12, :level => :h) %>
               <% qr_img = qr.to_img %>
               <% path=File.join(Rails.root, "/app/assets/images/") %>
+              <% path=File.join(Rails.root, "/public/") %>
               <% qr_img.resize(200, 200).save(path+"app_qrcode"+@company.id.to_s+".png") %>
               <%= link_to @company do %>
                 <%= image_tag(path+"app_qrcode"+@company.id.to_s+".png", :size => "100x100") %>
