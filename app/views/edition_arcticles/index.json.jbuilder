@@ -1,0 +1,1 @@
+json.array! @edition_arcticles, partial: 'edition_arcticles/edition_arcticle', as: :edition_arcticle

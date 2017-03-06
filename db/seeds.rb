@@ -92,6 +92,22 @@ mcategories = Mcategory.create({ctype:"Ticket", name:"Eintritt"})
 mcategories = Mcategory.create({ctype:"Ticket", name:"Gutschein"})
 mcategories = Mcategory.create({ctype:"Ticket", name:"Rabatt"})
 
+#create ticket categories 71
+mcategories = Mcategory.create({ctype:"Event", name:"Ticket"})
+
+#create Publikationen categories 72
+mcategories = Mcategory.create({ctype:"Publikationen", name:"Mitarbeiter Zeitschrift"})
+mcategories = Mcategory.create({ctype:"Publikationen", name:"Geschäftsbericht"})
+mcategories = Mcategory.create({ctype:"Publikationen", name:"Projektbericht"})
+
+#create Publikationen categories 75
+mcategories = Mcategory.create({ctype:"Artikel", name:"Organisation"})
+mcategories = Mcategory.create({ctype:"Artikel", name:"Hobby"})
+mcategories = Mcategory.create({ctype:"Artikel", name:"Erfahrungsbericht"})
+mcategories = Mcategory.create({ctype:"Artikel", name:"Führung"})
+mcategories = Mcategory.create({ctype:"Artikel", name:"Soziales"})
+mcategories = Mcategory.create({ctype:"Artikel", name:"Sonstiges"})
+
 #create some users...
 users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:"horst.wurm@bluewin.ch", password:"password", name:"Horst", lastname:"Wurm", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:true, webmaster:true, avatar:File.open(path+'horst.jpg', 'rb')})
 users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"11.2.1970", anonymous:false, status:"OK", active:true, email:"t.oschewsky@bluewin.ch", password:"password", name:"Tanja", lastname:"Oschewsky", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:false, webmaster:false, avatar:File.open(path+'ma_3.jpg', 'rb')})
@@ -499,7 +515,7 @@ co = rand(capanz)+1
 @mob = Mobject.where('name=?', "Bandabend").first
 msponsor = Msponsor.create({slevel: 1, active: true, status: "OK", company_id: co, mobject_id: @mob.id})
 # Tickets
-ticket = Ticket.create({active: true, msponsor_id: Msponsor.last.id, mcategory_id:68, name: "Eintritt", amount:0, contingent:30})
+ticket = Ticket.create({active: true, owner_id: Msponsor.last.id, owner_type: "Msponsor", mcategory_id:68, name: "Eintritt", amount:0, contingent:30})
 # UserIickets
 for i in 1..20
     us = rand(usanz)+1
@@ -520,7 +536,7 @@ end
 co = rand(capanz)+1
 msponsor = Msponsor.create({slevel: 1, active: true, status: "OK", company_id: co, mobject_id: @mob.id})
 # Tickets
-ticket = Ticket.create({active: true, msponsor_id: Msponsor.last.id, mcategory_id:69, name: "Essen & Getränk", amount:0, contingent:100})
+ticket = Ticket.create({active: true, owner_id: Msponsor.last.id, owner_type: "Msponsor", mcategory_id:69, name: "Essen & Getränk", amount:0, contingent:100})
 # UserIickets
 for i in 1..30
     us = rand(usanz)+1

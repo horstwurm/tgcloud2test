@@ -17,10 +17,17 @@
                 <div class="panel panel-default">
                     <div class="panel-heading header">
                       <li_header>
-                      <%= link_to tickets_path :ticket_id => @ticket.msponsor do %>
-                        <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                      <% if @ticket.owner_type == "Msponsor" %>
+                        <%= link_to tickets_path :msponsor_id => @ticket.owner_id do %>
+                          <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                        <% end %>
                       <% end %>
-                      TICKET
+                      <% if @ticket.owner_type == "Mobject" %>
+                        <%= link_to tickets_path :mobject_id => @ticket.owner_id do %>
+                          <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                        <% end %>
+                      <% end %>
+                      TICKET <%= @ticket.owner_type + " " + @ticket.owner_id.to_s %>
                       </li_header>
                     </div>
                 </div>
@@ -40,7 +47,12 @@
                     </div>
                     <div class="form-group">
                       <%= f.label "Beschreibung" %><br/>
-                      <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Ticket").order(:name), :id, :name, {}, class:"form-control" %>
+                      <% if @ticket.owner_type == "Msponsor" %>
+                        <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Ticket").order(:name), :id, :name, {}, class:"form-control" %>
+                      <% end %>
+                      <% if @ticket.owner_type == "Mobject" %>
+                        <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Event").order(:name), :id, :name, {}, :readonly => true, class:"form-control" %>
+                      <% end %>
                     </div>
                     <div class="form-group">
                       <%= f.label "Kontingent" %>
@@ -54,7 +66,8 @@
                       <input type="checkbox" name="my-checkbox" checked>
                       <%= f.label "Aktiv" %>
                     </div>
-                     <%= f.hidden_field :msponsor_id, class:"form-control" %>
+                     <%= f.hidden_field :owner_type, class:"form-control" %>
+                     <%= f.hidden_field :owner_id, class:"form-control" %>
                     <div class="actions">
                       <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
                     </div>

@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
     has_many :signages, as: :owner, dependent: :destroy 
     has_many :signage_locs, as: :owner, dependent: :destroy 
 
+    has_many :articles, dependent: :destroy 
     has_many :credentials, dependent: :destroy 
     has_many :webmasters, dependent: :destroy 
     has_many :companies, dependent: :destroy 

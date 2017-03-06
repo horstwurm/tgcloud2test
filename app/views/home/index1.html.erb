@@ -21,10 +21,19 @@
           <%= showImage2(:medium, @ticket.user, true) %>
           <%= @ticket.user.name + " " + @ticket.user.lastname %><br>
           <br>
-          <b><%= @ticket.ticket.msponsor.mobject.name %></b><br>
-          <%= @ticket.ticket.msponsor.mobject.date_from.strftime("%d.%m.%Y") + " - " + @ticket.ticket.msponsor.mobject.date_to.strftime("%d.%m.%Y")  %><br>
-          <%= link_to @ticket.ticket.msponsor.mobject do %>
-            <%= showFirstImage2(:medium, @ticket.ticket.msponsor.mobject, @ticket.ticket.msponsor.mobject.mdetails) %><br>
+          <% if @ticket.owner_type == "Msponsor"
+            <b><%= @ticket.ticket.owner.mobject.name %></b><br>
+            <%= @ticket.ticket.owner.mobject.date_from.strftime("%d.%m.%Y") + " - " + @ticket.ticket.owner.mobject.date_to.strftime("%d.%m.%Y")  %><br>
+            <%= link_to @ticket.ticket.owner.mobject do %>
+              <%= showFirstImage2(:medium, @ticket.ticket.owner.mobject, @ticket.ticket.owner.mobject.mdetails) %><br>
+            <% end %>
+          <% end %>
+          <% if @ticket.owner_type == "Mobject"
+            <b><%= @ticket.ticket.owner.name %></b><br>
+            <%= @ticket.ticket.owner.date_from.strftime("%d.%m.%Y") + " - " + @ticket.ticket.owner.date_to.strftime("%d.%m.%Y")  %><br>
+            <%= link_to @ticket.ticket.owner do %>
+              <%= showFirstImage2(:medium, @ticket.ticket.owner, @ticket.ticket.owner.mdetails) %><br>
+            <% end %>
           <% end %>
     		<% case @ticket.status %>
     		  <% when "aktiv", "persönlich", "übergeben" %>

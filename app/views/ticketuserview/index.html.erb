@@ -6,7 +6,7 @@
         <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => @ticket.id do %>
           <i class="btn btn-primary glyphicon glyphicon-list"></i>
         <% end %>
-        UEBERSICHT für TICKET <%= @ticket.name + " " + @ticket.msponsor.mobject.name + " " + @ticket.msponsor.company.name %>
+        UEBERSICHT für TICKET <%= @ticket.name + " " + @ticket.owner.mobject.name + " " + @ticket.owner.company.name %>
         <span class="badge"><%= @ticanz %></span>
         </li_header>
       </div>

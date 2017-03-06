@@ -198,6 +198,7 @@ class MobjectsController < ApplicationController
     @mobject.mcategory_id = params[:msubtype]
     @mobject.active = true
     @mobject.social = false
+    @mobject.online_pub = false
     @mobject.name = @mobject.mtype
     @mobject.description = "Beschreibung..."
     @mobject.homepage = "www.xyz.ch"
@@ -297,7 +298,7 @@ class MobjectsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def mobject_params
-      params.require(:mobject).permit(:eventpart, :owner_id, :owner_type, :mtype, :msubtype, :mcategory_id, :company_id, :user_id, :status, :name, :description, :reward, :interest_rate, :due_date, :date_from, :date_to, :time_from, :time_to, :days, :amount, :price, :tasks, :skills, :offers, :social, :price_reg, :price_new, :active, :keywords, :homepage, :address1, :address2, :address3, :latitude, :longitude, :geo_address)
+      params.require(:mobject).permit(:online_pub, :eventpart, :owner_id, :owner_type, :mtype, :msubtype, :mcategory_id, :company_id, :user_id, :status, :name, :description, :reward, :interest_rate, :due_date, :date_from, :date_to, :time_from, :time_to, :days, :amount, :price, :tasks, :skills, :offers, :social, :price_reg, :price_new, :active, :keywords, :homepage, :address1, :address2, :address3, :latitude, :longitude, :geo_address)
     end
 
 end

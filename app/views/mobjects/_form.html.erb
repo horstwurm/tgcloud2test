@@ -112,6 +112,11 @@
                             <%= f.text_field :due_date, class:"form-control"%>
                           </div>
                     <% end %>
+                  <% when "Publikationen" %>
+                      <div class="form-group">
+                        <input type="checkbox" name="my-checkbox4" checked>
+                        <%= f.label "Online Publikation" %>
+                      </div>
                   <% when "Vermietungen" %>
                       <div class="form-group">
                         <%= f.label "Zeit von-bis:" %>
@@ -178,6 +183,7 @@
                 <%= f.check_box :active, :id => "active", class:"form-control hidden" %>
                 <%= f.check_box :social, :id => "social", class:"form-control hidden" %>
                 <%= f.check_box :eventpart, :id => "eventpart", class:"form-control hidden" %>
+                <%= f.check_box :online_pub, :id => "online_pub", class:"form-control hidden" %>
               </div>
           </div>
                 
@@ -230,6 +236,10 @@
      $("[name='my-checkbox3']").bootstrapSwitch('state',<%= @mobject.eventpart %>);
      $("[name='my-checkbox3']").on('switchChange.bootstrapSwitch', function () {
      $("#eventpart").prop('checked',$("[name='my-checkbox3']").bootstrapSwitch('state'));
+     });
+     $("[name='my-checkbox4']").bootstrapSwitch('state',<%= @mobject.online_pub %>);
+     $("[name='my-checkbox4']").on('switchChange.bootstrapSwitch', function () {
+     $("#online_pub").prop('checked',$("[name='my-checkbox4']").bootstrapSwitch('state'));
      });
 </script>
 

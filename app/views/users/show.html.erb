@@ -142,6 +142,12 @@
         <% when "Crowdfunding (Beitraege)" %>
           <%= header("Crowdfunding Beitraege", false) %>
           <%= build_medialist2(@user.mstats, "mstats", "CF") %>
+        <% when "Publikationen" %>
+          <%= header("Publikationen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Publikationen"), "mobjects", nil) %>
+        <% when "Artikel" %>
+          <%= header("Artikel", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Artikel"), "mobjects", nil) %>
         <% when "Bewertungen" %>
             <%= header("Bewertungen", false) %>
             <%= build_medialist2(@user.mratings, "mratings", "Object") %>
@@ -320,20 +326,30 @@
           				<%= ut.status %>
                   </b></ticketstatuss><br>
                   
-                  <ntext><br>
-                  <b><%= ut.ticket.msponsor.mobject.name %></b><br>
-                  <%= ut.ticket.msponsor.mobject.date_from.strftime("%d.%m.%Y") + " - " + ut.ticket.msponsor.mobject.date_to.strftime("%d.%m.%Y")  %><br>
-                  <%= link_to ut.ticket.msponsor.mobject do %>
-                    <%= showFirstImage2(:medium, ut.ticket.msponsor.mobject, ut.ticket.msponsor.mobject.mdetails) %><br>
+                  <% if ut.ticket.owner_type == "Msponsor" %>
+                    <ntext><br>
+                    <b><%= ut.ticket.owner.mobject.name %></b><br>
+                    <%= ut.ticket.owner.mobject.date_from.strftime("%d.%m.%Y") + " - " + ut.ticket.owner.mobject.date_to.strftime("%d.%m.%Y")  %><br>
+                    <%= link_to ut.ticket.owner.mobject do %>
+                      <%= showFirstImage2(:medium, ut.ticket.owner.mobject, ut.ticket.owner.mobject.mdetails) %><br>
+                    <% end %>
+                    <br>
                   <% end %>
-                  <br>
+                  <% if ut.ticket.owner_type == "Mobject" %>
+                    <%= link_to ut.ticket.owner do %>
+                      <%= showFirstImage2(:medium, ut.ticket.owner, ut.ticket.owner.mdetails) %><br>
+                    <% end %>
+                  <% end %>
+                  
                   <%= showImage2(:small, ut.user, true) %>
                   <%= ut.user.name + " " + ut.user.lastname %><br>
                   <br>
                   
-                  <b>überreicht von</b><br>
-                  <%= showImage2(:small, ut.ticket.msponsor.company, true) %>
-                  <%= ut.ticket.msponsor.company.name %>
+                  <% if ut.ticket.owner_type == "Msponsor" %>
+                    <b>überreicht von</b><br>
+                    <%= showImage2(:small, ut.ticket.owner.company, true) %>
+                    <%= ut.ticket.owner.company.name %>
+                  <% end %>
 
                   </ntext>
 

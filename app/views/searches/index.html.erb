@@ -3,7 +3,7 @@
     <div class="col-xs-12">
       <div class="panel-body">
         <% if @ticket %>
-          <%= link_to tickets_path :msponsor_id => @ticket.msponsor_id do %>
+          <%= link_to tickets_path :msponsor_id => @ticket.owner_id do %>
             <i class="btn btn-primary glyphicon glyphicon-list"></i>
           <% end %>
           <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :generate => true, :page => session[:page] do %>
@@ -54,7 +54,7 @@
     
   <div class="row">
       <% if @ticket %>
-        <%= header("Suchen " + @search_domain + " " + @ticket.msponsor.mobject.name + " " + @ticket.name + " <span class='badge'>" + @seranz.to_s + "</span>", true) %>
+        <%= header("Suchen " + @search_domain + " " + @ticket.owner.mobject.name + " " + @ticket.name + " <span class='badge'>" + @seranz.to_s + "</span>", true) %>
       <% else %>
         <% if @search_domain == "Objekte" %>
           <%= header("Suchen " + @mtype.to_s + " " + @msubtype.to_s + " <span class='badge'>" + @seranz.to_s + "</span>", true) %>

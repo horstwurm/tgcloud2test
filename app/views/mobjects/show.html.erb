@@ -23,232 +23,247 @@
         <% when "Info" %>
           <%= header("Informationen", false) %>
           <div class="panel-body">
-           <% case @mobject.status %>
-              <% when "CHECK" %>
-                <i class="glyphicon glyphicon-question-sign"></i>
-              <% when "OK" %>
-                <i class="glyphicon glyphicon-ok-circle"></i>
-              <% when "NOK" %>
-                <i class="glyphicon glyphicon-ban-circle"></i>
-            <% end %>
-            <b> Status</b>
-            <br>
-            <%= carousel2(@mobject, :medium) %>
-      			</p>
-            <br><br>
-            <% case @mobject.msubtype %>
-              <% when "Spenden" %>
-                <b>Spendenziel</b><br>
-                <%= sprintf("%05.2f CHF", @mobject.amount) %>
-                <br>
-              <% when "Belohnungen" %>
-                <b>Projektziel</b><br>
-                <%= sprintf("%05.2f CHF", @mobject.amount) %>
-                <br><br>
-                <b>Stückelung</b><br>
-                <%= sprintf("%05.2f CHF", @mobject.price) %>
-                <br><br>
-                <b>Belohnung</b><br>
-                <%= @mobject.reward %>
-                <br>
-              <% when "Zinsen" %>
-                <b>Kreditsumme</b><br>
-                <%= sprintf("%05.2f CHF", @mobject.amount) %>
-                <br><br>
-                <b>Zinssatz</b><br>
-                <%= @mobject.interest_rate %>%
-                <br><br>
-                Rückzahlung am <%= @mobject.due_date.strftime("%d.%m.%Y") %>
-                <br>
-            <% end %>
-            <br>
-            <% if @mobject.mtype == "Crowdfunding" %>
             
-              <% if @mobject.sum_amount and @mobject.sum_amount >= @mobject.amount %>
-                <%= render("mobjects/form_crowdfunding_service") %>
-              <% end %>
-            
-              <% soll = @mobject.amount %>
-              <% if @mobject.mstats != nil %>
-                <% ist  = @mobject.mstats.sum(:amount) %>
+              <% if @mobject.mtype != "Artikel" %>
+               <% case @mobject.status %>
+                  <% when "CHECK" %>
+                    <i class="glyphicon glyphicon-question-sign"></i>
+                  <% when "OK" %>
+                    <i class="glyphicon glyphicon-ok-circle"></i>
+                  <% when "NOK" %>
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                <% end %>
+                <b> Status</b>
+                <br>
+                <%= carousel2(@mobject, :medium) %>
+          			</p>
+                <br><br>
+                <% case @mobject.msubtype %>
+                  <% when "Spenden" %>
+                    <b>Spendenziel</b><br>
+                    <%= sprintf("%05.2f CHF", @mobject.amount) %>
+                    <br>
+                  <% when "Belohnungen" %>
+                    <b>Projektziel</b><br>
+                    <%= sprintf("%05.2f CHF", @mobject.amount) %>
+                    <br><br>
+                    <b>Stückelung</b><br>
+                    <%= sprintf("%05.2f CHF", @mobject.price) %>
+                    <br><br>
+                    <b>Belohnung</b><br>
+                    <%= @mobject.reward %>
+                    <br>
+                  <% when "Zinsen" %>
+                    <b>Kreditsumme</b><br>
+                    <%= sprintf("%05.2f CHF", @mobject.amount) %>
+                    <br><br>
+                    <b>Zinssatz</b><br>
+                    <%= @mobject.interest_rate %>%
+                    <br><br>
+                    Rückzahlung am <%= @mobject.due_date.strftime("%d.%m.%Y") %>
+                    <br>
+                <% end %>
+                <br>
+                <% if @mobject.mtype == "Crowdfunding" %>
+                
+                  <% if @mobject.sum_amount and @mobject.sum_amount >= @mobject.amount %>
+                    <%= render("mobjects/form_crowdfunding_service") %>
+                  <% end %>
+                
+                  <% soll = @mobject.amount %>
+                  <% if @mobject.mstats != nil %>
+                    <% ist  = @mobject.mstats.sum(:amount) %>
+                  <% else %>
+                    <% ist = 0 %>
+                  <% end %>
+                  <b>Betrag</b><br>
+                  <%= sprintf("%05.2f CHF", ist) %>
+                  <br><br>
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist/soll*100) %>%">
+                      <span class="sr-only">40% Complete (success)</span>
+                    </div>
+                  </div>
+      
+        				  <% if @mobject.price %>
+                    <preiss><b><%= sprintf("%05.2f CHF", @mobject.price) %></b></preiss>
+        					<% else %>
+                    <% if @mobject.social %>
+                      <preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>
+                    <% end %>
+        					<% end %>
+                  <br><br>
+                <% end %>
+                
+                <% case @mobject.mtype %>
+                   <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding" %>
+                     <% if @mobject.msubtype == "Standard" %>
+                     <% else %>
+                      <% if @mobject.msubtype == "Aktion" %>
+                        <b>Preis</b><br>
+                        <% if @mobject.price_new %> 
+                          <%= sprintf("%05.2f CHF",@mobject.price_new) %> / 
+                        <% end %>
+                        <% if @mobject.price_reg  %>
+                          <%= sprintf("%05.2f CHF",@mobject.price_reg) %><br>
+                        <% end %>
+                        <br>
+                      <% end %>
+                      <b>Datum von-bis</b><br>
+                      <% if @mobject.date_from  %>
+                        <%= @mobject.date_from.strftime("%d.%m.%Y") %>
+                      <% end %>
+                      <% if @mobject.date_to %>
+                      - <%= @mobject.date_to.strftime("%d.%m.%Y") %>
+                      <% end %>
+                      <% if @mobject.date_from or @mobject.date_to %>
+                        <br><br>
+                      <% end %>
+                      <% if @mobject.date_to != nil %>
+                        <b>Laufzeit</b><br>
+                        <b><ntext>noch </ntext></b><restlaufzeits><%= (@mobject.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> Tage</ntext></b>
+                        <br>
+                        <% soll = (@mobject.date_to.to_date - @mobject.date_from.to_date).to_i %>
+                        <% ist = (DateTime.now.to_date - @mobject.date_from.to_date).to_i %>
+                        <% if soll > 0 and ist > 0 %>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar2" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist*100/soll) %>%">
+                            <span class="sr-only">40% Complete (success)</span>
+                          </div>
+                        </div>
+                        <% end %>
+                      <% end %>
+                      <br>
+                      <% if @mobject.mtype == "Veranstaltungen" and @mobject.eventpart %>
+                          </b><i class="glyphicon glyphicon-info-sign"></i> Anmeldung obligatorisch</b>
+                       <% end %>
+                      <% end %>
+    
+                   <% when "Vermietungen" %>
+                    <b>Mietzeiten</b><br>
+                    von:<%= @mobject.time_from %> bis: <%= @mobject.time_to %> Uhr
+                    <br><br>
+                    <b>Standort</b><br>
+                    <%= @mobject.address1 if @mobject.address1 %><br>
+                    <%= @mobject.address2 if @mobject.address2 %><br>
+                    <%= @mobject.address3 if @mobject.address3 %><br>
+                    <br>
+                    
+                  <% when "Stellenanzeigen" %>
+                      <div class="row">
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                          <div class="thumbnail" align="center">
+                            <anzeigetext>
+                            <% if @mobject.msubtype == "Anbieten" %>
+                  						Aufgaben
+                  					<% else %>
+                  					  Referenzen
+                  					<% end %>
+                            </anzeigetext>
+                            <p>
+                              <ntext>
+                  						<%= @mobject.tasks %>
+                  						</ntext>
+                  					</p>
+                          </div>
+                        </div>
+                        
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                          <div class="thumbnail" align="center">
+                            <anzeigetext>
+                              Qualifikationen
+                            </anzeigetext>
+                            <p>
+                              <ntext>
+                  						<%= @mobject.skills %>
+                  						</ntext>
+                  					</p>
+                          </div>
+                        </div>
+                
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                          <div class="thumbnail" align="center">
+                            <anzeigetext>
+                              Angebot
+                            </anzeigetext>
+                            <p>
+                              <ntext>
+                  						<%= @mobject.offers %>
+                  						</ntext>
+                  					</p>
+                          </div>
+                        </div>
+                    </div>
+                <% end %>
+                <br><br>
+                
+                <b>Bewertung</b><br>
+                <% avg_rating2(@mobject.id).times do %>
+                  <i class="glyphicon glyphicon-star"></i>
+                <% end %>
+                <br><br>
+                
+                <% if @mobject.social %>
+                    <i class="glyphicon glyphicon-heart"></i> soziales Engagement
+                <% end %>
+                <br><br>
+    
+                <% if @mobject.homepage != nil %>
+                  <b>Homepage</b><br>
+                  <%= link_to url_with_protocol(@mobject.homepage), :target => '_blank' do %>
+                    <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@mobject.homepage) %>
+                  <% end %>
+                  <br><br>
+                <% end %>
+                
+                <% if @mobject.description %>
+                  <b>Beschreibung</b><br>
+            			<%= @mobject.description %>
+                  <br><br>
+                <% end %>
+                <% if @mobject.mcategory_id %>
+                  <b>Kategorie</b><br>
+            			<%= @mobject.mcategory.name %>
+                  <br><br>
+                <% end %>
+                <% if @mobject.homepage != nil %>
+                  <%= link_to url_with_protocol(@mobject.homepage), :target => '_blank' do %>
+                    <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@mobject.homepage) %>
+                  <% end %>
+                  <br><br>
+                <% end %>
+                <b>Verantwortlich:</b><br>
+
               <% else %>
-                <% ist = 0 %>
+
+               	<div class="row">
+                  <artikel_header>
+               	    <%= @mobject.name %></h1>
+               	  </artikel_header>
+                </div>
+                <br>
+               	<%= build_article(@mobject) %>
+
               <% end %>
-              <b>Betrag</b><br>
-              <%= sprintf("%05.2f CHF", ist) %>
-              <br><br>
-              <div class="progress">
-                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist/soll*100) %>%">
-                  <span class="sr-only">40% Complete (success)</span>
+              <%= showImage2(:small, @mobject.owner, true) %><br>
+              <% if @mobject.owner_type == "User" %>
+                <%= @mobject.owner.name + " " + @mobject.owner.lastname %>
+              <% end %>
+              <% if @mobject.owner_type == "Company" %>
+                <%= @mobject.owner.name %>
+              <% end %>
+        			<br><br>
+              <%= @mobject.created_at.strftime("%d.%m.%Y") %>
+              </div>
+    
+              <%= header("Ort (Karte)", false) %>
+              <div class="panel-body">
+                <i class="glyphicon glyphicon-map-marker pull-left" onclick="return init_map(0);"></i>
+                <div id="map">
+                  <div id="map-canvas"></div>
                 </div>
               </div>
-  
-    				  <% if @mobject.price %>
-                <preiss><b><%= sprintf("%05.2f CHF", @mobject.price) %></b></preiss>
-    					<% else %>
-                <% if @mobject.social %>
-                  <preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>
-                <% end %>
-    					<% end %>
-              <br><br>
-            <% end %>
-            
-            <% case @mobject.mtype %>
-               <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding" %>
-                 <% if @mobject.msubtype == "Standard" %>
-                 <% else %>
-                  <% if @mobject.msubtype == "Aktion" %>
-                    <b>Preis</b><br>
-                    <% if @mobject.price_new %> 
-                      <%= sprintf("%05.2f CHF",@mobject.price_new) %> / 
-                    <% end %>
-                    <% if @mobject.price_reg  %>
-                      <%= sprintf("%05.2f CHF",@mobject.price_reg) %><br>
-                    <% end %>
-                    <br>
-                  <% end %>
-                  <b>Datum von-bis</b><br>
-                  <% if @mobject.date_from  %>
-                    <%= @mobject.date_from.strftime("%d.%m.%Y") %>
-                  <% end %>
-                  <% if @mobject.date_to %>
-                  - <%= @mobject.date_to.strftime("%d.%m.%Y") %>
-                  <% end %>
-                  <% if @mobject.date_from or @mobject.date_to %>
-                    <br><br>
-                  <% end %>
-                  <% if @mobject.date_to != nil %>
-                    <b>Laufzeit</b><br>
-                    <b><ntext>noch </ntext></b><restlaufzeits><%= (@mobject.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> Tage</ntext></b>
-                    <br>
-                    <% soll = (@mobject.date_to.to_date - @mobject.date_from.to_date).to_i %>
-                    <% ist = (DateTime.now.to_date - @mobject.date_from.to_date).to_i %>
-                    <% if soll > 0 and ist > 0 %>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar2" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist*100/soll) %>%">
-                        <span class="sr-only">40% Complete (success)</span>
-                      </div>
-                    </div>
-                    <% end %>
-                  <% end %>
-                  <br>
-                  <% if @mobject.mtype == "Veranstaltungen" and @mobject.eventpart %>
-                      </b><i class="glyphicon glyphicon-info-sign"></i> Anmeldung obligatorisch</b>
-                   <% end %>
-                  <% end %>
 
-               <% when "Vermietungen" %>
-                <b>Mietzeiten</b><br>
-                von:<%= @mobject.time_from %> bis: <%= @mobject.time_to %> Uhr
-                <br><br>
-                <b>Standort</b><br>
-                <%= @mobject.address1 if @mobject.address1 %><br>
-                <%= @mobject.address2 if @mobject.address2 %><br>
-                <%= @mobject.address3 if @mobject.address3 %><br>
-                <br>
-                
-              <% when "Stellenanzeigen" %>
-                  <div class="row">
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                      <div class="thumbnail" align="center">
-                        <anzeigetext>
-                        <% if @mobject.msubtype == "Anbieten" %>
-              						Aufgaben
-              					<% else %>
-              					  Referenzen
-              					<% end %>
-                        </anzeigetext>
-                        <p>
-                          <ntext>
-              						<%= @mobject.tasks %>
-              						</ntext>
-              					</p>
-                      </div>
-                    </div>
-                    
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                      <div class="thumbnail" align="center">
-                        <anzeigetext>
-                          Qualifikationen
-                        </anzeigetext>
-                        <p>
-                          <ntext>
-              						<%= @mobject.skills %>
-              						</ntext>
-              					</p>
-                      </div>
-                    </div>
-            
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                      <div class="thumbnail" align="center">
-                        <anzeigetext>
-                          Angebot
-                        </anzeigetext>
-                        <p>
-                          <ntext>
-              						<%= @mobject.offers %>
-              						</ntext>
-              					</p>
-                      </div>
-                    </div>
-                </div>
-            <% end %>
-            <br><br>
-            
-            <b>Bewertung</b><br>
-            <% avg_rating2(@mobject.id).times do %>
-              <i class="glyphicon glyphicon-star"></i>
-            <% end %>
-            <br><br>
-            
-            <% if @mobject.social %>
-                <i class="glyphicon glyphicon-heart"></i> soziales Engagement
-            <% end %>
-            <br><br>
-
-            <% if @mobject.homepage != nil %>
-              <b>Homepage</b><br>
-              <%= link_to url_with_protocol(@mobject.homepage), :target => '_blank' do %>
-                <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@mobject.homepage) %>
-              <% end %>
-              <br><br>
-            <% end %>
-            
-            <% if @mobject.description %>
-              <b>Beschreibung</b><br>
-        			<%= @mobject.description %>
-              <br><br>
-            <% end %>
-            <% if @mobject.mcategory_id %>
-              <b>Kategorie</b><br>
-        			<%= @mobject.mcategory.name %>
-              <br><br>
-            <% end %>
-            <% if @mobject.homepage != nil %>
-              <%= link_to url_with_protocol(@mobject.homepage), :target => '_blank' do %>
-                <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@mobject.homepage) %>
-              <% end %>
-              <br><br>
-            <% end %>
-            <b>Verantwortlich:</b><br>
-            <%= showImage2(:small, @mobject.owner, true) %><br>
-            <% if @mobject.owner_type == "User" %>
-              <%= @mobject.owner.name + " " + @mobject.owner.lastname %>
-            <% end %>
-            <% if @mobject.owner_type == "Company" %>
-              <%= @mobject.owner.name %>
-            <% end %>
-      			<br><br>
-            <%= @mobject.created_at.strftime("%d.%m.%Y") %>
-          </div>
-
-          <%= header("Ort (Karte)", false) %>
-          <div class="panel-body">
-            <i class="glyphicon glyphicon-map-marker pull-left" onclick="return init_map(0);"></i>
-            <div id="map">
-              <div id="map-canvas"></div>
-            </div>
-          </div>
 
         <% when "Details" %>
           <%= header("Details", false) %>
@@ -268,6 +283,12 @@
             <%= build_medialist2(@mobject.msponsors, "msponsors", "Company") %>
           </div>
           
+        <% when "Eintrittskarten" %>
+          <%= header("Eintrittskarten", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.tickets, "tickets", nil) %>
+          </div>
+
         <% when "Bewertungen" %>
           <%= header("Bewertungen", false) %>
           <div class="panel-body">
@@ -278,6 +299,18 @@
           <%= header("Ansprechpartner", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.madvisors, "madvisors", "User") %>
+          </div>
+
+        <% when "Blog" %>
+          <%= header("Blog", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.comments.order(created_at: :desc), "comments", "User") %>
+          </div>
+
+        <% when "Ausgaben" %>
+          <%= header("Ausgaben", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.editions.order(created_at: :desc), "editions", "User") %>
           </div>
 
         <% when "Teilnehmer (Veranstaltungen)" %>

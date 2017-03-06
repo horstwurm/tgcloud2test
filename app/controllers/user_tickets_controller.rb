@@ -15,12 +15,18 @@ class UserTicketsController < ApplicationController
     @user_ticket = UserTicket.new
     @user_ticket.user_id = params[:user_id]
     @user_ticket.ticket_id = params[:ticket_id]
-    @user_ticket.status = "persönlich"
+    @ticket = Ticket.find(params[:ticket_id])
+    if @ticket.owner_type == "Mobject"
+      @user_ticket.status = "aktiv"
+    end
+    if @ticket.owner_type == "Msponsor"
+      @user_ticket.status = "persönlich"
+    end
     @user_ticket.save
     
     @user_ticket = UserTicket.where('user_id=? and ticket_id=?',params[:user_id], params[:ticket_id]).last
     if @user_ticket
-        content = "Ticket_ID:"+ @user_ticket.id.to_s + " für " + @user_ticket.ticket.name + " für " + User.find(@user_ticket.user_id).fullname + " für Event " + @user_ticket.ticket.msponsor.mobject.name + " gesponsort von " + @user_ticket.ticket.msponsor.company.name + " persönliches Ticket"
+        #content = "Ticket_ID:"+ @user_ticket.id.to_s + " für " + @user_ticket.ticket.name + " für " + User.find(@user_ticket.user_id).fullname + " für Event " + @user_ticket.ticket.msponsor.mobject.name + " gesponsort von " + @user_ticket.ticket.msponsor.company.name + " persönliches Ticket"
         content = "http://tkbmarkt.herokuapp.com/home/index1?me="+@user_ticket.id.to_s
         @user_ticket.avatar = @user_ticket.buildQRCode(content)
         @user_ticket.save

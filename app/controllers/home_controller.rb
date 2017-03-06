@@ -46,11 +46,21 @@ def index1
     if params[:me]
       @ticket = UserTicket.where('id=?',params[:me]).first
       if @ticket
-        if @ticket.ticket.msponsor.company.user.id == current_user.id
-          @auth_status = "autorisiert"
-        else
-          @auth_status = "nicht autorisiert"
-          @auth_reason = "nur " + @ticket.ticket.msponsor.company.user.name + " " + @ticket.ticket.msponsor.company.user.lastname + "!"
+        if @ticket.owner_type == "Msponsor"
+          if @ticket.ticket.msponsor.company.user.id == current_user.id
+            @auth_status = "autorisiert"
+          else
+            @auth_status = "nicht autorisiert"
+            @auth_reason = "nur " + @ticket.ticket.msponsor.company.user.name + " " + @ticket.ticket.msponsor.company.user.lastname + "!"
+          end
+        end
+        if @ticket.owner_type == "Mobject"
+          if @ticket.ticket.owner.company.user.id == current_user.id
+            @auth_status = "autorisiert"
+          else
+            @auth_status = "nicht autorisiert"
+            @auth_reason = "nur " + @ticket.ticket.owner.company.user.name + " " + @ticket.ticket.owner.company.user.lastname + "!"
+          end
         end
         if @ticket.status == "aktiv"
           @ticket_status = "Ticket gültig"
@@ -210,27 +220,27 @@ def index10
     end
     
     # follow Tickets
-    @usertickets = UserTicket.where('user_id=? and (status=? or status=?) and created_at>=?', current_user.id, "übergeben", "persönlich", @n.day.ago)
+    @usertickets = UserTicket.where('user_id=? and (status=? or status=?) and created_at>=?', current_user.id, "übergeben", "persönlich", @n.day.ago).order(created_at: :desc)
 
     # follow Favoriten
-    @favourits = current_user.favourits.where('created_at>=?',@n.day.ago)
+    @favourits = current_user.favourits.where('created_at>=?',@n.day.ago).order(created_at: :desc)
 
     # follow Termine
-    @appointments = Appointment.where('user_id1=? and created_at>=?', current_user.id, @n.day.ago )
+    @appointments = Appointment.where('user_id1=? and created_at>=?', current_user.id, @n.day.ago ).order(created_at: :desc)
     
     # follow Transaktionen
-    @transactions = current_user.transactions.where('created_at>=?', @n.day.ago )
+    @transactions = current_user.transactions.where('created_at>=?', @n.day.ago ).order(created_at: :desc)
     
-    @customers = current_user.customers
+    @customers = current_user.customers.order(created_at: :desc)
 
     # follow eMails
-    @emails  = Email.where('m_to=? and created_at>=?', current_user.id, @n.day.ago )
+    @emails  = Email.where('m_to=? and created_at>=?', current_user.id, @n.day.ago ).order(created_at: :desc)
     
     # follow Objects from Favouriten
-    @mobjects = current_user.mobjects
+    @mobjects = current_user.mobjects.order(created_at: :desc)
 
     # follow Searches
-    @searches = current_user.searches
+    @searches = current_user.searches.order(created_at: :desc)
     
   end    
 end
@@ -253,6 +263,10 @@ def index11
     @signages = nil
   end
   
+end
+
+def index12
+  @edition = Edition.find(params[:edition_id])
 end
 
 end

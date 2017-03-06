@@ -3,9 +3,18 @@ class TicketsController < ApplicationController
 
   # GET /tickets
   def index
-    @msponsor = Msponsor.find(params[:msponsor_id])
-    @tickets = Ticket.where('msponsor_id=?',params[:msponsor_id]).limit(5)
-    @ticanz = @tickets.count
+    if params[:msponsor_id]
+      @msponsor = Msponsor.find(params[:msponsor_id])
+      @tickets = Ticket.where('owner_type=? and owner_id=?', "Msponsor", params[:msponsor_id]).limit(5)
+    end
+    if params[:mobject_id]
+      @tickets = Ticket.where('owner_type=? and owner_id=?', "Mobject", params[:mobject_id]).limit(10)
+    end
+    if @tickets
+      @ticanz = @tickets.count
+    else
+      @ticanz = 0
+    end
     
     if params[:ticket_id]
       @searches = Search.where('ticket_id=?', params[:ticket_id])
@@ -29,7 +38,14 @@ class TicketsController < ApplicationController
   # GET /tickets/new
   def new
     @ticket = Ticket.new
-    @ticket.msponsor_id = params[:msponsor_id]
+    if params[:msponsor_id]
+      @ticket.owner_id = params[:msponsor_id]
+      @ticket.owner_type = "Msponsor"
+    end
+    if params[:mobject_id]
+      @ticket.owner_id = params[:mobject_id]
+      @ticket.owner_type = "Mobject"
+    end
     @ticket.active = true
   end
 
@@ -41,7 +57,12 @@ class TicketsController < ApplicationController
   def create
     @ticket = Ticket.new(ticket_params)
     if @ticket.save
-      redirect_to tickets_path :msponsor_id => @ticket.msponsor_id, notice: 'Ticket was successfully created.'
+      if @ticket.owner_type == "Msponsor"
+        redirect_to tickets_path :msponsor_id => @ticket.owner_id, notice: 'Ticket was successfully created.'
+      end
+      if @ticket.owner_type == "Mobject"
+        redirect_to mobject_path(:id => @ticket.owner_id, :topic => "Eintrittskarten"), notice: 'Ticket was successfully created.'
+      end
     else
       render :new
     end
@@ -50,7 +71,12 @@ class TicketsController < ApplicationController
   # PUT /tickets/1
   def update
     if @ticket.update(ticket_params)
-      redirect_to tickets_path :msponsor_id => @ticket.msponsor_id, notice: 'Ticket was successfully updated.'
+      if @ticket.owner_type == "Msponsor"
+        redirect_to tickets_path :msponsor_id => @ticket.owner_id, notice: 'Ticket was successfully updated.'
+      end
+      if @ticket.owner_type == "Mobject"
+        redirect_to mobject_path(:id => @ticket.owner_id, :topic => "Eintrittskarten"), notice: 'Ticket was successfully updated.'
+      end
     else
       render :edit
     end
@@ -58,9 +84,19 @@ class TicketsController < ApplicationController
 
   # DELETE /tickets/1
   def destroy
-    @msponsor_id = @ticket.msponsor_id
+    if @ticket.owner_type == "Msponsor"
+      @msponsor_id = @ticket.owner_id
+    end
+    if @ticket.owner_type == "Mobject"
+      @mobject_id = @ticket.owner_id
+    end
     @ticket.destroy
-    redirect_to tickets_path :msponsor_id => @msponsor_id, notice: 'Ticket was successfully destroyed.'
+    if @msponsor_id
+      redirect_to tickets_path :msponsor_id => @msponsor_id, notice: 'Ticket was successfully destroyed.'
+    end
+    if @mobject_id
+      redirect_to mobject_path(:id => @mobject_id, :topic => "Eintrittskarten"), notice: 'Ticket was successfully destroyed.'
+    end
   end
 
   private
@@ -71,6 +107,6 @@ class TicketsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def ticket_params
-      params.require(:ticket).permit(:msponsor_id, :mcategory_id, :name, :description, :amount, :contingent, :active)
+      params.require(:ticket).permit(:owner_id, :owner_type, :mcategory_id, :name, :description, :amount, :contingent, :active)
     end
 end

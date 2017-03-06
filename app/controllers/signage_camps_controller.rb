@@ -36,7 +36,7 @@ class SignageCampsController < ApplicationController
     @anz_s = ""
     #@hits = @signage_camp.signage_hits
     @hits = SignageHit.select("signage_loc_id as loc, date(created_at) as datum, count(id) as summe").where('signage_camp_id=?',@signage_camp.id).group("date(created_at, signage_loc_id)")
-    @hits = SignageHit.select("date(created_at) as datum, count(id) as summe").where('signage_camp_id=?',@signage_camp.id).group("date(created_at)")
+    @hits = SignageHit.select("date(created_at) as datum, count(id) as summe").where('signage_camp_id=?',@signage_camp.id).group("date(created_at)").order("date(created_at)")
     @hits.each do |i|
       @anz_s = @anz_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
     end

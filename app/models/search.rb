@@ -138,6 +138,12 @@ class Search < ActiveRecord::Base
                         sql_string << self.mcategory_id
                     end
 
+                when "Publikationen"
+                    if self.mcategory_id != "" and self.mcategory_id != nil and self.mcategory_id.to_s.length != 0
+                        sql_string[0] = sql_string[0] + " and mcategory_id=?"
+                        sql_string << self.mcategory_id
+                    end
+
                 when "Ausschreibungen"
                     if self.mcategory_id != "" and self.mcategory_id != nil and self.mcategory_id.to_s.length != 0
                         sql_string[0] = sql_string[0] + " and mcategory_id=?"

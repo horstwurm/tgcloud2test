@@ -19,6 +19,9 @@ class MdetailsController < ApplicationController
     else
       @mdetail.mtype = "Details"
     end
+    @mdetail.textoptions = "Inhalt"
+    @mdetail.sequence = 0
+    
   end
 
   # GET /mdetails/1/edit
@@ -60,7 +63,7 @@ class MdetailsController < ApplicationController
     end
 
     def mdetail_params
-      params.require(:mdetail).permit(:status, :mobject_id, :name, :description, :avatar, :document, :mtype)
+      params.require(:mdetail).permit(:headline, :textoptions, :sequence, :status, :mobject_id, :name, :description, :avatar, :document, :mtype)
     end
 
 end

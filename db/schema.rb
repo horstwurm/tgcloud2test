@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302163903) do
+ActiveRecord::Schema.define(version: 20170305083938) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -57,6 +57,14 @@ ActiveRecord::Schema.define(version: 20170302163903) do
     t.boolean  "access"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "mobject_id"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "companies", force: :cascade do |t|
@@ -106,6 +114,31 @@ ActiveRecord::Schema.define(version: 20170302163903) do
     t.datetime "updated_at",      null: false
     t.index ["owner_id"], name: "index_customers_on_owner_id"
     t.index ["owner_type"], name: "index_customers_on_owner_type"
+  end
+
+  create_table "edition_arcticles", force: :cascade do |t|
+    t.integer  "mobject_id"
+    t.integer  "edition_id"
+    t.string   "status"
+    t.boolean  "active"
+    t.integer  "sequence"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "editions", force: :cascade do |t|
+    t.integer  "mobject_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "status"
+    t.boolean  "active"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.date     "release_date"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "emails", force: :cascade do |t|
@@ -168,6 +201,9 @@ ActiveRecord::Schema.define(version: 20170302163903) do
     t.string   "mtype"
     t.string   "name"
     t.string   "status"
+    t.boolean  "headline"
+    t.string   "textoptions"
+    t.integer  "sequence"
     t.text     "description"
     t.string   "document_file_name"
     t.string   "document_content_type"
@@ -215,6 +251,7 @@ ActiveRecord::Schema.define(version: 20170302163903) do
     t.decimal  "price_reg"
     t.decimal  "price_new"
     t.boolean  "active"
+    t.boolean  "online_pub"
     t.string   "keywords"
     t.string   "homepage"
     t.string   "address1"
@@ -402,7 +439,8 @@ ActiveRecord::Schema.define(version: 20170302163903) do
   end
 
   create_table "tickets", force: :cascade do |t|
-    t.string   "msponsor_id"
+    t.integer  "owner_id"
+    t.string   "owner_type"
     t.boolean  "active"
     t.integer  "mcategory_id"
     t.string   "name"

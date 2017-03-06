@@ -111,6 +111,9 @@
         <% when "Crowdfunding (Beitraege)" %>
           <%= header("Crowdfunding Beitraege", false) %>
           <%= build_medialist2(@company.mstats, "mstats", nil) %>
+        <% when "Publikationen" %>
+          <%= header("Publikationen", false) %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"Publikationen"), "mobjects", nil) %>
         <% when "Digital Signage (Kampagnen)" %>
           <%= header("Digital Signage Kampagnen", false) %>
           <%= build_medialist2(@company.signage_camps, "signage_camps", nil) %>

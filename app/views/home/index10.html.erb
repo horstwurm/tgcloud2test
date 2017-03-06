@@ -36,9 +36,9 @@
                     <% end %>
                   </div>
                   <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-                    <header><%= "Neues Ticket " + ut.ticket.name + " " + ut.ticket.msponsor.mobject.name %></header>
-                    <small_cal><%= ut.ticket.msponsor.company.name %></small_cal><br>
-                    <%= showFirstImage2(:small, ut.ticket.msponsor.mobject, ut.ticket.msponsor.mobject.mdetails) %>
+                    <header><%= "Neues Ticket " + ut.ticket.name + " " + ut.ticket.owner.mobject.name %></header>
+                    <small_cal><%= ut.ticket.owner.company.name %></small_cal><br>
+                    <%= showFirstImage2(:small, ut.ticket.owner.mobject, ut.ticket.owner.mobject.mdetails) %>
                   </div>
                 </div>
               </div>

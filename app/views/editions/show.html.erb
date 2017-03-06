@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Mobject:</strong>
+  <%= @edition.mobject_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @edition.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @edition.description %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @edition.status %>
+</p>
+
+<%= link_to 'Edit', edit_edition_path(@edition) %> |
+<%= link_to 'Back', editions_path %>

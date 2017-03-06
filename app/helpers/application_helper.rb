@@ -7,7 +7,11 @@ module ApplicationHelper
           # follow Tickets
           usertickets = UserTicket.where('user_id=? and (status=? or status=?)', current_user.id, "übergeben", "persönlich").last(3)
           usertickets.each do |ut|
-            	 ticker = ticker + "Ticket von " + ut.ticket.msponsor.company.name + " (" + ut.ticket.name + " " + ut.ticket.msponsor.mobject.name + ") erhalten... " 
+            	 #ticker = ticker + "Ticket von " + ut.ticket.msponsor.company.name + " (" + ut.ticket.name + " " + ut.ticket.msponsor.mobject.name + ") erhalten... " 
+                 if ut.ticket.owner_type == "Msponsor"
+                     sponsor = ut.ticket.owner
+                	 ticker = ticker + "Ticket von " + sponsor.company.name + " (" + ut.ticket.name + " " + sponsor.mobject.name + ") erhalten... " 
+                 end 
           end
 
           # follow User

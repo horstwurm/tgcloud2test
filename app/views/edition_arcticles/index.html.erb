@@ -1,0 +1,12 @@
+  <div class="row">
+    <action>
+    <%= action_buttons2("ArtikelEdition", @edition, nil) %>
+    </action> 
+  </div>
+
+  <div class="row">
+      <%= header("Artikel von " + @edition.mobject.name + " Ausgabe " + @edition.name + " <span class='badge'>" + @editionas.to_s + "</span>", true) %>
+  </div>
+
+  <%= build_medialist2(@edition.edition_arcticles, "edition_arcticles", "Artikel") %>
+  

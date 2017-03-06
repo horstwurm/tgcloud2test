@@ -38,7 +38,7 @@ class SearchesController < ApplicationController
         @usertickets = UserTicket.where('ticket_id=? and status=?', params[:ticket_id], "Filter Kampagne")
         @usertickets.each do |ut|
           ut.status = "übergeben"
-          content = "Ticket_ID:"+ut.id.to_s+ " für " + ut.ticket.name + " für " + ut.user.name + " " + ut.user.lastname + " für Event " + ut.ticket.msponsor.mobject.name + " gesponsort von " + ut.ticket.msponsor.company.name + " CRM Ticket"
+          #content = "Ticket_ID:"+ut.id.to_s+ " für " + ut.ticket.name + " für " + ut.user.name + " " + ut.user.lastname + " für Event " + ut.ticket.owner.mobject.name + " gesponsort von " + ut.ticket.owner.company.name + " CRM Ticket"
           content = "http://tkbmarkt.herokuapp.com/home/index1?me="+ut.id.to_s
           ut.avatar = ut.buildQRCode(content)
           ut.save
@@ -98,12 +98,12 @@ class SearchesController < ApplicationController
     if params[:ticket_id] != nil
       @ticket = Ticket.find(params[:ticket_id])
       @search.ticket_id = @ticket.id
-      @search.name = @ticket.msponsor.mobject.name + " Umkreissuche" 
-      @search.longitude = @ticket.msponsor.mobject.longitude
-      @search.latitude= @ticket.msponsor.mobject.latitude
-      @search.address1 = @ticket.msponsor.mobject.address1
-      @search.address2 = @ticket.msponsor.mobject.address2
-      @search.address3 = @ticket.msponsor.mobject.address3
+      @search.name = @ticket.owner.mobject.name + " Umkreissuche" 
+      @search.longitude = @ticket.owner.mobject.longitude
+      @search.latitude= @ticket.owner.mobject.latitude
+      @search.address1 = @ticket.owner.mobject.address1
+      @search.address2 = @ticket.owner.mobject.address2
+      @search.address3 = @ticket.owner.mobject.address3
       @search.distance = 10
     else
       @search.longitude = current_user.longitude

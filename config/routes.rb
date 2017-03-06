@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :comments
+  resources :edition_arcticles
+  resources :editions
   resources :qrcodes
   resources :signage_hits
   resources :signage_camps
@@ -34,6 +37,7 @@ Rails.application.routes.draw do
   get 'home/index9'
   get 'home/index10'
   get 'home/index11'
+  get 'home/index12'
   
   resources :searches
   resources :partner_links
