@@ -965,6 +965,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Privatpersonen",item,"Kundenbeziehungen", item.customers.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Transaktionen", item.transactions.where('ttype=?', "Payment").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"eMail", Email.where('m_to=? or m_from=?', item.id, item.id).count > 0)
+        #html_string = html_string + build_nav("Privatpersonen",item,"Berechtigungen", item.credentials.count > 0)
 
       when "Institutionen"
         html_string = html_string + build_nav("Institutionen",item,"Info",item)
@@ -1042,7 +1043,7 @@ end
 def build_nav(object, item, topic, condition)
   
   html_string=""
-  if $activeapps.include?(object+topic)
+  if (!user_signed_in? and $activeapps.include?(object+topic)) or (user_signed_in? and getUserCreds.include?(object+topic)) or (user_signed_in? and current_user.superuser)
 
     if condition
       btn = "active"
@@ -1137,6 +1138,11 @@ def action_buttons2(object, item, topic)
           if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen)")
             html_string = html_string + link_to(new_user_position_path(:user_id => current_user.id)) do
               content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-map-marker")
+            end
+          end
+          if current_user.superuser
+            html_string = html_string + link_to(credentials_path(:user_id => item.id)) do
+              content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-lock")
             end
           end
 
@@ -1421,7 +1427,7 @@ def action_buttons2(object, item, topic)
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-book")
          end
          if user_signed_in?
-          if current_user.id == item.mobject.owner.user_id 
+          if current_user.id == item.mobject.owner.id 
             html_string = html_string + link_to(new_edition_arcticle_path(:edition_id => item.id)) do
               content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
             end
@@ -1448,6 +1454,8 @@ end
 def getIcon(iconstring)
     case iconstring
 
+      when "Berechtigungen"
+        icon = "lock"
       when "Ausgaben"
         icon = "duplicate"
       when "Blog"
@@ -1817,14 +1825,6 @@ def build_hauptmenue
       creds = init_apps
     end
 
-    #html_string=html_string+creds.to_s
-
-    # if creds.include?("Hauptmenue"+"meine Abfragen")
-    #   domain = "meine Abfragen"
-    #   path = home_index6_path
-    #   html_string = html_string + simple_menue(domain, path)
-    # end
-
     if creds.include?("Hauptmenue"+"News") and user_signed_in?
         domain = "News"
         path = home_index10_path
@@ -2063,46 +2063,67 @@ def build_sub_menu(domain, domain_text, hasharray)
   return html_string.html_safe
 end
 
-def build_kachel_access(topic, mode)
-
-  if mode == "System"
-    credentials = Appparam.where('domain=?',topic)
-  end
-  if mode == "User"
-    credentials = current_user.credentials.where('domain=?',topic)
-  end
+def build_kachel_access(topic, mode, user)
 
   html_string = ""
-  credentials.each do |c|
-    
+  appparams = Appparam.where('domain=?',topic)
+  appparams.each do |a|
+  
     if mode == "System"
-      cpath = appparams_path(:id => c.id)
-    end
-    skip = false
-    if mode == "User"
-      if !$activeapps.include?(topic+c.right)
-        skip = true
+      if a.access
+          thumbnail_state = 'thumbnail-active'
+        else
+          thumbnail_state = 'thumbnail-inactive'
       end
-      cpath = credentials_path(:id => c.id)
+      cpath = appparams_path(:id => a.id)
     end
-    
-    if !skip
-      if c.access == nil or c.access == true
-        thumbnail_state = 'thumbnail-active'
-      else
-        thumbnail_state = 'thumbnail-inactive'
-      end
 
-        html_string = html_string + link_to(cpath) do
-          content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
-            content_tag(:div, nil, class:"thumbnail " + thumbnail_state, align:"center") do
-              content_tag(:span, nil) do
-                icon_size = "4"
-                content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(c.right), style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+c.right)
-              end
+    if mode == "User"
+      forget = false
+      @credential = user.credentials.where('appparam_id=?',a.id).first
+      if @credential
+        if !a.access
+          #@credential.access = false
+          #@credential.save
+          @credential.destroy
+          forget=true
+        end
+      else
+        if a.access
+          @cred = Credential.new
+          @cred.appparam_id = a.id
+          @cred.user_id = user.id
+          @cred.access = a.access
+          @cred.save
+        else
+          forget=true
+        end
+      end
+      if !forget
+        @credential = user.credentials.where('appparam_id=?',a.id).first
+        if @credential
+          if @credential.access
+              thumbnail_state = 'thumbnail-active'
+            else
+              thumbnail_state = 'thumbnail-inactive'
+          end
+          cpath = credentials_path(:id => @credential.id, :user_id => user.id)
+        end
+      end
+    end
+
+    if !forget
+
+      html_string = html_string + link_to(cpath) do
+        content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
+          content_tag(:div, nil, class:"thumbnail " + thumbnail_state, align:"center") do
+            content_tag(:span, nil) do
+              icon_size = "4"
+              content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(a.right), style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+a.right)
             end
           end
         end
+      end
 
     end
 
@@ -2409,6 +2430,9 @@ def init_apps
     hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Aktivitaeten"}
     @array << hash
+    #hash = Hash.new
+    #hash = {"domain" => "Privatpersonen", "right" => "Berechtigungen"}
+    #@array << hash
     
     hash = Hash.new
     hash = {"domain" => "Institutionen", "right" => "Info"}
@@ -2573,23 +2597,32 @@ end
 def init_credentials
   @appparams = Appparam.all
   @appparams.each do |a|
-    c = Credential.new
-    c.user_id = current_user.id
-    c.appparam_id = a.id
-    c.access = a.access
-    c.save
+    if a.access
+      c = Credential.new
+      c.user_id = current_user.id
+      c.appparam_id = a.id
+      c.access = a.access
+      c.save
+    end
   end
 end
 
 def getUserCreds
   credapps = []
-  creds = current_user.credentials
-  if !creds or creds.count==0
-    init_credentials
-  end
-  creds.each do |c|
-    if $activeapps.include?(c.appparam.domain+c.appparam.right)
-      credapps << c.appparam.domain+c.appparam.right if c.access
+  if current_user.superuser
+    appparams = Appparam.all
+    appparams.each do |a|
+      credapps << a.domain+a.right
+    end
+  else  
+    creds = current_user.credentials
+    if !creds or creds.count==0
+      init_credentials
+    end
+    creds.each do |c|
+      if $activeapps.include?(c.appparam.domain+c.appparam.right)
+        credapps << c.appparam.domain+c.appparam.right if c.access
+      end
     end
   end
   return credapps

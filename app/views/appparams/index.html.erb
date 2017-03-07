@@ -1,24 +1,30 @@
-<div class="row">
-    <%= header("Hauptmenü", true) %>
+<div class=panel body>
+    <div class="row">
+        <%= header("xConnect Standard Funktionalität", true) %>
+    </div>
+    <br>
+    <div class="row">
+        <%= header("Hauptmenü", true) %>
+    </div>
+    <%= build_kachel_access("Hauptmenue", "System", nil) %>
+    <div class="row">
+        <%= header("Funktionen Privatpersonen", true) %>
+    </div>
+    <%= build_kachel_access("Privatpersonen", "System", nil) %>
+    <div class="row">
+        <%= header("Funktionen Institutionen", true) %>
+    </div>
+    <%= build_kachel_access("Institutionen", "System", nil) %>
+    <div class="row">
+        <%= header("Funktionen Business Objekte", true) %>
+    </div>
+    <%= build_kachel_access("Objekte", "System", nil) %>
+    <div class="row">
+        <%= header("Funktionen Kampagnen", true) %>
+    </div>
+    <%= build_kachel_access("Kampagnen", "System", nil) %>
+    <div class="row">
+        <%= header("Funktionen Standorte", true) %>
+    </div>
+    <%= build_kachel_access("Standorte", "System", nil) %>
 </div>
-<%= build_kachel_access("Hauptmenue", "System") %>
-<div class="row">
-    <%= header("Funktionen Privatpersonen", true) %>
-</div>
-<%= build_kachel_access("Privatpersonen", "System") %>
-<div class="row">
-    <%= header("Funktionen Institutionen", true) %>
-</div>
-<%= build_kachel_access("Institutionen", "System") %>
-<div class="row">
-    <%= header("Funktionen Business Objekte", true) %>
-</div>
-<%= build_kachel_access("Objekte", "System") %>
-<div class="row">
-    <%= header("Funktionen Kampagnen", true) %>
-</div>
-<%= build_kachel_access("Kampagnen", "System") %>
-<div class="row">
-    <%= header("Funktionen Standorte", true) %>
-</div>
-<%= build_kachel_access("Standorte", "System") %>
