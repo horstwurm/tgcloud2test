@@ -1427,7 +1427,7 @@ def action_buttons2(object, item, topic)
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-book")
          end
          if user_signed_in?
-          if current_user.id == item.edition.mobject.owner.id 
+          if (item.mobject.owner_type == "User" and current_user.id == item.mobject.owner.id) or (item.mobject.owner_type == "Company" and current_user.id == item.mobject.owner.user_id) 
             html_string = html_string + link_to(new_edition_arcticle_path(:edition_id => item.id)) do
               content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
             end
