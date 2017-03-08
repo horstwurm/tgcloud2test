@@ -443,6 +443,33 @@ geblockt {
   font-weight: bold;
 }
 
+.panel-publish {
+      color:white!important;
+      padding: 5px!important;
+      margin:10px!important;
+  a {
+      background:white!important;
+      color:$color5!important;
+  }
+  a:hover {
+      color:$color1!important;
+  }
+}
+
+.panel-blog {
+      background:$color4!important;
+      color:white!important;
+      padding: 5px!important;
+      margin:10px!important;
+  a {
+      background:$color4!important;
+      color:$color5!important;
+  }
+  a:hover {
+      color:$color1!important;
+  }
+}
+
 /*******************************************************************************************************/
 /* TABLES */
 /*******************************************************************************************************/
@@ -550,14 +577,15 @@ artikel_subheader {
     padding:5;
 }
 
-artikel_content {
+artikel_content, artikel_autor {
     color: $color5!important;
     font-size: 100%!important;
     padding:5;
 }
 
 artikel_quote {
-  background: #f9f9f9;
+    color: $color5!important;
+    background: #f9f9f9;
   margin: 1.5em 10px;
   font-style:italic;
 }

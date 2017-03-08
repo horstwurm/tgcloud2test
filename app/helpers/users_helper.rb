@@ -606,6 +606,9 @@ def build_medialist2(items, cname, par)
                     access = true
                   end
                 when "editions"
+    	            html_string = html_string + link_to(edition_arcticles_path(:edition_id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-book")
+                  end
                   if (item.mobject.owner_type == "User" and item.mobject.owner_id == current_user.id) or (item.mobject.owner_type == "Company" and item.mobject.owner.user_id == current_user.id)
                     access = true
                   end
@@ -700,9 +703,9 @@ def build_medialist2(items, cname, par)
     	            html_string = html_string + link_to(edit_edition_path(:id => item)) do 
                     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
                   end
-    	            html_string = html_string + link_to(edition_arcticles_path(:edition_id => item)) do 
-                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-book")
-                  end
+    	            #html_string = html_string + link_to(edition_arcticles_path(:edition_id => item)) do 
+                  #  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-book")
+                  #end
                 when "comments"
     	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
                     content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
@@ -2640,11 +2643,14 @@ def build_edition(edition)
   
     html_string = html_string + "<div class='row'>"
       html_string = html_string + "<div class='col-xs-3 col-sm-3 col-md-3 col-lg-3 xl-3'>"
-        html_string = html_string + showImage2(:medium, edition, true)
+        html_string = html_string + showImage2(:medium, edition, false)
       html_string = html_string + "</div>"
       
       html_string = html_string + "<div class='col-xs-9 col-sm-9 col-md-9 col-lg-9 xl-9'>"
-        html_string = html_string + "<edition_header>" + edition.mobject.owner.name + " " + edition.mobject.name + " " + edition.name + "</edition_header>"
+        html_string = html_string + "<div class='panel panel-heading header'>"
+          #html_string = html_string + "<edition_header>" + edition.mobject.owner.name + " " + edition.mobject.name + " " + edition.name + "</edition_header>"
+          html_string = html_string + edition.mobject.owner.name + " " + edition.mobject.name + " " + edition.name 
+        html_string = html_string + "</div>"
       html_string = html_string + "</div>"
     html_string = html_string + "</div>"
     
@@ -2654,28 +2660,28 @@ def build_edition(edition)
     
     html_string = html_string + "<div class='row'>"
       html_string = html_string + "<div class='panel-group' id='accordion' role='tablist' aria-multiselectable='true'>"
-        html_string = html_string + "<div class='panel panel-default'>"
+        #html_string = html_string + "<div class='panel-body'>"
         
           id=0
           edition.edition_arcticles.order(:sequence).each do |a|
             id = id + 1
             
-            html_string = html_string + "<div class='panel-heading' role='tab' id='headingOne'>"
-              html_string = html_string + "<h4 class='panel-title'>"
+            #html_string = html_string + "<div class='panel panel-nav' role='tab' id='headingOne'>"
+              html_string = html_string + "<h4 class='panel panel-publish'>"
                 html_string = html_string + "<a role='button' data-toggle='collapse' data-parent='#accordion' href='#collapseOne"+id.to_s + "' aria-expanded='true' aria-controls='collapseOne'>"
                   html_string = html_string + a.mobject.name
                 html_string = html_string + "</a>"
               html_string = html_string + "</h4>"
-            html_string = html_string + "</div>"
-            html_string = html_string + "<div id='collapseOne"+id.to_s+"' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='headingOne'>"
-              html_string = html_string + "<div class='panel-body'>"
+            #html_string = html_string + "</div>"
+            html_string = html_string + "<div id='collapseOne"+id.to_s+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingOne'>"
+              html_string = html_string + "<div class='panel panel-publish'>"
                 html_string = html_string + build_article(a.mobject)
               html_string = html_string + "</div>"
             html_string = html_string + "</div>"
             
           end
           
-        html_string = html_string + "</div>"
+        #html_string = html_string + "</div>"
       html_string = html_string + "</div>"
     html_string = html_string + "</div>"
 
@@ -2719,8 +2725,9 @@ def build_article(article)
       html_string = html_string + "</div>"
     end
   html_string = html_string + "</div>"
+  
   html_string = html_string + "<br>"
-  html_string = html_string + showImage2(:small, article.owner, true)
+  html_string = html_string + showImage2(:small, article.owner, true) + "<br>"
   html_string = html_string + "<artikel_autor>"
   if article.owner_type == "User"
     html_string = html_string + article.owner.name + " " + article.owner.lastname
@@ -2728,9 +2735,51 @@ def build_article(article)
   if article.owner_type == "Company"
     html_string = html_string + article.owner.name
   end
-  html_string = html_string + "</artikel_autor>"
-  html_string = html_string + "<br><br>"
+  html_string = html_string + "<br>"
   html_string = html_string + article.created_at.strftime("%d.%m.%Y")
+  html_string = html_string + "</artikel_autor>"
+
+
+  html_string = html_string + "<div class='row'>"
+    html_string = html_string + "<div class='panel-group' id='accordion"+article.id.to_s+"' role='tablist' aria-multiselectable='true'>"
+      html_string = html_string + "<div class='panel panel-blog'>"
+      
+          #html_string = html_string + "<div class='panel-heading' role='tab' id='headingOne'>"
+            html_string = html_string + "<h4 class='panel panel-blog'>"
+              html_string = html_string + "<a role='button' data-toggle='collapse' data-parent='#accordion"+article.id.to_s+"' href='#collapseTwo"+article.id.to_s+"' aria-expanded='true' aria-controls='collapseOne'>"
+
+                html_string = html_string + "Bewertungen und Kommentare"
+
+              html_string = html_string + "</a>"
+            html_string = html_string + "</h4>"
+          #html_string = html_string + "</div>"
+          html_string = html_string + "<div id='collapseTwo"+article.id.to_s+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingOne'>"
+            #html_string = html_string + "<div class='panel panel-blog'>"
+
+                if user_signed_in?
+                  html_string = html_string + link_to(new_mrating_path :mobject_id => article.id, :user_id => current_user.id) do
+                    #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                    content_tag(:span, content_tag(:b, "Neue Bewertung schreiben"), class:"btn btn-primary glyphicon glyphicon-plus")
+                  end
+                end
+                #html_string = html_string + header("Bewertungen", false)
+                html_string = html_string + build_medialist2(article.mratings.order(created_at: :desc), "mratings", "User")
+            
+                # if user_signed_in?
+                #   html_string = html_string + link_to(new_comment_path :mobject_id => article.id, :user_id => current_user.id) do
+                #     #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                #     content_tag(:span, content_tag(:b, "Neue Blog Eintrag schreiben"), class:"btn btn-primary glyphicon glyphicon-plus")
+                #   end
+                # end
+                # html_string = html_string + header("Blog", false)
+                # html_string = html_string + build_medialist2(article.comments.order(created_at: :desc), "comments", "User")
+
+            #html_string = html_string + "</div>"
+          html_string = html_string + "</div>"
+          
+      html_string = html_string + "</div>"
+    html_string = html_string + "</div>"
+  html_string = html_string + "</div>"
 
   return html_string.html_safe
 end 
