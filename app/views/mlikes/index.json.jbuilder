@@ -1,0 +1,1 @@
+json.array! @mlikes, partial: 'mlikes/mlike', as: :mlike

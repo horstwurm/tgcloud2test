@@ -10,6 +10,7 @@ class EditionsController < ApplicationController
   # GET /editions/1
   # GET /editions/1.json
   def show
+    #@edition = Edition.find(params[:edition_id])
   end
 
   # GET /editions/new

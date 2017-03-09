@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :mlikes
   resources :comments
   resources :edition_arcticles
   resources :editions

@@ -1,24 +1,17 @@
-<p id="notice"><%= notice %></p>
+  <div class="row">
+    <action>
+    <%= action_buttons2("Editionen", @edition, @topic) %>
+    </action>
+  </div>
 
-<p>
-  <strong>Mobject:</strong>
-  <%= @edition.mobject_id %>
-</p>
+  <div class="row">
+    <header>
+    <%= header(@edition.mobject.owner.name + " " + @edition.mobject.name + " " + @edition.name, true) %>
+    </header>
+  </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @edition.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @edition.description %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @edition.status %>
-</p>
-
-<%= link_to 'Edit', edit_edition_path(@edition) %> |
-<%= link_to 'Back', editions_path %>
+  <div class="row">
+    <div class="panel-body">
+        <%=  build_edition(@edition) %>
+    </div>
+  </div>

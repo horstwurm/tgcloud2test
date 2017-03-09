@@ -460,7 +460,7 @@ def build_medialist2(items, cname, par)
 
                         when "Publikationen"
                             item.editions.order(release_date: :desc).each do |e|
-                              html_string = html_string + link_to(home_index12_path :edition_id => e.id) do
+                              html_string = html_string + link_to(edition_path(:id => e.id, :topic => "Artikel")) do
                                 content_tag(:div, showImage2(:small, e, false)) + content_tag(:div, e.name)
                                 #html_string = html_string + e.name + "<br>"
                               end
@@ -1420,6 +1420,11 @@ def action_buttons2(object, item, topic)
                 end
               end
             when "Standorte"
+         end
+
+      when "Editionen"
+         html_string = html_string + link_to(mobject_path(:id => item.mobject_id, :topic => "Ausgaben")) do
+          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
 
       when "ArtikelEdition"
@@ -2647,53 +2652,35 @@ def build_edition(edition)
       html_string = html_string + "</div>"
       
       html_string = html_string + "<div class='col-xs-9 col-sm-9 col-md-9 col-lg-9 xl-9'>"
-        html_string = html_string + "<div class='panel panel-heading header'>"
-          #html_string = html_string + "<edition_header>" + edition.mobject.owner.name + " " + edition.mobject.name + " " + edition.name + "</edition_header>"
-          html_string = html_string + edition.mobject.owner.name + " " + edition.mobject.name + " " + edition.name 
-        html_string = html_string + "</div>"
-      html_string = html_string + "</div>"
-    html_string = html_string + "</div>"
-    
-    html_string = html_string + "<br><br>"
-    html_string = html_string + "<inhalt>Inhalt</inhalt>"
-    html_string = html_string + "<br><br>"
-    
-    html_string = html_string + "<div class='row'>"
-      html_string = html_string + "<div class='panel-group' id='accordion' role='tablist' aria-multiselectable='true'>"
-        #html_string = html_string + "<div class='panel-body'>"
-        
-          id=0
-          edition.edition_arcticles.order(:sequence).each do |a|
-            id = id + 1
-            
-            #html_string = html_string + "<div class='panel panel-nav' role='tab' id='headingOne'>"
-              html_string = html_string + "<h4 class='panel panel-publish'>"
-                html_string = html_string + "<a role='button' data-toggle='collapse' data-parent='#accordion' href='#collapseOne"+id.to_s + "' aria-expanded='true' aria-controls='collapseOne'>"
-                  html_string = html_string + a.mobject.name
-                html_string = html_string + "</a>"
-              html_string = html_string + "</h4>"
-            #html_string = html_string + "</div>"
-            html_string = html_string + "<div id='collapseOne"+id.to_s+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingOne'>"
-              html_string = html_string + "<div class='panel panel-publish'>"
-                html_string = html_string + build_article(a.mobject)
-              html_string = html_string + "</div>"
-            html_string = html_string + "</div>"
-            
-          end
-          
-        #html_string = html_string + "</div>"
-      html_string = html_string + "</div>"
-    html_string = html_string + "</div>"
 
+        html_string = html_string + "<div class='row'>"
+          html_string = html_string + "<inhalt>Inhalt</inhalt>"
+          html_string = html_string + "<br><br>"
+          edition.edition_arcticles.order(:sequence).each do |a|
+            html_string = html_string + "<h4 class='panel panel-publish'>"
+            html_string = html_string + link_to(mobject_path(:id => a.mobject.id, :topic => "Info")) do
+              content_tag(:div, a.mobject.name)
+            end
+            html_string = html_string + "</h4>"
+          end
+        html_string = html_string + "</div>"
+
+      html_string = html_string + "</div>"
+    html_string = html_string + "</div>"
+    
   html_string = html_string + "</div>"
   return html_string.html_safe
 end
 
 def build_article(article)
+#html_string = "<div class=panel-body>"
   html_string = ""
   html_string = html_string + "<div class='row'>"
 
     article.mdetails.order(:sequence).each do |d|
+
+      if d.textoptions != "Blog" and d.textoptions != "Bewertung"
+      
       html_string = html_string + "<div class='col-xs-12 col-sm-6 col-md-6 col-lg-4 xl-4'>"
         html_string = html_string + "<div class='row'>"
           if d.avatar_file_name
@@ -2709,79 +2696,99 @@ def build_article(article)
             html_string = html_string + "</div>"
           end
           html_string = html_string + "<br>"
+          
           case d.textoptions
             when "Zitat"
               html_string = html_string + "<artikel_quote>" + '"' + d.description + '"' + "</artikel_quote><br>"
             when "Link"
               html_string = html_string + "<artikel_link>"
               html_string = html_string + link_to(url_with_protocol(d.description), target: "_blank") do
-                content_tag(d.name)
+                content_tag(:div, d.description)
               end
               html_string = html_string + "</artikel_link>"
+
+            when "Abstimmung"
+                html_string = html_string + "<div class='panel panel-blog'>"
+                  
+                  if user_signed_in?
+                    @url = url_for(action: action_name, controller: controller_name)
+                    html_string = html_string + link_to(new_mlike_path :mobject_id => article.id, :user_id => current_user.id, :like => true, :return_url => @url) do
+                      #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                      content_tag(:span, content_tag(:b, "Ja")+content_tag(:span, article.mlikes.where('like=?',true).count.to_s, class:"badge"), class:"btn btn-primary glyphicon glyphicon-thumbs-up")
+                    end
+                    html_string = html_string + link_to(new_mlike_path :mobject_id => article.id, :user_id => current_user.id, :like => false, :return_url => @url) do
+                      #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+                      content_tag(:span, content_tag(:b, "Nein")+content_tag(:span, article.mlikes.where('like=?',false).count.to_s, class:"badge"), class:"btn btn-primary glyphicon glyphicon-thumbs-down")
+                    end
+                  else
+                      html_string = html_string + content_tag(:i, nil, class:"glyphicon glyphicon-thumbs-up") + content_tag(:span, article.mlikes.where('like=?',true).count.to_s, class:"badge")
+                      html_string = html_string + content_tag(:i, nil, class:"glyphicon glyphicon-thumbs-down") + content_tag(:span, article.mlikes.where('like=?',false).count.to_s, class:"badge")
+                  end
+                html_string = html_string + "</div>"
+              
             when "Text"
               html_string = html_string + "<artikel_content>" + d.description + "</artikel_content><br>"
           end
         html_string = html_string + "</div><br>"
       html_string = html_string + "</div>"
     end
-  html_string = html_string + "</div>"
-  
-  html_string = html_string + "<br>"
-  html_string = html_string + showImage2(:small, article.owner, true) + "<br>"
-  html_string = html_string + "<artikel_autor>"
-  if article.owner_type == "User"
-    html_string = html_string + article.owner.name + " " + article.owner.lastname
-  end
-  if article.owner_type == "Company"
-    html_string = html_string + article.owner.name
-  end
-  html_string = html_string + "<br>"
-  html_string = html_string + article.created_at.strftime("%d.%m.%Y")
-  html_string = html_string + "</artikel_autor>"
-
-
-  html_string = html_string + "<div class='row'>"
-    html_string = html_string + "<div class='panel-group' id='accordion"+article.id.to_s+"' role='tablist' aria-multiselectable='true'>"
-      html_string = html_string + "<div class='panel panel-blog'>"
+    end
+    
+    article.mdetails.order(:sequence).each do |d|
       
-          #html_string = html_string + "<div class='panel-heading' role='tab' id='headingOne'>"
-            html_string = html_string + "<h4 class='panel panel-blog'>"
-              html_string = html_string + "<a role='button' data-toggle='collapse' data-parent='#accordion"+article.id.to_s+"' href='#collapseTwo"+article.id.to_s+"' aria-expanded='true' aria-controls='collapseOne'>"
+      html_string = html_string + "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 xl-12'>"
+        case d.textoptions
+          when "Bewertung"
+              #html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_header><br>"
+              html_string = html_string + "<div class='row'>"
+                html_string = html_string + "<div class='panel-group' id='accordionB"+article.id.to_s+"' role='tablist' aria-multiselectable='true'>"
+                  html_string = html_string + "<div class='panel panel-blog'>"
+                  
+                    html_string = html_string + "<h4 class='panel panel-blog'>"
+                      html_string = html_string + "<a role='button' data-toggle='collapse' data-parent='#accordionB"+article.id.to_s+"' href='#collapseTwoB"+article.id.to_s+"' aria-expanded='true' aria-controls='collapseOne'>"
+                        html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_header> "
+                        html_string = html_string + link_to(mobject_path :mobject_id => article.id, :topic => "Bewertungen") do
+                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-star")
+                        end
+                      html_string = html_string + "</a>"
+                    html_string = html_string + "</h4>"
+                    html_string = html_string + "<div id='collapseTwoB"+article.id.to_s+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingOne'>"
+                      html_string = html_string + build_medialist2(article.mratings.order(created_at: :desc), "mratings", "User")
+                    html_string = html_string + "</div>"
+                      
+                  html_string = html_string + "</div>"
+                html_string = html_string + "</div>"
+              html_string = html_string + "</div>"
 
-                html_string = html_string + "Bewertungen und Kommentare"
+          when "Blog"
+              #html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_header><br>"
+              html_string = html_string + "<div class='row'>"
+                html_string = html_string + "<div class='panel-group' id='accordionG"+article.id.to_s+"' role='tablist' aria-multiselectable='true'>"
+                  html_string = html_string + "<div class='panel panel-blog'>"
+                  
+                    html_string = html_string + "<h4 class='panel panel-blog'>"
+                      html_string = html_string + "<a role='button' data-toggle='collapse' data-parent='#accordionG"+article.id.to_s+"' href='#collapseTwoG"+article.id.to_s+"' aria-expanded='true' aria-controls='collapseOne'>"
+                        html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_header> "
+                        html_string = html_string + link_to(mobject_path :mobject_id => article.id, :topic => "Blog") do
+                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-comment")
+                        end
+                      html_string = html_string + "</a>"
+                    html_string = html_string + "</h4>"
+                    html_string = html_string + "<div id='collapseTwoG"+article.id.to_s+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingOne'>"
+                      html_string = html_string + build_medialist2(article.comments.order(created_at: :desc), "mcomments", "User")
+                    html_string = html_string + "</div>"
+                      
+                  html_string = html_string + "</div>"
+                html_string = html_string + "</div>"
+              html_string = html_string + "</div>"
 
-              html_string = html_string + "</a>"
-            html_string = html_string + "</h4>"
-          #html_string = html_string + "</div>"
-          html_string = html_string + "<div id='collapseTwo"+article.id.to_s+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingOne'>"
-            #html_string = html_string + "<div class='panel panel-blog'>"
+        end
+      html_string = html_string + "</div>"        
+    end
 
-                if user_signed_in?
-                  html_string = html_string + link_to(new_mrating_path :mobject_id => article.id, :user_id => current_user.id) do
-                    #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
-                    content_tag(:span, content_tag(:b, "Neue Bewertung schreiben"), class:"btn btn-primary glyphicon glyphicon-plus")
-                  end
-                end
-                #html_string = html_string + header("Bewertungen", false)
-                html_string = html_string + build_medialist2(article.mratings.order(created_at: :desc), "mratings", "User")
-            
-                # if user_signed_in?
-                #   html_string = html_string + link_to(new_comment_path :mobject_id => article.id, :user_id => current_user.id) do
-                #     #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
-                #     content_tag(:span, content_tag(:b, "Neue Blog Eintrag schreiben"), class:"btn btn-primary glyphicon glyphicon-plus")
-                #   end
-                # end
-                # html_string = html_string + header("Blog", false)
-                # html_string = html_string + build_medialist2(article.comments.order(created_at: :desc), "comments", "User")
-
-            #html_string = html_string + "</div>"
-          html_string = html_string + "</div>"
-          
-      html_string = html_string + "</div>"
-    html_string = html_string + "</div>"
   html_string = html_string + "</div>"
-
-  return html_string.html_safe
+#html_string = html_string + "</div>"
+return html_string.html_safe
 end 
 
 end    

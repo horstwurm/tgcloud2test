@@ -101,7 +101,11 @@ class MobjectsController < ApplicationController
       end
     end
     if !params[:topic]
-      @topic = "Info"
+      if @mobject.mtype == "Publikationen"
+        @topic = "Ausgaben"
+      else
+        @topic = "Info"
+      end
     else
       @topic = params[:topic]
     end

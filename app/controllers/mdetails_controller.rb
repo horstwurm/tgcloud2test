@@ -19,7 +19,7 @@ class MdetailsController < ApplicationController
     else
       @mdetail.mtype = "Details"
     end
-    @mdetail.textoptions = "Inhalt"
+    @mdetail.textoptions = "Text"
     @mdetail.sequence = 0
     
   end

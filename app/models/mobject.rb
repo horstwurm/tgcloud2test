@@ -13,6 +13,7 @@ has_many :participants, dependent: :destroy
 has_many :tickets, as: :owner, dependent: :destroy 
 has_many :comments, dependent: :destroy 
 has_many :editions, dependent: :destroy 
+has_many :mlikes, dependent: :destroy 
 
 before_validation :update_geo_address
 geocoded_by :geo_address

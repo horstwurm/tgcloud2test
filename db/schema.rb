@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170305083938) do
+ActiveRecord::Schema.define(version: 20170309153155) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -137,8 +137,8 @@ ActiveRecord::Schema.define(version: 20170305083938) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.date     "release_date"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "emails", force: :cascade do |t|
@@ -220,6 +220,14 @@ ActiveRecord::Schema.define(version: 20170305083938) do
   create_table "messages", force: :cascade do |t|
     t.text     "content"
     t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mlikes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "mobject_id"
+    t.boolean  "like"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
