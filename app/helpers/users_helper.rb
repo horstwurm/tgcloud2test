@@ -1889,6 +1889,12 @@ def build_hauptmenue
         html_string = html_string + simple_menue(domain, path)
     end
 
+    if creds.include?("Hauptmenue"+"Artikel")
+        domain = "Artikel"
+        path = mobjects_path(:mtype => "Artikel", :msubtype => nil)
+        html_string = html_string + simple_menue(domain, path)
+    end
+
     if creds.include?("Hauptmenue"+"Stellenanzeigen")
         hasharray = []
         domain = "Stellenanzeigen"
@@ -2307,6 +2313,9 @@ def init_apps
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Hauptmenue", "right" => "Publikationen"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Hauptmenue", "right" => "Artikel"}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Hauptmenue", "parent_domain" => "Kleinanzeigen", "right" => "KleinanzeigenAnbieten"}

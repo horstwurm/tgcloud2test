@@ -114,6 +114,12 @@
                             <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Publikationen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                           </div>
 
+                        <% when "Artikel" %>
+                          <div class="form-group">
+                            <%= f.label "Kategorie" %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Artikel").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                          </div>
+
                         <% when "Ausschreibungen" %>
                           <div class="form-group">
                             <%= f.label "Kategorie" %><br/>

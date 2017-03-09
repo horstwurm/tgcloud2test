@@ -496,6 +496,9 @@ td {
 /*******************************************************************************************************/
 .thumbnail {
    box-shadow: 2px 2px 10px #B1B1B1;
+   img {
+       opacity:0.5;
+   }
 }
 .thumbnail:hover {
     border-color: $color1!important;
@@ -504,6 +507,9 @@ td {
         color:white!important;
         background:$color1!important;
     }
+   img {
+       opacity:1.0;
+   }
 }
 
 .thumbnail-navnav {
