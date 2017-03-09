@@ -2719,7 +2719,7 @@ def build_article(article)
             when "Abstimmung"
                 html_string = html_string + "<div class='panel panel-blog'>"
                   
-                  if user_signed_in?
+                  if user_signed_in? and false
                     @url = url_for(action: action_name, controller: controller_name)
                     html_string = html_string + link_to(new_mlike_path :mobject_id => article.id, :user_id => current_user.id, :like => true, :return_url => @url) do
                       #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
