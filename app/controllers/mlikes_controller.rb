@@ -17,7 +17,7 @@ class MlikesController < ApplicationController
     @mlike = Mlike.new
     @mlike.mobject_id = params[:mobject_id]
     @mlike.user_id = params[:user_id]
-    @mlike.like = params[:like]
+    @mlike.likeit = params[:like]
     @mlike.save
     redirect_to mobject_path(:id => @mlike.mobject_id, :topic => "Info"), notice: 'Mlike was successfully created.'
 end
@@ -75,6 +75,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def mlike_params
-      params.require(:mlike).permit(:user_id, :mobject_id, :like)
+      params.require(:mlike).permit(:user_id, :mobject_id, :likeit)
     end
 end

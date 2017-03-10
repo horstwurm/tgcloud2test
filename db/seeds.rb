@@ -95,18 +95,23 @@ mcategories = Mcategory.create({ctype:"Ticket", name:"Rabatt"})
 #create ticket categories 71
 mcategories = Mcategory.create({ctype:"Event", name:"Ticket"})
 
-#create Publikationen categories 72
-mcategories = Mcategory.create({ctype:"Publikationen", name:"Mitarbeiter Zeitschrift"})
+#create Publikationen categories 72..76
+mcategories = Mcategory.create({ctype:"Publikationen", name:"Mitarbeiter Zeitung"})
 mcategories = Mcategory.create({ctype:"Publikationen", name:"Geschäftsbericht"})
 mcategories = Mcategory.create({ctype:"Publikationen", name:"Projektbericht"})
+mcategories = Mcategory.create({ctype:"Publikationen", name:"Information"})
+mcategories = Mcategory.create({ctype:"Publikationen", name:"Zeitschrift"})
+mcategories = Mcategory.create({ctype:"Publikationen", name:"Buch"})
 
-#create Publikationen categories 75
+#create Artikel categories 77..84
 mcategories = Mcategory.create({ctype:"Artikel", name:"Organisation"})
 mcategories = Mcategory.create({ctype:"Artikel", name:"Hobby"})
-mcategories = Mcategory.create({ctype:"Artikel", name:"Erfahrungsbericht"})
+mcategories = Mcategory.create({ctype:"Artikel", name:"Persönliches"})
 mcategories = Mcategory.create({ctype:"Artikel", name:"Führung"})
 mcategories = Mcategory.create({ctype:"Artikel", name:"Soziales"})
 mcategories = Mcategory.create({ctype:"Artikel", name:"Sonstiges"})
+mcategories = Mcategory.create({ctype:"Artikel", name:"Ferien"})
+mcategories = Mcategory.create({ctype:"Artikel", name:"Geschäftsmodell"})
 
 #create some users...
 users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:"horst.wurm@bluewin.ch", password:"password", name:"Horst", lastname:"Wurm", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:true, webmaster:true, avatar:File.open(path+'horst.jpg', 'rb')})
@@ -649,6 +654,61 @@ for i in 1..50
     @user = User.find(us)
     mstats = Mstat.create({anonymous:false, status:"OK", mobject_id:@mob.id, owner_type:"User", owner_id:@user.id, amount: 1000, created_at:Date.today-us})
 end
+
+#Publikationen
+co = rand(capanz)+1
+comp = Company.find(4)
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Publikationen", msubtype:nil, name:"Münz", owner_type:"Company", owner_id: comp.id, mcategory_id:72, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+@mob = Mobject.where('name=?', "Münz").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'muenz.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+editions = Edition.create({mobject_id: @mob.id, release_date: "2017-03-23", name:"Ausgabe Q1", description:"", avatar:File.open(path+'tkb01.png', 'rb')})
+editions = Edition.create({mobject_id: @mob.id, release_date: "2017-06-23", name:"Ausgabe Q2", description:"", avatar:File.open(path+'tkb02.png', 'rb')})
+editions = Edition.create({mobject_id: @mob.id, release_date: "2017-06-23", name:"Ausgabe Q3", description:"", avatar:File.open(path+'tkb03.png', 'rb')})
+
+co = rand(capanz)+1
+comp = Company.find(4)
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Publikationen", msubtype:nil, name:"Digitalisierungsboard", owner_type:"Company", owner_id: comp.id, mcategory_id:75, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+@mob = Mobject.where('name=?', "Digitalisierungsboard").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'muenz.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+editions = Edition.create({mobject_id: @mob.id, release_date: "2016-10-23", name:"Oktober 2016", description:"", avatar:File.open(path+'dig1.png', 'rb')})
+editions = Edition.create({mobject_id: @mob.id, release_date: "2016-11-21", name:"November 2016", description:"", avatar:File.open(path+'dig2.png', 'rb')})
+editions = Edition.create({mobject_id: @mob.id, release_date: "2017-02-23", name:"Februar 2017", description:"", avatar:File.open(path+'dig3.png', 'rb')})
+
+#Artikel
+us = rand(usanz)+1
+@user = User.find(us)
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Artikel", msubtype:nil, name:"Digitalisierung bei der TKB", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
+@mob = Mobject.where('name=?', "Digitalisierung bei der TKB").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Problemstellung", description:"hier steht die Problemstellung", avatar:File.open(path+'tkb01.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lösungsansätze", description:"hier stehen die Lösungsansätze", avatar:File.open(path+'tkb02.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+
+us = rand(usanz)+1
+@user = User.find(us)
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Artikel", msubtype:nil, name:"Spracherkennung", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
+@mob = Mobject.where('name=?', "Spracherkennung").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Fokusthema Spracherkennung", description:"hier steht die Problemstellung", avatar:File.open(path+'spracherkennung.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lösungsansatz mit Spich Technologies", description:"hier stehen die Lösungsansätze", avatar:File.open(path+'spitch.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+
+us = rand(usanz)+1
+@user = User.find(us)
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Artikel", msubtype:nil, name:"Örk Kredite mit Loanboox", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
+@mob = Mobject.where('name=?', "Örk Kredite mit Loanboox").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Fokusthema Loanboox", description:"hier steht die Problemstellung", avatar:File.open(path+'loanboox.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lösungsansatz mit Loanboox", description:"hier stehen die Lösungsansätze", avatar:File.open(path+'dig3.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+
+us = rand(usanz)+1
+@user = User.find(us)
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Artikel", msubtype:nil, name:"Twint 2.0", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
+@mob = Mobject.where('name=?', "Twint 2.0").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Twint 2.0 in a nutshell", description:"hier steht die Problemstellung", avatar:File.open(path+'twint.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lösungsansatz Twint", description:"hier stehen die Lösungsansätze", avatar:File.open(path+'twint.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+
+us = rand(usanz)+1
+@user = User.find(us)
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Artikel", msubtype:nil, name:"Strategische Option Marktplatzbank", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
+@mob = Mobject.where('name=?', "Strategische Option Marktplatzbank").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Twint 2.0 in a nutshell", description:"hier steht die Problemstellung", avatar:File.open(path+'mp.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lösungsansatz Twint", description:"hier stehen die Lösungsansätze", avatar:File.open(path+'marketplace.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 #Bewertungen
 obanz = Mobject.count-1

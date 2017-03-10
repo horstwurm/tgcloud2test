@@ -37,7 +37,14 @@ def small_carousel(company, size)
           html = html + "<div align=center>"+ (image_tag s.avatar(:medium), class:"img-rounded") + "<h4>" + m.mtype + ": " + m.name + "</h4><p>" + s.description + "</p></div>"
         end
       end
+      
+      m.mratings.last(1).each do |r|
+        if r.user.avatar_file_name
+          html = html + "<div align=center>"+ (image_tag r.user.avatar(:medium), class:"img-rounded") + "<h4>" + r.comment + "</h4><p>" + r.user.name + " " + r.user.lastname + "</p></div>"
+        end
+      end
     end
+    
     html = html +  "</div>"
     return html.html_safe
 end
@@ -2270,321 +2277,321 @@ def init_apps
     @array = []
 
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "News"}
+    hash = {"domain" => "Hauptmenue", "right" => "News", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Privatpersonen"}
+    hash = {"domain" => "Hauptmenue", "right" => "Privatpersonen", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Institutionen"}
+    hash = {"domain" => "Hauptmenue", "right" => "Institutionen", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Angebote"}
+    hash = {"domain" => "Hauptmenue", "right" => "Angebote", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Angebote", "right" => "AngeboteStandard"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Angebote", "right" => "AngeboteStandard", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Angebote", "right" => "AngeboteAktionen"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Angebote", "right" => "AngeboteAktionen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Vermietungen"}
+    hash = {"domain" => "Hauptmenue", "right" => "Vermietungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Ausschreibungen"}
+    hash = {"domain" => "Hauptmenue", "right" => "Ausschreibungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Stellenanzeigen"}
+    hash = {"domain" => "Hauptmenue", "right" => "Stellenanzeigen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Stellenanzeigen", "right" => "StellenanzeigenAnbieten"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Stellenanzeigen", "right" => "StellenanzeigenAnbieten", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Stellenanzeigen", "right" => "StellenanzeigenSuchen"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Stellenanzeigen", "right" => "StellenanzeigenSuchen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Veranstaltungen"}
+    hash = {"domain" => "Hauptmenue", "right" => "Veranstaltungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Ausflugsziele"}
+    hash = {"domain" => "Hauptmenue", "right" => "Ausflugsziele", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Kleinanzeigen"}
+    hash = {"domain" => "Hauptmenue", "right" => "Kleinanzeigen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Publikationen"}
+    hash = {"domain" => "Hauptmenue", "right" => "Publikationen", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Artikel"}
+    hash = {"domain" => "Hauptmenue", "right" => "Artikel", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kleinanzeigen", "right" => "KleinanzeigenAnbieten"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kleinanzeigen", "right" => "KleinanzeigenAnbieten", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kleinanzeigen", "right" => "KleinanzeigenSuchen"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kleinanzeigen", "right" => "KleinanzeigenSuchen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Crowdfunding"}
+    hash = {"domain" => "Hauptmenue", "right" => "Crowdfunding", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Crowdfunding", "right" => "CrowdfundingSpenden"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Crowdfunding", "right" => "CrowdfundingSpenden", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Crowdfunding", "right" => "CrowdfundingBelohnungen"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Crowdfunding", "right" => "CrowdfundingBelohnungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Crowdfunding", "right" => "CrowdfundingZinsen"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Crowdfunding", "right" => "CrowdfundingZinsen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Digital Signage (Standorte)"}
+    hash = {"domain" => "Hauptmenue", "right" => "Digital Signage (Standorte)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Kalender"}
+    hash = {"domain" => "Hauptmenue", "right" => "Kalender", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderGeburtstage"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderGeburtstage", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderAktionen"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderAktionen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderCrowdfunding"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderCrowdfunding", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderStellenanzeigen"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderStellenanzeigen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderVeranstaltungen"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderVeranstaltungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderAusschreibungen"}
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderAusschreibungen", "access" => false}
     @array << hash
 
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Info"}
+    hash = {"domain" => "Privatpersonen", "right" => "Info", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Kalendereintraege"}
+    hash = {"domain" => "Privatpersonen", "right" => "Kalendereintraege", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Angebote"}
+    hash = {"domain" => "Privatpersonen", "right" => "Angebote", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Aktionen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Aktionen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Ansprechpartner"}
+    hash = {"domain" => "Privatpersonen", "right" => "Ansprechpartner", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Institutionen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Institutionen", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Stellenanzeigen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Stellenanzeigen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Kleinanzeigen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Kleinanzeigen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Vermietungen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Vermietungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Veranstaltungen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Veranstaltungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Veranstaltungen (angemeldet)"}
+    hash = {"domain" => "Privatpersonen", "right" => "Veranstaltungen (angemeldet)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Tickets"}
+    hash = {"domain" => "Privatpersonen", "right" => "Tickets", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Ausflugsziele"}
+    hash = {"domain" => "Privatpersonen", "right" => "Ausflugsziele", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Ausschreibungen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Ausschreibungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Spenden)"}
+    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Spenden)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Belohnungen)"}
+    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Belohnungen)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Zinsen)"}
+    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Zinsen)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Beitraege)"}
+    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Beitraege)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Bewertungen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Bewertungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Favoriten"}
+    hash = {"domain" => "Privatpersonen", "right" => "Favoriten", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Publikationen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Publikationen", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Artikel"}
+    hash = {"domain" => "Privatpersonen", "right" => "Artikel", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Kundenbeziehungen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Kundenbeziehungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Kontobeziehungen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Kontobeziehungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Transaktionen"}
+    hash = {"domain" => "Privatpersonen", "right" => "Transaktionen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "eMail"}
+    hash = {"domain" => "Privatpersonen", "right" => "eMail", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Positionen (Privatpersonen)"}
+    hash = {"domain" => "Privatpersonen", "right" => "Positionen (Privatpersonen)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Positionen (Favoriten)"}
+    hash = {"domain" => "Privatpersonen", "right" => "Positionen (Favoriten)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Aktivitaeten"}
+    hash = {"domain" => "Privatpersonen", "right" => "Aktivitaeten", "access" => false}
     @array << hash
     #hash = Hash.new
-    #hash = {"domain" => "Privatpersonen", "right" => "Berechtigungen"}
+    #hash = {"domain" => "Privatpersonen", "right" => "Berechtigungen", "access" => false}
     #@array << hash
     
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Info"}
+    hash = {"domain" => "Institutionen", "right" => "Info", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Angebote"}
+    hash = {"domain" => "Institutionen", "right" => "Angebote", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Aktionen"}
+    hash = {"domain" => "Institutionen", "right" => "Aktionen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Stellenanzeigen"}
+    hash = {"domain" => "Institutionen", "right" => "Stellenanzeigen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Kleinanzeigen"}
+    hash = {"domain" => "Institutionen", "right" => "Kleinanzeigen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Vermietungen"}
+    hash = {"domain" => "Institutionen", "right" => "Vermietungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Veranstaltungen"}
+    hash = {"domain" => "Institutionen", "right" => "Veranstaltungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Sponsorenengagements"}
+    hash = {"domain" => "Institutionen", "right" => "Sponsorenengagements", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Ausflugsziele"}
+    hash = {"domain" => "Institutionen", "right" => "Ausflugsziele", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Ausschreibungen"}
+    hash = {"domain" => "Institutionen", "right" => "Ausschreibungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Spenden)"}
+    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Spenden)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Belohnungen)"}
+    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Belohnungen)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Zinsen)"}
+    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Zinsen)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Beitraege)"}
+    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Beitraege)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Publikationen"}
+    hash = {"domain" => "Institutionen", "right" => "Publikationen", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Kundenbeziehungen"}
+    hash = {"domain" => "Institutionen", "right" => "Kundenbeziehungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Kontobeziehungen"}
+    hash = {"domain" => "Institutionen", "right" => "Kontobeziehungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Transaktionen"}
+    hash = {"domain" => "Institutionen", "right" => "Transaktionen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "eMail"}
+    hash = {"domain" => "Institutionen", "right" => "eMail", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Favoriten"}
+    hash = {"domain" => "Institutionen", "right" => "Favoriten", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Links (Partner)"}
+    hash = {"domain" => "Institutionen", "right" => "Links (Partner)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Aktivitaeten"}
+    hash = {"domain" => "Institutionen", "right" => "Aktivitaeten", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Digital Signage (Kampagnen)"}
+    hash = {"domain" => "Institutionen", "right" => "Digital Signage (Kampagnen)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Digital Signage (Standorte)"}
+    hash = {"domain" => "Institutionen", "right" => "Digital Signage (Standorte)", "access" => false}
     @array << hash
 
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Info"}
+    hash = {"domain" => "Objekte", "right" => "Info", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Details"}
+    hash = {"domain" => "Objekte", "right" => "Details", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Eintrittskarten"}
+    hash = {"domain" => "Objekte", "right" => "Eintrittskarten", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Sponsorenengagements"}
+    hash = {"domain" => "Objekte", "right" => "Sponsorenengagements", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Ansprechpartner"}
+    hash = {"domain" => "Objekte", "right" => "Ansprechpartner", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Kalender (Vermietungen)"}
+    hash = {"domain" => "Objekte", "right" => "Kalender (Vermietungen)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Teilnehmer (Veranstaltungen)"}
+    hash = {"domain" => "Objekte", "right" => "Teilnehmer (Veranstaltungen)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Ausschreibungsangebote"}
+    hash = {"domain" => "Objekte", "right" => "Ausschreibungsangebote", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Bewertungen"}
+    hash = {"domain" => "Objekte", "right" => "Bewertungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Blog"}
+    hash = {"domain" => "Objekte", "right" => "Blog", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Ausgaben"}
+    hash = {"domain" => "Objekte", "right" => "Ausgaben", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "CF Statistik"}
+    hash = {"domain" => "Objekte", "right" => "CF Statistik", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "CF Transaktionen"}
+    hash = {"domain" => "Objekte", "right" => "CF Transaktionen", "access" => false}
     @array << hash
     
     hash = Hash.new
-    hash = {"domain" => "Kampagnen", "right" => "Info"}
+    hash = {"domain" => "Kampagnen", "right" => "Info", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Kampagnen", "right" => "Details"}
+    hash = {"domain" => "Kampagnen", "right" => "Details", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Kampagnen", "right" => "Kalender"}
+    hash = {"domain" => "Kampagnen", "right" => "Kalender", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Kampagnen", "right" => "Standorte"}
+    hash = {"domain" => "Kampagnen", "right" => "Standorte", "access" => false}
     @array << hash
 
     hash = Hash.new
-    hash = {"domain" => "Standorte", "right" => "Info"}
+    hash = {"domain" => "Standorte", "right" => "Info", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Standorte", "right" => "Kampagnen"}
+    hash = {"domain" => "Standorte", "right" => "Kampagnen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Standorte", "right" => "Kalender"}
+    hash = {"domain" => "Standorte", "right" => "Kalender", "access" => false}
     @array << hash
 
     for i in 0..@array.length-1
@@ -2596,7 +2603,7 @@ def init_apps
         c.parent_domain = "Root"
       end
       c.right = @array[i]["right"]
-      c.access = true
+      c.access = @array[i]["access"]
       c.save
     end
     apps = Appparam.all
@@ -2719,15 +2726,15 @@ def build_article(article)
             when "Abstimmung"
                 html_string = html_string + "<div class='panel panel-blog'>"
                   
-                  if user_signed_in? and false
+                  if user_signed_in?
                     @url = url_for(action: action_name, controller: controller_name)
                     html_string = html_string + link_to(new_mlike_path :mobject_id => article.id, :user_id => current_user.id, :like => true, :return_url => @url) do
                       #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
-                      content_tag(:span, content_tag(:b, "Ja")+content_tag(:span, article.mlikes.where('like=?',true).count.to_s, class:"badge"), class:"btn btn-primary glyphicon glyphicon-thumbs-up")
+                      content_tag(:span, content_tag(:b, "Ja")+content_tag(:span, article.mlikes.where('likeit=?',true).count.to_s, class:"badge"), class:"btn btn-primary glyphicon glyphicon-thumbs-up")
                     end
                     html_string = html_string + link_to(new_mlike_path :mobject_id => article.id, :user_id => current_user.id, :like => false, :return_url => @url) do
                       #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
-                      content_tag(:span, content_tag(:b, "Nein")+content_tag(:span, article.mlikes.where('like=?',false).count.to_s, class:"badge"), class:"btn btn-primary glyphicon glyphicon-thumbs-down")
+                      content_tag(:span, content_tag(:b, "Nein")+content_tag(:span, article.mlikes.where('likeit=?',false).count.to_s, class:"badge"), class:"btn btn-primary glyphicon glyphicon-thumbs-down")
                     end
                   else
                       html_string = html_string + content_tag(:i, nil, class:"glyphicon glyphicon-thumbs-up") + content_tag(:span, article.mlikes.where('like=?',true).count.to_s, class:"badge")
@@ -2738,6 +2745,14 @@ def build_article(article)
             when "Text"
               html_string = html_string + "<artikel_content>" + d.description + "</artikel_content><br>"
           end
+          
+          if d.document_file_name
+            html_string = html_string + "<br>Download Link "
+            html_string = html_string + link_to(d.document.url, target: "_blank") do
+              content_tag(:i, nil, class:'btn btn-primary btn-xs glyphicon glyphicon-cloud-download')
+            end
+          end
+          
         html_string = html_string + "</div><br>"
       html_string = html_string + "</div>"
     end
