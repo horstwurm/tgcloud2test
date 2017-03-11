@@ -885,7 +885,7 @@ def showFirstImage2(size, item, details)
       if details.count > 0
         pic = details.first
         if pic.avatar_file_name
-          image_tag pic.avatar(size), class:"img-rounded"
+          image_tag pic.avatar(size), class:"img-rounded img-responsive"
         else
           image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive")
           #image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
@@ -902,7 +902,8 @@ def showImage2(size, item, linkit)
     if linkit
       html_string = link_to(item) do
         if item.avatar_file_name
-            image_tag(item.avatar(size), class:"card-img-top img-responsive")
+            #image_tag(item.avatar(size), class:"card-img-top img-responsive")
+            image_tag(item.avatar(size), class:"img-responsive")
         else
           html_string = image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive")
           # case item.class.name
@@ -2704,7 +2705,7 @@ def build_article(article)
               html_string = html_string + showImage2(:medium, d, false)
             html_string = html_string + "</div>"
             html_string = html_string + "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6'>"
-              html_string = html_string + "<artikel_subheader>" + d.name + "</artikel_header><br>"
+              html_string = html_string + "<artikel_subheader>" + d.name + "</artikel_header><br><br>"
             html_string = html_string + "</div>"
           else
             html_string = html_string + "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>"
