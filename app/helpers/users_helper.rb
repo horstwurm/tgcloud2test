@@ -2707,9 +2707,10 @@ def build_article(article)
             html_string = html_string + "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6'>"
               html_string = html_string + "<artikel_subheader>" + d.name + "</artikel_header><br><br>"
             html_string = html_string + "</div>"
+            
           else
             html_string = html_string + "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>"
-              html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_header><br>"
+              html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_header><br><br>"
             html_string = html_string + "</div>"
           end
           html_string = html_string + "<br>"
@@ -2738,8 +2739,8 @@ def build_article(article)
                       content_tag(:span, content_tag(:b, "Nein")+content_tag(:span, article.mlikes.where('likeit=?',false).count.to_s, class:"badge"), class:"btn btn-primary glyphicon glyphicon-thumbs-down")
                     end
                   else
-                      html_string = html_string + content_tag(:i, nil, class:"glyphicon glyphicon-thumbs-up") + content_tag(:span, article.mlikes.where('like=?',true).count.to_s, class:"badge")
-                      html_string = html_string + content_tag(:i, nil, class:"glyphicon glyphicon-thumbs-down") + content_tag(:span, article.mlikes.where('like=?',false).count.to_s, class:"badge")
+                      html_string = html_string + content_tag(:i, nil, class:"glyphicon glyphicon-thumbs-up") + content_tag(:span, article.mlikes.where('mlike=?',true).count.to_s, class:"badge")
+                      html_string = html_string + content_tag(:i, nil, class:"glyphicon glyphicon-thumbs-down") + content_tag(:span, article.mlikes.where('mlike=?',false).count.to_s, class:"badge")
                   end
                 html_string = html_string + "</div>"
               

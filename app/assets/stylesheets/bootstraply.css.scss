@@ -586,7 +586,6 @@ artikel_subheader {
 artikel_content, artikel_autor {
     color: $color5!important;
     font-size: 100%!important;
-    padding:5;
 }
 
 artikel_quote {
@@ -594,6 +593,7 @@ artikel_quote {
     background: #f9f9f9;
   margin: 1.5em 10px;
   font-style:italic;
+  padding:5;
 }
 
 artikel_link {
