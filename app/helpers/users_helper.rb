@@ -2739,8 +2739,8 @@ def build_article(article)
                       content_tag(:span, content_tag(:b, "Nein")+content_tag(:span, article.mlikes.where('likeit=?',false).count.to_s, class:"badge"), class:"btn btn-primary glyphicon glyphicon-thumbs-down")
                     end
                   else
-                      html_string = html_string + content_tag(:i, nil, class:"glyphicon glyphicon-thumbs-up") + content_tag(:span, article.mlikes.where('mlike=?',true).count.to_s, class:"badge")
-                      html_string = html_string + content_tag(:i, nil, class:"glyphicon glyphicon-thumbs-down") + content_tag(:span, article.mlikes.where('mlike=?',false).count.to_s, class:"badge")
+                      html_string = html_string + content_tag(:i, nil, class:"glyphicon glyphicon-thumbs-up") + content_tag(:span, article.mlikes.where('likeit=?',true).count.to_s, class:"badge")
+                      html_string = html_string + content_tag(:i, nil, class:"glyphicon glyphicon-thumbs-down") + content_tag(:span, article.mlikes.where('likeit=?',false).count.to_s, class:"badge")
                   end
                 html_string = html_string + "</div>"
               
