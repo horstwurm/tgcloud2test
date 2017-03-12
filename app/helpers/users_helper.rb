@@ -278,7 +278,7 @@ def build_medialist2(items, cname, par)
                   when "searches"
                       if par != nil and par != ""
                         html_string = html_string + link_to(showcal_index_path(:filter_id => item.id, :dom => par)) do
-                          content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.mtype), style:"font-size:8em") 
+                          content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.mtype)["icon"], style:"font-size:8em") 
                           #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
                         end
                       else
@@ -1065,24 +1065,24 @@ def build_nav(object, item, topic, condition)
     case object
       when "Privatpersonen"
         html_string = link_to(user_path(:id => item.id, :topic => topic)) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic)["icon"], title: getIcon(topic)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top' )
           #content_tag(:span, content_tag(:i, topic), class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
         end
       when "Institutionen"
         html_string = link_to(company_path(:id => item.id, :topic => topic)) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic)["icon"], title: getIcon(topic)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top' )
         end
       when "Objekte"
         html_string = link_to(mobject_path(:id => item.id, :topic => topic)) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic)["icon"], title: getIcon(topic)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top' )
         end
       when "Kampagnen"
         html_string = link_to(signage_camp_path(:id => item.id, :topic => topic)) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic)["icon"], title: getIcon(topic)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top' )
         end
       when "Standorte"
         html_string = link_to(signage_loc_path(:id => item.id, :topic => topic)) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic)["icon"], title: getIcon(topic)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top' )
         end
     end
   end
@@ -1468,14 +1468,18 @@ def build_stats(array, records, label)
 end
 
 def getIcon(iconstring)
+    icon = nil
+    icontext = nil
     case iconstring
 
       when "Berechtigungen"
         icon = "lock"
       when "Ausgaben"
         icon = "duplicate"
+        icontext = "Ausgaben/Editionen zur Publikation"
       when "Blog"
         icon = "comment"
+        icontext = "Teilen Sie uns Ihre Meinung mit - nutzen Sie den Blog"
       when "Artikel"
         icon = "text-background"
       when "Publikationen"
@@ -1531,6 +1535,7 @@ def getIcon(iconstring)
         icon = "signal"
       when "Info"
         icon = "info-sign"
+        icontext = "Allgemeine Informationen"
       when "Kalendereintraege"
         icon = "calendar"
       when "Ansprechpartner"
@@ -1545,6 +1550,7 @@ def getIcon(iconstring)
         icon = "gift"
       when "Bewertungen"
         icon = "star"
+        icontext = "Helfen Sie uns besser zu werden; geben Sie Ihre Bewertung ab "
       when "Favoriten"
         icon = "heart"
       when "Kundenbeziehungen"
@@ -1567,6 +1573,7 @@ def getIcon(iconstring)
         icon = "globe"
       when "Details"
         icon = "search"
+        icontext = "Geben Sie weitere Informationen an"
       when "Ausschreibungsangebote"
         icon = "book"
       when "Kalender (Vermietungen)"
@@ -1668,6 +1675,34 @@ def getIcon(iconstring)
       else
         icon = "question-mark"
     end
+    if !icon
+      icon = "question-mark"
+    end
+    if !icontext
+      icontext = "kein Hinweistext verfügbar"
+    end
+    ret = Hash.new
+    ret = {"icon" => icon, "icontext" => icontext}
+    
+    return ret
+end
+
+def getText(te)
+case te
+  when "Info"
+    texttext = "Allgemeine Informationen"
+  when "Kalendereintraege"
+    texttext = "Kalendereinträge"
+  when "Angebote"
+    texttext = "Standard Angebote"
+  when "Aktionen"
+    texttext = "Befristete Aktionen"
+  when "Ansprechpartner"
+    texttext = "bei welchen Angeboten bin ich der Ansprechpartner"
+  when "Institutionen"
+    texttext = "Meine Institutionen Gewerbe Firmen"
+end
+return texttext
 end
 
 def build_kachel_color(domain, name, path_param, user_id, company_id)
@@ -2040,7 +2075,7 @@ def simple_menue (domain, path)
       content_tag(:div, nil, class:"panel-body panel-nav") do
         temp = content_tag(:div, nil, class:"col-xs-3 col-sm-3 col-md-3 col-lg-3") do
           icon_size = "4"
-          content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(domain), style:"font-size:" + icon_size + "em") 
+          content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(domain)["icon"], style:"font-size:" + icon_size + "em") 
         end
         temp = temp + content_tag(:div, nil, class:"col-xs-7 col-sm-7 col-md-7 col-lg-7") do
           content_tag(:home_nav, domain)
@@ -2061,7 +2096,7 @@ def complex_menue (domain, domain_text, hasharray)
       
       temp = content_tag(:div, nil, class:"col-xs-3 col-sm-3 col-md-3 col-lg-3") do
         icon_size = "4"
-        content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(domain), style:"font-size:" + icon_size + "em") 
+        content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(domain)["icon"], style:"font-size:" + icon_size + "em") 
       end
       temp = temp + content_tag(:div, nil, class:"col-xs-9 col-sm-9 col-md-9 col-lg-9") do
         temp2 = content_tag(:home_nav, domain_text) + "<br><br>".html_safe
@@ -2077,7 +2112,7 @@ def build_sub_menu(domain, domain_text, hasharray)
   html_string = "<" + domain + "_options" + ">"
   for i in 0..hasharray.length-1
         html_string = html_string + "<a href="+hasharray[i]["path"] + ">"
-        html_string = html_string + "<i class='glyphicon glyphicon-"+getIcon(hasharray[i]["icon"])+"' style='font-size:2em'> </i> "
+        html_string = html_string + "<i class='glyphicon glyphicon-"+getIcon(hasharray[i])["icon"]+"' style='font-size:2em'> </i> "
         html_string = html_string + hasharray[i]["text"]
         html_string = html_string + "</a><br><br>"
   end
@@ -2141,7 +2176,7 @@ def build_kachel_access(topic, mode, user)
           content_tag(:div, nil, class:"thumbnail " + thumbnail_state, align:"center") do
             content_tag(:span, nil) do
               icon_size = "4"
-              content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(a.right), style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+a.right)
+              content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(a.right)["icon"], style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+a.right)
             end
           end
         end

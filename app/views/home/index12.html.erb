@@ -1,0 +1,16 @@
+
+<% topic = "Info" %>
+<%= html_string = link_to(user_path(:id => User.first.id, :topic => topic)) do %>
+<%  content_tag(:i, content_tag(:i, ""), class:"btn btn-primary glyphicon glyphicon-" + getIcon(topic)["icon"], title: "Allgemeine Informationen", 'data-toggle' => 'tooltip', 'data-placement' => 'top' ) %>
+<% end %>
+
+
+<script>
+$(document).on("ready page:change", function() {
+  $('.btn-primary').tooltip();
+});
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {$('.btn-btn-primary glyphicon glyphicon-info').tooltip();})
+</script>

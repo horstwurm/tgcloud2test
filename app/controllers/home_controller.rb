@@ -266,7 +266,7 @@ def index11
 end
 
 def index12
-  @edition = Edition.find(params[:edition_id])
+
 end
 
 end
