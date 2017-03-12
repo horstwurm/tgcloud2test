@@ -18,20 +18,20 @@
     <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <footer_header>
-                    xCONNECT Nutzung
+                    <%= $app_name %> Nutzung
                 </footer_header>
                 <br>
                 <footer_text>
                     <%= link_to("Info", home_index_path) %><br>
-                    <%= link_to("Über uns", url_with_protocol("xConnect_ueber_uns.html"), :target => '_blank') %><br>
-                    <%= link_to("Rechtliches & Impressum", url_with_protocol("xConnect_rechtliches_und.impressum"), :target => '_blank') %><br>
+                    <%= link_to("Über uns", url_with_protocol("ueber_uns.html"), :target => '_blank') %><br>
+                    <%= link_to("Rechtliches & Impressum", url_with_protocol("rechtliches_und_impressum.html"), :target => '_blank') %><br>
                     <br>
                 </footer_text>
             </div>
 
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <footer_header>
-                    xCONNECT Anmeldung
+                    <%= $app_name %> Anmeldung
                 </footer_header>
                 <br>
                 <footer_text>
@@ -50,7 +50,7 @@
             <% if user_signed_in? and (current_user.webmaster or current_user.superuser) %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <footer_header>
-                        xCONNECT Poweruser
+                        <%= $app_name %> Poweruser
                     </footer_header>
                     <br>
                     <footer_text>
@@ -71,7 +71,7 @@
 
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <footer_header>
-                    xConnect Partner
+                    <%= $app_name %> Partner
                 </footer_header>
                 <br>
                 <footer_text>

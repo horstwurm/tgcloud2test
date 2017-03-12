@@ -1,9 +1,10 @@
 
+<% if false %>
     <div class="panel-heading">
       <div class="row">
         <div class="col-md-12">
           <li_header>
-          xConnect - Funktionen<br>
+          <%= $app_name %> - Funktionen<br>
           </li_header>
         </div>
       </div>
@@ -27,7 +28,7 @@
       <div class="row">
         <div class="col-md-12">
           <li_header>
-          xConnect - Funktionen<br>
+          <%= $app_name %> - Funktionen<br>
           </li_header>
         </div>
       </div>
@@ -254,12 +255,11 @@
     </div>
     <br>
 
-<% if false %>
     <div class="panel-heading">
       <div class="row">
         <div class="col-md-12">
           <li_header>
-          xConnect - Partner<br>
+          <%= $app_name %> - Partner<br>
           </li_header>
         </div>
       </div>
@@ -268,7 +268,7 @@
       <div class="row">
         <div class="col-md-12">
           <anzeigetext>
-          xConnect Partner <br><br>
+          <%= $app_name %> Partner <br><br>
           </anzeigetext>
         </div>
       </div>
@@ -340,13 +340,12 @@
       </div>
     </div>
     <br>
-<% end %>
 
     <div class="panel-heading">
       <div class="row">
         <div class="col-md-12">
           <li_header>
-          xConnect - Kurzanleitung<br>
+          <%= $app_name %> - Kurzanleitung<br>
           </li_header>
         </div>
       </div>
@@ -528,12 +527,13 @@
       <br>
     </div>
     <br>
-    
+<% end %>
+
     <div class="panel-heading">
       <div class="row">
         <div class="col-md-12">
           <li_header>
-          über xConnect...<br>
+          über <%= $app_name %> ...<br>
           </li_header>
         </div>
       </div>
@@ -545,7 +545,7 @@
             <%= image_tag("mp.jpg", :size => "200x200") %><br>
             <ntext>
             <b>Version 0.91</b><br><br>
-            <i class="glyphicon glyphicon-copyright-mark"></i> 2016, alle Rechte vorbehalten
+            <i class="glyphicon glyphicon-copyright-mark"></i> 2016, 2017 alle Rechte vorbehalten
             <br><br>
             <i class="glyphicon glyphicon-info-sign"></i> Dies ist eine freie Testversion zu Demozwecken, sämtliche Daten, Personen, Firmen, Services, etc. sind frei erfunden, jegliche Haftung ist ausgeschlossen!
             </ntext>
@@ -557,17 +557,17 @@
       <div class="row">
         <div class="col-md-12">
           <%= header("Registrationen Privatkunden", false) %>
-          <%= @anz_pk.to_s %>
+          <% @anz_pk.to_s %>
           <div class="panel-body">
             <div id="curve_chart1"></div>
           </div>
           <%= header("Registrationen Institutionen", false) %>
-          <%= @anz_fk.to_s %>
+          <% @anz_fk.to_s %>
           <div class="panel-body">
             <div id="curve_chart2"></div>
           </div>
           <%= header("Registrationen Objekte", false) %>
-          <%= @anz_obj.to_s %>
+          <% @anz_obj.to_s %>
           <div class="panel-body">
             <div id="curve_chart3"></div>
           </div>

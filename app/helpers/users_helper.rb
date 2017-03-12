@@ -2155,7 +2155,7 @@ end
 
 def image_def (domain, mtype, msubtype)
     case domain
-      when "mein xConnect"
+      when $app_name
         pic = "connect.jpg"
       when "Privatpersonen"
         pic = "user.jpg"
@@ -2705,12 +2705,12 @@ def build_article(article)
               html_string = html_string + showImage2(:medium, d, false)
             html_string = html_string + "</div>"
             html_string = html_string + "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6'>"
-              html_string = html_string + "<artikel_subheader>" + d.name + "</artikel_header><br><br>"
+              html_string = html_string + "<artikel_subheader>" + d.name + "</artikel_subheader><br><br>"
             html_string = html_string + "</div>"
             
           else
             html_string = html_string + "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>"
-              html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_header><br><br>"
+              html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_subheader><br><br>"
             html_string = html_string + "</div>"
           end
           html_string = html_string + "<br>"
