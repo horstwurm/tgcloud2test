@@ -2112,7 +2112,7 @@ def build_sub_menu(domain, domain_text, hasharray)
   html_string = "<" + domain + "_options" + ">"
   for i in 0..hasharray.length-1
         html_string = html_string + "<a href="+hasharray[i]["path"] + ">"
-        html_string = html_string + "<i class='glyphicon glyphicon-"+getIcon(hasharray[i])["icon"]+"' style='font-size:2em'> </i> "
+        html_string = html_string + "<i class='glyphicon glyphicon-"+getIcon(hasharray[i]["icon"])["icon"]+"' style='font-size:2em'> </i> "
         html_string = html_string + hasharray[i]["text"]
         html_string = html_string + "</a><br><br>"
   end
