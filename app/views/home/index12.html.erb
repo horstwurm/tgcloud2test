@@ -1,16 +1,26 @@
+<div class="owl-show">
+<%  u = User.all %>
+<%  u.each do |m| %>
+<%    if m.avatar_file_name %>
+        <div align=center> 
+          <%= build_medialist2(User.where('id=?',m), "user", nil) %>
+        </div>
+<%    end %>
+<%  end %>
+</div>
 
-<% topic = "Info" %>
-<%= html_string = link_to(user_path(:id => User.first.id, :topic => topic)) do %>
-<%  content_tag(:i, content_tag(:i, ""), class:"btn btn-primary glyphicon glyphicon-" + getIcon(topic)["icon"], title: "Allgemeine Informationen", 'data-toggle' => 'tooltip', 'data-placement' => 'top' ) %>
-<% end %>
-
-
-<script>
-$(document).on("ready page:change", function() {
-  $('.btn-primary').tooltip();
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.owl-show').owlCarousel({  
+    
+    itemsCustom : false,
+    itemsDesktop : [1199,4],
+    itemsDesktopSmall : [980,3],
+    itemsTablet: [768,2],
+    itemsTabletSmall: false,
+    itemsMobile : [479,1],
+    autoPlay: true
+    
+  });
 });
-</script>
-
-<script>
-  document.addEventListener("turbolinks:load", function() {$('.btn-btn-primary glyphicon glyphicon-info').tooltip();})
 </script>

@@ -67,6 +67,11 @@ class UsersController < ApplicationController
       @locs = @locs + "]"
       @wins = @wins + "]"
      
+    respond_to do |format|
+      format.html
+      format.json { render :json => @users }
+    end
+     
   end
   
   # GET /users/1
