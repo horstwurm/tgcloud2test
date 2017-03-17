@@ -56,7 +56,7 @@
             <br>
             <cite><%= @company.created_at.strftime("%d.%m.%Y") %></cite><br>
           </div>
-          <% if $activeapps.include?("InstitutionenAktivitaeten") %>
+          <% if $activeapps.include?("InstitutionenAktivitaeten") or current_user.superuser %>
             <%= header("Aktivitätsübersicht", false) %>
             <div class="panel-body">
               <% @array_s %>

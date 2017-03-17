@@ -1125,7 +1125,7 @@ def action_buttons2(object, item, topic)
         end
         
         if user_signed_in?
-          if $activeapps.include?("PrivatpersonenFavoriten")
+          if $activeapps.include?("PrivatpersonenFavoriten") or current_user.superuser
             html_string = html_string + link_to(new_favourit_path :object_name => "User", :object_id => item.id, :user_id => current_user.id) do
               content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-heart")
             end
@@ -1141,12 +1141,12 @@ def action_buttons2(object, item, topic)
           html_string = html_string + link_to(new_webmaster_path :object_name => "User", :object_id => item.id, :user_id => current_user.id) do
             content_tag(:i, nil, class: "btn btn-warning pull-right glyphicon glyphicon-eye-open")
           end
-          if $activeapps.include?("PrivatpersonenTransaktionen")
+          if $activeapps.include?("PrivatpersonenTransaktionen") or current_user.superuser
             html_string = html_string + link_to(listaccount_index_path :user_id => current_user.id, :user_id_ver => item.id, :company_id_ver => nil, :ref => "Vergütung an "+item.name + " " + item.lastname, :object_name => "User", :object_id => item.id, :amount => nil) do
               content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-euro")
             end
           end
-          if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen)")
+          if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen)") or current_user.superuser
             html_string = html_string + link_to(new_user_position_path(:user_id => current_user.id)) do
               content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-map-marker")
             end
@@ -1209,7 +1209,7 @@ def action_buttons2(object, item, topic)
           content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
         end
         if user_signed_in?
-          if $activeapps.include?("InstitutionenFavoriten")
+          if $activeapps.include?("InstitutionenFavoriten") or current_user.superuser
             html_string = html_string + link_to(new_favourit_path :object_name => "Company", :object_id => item.id, :user_id => current_user.id) do
               content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-heart")
             end
@@ -1230,7 +1230,7 @@ def action_buttons2(object, item, topic)
           html_string = html_string + link_to(new_webmaster_path :object_name => "Company", :object_id => item.id, :user_id => current_user.id) do
             content_tag(:i, nil, class: "btn btn-warning pull-right glyphicon glyphicon-eye-open")
           end
-          if $activeapps.include?("InstitutionenTransaktionen")
+          if $activeapps.include?("InstitutionenTransaktionen") or current_user.superuser
             html_string = html_string + link_to(listaccount_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => item.id, :ref => "Vergütung an "+item.name, :object_name => "Company", :object_id => item.id, :amount => nil) do
               content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-euro")
             end
