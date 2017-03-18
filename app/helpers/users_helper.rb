@@ -953,8 +953,9 @@ def navigate(object,item)
       when "Privatpersonen"
         html_string = html_string + build_nav("Privatpersonen",item,"Info",item)
         html_string = html_string + build_nav("Privatpersonen",item,"Kalendereintraege",Appointment.where('user_id1=? or user_id2=?',item,item).count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Angebote",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Aktionen",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion").count > 0)
+        #html_string = html_string + build_nav("Privatpersonen",item,"Angebote",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard").count > 0)
+        #html_string = html_string + build_nav("Privatpersonen",item,"Aktionen",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Angebote, Services und Aktionen",item.mobjects.where('mtype=?',"Angebote").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Ansprechpartner",item.madvisors.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Institutionen",item.companies.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Stellenanzeigen",item.mobjects.where('mtype=?',"Stellenanzeigen").count > 0)
@@ -965,9 +966,10 @@ def navigate(object,item)
         html_string = html_string + build_nav("Privatpersonen",item,"Tickets",item.user_tickets.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Ausflugsziele",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Ausschreibungen",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Spenden)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Belohnungen)",item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Zinsen)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen").count > 0)
+        #html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Spenden)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden").count > 0)
+        #html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Belohnungen)",item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen").count > 0)
+        #html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Zinsen)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding Initiativen", item.mobjects.where('mtype=? ',"Crowdfunding").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Beitraege)", item.mstats.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Bewertungen", item.mratings.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Favoriten",item.favourits.count > 0)
@@ -980,8 +982,9 @@ def navigate(object,item)
 
       when "Institutionen"
         html_string = html_string + build_nav("Institutionen",item,"Info",item)
-        html_string = html_string + build_nav("Institutionen",item,"Angebote",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Aktionen",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion").count > 0)
+        #html_string = html_string + build_nav("Institutionen",item,"Angebote",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard").count > 0)
+        #html_string = html_string + build_nav("Institutionen",item,"Aktionen",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Angebote, Services und Aktionen",item.mobjects.where('mtype=? ',"Angebote").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Stellenanzeigen",item.mobjects.where('mtype=?',"Stellenanzeigen").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Kleinanzeigen",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Vermietungen",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
@@ -989,9 +992,10 @@ def navigate(object,item)
         html_string = html_string + build_nav("Institutionen",item,"Sponsorenengagements",item.msponsors.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Ausflugsziele",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Ausschreibungen",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Spenden)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Belohnungen)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Zinsen)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen").count > 0)
+        #html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Spenden)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden").count > 0)
+        #html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Belohnungen)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen").count > 0)
+        #html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Zinsen)", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding Initiativen", item.mobjects.where('mtype=?',"Crowdfunding").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Beitraege)", item.mstats.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Digital Signage (Kampagnen)", item.signage_camps.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Digital Signage (Standorte)", item.signage_locs.count > 0)
@@ -1168,11 +1172,11 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(new_appointment_path :user_id1 => item.id, :user_id2 => current_user.id) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Angebote", "Aktionen"
+            when "Angebote", "Aktionen", "Angebote, Services und Aktionen"
               html_string = html_string + link_to(home_index8_path :user_id => current_user.id, :mtype => "Angebote") do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Crowdfunding (Spenden)", "Crowdfunding (Belohnungen)", "Crowdfunding (Zinsen)"
+            when "Crowdfunding (Spenden)", "Crowdfunding (Belohnungen)", "Crowdfunding (Zinsen)", "Crowdfunding Initiativen"
               html_string = html_string + link_to(home_index8_path :user_id => current_user.id, :mtype => "Crowdfunding") do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
@@ -1236,11 +1240,11 @@ def action_buttons2(object, item, topic)
             end
           end
           case topic
-            when "Angebote", "Aktionen"
+            when "Angebote", "Aktionen", "Angebote, Services und Aktionen"
               html_string = html_string + link_to(home_index8_path :company_id => item.id, :mtype => "Angebote") do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Crowdfunding (Spenden)", "Crowdfunding (Belohnungen)", "Crowdfunding (Zinsen)"
+            when "Crowdfunding (Spenden)", "Crowdfunding (Belohnungen)", "Crowdfunding (Zinsen)", "Crowdfunding Initiativen"
               html_string = html_string + link_to(home_index8_path :company_id => item.id, :mtype => "Crowdfunding") do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
@@ -1435,6 +1439,11 @@ def action_buttons2(object, item, topic)
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
 
+      when "Edition"
+         html_string = html_string + link_to(edition_path(:id => item.id, :topic => "Info")) do
+          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+         end
+
       when "ArtikelEdition"
          html_string = html_string + link_to(mobject_path(:id => item.mobject_id, :topic => "Ausgaben")) do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
@@ -1472,8 +1481,15 @@ def getIcon(iconstring)
     icontext = nil
     case iconstring
 
+      when "Angebote, Services und Aktionen"
+        icon = "shopping-cart"
+        icontext = "Produkte, Services & Aktionen"
+      when "Crowdfunding Initiativen"
+        icon = "grain"
+        icontext = "Crowdfunding Initiativen"
       when "Berechtigungen"
         icon = "lock"
+        icontext = "Berechtigungen"
       when "Ausgaben"
         icon = "duplicate"
         icontext = "Ausgaben/Editionen zur Publikation"
@@ -1482,190 +1498,262 @@ def getIcon(iconstring)
         icontext = "Teilen Sie uns Ihre Meinung mit - nutzen Sie den Blog"
       when "Artikel"
         icon = "text-background"
+        icontext = "Artikel"
       when "Publikationen"
         icon = "book"
+        icontext = "Publikationen"
       when "Eintrittskarten"
         icon = "qrcode"
-      when "Digital Signage Standorte", "Werbeflächen"
-        icon = "film"
+        icontext = "Eintrittskarten & Tickets"
+      when "Digital Signage Standorte"
+        icon = "blackboard"
+        icontext = "Crowdfunding Initiativen"
+      when "Werbeflächen"
+        icon = "blackboard"
+        icontext = "Crowdfunding Initiativen"
       when "Kampagnen"
-        icon = "signal"
+        icon = "bullhorn"
+        icontext = "Werbekampagnen"
       when "Digital Signage (Kampagnen)"
-        icon = "film"
+        icon = "bullhorn"
+        icontext = "Werbekampagnen"
       when "Digital Signage (Standorte)"
-        icon = "film"
+        icon = "blackboard"
+        icontext = "Werbeflächen"
       when "Digital Signage (Show)"
         icon = "film"
+        icontext = "Werbekampagne anzeigen"
       when "News"
         icon = "alert"
+        icontext = "Benachrichtigungen"
       when "AngeboteStandard"
         icon = "info-sign"
+        icontext = "Angebote, Produkte & Services"
       when "AngeboteAktionen"
         icon = "exclamation-sign"
+        icontext = "befristete Sonderaktionen"
       when "StellenanzeigenSuchen"
         icon = "search"
+        icontext = "Stellenanzeigen Suchen"
       when "StellenanzeigenAnbieten"
         icon = "filter"
+        icontext = "Stellenanzeige Angebote"
       when "KleinanzeigenSuchen"
         icon = "search"
+        icontext = "Kleinanzeigen Suchen"
       when "KleinanzeigenAnbieten"
         icon = "filter"
+        icontext = "Kleinanzeigen Angebote"
       when "CrowdfundingSpenden"
         icon = "gift"
+        icontext = "Spendeninitiativen"
       when "CrowdfundingBelohnungen"
         icon = "qrcode"
+        icontext = "Crowdfunding"
       when "CrowdfundingZinsen"
         icon = "signal"
+        icontext = "Crowdlending"
       when "KalenderGeburtstage"
         icon = "user"
+        icontext = "Geburtstagskalender"
       when "KalenderAktionen"
         icon = "shopping-cart"
+        icontext = "Aktionskalender"
       when "KalenderAusschreibungen"
         icon = "pencil"
+        icontext = "Aussschreibungskalender"
       when "KalenderVeranstaltungen"
         icon = "glass"
+        icontext = "Veranstaltungskalender"
       when "KalenderStellenanzeigen"
         icon = "briefcase"
+        icontext = "befristete Stellenanzeigen"
       when "KalenderCrowdfunding"
         icon = "grain"
-
+        icontext = "Crowdfunding Kalender"
       when "Kalender"
         icon = "calendar"
+        icontext = "Kalender"
       when "Standorte"
-        icon = "signal"
+        icon = "blackboard"
+        icontext = "Werbeflächen"
       when "Info"
         icon = "info-sign"
         icontext = "Allgemeine Informationen"
       when "Kalendereintraege"
         icon = "calendar"
+        icontext = "Kalender"
       when "Ansprechpartner"
         icon = "user"
+        icontext = "Verantwortungen"
       when "Stellenanzeigen"
         icon = "briefcase"
+        icontext = "Stellenanzeigen"
       when "Kleinanzeigen"
         icon = "pushpin"
+        icontext = "Kleinanzeigen"
       when "Tickets"
         icon = "barcode"
+        icontext = "Tickets & Gutscheine"
       when "Crowdfunding (Beitraege)"
         icon = "gift"
+        icontext = "Crowdfunding Beiträge"
       when "Bewertungen"
         icon = "star"
-        icontext = "Helfen Sie uns besser zu werden; geben Sie Ihre Bewertung ab "
+        icontext = "Bewertungen"
       when "Favoriten"
         icon = "heart"
+        icontext = "Persönliche Favoriten"
       when "Kundenbeziehungen"
         icon = "check"
+        icontext = "Kundenbeziehungen"
       when "Kontobeziehungen"
         icon = "list"
+        icontext = "Kontobeziehungen"
       when "Transaktionen"
         icon = "euro"
+        icontext = "Geldtransaktionen"
       when "eMail"
         icon = "envelope"
+        icontext = "Korrespondenz & Nachrichten"
       when "Positionen (Privatpersonen)"
         icon = "map-marker"
+        icontext = "meine Ortungspositionen"
       when "Positionen (Favoriten)"
         icon = "map-marker"
+        icontext = "Ortungspositionen meiner Favoriten"
       when "Aktivitaeten"
         icon = "dashboard"
+        icontext = "Aktivitätenübersicht"
       when "Sponsorenengagements"
         icon = "heart"
+        icontext = "Sponsorenengagements"
       when "Links (Partner)"
         icon = "globe"
+        icontext = "Spezielle Partnerlinks"
       when "Details"
         icon = "search"
         icontext = "Geben Sie weitere Informationen an"
       when "Ausschreibungsangebote"
         icon = "book"
+        icontext = "Angebote der Ausschreibung"
       when "Kalender (Vermietungen)"
         icon = "calendar"
+        icontext = "Belegungskalender"
       when "Teilnehmer (Veranstaltungen)"
-        icon = "user"
+        icon = "subscript"
+        icontext = "Teilnehmer der Veranstaltung"
       when "CF Statistik"
         icon = "dashboard"
+        icontext = "Crowdfunding Statistik"
       when "CF Transaktionen"
         icon = "euro"
-
+        icontext = "Crowdfunding Geldtransaktionen"
       when "Einstellungen"
         icon = "cog"
+        icontext = "Einstellungen"
       when "meine Abfragen"
         icon = "question-sign"
-
+        icontext = "meine Abfragen"
       when "Privatpersonen"
         icon = "user"
+        icontext = "Privatpersonen"
       when "Institutionen"
         icon = "copyright-mark"
-
+        icontext = "Firmen, Gewerbe, Vereine & Institutionen"
       when "Suchen"
         icon = "search"
+        icontext = "Suchen"
       when "Anbieten"
         icon = "filter"
-
+        icontext = "Anbieten"
       when "Angebote"
         icon = "shopping-cart"
+        icontext = "Angebote und Services"
       when "Aktionen"
         icon = "shopping-cart"
+        icontext = "Befristete Sonderaktionen"
       when "Standard"
         icon = "info-sign"
+        icontext = "Angebote und Services"
       when "Aktion"
         icon = "exclamation-sign"
+        icontext = "Befristete Sonderaktionen"
       when "Vermietungen"
         icon = "retweet"
+        icontext = "Vermietungen"
       when "Ausschreibungen"
         icon = "pencil"
+        icontext = "Ausschreibungen"
       when "Stellenanzeigen"
         icon = "briefcase"
+        icontext = "Stellenanzeigen"
       when "Stellenanzeigen (Suchen)"
         icon = "briefcase"
+        icontext = "Stellenanzeigen Suchen"
       when "Stellenanzeigen (Anbieten)"
         icon = "briefcase"
+        icontext = "Stellenanzeigen Anbieten"
       when "Veranstaltungen"
         icon = "glass"
+        icontext = "Veranstaltungen"
       when "Veranstaltungen (angemeldet)"
-        icon = "glass"
+        icon = "subscript"
+        icontext = "Veranstaltungsanmeldungen"
       when "Ausflugsziele"
-        icon = "map-marker"
+        icon = "camera"
+        icontext = "Ausflugsziele, Sehenswürdigkeiten"
       when "Kleinanzeigen"
         icon = "pushpin"
+        icontext = "Kleinanzeigen"
       when "Kleinanzeigen (Suchen)"
         icon = "pushpin"
+        icontext = "Kleinanzeigen Suchen"
       when "Kleinanzeigen (Anbieten)"
         icon = "pushpin"
+        icontext = "Kleinanzeigen Anbieten"
       when "Crowdfunding"
         icon = "grain"
+        icontext = "Crowdfunding Initiativen"
       when "Spenden"
         icon = "gift"
+        icontext = "Spendeninitiativen"
       when "Belohnungen"
         icon = "qrcode"
+        icontext = "Reward Initiativen"
       when "Zinsen"
         icon = "signal"
+        icontext = "Crowdlending"
       when "Crowdfunding (Spenden)"
         icon = "grain"
+        icontext = "Spendeninitiativen"
       when "Crowdfunding (Belohnungen)"
         icon = "grain"
+        icontext = "Reward Initiativen"
       when "Crowdfunding (Zinsen)"
         icon = "grain"
+        icontext = "Crowdlending"
       when "Kalender (Aktionen)"
         icon = "calendar"
+        icontext = "Aktionskalender"
       when "Kalender (Veranstaltungen)"
         icon = "calendar"
+        icontext = "Veranstaltungskalender"
       when "Kalender (Ausschreibungen)"
         icon = "calendar"
-
+        icontext = "Aussschreibungskalender"
       when "Neues Angebot"
         icon = "shopping-cart"
       when "Neue Aktion"
         icon = "shopping-cart"
-
       when "Neue Kleinanzeige (Anbieten)"
         icon = "align-justify"
       when "Neue Kleinanzeige (Suchen)"
         icon = "align-justify"
-
       when "Neue Stellenanzeige (Anbieten)"
         icon = "briefcase"
       when "Neue Stellenanzeige (Suchen)"
         icon = "briefcase"
-
       when "Neue Crowdfunding-Initiative (Spenden)"
         icon = "grain"
       when "Neue Crowdfunding-Initiative (Belohnungen)"
@@ -1685,24 +1773,6 @@ def getIcon(iconstring)
     ret = {"icon" => icon, "icontext" => icontext}
     
     return ret
-end
-
-def getText(te)
-case te
-  when "Info"
-    texttext = "Allgemeine Informationen"
-  when "Kalendereintraege"
-    texttext = "Kalendereinträge"
-  when "Angebote"
-    texttext = "Standard Angebote"
-  when "Aktionen"
-    texttext = "Befristete Aktionen"
-  when "Ansprechpartner"
-    texttext = "bei welchen Angeboten bin ich der Ansprechpartner"
-  when "Institutionen"
-    texttext = "Meine Institutionen Gewerbe Firmen"
-end
-return texttext
 end
 
 def build_kachel_color(domain, name, path_param, user_id, company_id)
@@ -1838,7 +1908,7 @@ def build_kachel_color(domain, name, path_param, user_id, company_id)
 
     end
     
-    icon = getIcon(domain)
+    icon = getIcon(domain)["icon"]
     if path_param
       path = path_param
     end
@@ -2409,11 +2479,14 @@ def init_apps
     hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Kalendereintraege", "access" => false}
     @array << hash
+    # hash = Hash.new
+    # hash = {"domain" => "Privatpersonen", "right" => "Angebote", "access" => false}
+    # @array << hash
+    # hash = Hash.new
+    # hash = {"domain" => "Privatpersonen", "right" => "Aktionen", "access" => false}
+    # @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Angebote", "access" => false}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Aktionen", "access" => false}
+    hash = {"domain" => "Privatpersonen", "right" => "Angebote, Services und Aktionen", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Ansprechpartner", "access" => false}
@@ -2445,14 +2518,17 @@ def init_apps
     hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Ausschreibungen", "access" => false}
     @array << hash
+    # hash = Hash.new
+    # hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Spenden)", "access" => false}
+    # @array << hash
+    # hash = Hash.new
+    # hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Belohnungen)", "access" => false}
+    # @array << hash
+    # hash = Hash.new
+    # hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Zinsen)", "access" => false}
+    # @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Spenden)", "access" => false}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Belohnungen)", "access" => false}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Zinsen)", "access" => false}
+    hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding Initiativen", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Beitraege)", "access" => false}
@@ -2497,11 +2573,14 @@ def init_apps
     hash = Hash.new
     hash = {"domain" => "Institutionen", "right" => "Info", "access" => true}
     @array << hash
+    # hash = Hash.new
+    # hash = {"domain" => "Institutionen", "right" => "Angebote", "access" => false}
+    # @array << hash
+    # hash = Hash.new
+    # hash = {"domain" => "Institutionen", "right" => "Aktionen", "access" => false}
+    # @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Angebote", "access" => false}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Aktionen", "access" => false}
+    hash = {"domain" => "Institutionen", "right" => "Angebote, Services und Aktionen", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Institutionen", "right" => "Stellenanzeigen", "access" => false}
@@ -2525,13 +2604,16 @@ def init_apps
     hash = {"domain" => "Institutionen", "right" => "Ausschreibungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Spenden)", "access" => false}
-    @array << hash
+    # hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Spenden)", "access" => false}
+    # @array << hash
+    # hash = Hash.new
+    # hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Belohnungen)", "access" => false}
+    # @array << hash
+    # hash = Hash.new
+    # hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Zinsen)", "access" => false}
+    # @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Belohnungen)", "access" => false}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Zinsen)", "access" => false}
+    hash = {"domain" => "Institutionen", "right" => "Crowdfunding Initiativen", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Beitraege)", "access" => false}
@@ -2706,12 +2788,26 @@ def build_edition(edition)
       html_string = html_string + "<div class='col-xs-9 col-sm-9 col-md-9 col-lg-9 xl-9'>"
 
         html_string = html_string + "<div class='row'>"
+          html_string = html_string + link_to(edition.mobject.owner) do
+            showImage2(:small, edition.mobject.owner, false)
+          end
+          html_string = html_string + "<br>"
+          if edition.mobject.owner_type == "User"
+            html_string = html_string + edition.mobject.owner.name + " " + edition.mobject.owner.lastname
+          end
+          if edition.mobject.owner_type == "Company"
+            html_string = html_string + edition.mobject.owner.name
+          end
+        html_string = html_string + "</div>"
+        html_string = html_string + "<br><br>"
+          
+        html_string = html_string + "<div class='row'>"
           html_string = html_string + "<inhalt>Inhalt</inhalt>"
           html_string = html_string + "<br><br>"
           edition.edition_arcticles.order(:sequence).each do |a|
             html_string = html_string + "<h4 class='panel panel-publish'>"
-            html_string = html_string + link_to(mobject_path(:id => a.mobject.id, :topic => "Info")) do
-              content_tag(:div, a.mobject.name)
+            html_string = html_string + link_to(mobject_path(:id => a.mobject.id, :topic => "Info", :edition_id => edition.id)) do
+              content_tag(:div, a.mobject.name) + content_tag(:artikel_autor, a.mobject.owner.name + " " + a.mobject.owner.lastname)
             end
             html_string = html_string + "</h4>"
           end

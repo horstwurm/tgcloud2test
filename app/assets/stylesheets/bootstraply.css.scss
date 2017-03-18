@@ -596,6 +596,12 @@ artikel_quote {
   padding:5;
 }
 
+artikel_autor {
+  color: $color5!important;
+  font-style:italic;
+  font-size:70%!important;
+}
+
 artikel_link {
 }
 
@@ -769,8 +775,8 @@ visit-us {
     display: none;
 }
 
-.new-tooltip + .tooltip > .tooltip-inner {background-color: $blaugruen; font-size:200%}
-.new-tooltip + .tooltip > .tooltip-arrow {border-bottom-color: $blaugruen; }
+.new-tooltip + .tooltip > .tooltip-inner {background-color: $orange; font-size:200%}
+.new-tooltip + .tooltip > .tooltip-arrow {border-bottom-color: $orange; color: $orange; }
 
 @import "*";
 @import "bootstrap-sprockets";

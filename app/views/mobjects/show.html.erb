@@ -1,6 +1,11 @@
 <div class="row">
     <action>
-    <%= action_buttons2("Objekte", @mobject, @topic) %>
+    <% if @edition_id %>
+      <% @edition = Edition.find(@edition_id) %>
+      <%= action_buttons2("Edition", @edition, "Info") %>
+    <% else %>
+      <%= action_buttons2("Objekte", @mobject, @topic) %>
+    <% end %>
     </action> 
   </div>
 

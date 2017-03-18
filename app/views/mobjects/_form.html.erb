@@ -16,7 +16,7 @@
             <div class="col-md-12">
               <div class="panel panel-heading header">
               <li_header>
-                <%= link_to @mobject do %>
+                <%= link_to @mobject.owner do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
                 <%= @mobject.mtype.upcase %>

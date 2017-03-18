@@ -78,6 +78,9 @@
         <% when "Aktionen" %>
           <%= header("Aktionen", false) %>
           <%= build_medialist2(@company.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion"), "mobjects", nil) %>
+        <% when "Angebote, Services und Aktionen" %>
+          <%= header("Produkte, Angebote und Aktionen", false) %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"Angebote"), "mobjects", nil) %>
         <% when "Stellenanzeigen" %>
           <%= header("Stellenanzeigen", false) %>
           <%= build_medialist2(@company.mobjects.where('mtype=?',"Stellenanzeigen"), "mobjects", nil) %>
@@ -108,6 +111,9 @@
         <% when "Crowdfunding (Zinsen)" %>
           <%= header("Crowdfunding Zinsen", false) %>
           <%= build_medialist2(@company.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen"), "mobjects", nil) %>
+        <% when "Crowdfunding Initiativen" %>
+          <%= header("Crowdfunding Initiativen", false) %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"Crowdfunding"), "mobjects", nil) %>
         <% when "Crowdfunding (Beitraege)" %>
           <%= header("Crowdfunding Beitraege", false) %>
           <%= build_medialist2(@company.mstats, "mstats", nil) %>

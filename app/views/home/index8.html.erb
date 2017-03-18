@@ -3,7 +3,7 @@
           <div class="panel-body">
             
             <% case @mtype %>
-              <% when "Angebote" %>
+              <% when "Angebote", "Angebote, Services und Aktionen" %>
                 <!--<%= build_kachel_color("Neues Angebot", "", nil, @user_id, @company_id) %>-->
                 <!--<%= build_kachel_color("Neue Aktion", "", nil, @user_id, @company_id) %>-->
 
@@ -12,11 +12,11 @@
                 <% domain_text = "Neues Angebot" %>
                 <% hash = Hash.new %>
                 <% path = new_mobject_path(:mtype => "Angebote", :msubtype => "Standard", :user_id => @user_id, :company_id => @company_id) %>
-                <% hash = {"path" => path, "text" => "Angebot", "icon" => "Angebot", :user_id => @user_id, :company_id => @company_id } %>
+                <% hash = {"path" => path, "text" => "Standardangebot", "icon" => "Standard", :user_id => @user_id, :company_id => @company_id } %>
                 <% hasharray << hash %>
                 <% hash = Hash.new %>
                 <% path = new_mobject_path(:mtype => "Angebote", :msubtype => "Aktion", :user_id => @user_id, :company_id => @company_id) %>
-                <% hash = {"path" => path, "text" => "Aktion", "icon" => "Aktion", :user_id => @user_id, :company_id => @company_id } %>
+                <% hash = {"path" => path, "text" => "Befristete Sonderaktion", "icon" => "Aktion", :user_id => @user_id, :company_id => @company_id } %>
                 <% hasharray << hash %>
                 <%= complex_menue(domain, domain_text, hasharray) %>
 

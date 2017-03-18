@@ -86,6 +86,9 @@ class MobjectsController < ApplicationController
 
   # GET /mobjects/1
   def show
+    if params[:edition_id]
+      @edition_id = params[:edition_id]
+    end
     if params[:confirm_id]
       calEntry = Mcalendar.find(params[:confirm_id])
       if calEntry
