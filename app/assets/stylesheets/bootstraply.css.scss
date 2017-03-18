@@ -769,7 +769,8 @@ visit-us {
     display: none;
 }
 
-
+.new-tooltip + .tooltip > .tooltip-inner {background-color: $blaugruen; font-size:200%}
+.new-tooltip + .tooltip > .tooltip-arrow {border-bottom-color: $blaugruen; }
 
 @import "*";
 @import "bootstrap-sprockets";

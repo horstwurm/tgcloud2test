@@ -1,26 +1,14 @@
-<div class="owl-show">
-<%  u = User.all %>
-<%  u.each do |m| %>
-<%    if m.avatar_file_name %>
-        <div align=center> 
-          <%= build_medialist2(User.where('id=?',m), "user", nil) %>
-        </div>
-<%    end %>
-<%  end %>
-</div>
+<%= link_to(user_path(:id => 1, :topic => "Info"), title: "hello", 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do %>
+<%  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign", ) %>
+<% end %>
 
-<script type="text/javascript">
+<a href="#" data-toggle="tooltip" data-placement="bottom" title="hello" data-original-title="Tooltip on bottom" class="red-tooltip">Tooltip on bottom</a>
+
+<%= link_to (user_path(:id => 1, :topic => "Info")), title: 'View Agent Data', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'class' => 'red-tooltip' do %>
+  <span class="btn btn-info glyphicon glyphicon-search"></span>
+<% end %>
+
+<script>
 $(document).ready(function(){
-  $('.owl-show').owlCarousel({  
-    
-    itemsCustom : false,
-    itemsDesktop : [1199,4],
-    itemsDesktopSmall : [980,3],
-    itemsTablet: [768,2],
-    itemsTabletSmall: false,
-    itemsMobile : [479,1],
-    autoPlay: true
-    
-  });
-});
-</script>
+    $("a").tooltip();
+});</script>

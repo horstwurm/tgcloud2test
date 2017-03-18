@@ -71,7 +71,7 @@
                   <%= @user.email %><br>
                 <% end %>
             </div>
-            <% if $activeapps.include?("PrivatpersonenAktivitaeten") or current_user.superuser %>
+            <% if $activeapps.include?("PrivatpersonenAktivitaeten") or (user_signed_in? and current_user.superuser) %>
               <%= header("Aktivitätsübersicht", false) %>
               <div class="panel-body">
                 <i class="glyphicon glyphicon-map-marker pull-left" onclick="return drawChart();"></i>
@@ -87,7 +87,7 @@
               </div>
             </div>
 
-            <% if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen)")or current_user.superuser %>
+            <% if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen)") or (user_signed_in? and current_user.superuser) %>
               <%= header("Meine Positionen", false) %>
               <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
               <div class="panel-body">
@@ -389,7 +389,7 @@
           <div class="panel-body">
             <%= build_medialist2(@user.favourits, "favourits", nil) %>
           </div>
-          <% if $activeapps.include?("PrivatpersonenPositionen (Favoriten)") or current_user.superuser %>
+          <% if $activeapps.include?("PrivatpersonenPositionen (Favoriten)") or (user_signed_in? and current_user.superuser) %>
             <%= header("Wo sind meine Favoriten?", false) %>
             <div class="panel-body">
               <div id="map2">
@@ -616,6 +616,8 @@ $(document).ready(function(){
         weekNumbers: true,
         events: [<%= raw @array %> ]
     })
-  
+
+    $("a").tooltip();
+
 });
 </script>
