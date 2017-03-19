@@ -6,7 +6,7 @@ $(document).ready(function () {
   $('#get-data').click(function () {
     var showData = $('#show-data');
 
-    $.getJSON('http://tkbmarkt.herokuapp.com/home/index13.json', function (data) {
+    $.getJSON('tkbmarkt.herokuapp.com/home/index13.json', function (data) {
       console.log(data);
 
       var items = data.items.map(function (item) {
