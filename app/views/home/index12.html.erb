@@ -6,7 +6,7 @@ $(document).ready(function () {
   $('#get-data').click(function () {
     var showData = $('#show-data');
 
-    $.getJSON('https://ostch-horstwurm.c9users.io/home/index13.json', function (data) {
+    $.getJSON('http://tkbmarkt.herokuapp.com/home/index13.json', function (data) {
       console.log(data);
 
       var items = data.items.map(function (item) {
