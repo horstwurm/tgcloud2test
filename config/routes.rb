@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   get 'home/index10'
   get 'home/index11'
   get 'home/index12'
-  post 'home/index12'
+  get 'home/index13'
   
   resources :searches
   resources :partner_links

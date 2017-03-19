@@ -1,14 +1,28 @@
-<%= link_to(user_path(:id => 1, :topic => "Info"), title: "hello", 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do %>
-<%  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-info-sign", ) %>
-<% end %>
-
-<a href="#" data-toggle="tooltip" data-placement="bottom" title="hello" data-original-title="Tooltip on bottom" class="red-tooltip">Tooltip on bottom</a>
-
-<%= link_to (user_path(:id => 1, :topic => "Info")), title: 'View Agent Data', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'class' => 'red-tooltip' do %>
-  <span class="btn btn-info glyphicon glyphicon-search"></span>
-<% end %>
+<a href="#" id="get-data">Get JSON data</a>
+<div id="show-data"></div>
 
 <script>
-$(document).ready(function(){
-    $("a").tooltip();
-});</script>
+$(document).ready(function () {
+  $('#get-data').click(function () {
+    var showData = $('#show-data');
+
+    $.getJSON('https://ostch-horstwurm.c9users.io/home/index13.json', function (data) {
+      console.log(data);
+
+      var items = data.items.map(function (item) {
+        return item.key + ': ' + item.value;
+      });
+
+      showData.empty();
+
+      if (items.length) {
+        var content = '<li>' + items.join('</li><li>') + '</li>';
+        var list = $('<ul />').html(content);
+        showData.append(list);
+      }
+    });
+
+    showData.text('Loading the JSON file.');
+  });
+});
+</script>

@@ -266,7 +266,14 @@ def index11
 end
 
 def index12
+end
 
+def index13
+    @users = User.all
+    respond_to do |format|
+      format.html
+      format.json { render :json => @users }
+    end
 end
 
 end
