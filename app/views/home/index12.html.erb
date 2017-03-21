@@ -5,6 +5,10 @@
 
 <button>fill</button>
 
+<div class="square">
+    <h1><div id="bigdata"></h1>
+</div>
+
 <div id="results"></div>
 <div id="dataset"></div>
 
@@ -12,18 +16,19 @@
 
 <script>
 $(document).ready(function(){
-  
-  $('#dataset').append("['Monat','Wert']");
+
+  window.dataset = [["Monat", "Wert"],["Januar", 150],["Februar", 300]];
 
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart1);
   function drawChart1() {
-    var data = google.visualization.arrayToDataTable([getdataset]);
+    var data = google.visualization.arrayToDataTable(dataset);
     var options = {
       title: 'Registration Objekte',
       curveType: 'function',
       legend: { position: 'bottom' }
     };
+    // alert(dataset);
     var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
     chart.draw(data, options);
   }
@@ -49,8 +54,16 @@ $(document).ready(function(){
                 for (var i=0;i<json.length;++i)
                 {
                     $('#results').append('<div class="name">'+json[i].name + " " + json[i].lastname + '</>');
-                    $('#dataset').append(",['test',250]");
                 }
+                i=Math.round(Math.random()*1000);
+                dataset.push([Date(), i]);
+                $("#bigdata").text(i);
+
+                $("#bigdata").hide();
+                window.setTimeout(function(){ $("#bigdata").fadeIn("slow")}, 1000);
+
+                google.charts.setOnLoadCallback(drawChart1);
+                
             }
         });
     }
