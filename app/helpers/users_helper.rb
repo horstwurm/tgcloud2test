@@ -1009,7 +1009,13 @@ def navigate(object,item)
 
       when "Objekte"
         html_string = html_string + build_nav("Objekte",item,"Info",item)
-        html_string = html_string + build_nav("Objekte",item,"Details",item.mdetails.where('mtype=?',"Details").count > 0)
+
+        if user_signed_in?
+          if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
+          html_string = html_string + build_nav("Objekte",item,"Details",item.mdetails.where('mtype=?',"Details").count > 0)
+          end
+        end 
+        
         if item.mtype == "Angebote" or item.mtype == "Stellenanzeigen"
           html_string = html_string + build_nav("Objekte",item,"Ansprechpartner",item.madvisors.count > 0)
         end
@@ -1025,7 +1031,7 @@ def navigate(object,item)
           html_string = html_string + build_nav("Objekte",item,"Ausschreibungsangebote",item.mdetails.where('mtype=?',"Ausschreibungsangebote").count > 0)
         end
         if item.mtype == "Artikel"
-          html_string = html_string + build_nav("Objekte",item,"Blog",item.comments.count > 0)
+          #html_string = html_string + build_nav("Objekte",item,"Blog",item.comments.count > 0)
         end
         if item.mtype == "Publikationen"
           html_string = html_string + build_nav("Objekte",item,"Ausgaben",item.editions.count > 0)
@@ -1034,7 +1040,9 @@ def navigate(object,item)
           html_string = html_string + build_nav("Objekte",item,"CF Statistik",item.mstats.count > 0)
           html_string = html_string + build_nav("Objekte",item,"CF Transaktionen",item.mstats.count > 0)
         end
-        html_string = html_string + build_nav("Objekte",item,"Bewertungen",item.mratings.count > 0)
+        if item.mtype != "Artikel"
+          html_string = html_string + build_nav("Objekte",item,"Bewertungen",item.mratings.count > 0)
+        end
 
       when "Kampagnen"
         html_string = html_string + build_nav("Kampagnen",item, "Info",item)
@@ -2904,8 +2912,11 @@ def build_article(article)
                     html_string = html_string + "<h4 class='panel panel-blog'>"
                       html_string = html_string + "<a role='button' data-toggle='collapse' data-parent='#accordionB"+article.id.to_s+"' href='#collapseTwoB"+article.id.to_s+"' aria-expanded='true' aria-controls='collapseOne'>"
                         html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_header> "
-                        html_string = html_string + link_to(mobject_path :mobject_id => article.id, :topic => "Bewertungen") do
-                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-star")
+                        #html_string = html_string + link_to(mobject_path :mobject_id => article.id, :topic => "Bewertungen") do
+                        if user_signed_in?
+                          html_string = html_string + link_to(new_mrating_path(:mobject_id => article.id, :user_id => current_user.id)) do
+                            content_tag(:i, content_tag(:i," bewerten"), class:"btn btn-primary glyphicon glyphicon-star")
+                          end
                         end
                       html_string = html_string + "</a>"
                     html_string = html_string + "</h4>"
@@ -2926,13 +2937,16 @@ def build_article(article)
                     html_string = html_string + "<h4 class='panel panel-blog'>"
                       html_string = html_string + "<a role='button' data-toggle='collapse' data-parent='#accordionG"+article.id.to_s+"' href='#collapseTwoG"+article.id.to_s+"' aria-expanded='true' aria-controls='collapseOne'>"
                         html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_header> "
-                        html_string = html_string + link_to(mobject_path :mobject_id => article.id, :topic => "Blog") do
-                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-comment")
+                        #html_string = html_string + link_to(mobject_path :mobject_id => article.id, :topic => "Blog") do
+                        if user_signed_in?
+                          html_string = html_string + link_to(new_comment_path(:mobject_id => article.id, :user_id => current_user.id)) do
+                            content_tag(:i, content_tag(:i," kommentieren"), class:"btn btn-primary glyphicon glyphicon-comment")
+                          end
                         end
                       html_string = html_string + "</a>"
                     html_string = html_string + "</h4>"
                     html_string = html_string + "<div id='collapseTwoG"+article.id.to_s+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingOne'>"
-                      html_string = html_string + build_medialist2(article.comments.order(created_at: :desc), "mcomments", "User")
+                      html_string = html_string + build_medialist2(article.comments.order(created_at: :desc), "comments", "User")
                     html_string = html_string + "</div>"
                       
                   html_string = html_string + "</div>"

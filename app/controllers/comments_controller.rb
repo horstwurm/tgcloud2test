@@ -30,7 +30,12 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => "Blog"), notice: 'Comment was successfully created.' }
+        if @comment.mobject.mtype == "Artikel"
+          @topic = "Info"
+        else
+          @topic = "Blog"
+        end
+        format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => @topic), notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
@@ -44,7 +49,12 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => "Blog"), notice: 'Comment was successfully updated.' }
+        if @mrating.mobject.mtype == "Artikel"
+          @topic = "Info"
+        else
+          @topic = "Blog"
+        end
+        format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => @topic), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
@@ -57,9 +67,14 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @mobject_id = @comment.mobject_id
+    if @mrating.mobject.mtype == "Artikel"
+      @topic = "Info"
+    else
+      @topic = "Blog"
+    end
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => "Blog"), notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => @topic), notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

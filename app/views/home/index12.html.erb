@@ -1,28 +1,63 @@
-<a href="#" id="get-data">Get JSON data</a>
-<div id="show-data"></div>
+<%= header("Dashboard", false) %>
+<div class="panel-body">
+  <div id="curve_chart1"></div>
+</div>
+
+<button>fill</button>
+
+<div id="results"></div>
+<div id="dataset"></div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script>
-$(document).ready(function () {
-  $('#get-data').click(function () {
-    var showData = $('#show-data');
+$(document).ready(function(){
+  
+  $('#dataset').append("['Monat','Wert']");
 
-    $.getJSON('tkbmarkt.herokuapp.com/home/index13.json', function (data) {
-      console.log(data);
-
-      var items = data.items.map(function (item) {
-        return item.key + ': ' + item.value;
-      });
-
-      showData.empty();
-
-      if (items.length) {
-        var content = '<li>' + items.join('</li><li>') + '</li>';
-        var list = $('<ul />').html(content);
-        showData.append(list);
-      }
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart1);
+  function drawChart1() {
+    var data = google.visualization.arrayToDataTable([getdataset]);
+    var options = {
+      title: 'Registration Objekte',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+    chart.draw(data, options);
+  }
+  
+    window.setInterval( callme, 5000 );
+        
+    $("button").click(function(){
+        callme;
+        drawChart1;
     });
+    
+    function callme() {
+        $.ajax({
+            url: "https://ostch-horstwurm.c9users.io/home/index13.json",
+            //force to handle it as text
+            dataType: "text",
+            success: function(data) {
+                //data downloaded so we call parseJSON function 
+                //and pass downloaded data
+                var json = $.parseJSON(data);
+                //now json variable contains data in json format
+                //let's display a few items
+                for (var i=0;i<json.length;++i)
+                {
+                    $('#results').append('<div class="name">'+json[i].name + " " + json[i].lastname + '</>');
+                    $('#dataset').append(",['test',250]");
+                }
+            }
+        });
+    }
+    
+    function getdataset() {
+      return $('#dataset').val();
+    }
 
-    showData.text('Loading the JSON file.');
-  });
 });
 </script>

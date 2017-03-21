@@ -276,4 +276,15 @@ def index13
     end
 end
 
+def index14
+  random = Random.new(Time.new.to_i)
+  ra1 = rand(100)+1
+  
+  @anz_obj = []
+  for i in 0..ra1
+    temp = Hash.new
+    temp = {"Nummer"+ i.to_s => i}
+    @anz_obj << temp
+  end
+end
 end
