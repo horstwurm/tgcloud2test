@@ -287,4 +287,16 @@ def index14
     @anz_obj << temp
   end
 end
+
+def dashboard_data
+    respond_to do |format|
+      format.json 
+        msg = [{:kategorie => "User", :anzahl => User.all.count},{:kategorie => "UserOnline", :anzahl => User.where("updated_at > ?", 10.minutes.ago).count},{:kategorie => "Company", :anzahl => Company.all.count},{:kategorie => "Objekt", :anzahl => Mobject.all.count}]
+        render :json => msg.to_json
+    end
+end
+
+def dashboard
+end
+
 end

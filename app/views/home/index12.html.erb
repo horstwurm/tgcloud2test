@@ -1,6 +1,22 @@
 <%= header("Dashboard", false) %>
-<div class="panel-body">
-  <div id="curve_chart1"></div>
+
+<div id="achart_div" style="width: 400px; height: 120px;"></div>
+<div id="chart_div" style="width: 100%; height: 100%;"></div>
+
+<div class="row">
+  <div class="panel-body">
+    <div id="curve_chart1"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div id="divi" style="background:orange;height:100px;width:100px;position:absolute;"><br><br><br><br></div>
+</div>
+
+<div class="row">
+  <div class="panel-body">
+    <div id="piechart"></div>
+  </div>
 </div>
 
 <button>fill</button>
@@ -18,6 +34,7 @@
 $(document).ready(function(){
 
   window.dataset = [["Monat", "Wert"],["Januar", 150],["Februar", 300]];
+  window.dataset2 = [["Monat", "Wert"],["Wert", 500],["Rest", 500]];
 
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart1);
@@ -28,7 +45,6 @@ $(document).ready(function(){
       curveType: 'function',
       legend: { position: 'bottom' }
     };
-    // alert(dataset);
     var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
     chart.draw(data, options);
   }
@@ -38,8 +54,24 @@ $(document).ready(function(){
     $("button").click(function(){
         callme;
         drawChart1;
+        drawChart2;
     });
     
+  google.charts.setOnLoadCallback(drawChart2);
+  function drawChart2() {
+
+    var data = google.visualization.arrayToDataTable(dataset2);
+
+    var options = {
+      title: 'Aktivitätenübersicht',
+      pieHole: 0.4
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
+  }
+
     function callme() {
         $.ajax({
             url: "https://ostch-horstwurm.c9users.io/home/index13.json",
@@ -63,14 +95,83 @@ $(document).ready(function(){
                 window.setTimeout(function(){ $("#bigdata").fadeIn("slow")}, 1000);
 
                 google.charts.setOnLoadCallback(drawChart1);
-                
+
+                // window.dataset2 = [["Monat", "Wert"],["Wert", i],["Rest", 1000-i]];
+                // google.charts.setOnLoadCallback(drawChart2);                
+                jojo2(i);
             }
         });
+    }
+    
+    function jojo(anz) {
+      for (var i=0;i<anz;++i)
+      {
+          window.dataset2 = [["Monat", "Wert"],["Wert", i],["Rest", 1000-i]];
+          google.charts.setOnLoadCallback(drawChart2);
+          pausecomp(10);
+      }
+      // window.dataset2 = [["Monat", "Wert"],["Wert", anz],["Rest", 1000-anz]];
+    }
+
+    function jojo2(anz) {
+          window.dataset2 = [["Monat", "Wert"],["Wert", anz],["Rest", 1000-anz]];
+          google.charts.setOnLoadCallback(drawChart2);
+          
+          window.setTimeout(function(){ $("#divi").toggle()}, 500);
+          $("#divi").width(anz);
+          $("#divi").animate({
+            width: 'toggle'
+          });
+
     }
     
     function getdataset() {
       return $('#dataset').val();
     }
+    
+    function pausecomp(ms) {
+      ms += new Date().getTime();
+      while (new Date() < ms){}
+    } 
 
 });
+</script>
+
+<script>
+      google.charts.load('current', {'packages':['gauge']});
+      google.charts.setOnLoadCallback(drawChart3);
+
+      function drawChart3() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Personen', 80],
+          ['Institutionen', 55],
+          ['Artikel', 68]
+        ]);
+
+        var options = {
+          width: 400, height: 120,
+          redFrom: 90, redTo: 100,
+          yellowFrom:75, yellowTo: 90,
+          minorTicks: 5
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+
+        setInterval(function() {
+          data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
+          chart.draw(data, options);
+        }, 13000);
+        setInterval(function() {
+          data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
+          chart.draw(data, options);
+        }, 5000);
+        setInterval(function() {
+          data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
+          chart.draw(data, options);
+        }, 2000);
+      } 
 </script>

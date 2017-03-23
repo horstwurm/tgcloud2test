@@ -40,6 +40,8 @@ Rails.application.routes.draw do
   get 'home/index11'
   get 'home/index12'
   get 'home/index13'
+  get 'home/dashboard'
+  get 'home/dashboard_data'
   
   resources :searches
   resources :partner_links
