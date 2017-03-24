@@ -13,6 +13,9 @@
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
     <div id="chart4"></div>
   </div>
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <div id="chart5"></div>
+  </div>
 </div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -24,6 +27,7 @@ $(document).ready(function(){
   window.dataset_users_online = [["Zeit", "Wert"],[Date(),0]];
   window.dataset_publikationen = [["Zeit", "Wert"],[Date(),0]];
   window.dataset_artikel = [["Zeit", "Wert"],[Date(),0]];
+  window.dataset_events = [["Zeit", "Wert"],[Date(),0]];
 
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart1);
@@ -74,6 +78,18 @@ $(document).ready(function(){
     var chart = new google.visualization.LineChart(document.getElementById('chart4'));
     chart.draw(data, options);
   }
+  google.charts.setOnLoadCallback(drawChart5);
+  function drawChart5() {
+    var data = google.visualization.arrayToDataTable(dataset_events);
+    var options = {
+      title: 'Veranstaltungen',
+      colors: ['#ACC550'],
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('chart5'));
+    chart.draw(data, options);
+  }
   
     window.setInterval( callme, 15000 );
         
@@ -102,6 +118,9 @@ $(document).ready(function(){
 
                 dataset_artikel.push([Date(), json[3].anzahl]);
                 google.charts.setOnLoadCallback(drawChart4);
+
+                dataset_artikel.push([Date(), json[4].anzahl]);
+                google.charts.setOnLoadCallback(drawChart5);
 
                 //now json variable contains data in json format
                 //let's display a few items
