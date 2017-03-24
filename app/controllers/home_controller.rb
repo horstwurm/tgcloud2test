@@ -291,7 +291,7 @@ end
 def dashboard_data
     respond_to do |format|
       format.json 
-        msg = [{:kategorie => "User", :anzahl => User.all.count},{:kategorie => "UserOnline", :anzahl => User.where("updated_at > ?", 10.minutes.ago).count},{:kategorie => "Company", :anzahl => Mobject.where('mtype=?',"Publikationen").count},{:kategorie => "Objekt", :anzahl => Mobject.where('mtype=?',"Artikel").count}]
+        msg = [{:kategorie => "User", :anzahl => User.all.count},{:kategorie => "UserOnline", :anzahl => User.where("updated_at > ?", 10.minutes.ago).count},{:kategorie => "Publikationen", :anzahl => Mobject.where('mtype=?',"Publikationen").count},{:kategorie => "Artikel", :anzahl => Mobject.where('mtype=?',"Artikel").count},{:kategorie => "Veranstaltungen", :anzahl => Mobject.where('mtype=?',"Veranstaltungen").count}]
         render :json => msg.to_json
     end
 end
