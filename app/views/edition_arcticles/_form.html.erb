@@ -31,6 +31,10 @@
                 <div class="panel-body">
                     <div class="form-group">
                       <%= f.label "Artikel" %><br/>
+                      <%= showFirstImage2(:medium, Mobject.find(@edition_arcticle.mobject_id), Mobject.find(@edition_arcticle.mobject_id).mdetails) %>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Artikel" %><br/>
                       <%= f.collection_select :mobject_id, Mobject.where('mtype=? and active=?', "Artikel", true), :id, :name, {}, class:"form-control" %>
                     </div>
                     <div class="form-group">

@@ -18,6 +18,7 @@ class EditionArcticlesController < ApplicationController
   def new
     @edition_arcticle = EditionArcticle.new
     @edition_arcticle.edition_id = params[:edition_id]
+    @edition_arcticle.mobject_id = params[:article_id]
     @edition_arcticle.active = false
     @edition_arcticle.status = ""
 end

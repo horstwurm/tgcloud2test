@@ -4,6 +4,10 @@ class MobjectsController < ApplicationController
   # GET /mobjects
   def index
 
+    if params[:edition_id]
+      @edition_id = params[:edition_id]
+    end
+
     @controller_name = controller_name
     
     if params[:set_part_id]

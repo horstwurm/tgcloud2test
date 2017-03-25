@@ -324,7 +324,9 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + item.mobject.owner.name + " " + item.mobject.owner.lastname
                     when "editions"
                       html_string = html_string + '<i class="glyphicon glyphicon-calendar"></i> '
-                      html_string = html_string +  item.release_date.strftime("%d.%m.%Y") + '<br>'
+                      if item.release_date 
+                        html_string = html_string +  item.release_date.strftime("%d.%m.%Y") + '<br>'
+                      end 
                       html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
                       html_string = html_string + item.description
                     when "comments"
@@ -663,6 +665,11 @@ def build_medialist2(items, cname, par)
                             content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
                           end
                         end
+                      end
+                    end
+                    if item.mtype == "Artikel" and par #Artikelauswahl für Edition
+                      html_string = html_string + link_to(new_edition_arcticle_path(:edition_id => par, :article_id => item.id)) do
+                        content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
                       end
                     end
                   end
@@ -1462,6 +1469,9 @@ def action_buttons2(object, item, topic)
          if user_signed_in?
           if (item.mobject.owner_type == "User" and current_user.id == item.mobject.owner.id) or (item.mobject.owner_type == "Company" and current_user.id == item.mobject.owner.user_id) 
             html_string = html_string + link_to(new_edition_arcticle_path(:edition_id => item.id)) do
+              content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+            end
+            html_string = html_string + link_to(mobjects_path(:mtype => "Artikel", :edition_id => item.id)) do
               content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
             end
           end
