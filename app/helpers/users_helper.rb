@@ -1463,14 +1463,14 @@ def action_buttons2(object, item, topic)
          html_string = html_string + link_to(mobject_path(:id => item.mobject_id, :topic => "Ausgaben")) do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
-         html_string = html_string + link_to(home_index11_path(:loc_id => item.id)) do
-          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-book")
-         end
+         #html_string = html_string + link_to(home_index11_path(:loc_id => item.id)) do
+          #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-book")
+         #end
          if user_signed_in?
           if (item.mobject.owner_type == "User" and current_user.id == item.mobject.owner.id) or (item.mobject.owner_type == "Company" and current_user.id == item.mobject.owner.user_id) 
-            html_string = html_string + link_to(new_edition_arcticle_path(:edition_id => item.id)) do
-              content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
-            end
+            #html_string = html_string + link_to(new_edition_arcticle_path(:edition_id => item.id)) do
+            #  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
+            #end
             html_string = html_string + link_to(mobjects_path(:mtype => "Artikel", :edition_id => item.id)) do
               content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
             end

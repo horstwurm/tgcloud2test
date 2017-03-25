@@ -30,12 +30,13 @@
             <div class="col-md-6">
                 <div class="panel-body">
                     <div class="form-group">
-                      <%= f.label "Artikel" %><br/>
-                      <%= showFirstImage2(:medium, Mobject.find(@edition_arcticle.mobject_id), Mobject.find(@edition_arcticle.mobject_id).mdetails) %>
+                      <% @mobject = Mobject.find(@edition_arcticle.mobject_id) %>
+                      <%= f.label @mobject.name %><br/>
+                      <%= showFirstImage2(:medium, @mobject, @mobject.mdetails) %>
                     </div>
                     <div class="form-group">
-                      <%= f.label "Artikel" %><br/>
-                      <%= f.collection_select :mobject_id, Mobject.where('mtype=? and active=?', "Artikel", true), :id, :name, {}, class:"form-control" %>
+                      <% f.label "Artikel" %><br/>
+                      <% f.collection_select :mobject_id, Mobject.where('mtype=? and active=?', "Artikel", true), :id, :name, {}, class:"form-control" %>
                     </div>
                     <div class="form-group">
                       <input type="checkbox" name="my-checkbox1" checked>
@@ -47,6 +48,7 @@
                       </div>
                      <%= f.check_box :active, :id => "active", class:"form-control hidden" %>
                      <%= f.hidden_field :edition_id, class:"form-control" %>
+                     <%= f.hidden_field :mobject_id, class:"form-control" %>
                      <%= f.hidden_field :status, class:"form-control" %>
                     <div class="actions">
                        <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
