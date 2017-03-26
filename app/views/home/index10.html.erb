@@ -410,9 +410,14 @@
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                   <% case @suche.table_name %>
                     <% when "mobjects" %>
-                      <header><%= "Neuer Eintrag " + su.name %></header>
+                      <header><%= "Neu! " + su.mtype + " " + su.name %></header>
                       <small_cal>
-                        <%= su.mtype + " " + su.owner.name %>
+                        <% if su.owner_type == "User" %>
+                          <%= su.owner.name + " " + su.owner.lastname %>
+                        <% end %>
+                        <% if su.owner_type == "Company" %>
+                          <%= su.owner.name %>
+                        <% end %>
                       </small_cal><br>
                       <%= showFirstImage2(:small, su, su.mdetails) %>
                     <% when "users" %>

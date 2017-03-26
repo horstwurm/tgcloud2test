@@ -894,11 +894,11 @@ def showFirstImage2(size, item, details)
         if pic.avatar_file_name
           image_tag pic.avatar(size), class:"img-rounded img-responsive"
         else
-          image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive")
+          image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
           #image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
         end
       else
-        image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive")
+        image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
         #image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
       end
     end
@@ -912,7 +912,7 @@ def showImage2(size, item, linkit)
             #image_tag(item.avatar(size), class:"card-img-top img-responsive")
             image_tag(item.avatar(size), class:"img-responsive")
         else
-          html_string = image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive")
+          html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
           # case item.class.name
           #   when "User"
           #     image_tag(image_def("Privatpersonen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
@@ -927,7 +927,7 @@ def showImage2(size, item, linkit)
       if item.avatar_file_name
           html_string = image_tag(item.avatar(size), class:"card-img-top img-responsive")
       else
-        html_string = image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive")
+        html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
         # case item.class.name
         #   when "User"
         #     html_string = image_tag(image_def("Privatpersonen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
