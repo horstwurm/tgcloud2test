@@ -375,11 +375,11 @@
       <% @searches.each do |s| %>
       <% case s.search_domain %>
         <% when "Privatpersonen" %>
-          <% @suche = User.where(s.sql_string) %>
+          <% @suche = User.where(s.build_sql) %>
         <% when "Institutionen" %>
-          <% @suche = Company.where(s.sql_string) %>
+          <% @suche = Company.where(s.build_sql) %>
         <% when "Objekte" %>
-          <% @suche = Mobject.where(s.sql_string) %>
+          <% @suche = Mobject.where(s.build_sql) %>
       <% end %>
       <% @suche.where('created_at>=?',@n.day.ago).each do |su| %>
 
