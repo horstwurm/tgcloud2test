@@ -384,7 +384,8 @@
       <% @suche.where('created_at>=?',@n.day.ago).each do |su| %>
 
         <% if (@suche.table_name == "users" and getUserCreds.include?("Hauptmenue"+"Privatpersonen")) or %>
-        <%    (@suche.table_name == "users" and getUserCreds.include?("Hauptmenue"+"Institutionen")) %>
+        <%    (@suche.table_name == "companies" and getUserCreds.include?("Hauptmenue"+"Institutionen")) or %>
+        <%    (@suche.table_name == "mobjects") %>
       
           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
             <div class="panel-body panel-nav">
