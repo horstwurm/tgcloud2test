@@ -90,23 +90,23 @@ class ShowcalController < ApplicationController
       end
       @anz = @mobjects.count
       @mobjects.each do |u|
-            if u.date_from
-              counter = counter + 1
-              @array = @array + "{"
-              @array = @array + "color : '#ACC550',"
-              @array = @array + "textColor : 'white',"
-              @array = @array + "title : '" + u.name + "', "
-              @array = @array + "start : '" + u.date_from.to_s + "', "
-              if u.date_to
-                @array = @array + "end : '" + u.date_to.to_s + "', "
-              end
-              @array = @array + "url : '" + mobject_path(:id => u.id, :topic => "Info") +"'" 
-              @array = @array + "}"
-              if @mobjects.count >= counter
-                @array = @array + ", "
-              end  
-            end
+        if u.date_from
+          counter = counter + 1
+          @array = @array + "{"
+          @array = @array + "color : '#ACC550',"
+          @array = @array + "textColor : 'white',"
+          @array = @array + "title : '" + u.name + "', "
+          @array = @array + "start : '" + u.date_from.to_s + "', "
+          if u.date_to
+            @array = @array + "end : '" + u.date_to.to_s + "', "
+          end
+          @array = @array + "url : '" + mobject_path(:id => u.id, :topic => "Info") +"'" 
+          @array = @array + "}"
+          if @mobjects.count >= counter
+            @array = @array + ", "
+          end  
         end
+      end
     end
 
     if @domain == "Geburtstage"
@@ -181,6 +181,7 @@ class ShowcalController < ApplicationController
        end
        @locs = @locs + "]"
        @wins = @wins + "]"
+
     end
 
 end

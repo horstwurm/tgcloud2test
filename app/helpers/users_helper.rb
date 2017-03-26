@@ -1574,6 +1574,9 @@ def getIcon(iconstring)
       when "KalenderGeburtstage"
         icon = "user"
         icontext = "Geburtstagskalender"
+      when "KalenderPublikationen"
+        icon = "book"
+        icontext = "Publikationskalender"
       when "KalenderAktionen"
         icon = "shopping-cart"
         icontext = "Aktionskalender"
@@ -2474,6 +2477,9 @@ def init_apps
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderGeburtstage", "access" => false}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderPublikationen", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Hauptmenue", "parent_domain" => "Kalender", "right" => "KalenderAktionen", "access" => false}
