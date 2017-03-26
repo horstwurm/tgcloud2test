@@ -14,9 +14,25 @@ class AppparamsController < ApplicationController
         @c.save
       end
     end
-
     @appparams = Appparam.all
+  end
 
+  def updateuser
+    @users = User.all
+    @users.each do |u|
+      u.credentials.destroy_all
+      @appparams = Appparam.all
+      @appparams.each do |a|
+        if a.access
+          c = Credential.new
+          c.user_id = u
+          c.appparam_id = a.id
+          c.access = a.access
+          c.save
+        end
+      end
+    end
+    redirect_to appparams_path :page => session[:page], notice: 'Appparam was successfully created.'
   end
 
   # GET /appparams/1

@@ -61,7 +61,8 @@ Rails.application.routes.draw do
   get 'customer_advisor/index'
 
   get 'customer_advisor/index2'
-
+  get 'appparams/updateuser'
+  
   resources :companies
   resources :appparams
   resources :appointments
