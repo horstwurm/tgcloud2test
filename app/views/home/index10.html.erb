@@ -382,6 +382,10 @@
           <% @suche = Mobject.where(s.sql_string) %>
       <% end %>
       <% @suche.where('created_at>=?',@n.day.ago).each do |su| %>
+
+        <% if (@suche.table_name == "users" and getUserCreds.include?("Hauptmenue"+"Privatpersonen")) or %>
+        <%    (@suche.table_name == "users" and getUserCreds.include?("Hauptmenue"+"Institutionen")) %>
+      
           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
             <div class="panel-body panel-nav">
               <div class="row">
@@ -411,20 +415,18 @@
                       </small_cal><br>
                       <%= showFirstImage2(:small, su, su.mdetails) %>
                     <% when "users" %>
-                      <% if getUserCreds.include?("Hauptmenue"+"Privatpersonen") %>
                         <header><%= "Neue Privatperson " + su.name + " " + su.lastname %></header>
                         <%= showImage2(:small, su, true) %>
-                      <% end %>
                     <% when "companies" %>
-                      <% if getUserCreds.include?("Hauptmenue"+"Institutionen") %>
                         <header><%= "Neue Institution " + su.name %></header>
                         <%= showImage2(:small, su, true) %>
-                      <% end %>
                   <% end %>
                 </div>
               </div>
             </div>
           </div>
+          <% end %>
+          
       <% end %>
     <% end %> 
   </div>
