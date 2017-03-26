@@ -381,7 +381,7 @@
         <% when "Objekte" %>
           <% @suche = Mobject.where(s.build_sql) %>
       <% end %>
-      <% @suche.where('created_at>=?',@n.day.ago).each do |su| %>
+      <% @suche.where('created_at>=?',@n.day.ago).order(created_at: :desc).each do |su| %>
 
         <% if (@suche.table_name == "users" and getUserCreds.include?("Hauptmenue"+"Privatpersonen")) or %>
         <%    (@suche.table_name == "companies" and getUserCreds.include?("Hauptmenue"+"Institutionen")) or %>
