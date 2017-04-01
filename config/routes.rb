@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :user_answers
+  resources :answers
+  resources :questions
   resources :mlikes
   resources :comments
   resources :edition_arcticles
@@ -40,8 +43,12 @@ Rails.application.routes.draw do
   get 'home/index11'
   get 'home/index12'
   get 'home/index13'
+  get 'home/index14'
+  get 'home/index15'
+  get 'home/index16'
   get 'home/dashboard'
   get 'home/dashboard_data'
+  get 'home/fragebogen_data'
   
   resources :searches
   resources :partner_links

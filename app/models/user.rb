@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
     has_many :user_positions, dependent: :destroy 
     has_many :participants, dependent: :destroy   
     has_many :mlikes, dependent: :destroy   
+    has_many :user_answers, dependent: :destroy   
     
     # validates :userid, presence: true, :uniqueness => true
     validates :lastname, presence: true    

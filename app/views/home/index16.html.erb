@@ -1,0 +1,89 @@
+
+<div class="row">
+    <div class='col-xs-12'>
+      <div class='panel-body'>
+         <%= link_to mobject_path(:id => @question.mobject_id, :topic => "Fragen") do %>
+          <i class="btn btn-primary glyphicon glyphicon-list"></i>
+         <% end %><br>
+      </div>
+    </div>
+</div>
+
+<%= header("Status Frage "+@question.name, false) %>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div id="chart2"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div id="chart3"></div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script>
+$(document).ready(function(){
+
+  window.dataset_frage = [["Antwort", "Wert"],["keine Antwort",0]];
+
+  google.charts.load('current', {'packages':['corechart']});
+
+  google.charts.setOnLoadCallback(drawChart2);
+  function drawChart2() {
+    var data = google.visualization.arrayToDataTable(dataset_frage);
+    var options = {
+      title: 'Antworten',
+      colors: ['#ACC550'],
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById('chart2'));
+    chart.draw(data, options);
+  };
+  
+  google.charts.setOnLoadCallback(drawChart3);
+  function drawChart3() {
+    var data = google.visualization.arrayToDataTable(dataset_frage);
+    var options = {
+      title: 'Antworten',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.PieChart(document.getElementById('chart3'));
+    chart.draw(data, options);
+  };
+
+    window.setInterval( callme, 10000 );
+        
+    function callme() {
+        $.ajax({
+            url: "https://ostch-horstwurm.c9users.io/home/fragebogen_data.json?question_id=<%= @question.id %>",
+            //force to handle it as text
+            dataType: "text",
+            success: function(data) {
+                //data downloaded so we call parseJSON function 
+                //and pass downloaded data
+                var json = $.parseJSON(data);
+                //now json variable contains data in json format
+                //let's display a few items
+                window.dataset_frage = [["Antwort", "Wert"],["keine Antwort",0]];
+                for (var i=0;i<json.length;++i)
+                {
+                    dataset_frage.push([json[i].kategorie, json[i].anzahl]);
+                }
+
+                google.charts.setOnLoadCallback(drawChart2);                
+                google.charts.setOnLoadCallback(drawChart3);                
+            }
+        });
+    }
+
+});
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {drawChart2,drawChart3})
+</script>

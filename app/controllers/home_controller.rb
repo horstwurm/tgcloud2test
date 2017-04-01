@@ -299,4 +299,73 @@ end
 def dashboard
 end
 
+def index15
+  @question = Question.find(params[:question_id])
+  
+  if @question.mcategory.name == "Text" or @question.mcategory.name == "Numerisch" 
+    if @question.answers.count == 0
+      @a = Answer.new
+      @a.question_id = @question.id
+      @a.name = "Bitte angeben"
+      @a.save
+    end  
+  end
+  
+  if params[:user_answer_id]
+    @ua = UserAnswer.find(params[:user_answer_id])
+    @a = @ua.answer
+    
+    if @question.mcategory.name == "Single"
+      @question.answers.each do |qa|
+        @uai = UserAnswer.where('user_id=? and answer_id=?', current_user.id, qa.id).first
+        if @uai and @uai.checker
+          @uai.checker = false
+          @uai.save
+        end
+      end
+    end
+    if @ua
+      if @question.mcategory.name == "Multiple"
+        if @ua.checker
+          @ua.check = false
+        else
+          @ua.checker = true
+        end
+      else
+        @ua.checker =true
+      end
+      @ua.save
+    end
+  end
+end
+
+
+def index16
+  @question = Question.find(params[:question_id])
+end
+
+def fragebogen_data
+
+    @question = Question.find(params[:question_id])
+  
+    @array = []
+    @question.answers.each do |qa|
+      
+      anz = qa.user_answers.where('checker=?',true).count
+      
+      hash = Hash.new
+      hash = {:kategorie => qa.name, :anzahl => anz.to_s}
+      @array << hash
+      
+    end
+
+    #msg = [{:kategorie => "User", :anzahl => User.all.count},{:kategorie => "UserOnline", :anzahl => User.where("updated_at > ?", 10.minutes.ago).count},{:kategorie => "Publikationen", :anzahl => Mobject.where('mtype=?',"Publikationen").count},{:kategorie => "Artikel", :anzahl => Mobject.where('mtype=?',"Artikel").count},{:kategorie => "Veranstaltungen", :anzahl => Mobject.where('mtype=?',"Veranstaltungen").count}]
+
+    respond_to do |format|
+      format.json 
+        render :json => @array.to_json
+    end
+
+end
+
 end

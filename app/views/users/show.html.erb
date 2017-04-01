@@ -148,6 +148,9 @@
         <% when "Crowdfunding (Beitraege)" %>
           <%= header("Crowdfunding Beitraege", false) %>
           <%= build_medialist2(@user.mstats, "mstats", "CF") %>
+        <% when "Fragebogen" %>
+          <%= header("Fragebogen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Fragebogen"), "mobjects", nil) %>
         <% when "Publikationen" %>
           <%= header("Publikationen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Publikationen"), "mobjects", nil) %>

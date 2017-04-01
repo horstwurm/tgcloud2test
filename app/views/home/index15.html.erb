@@ -1,0 +1,79 @@
+<div class="row">
+    <div class='col-xs-12'>
+      <div class='panel-body'>
+         <%= link_to user_answers_path(:mobject_id => @question.mobject_id) do %>
+          <i class="btn btn-primary glyphicon glyphicon-list"></i>
+         <% end %><br>
+      </div>
+    </div>
+</div>
+
+<%= header("Frage "+@question.name, false) %>
+
+<div class="row">
+    <div class='col-xs-12'>
+      <div class='panel-body'>
+
+        <% @question.answers.each do |a| %>
+
+          <% case @question.mcategory.name %>
+            <% when "Text", "Numerisch" %>
+              <div class="row">
+                  <div class='col-xs-10 col-sm-10 col-md-10 col-lg-10 xl-10'>
+                    <% @ua = UserAnswer.where('user_id=? and answer_id=?', current_user.id, a.id).first %>
+                    <% if @ua and @question.mcategory.name == "Text" %>
+                      <%= @ua.description %>
+                    <% end %>
+                    <% if @ua and @question.mcategory.name == "Numerisch" %>
+                      <%= @ua.num %>
+                    <% end %>
+                  </div>
+                  <div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 xl-2'>
+                    <% if @ua %>
+                      <%= link_to(edit_user_answer_path(:id => @ua.id)) do %>
+                        <i class="btn btn-primary glyphicon glyphicon-pencil"></i>
+                      <% end %>
+                    <% else %>
+                      <%= link_to(new_user_answer_path(:user_id => current_user.id, :answer_id => a.id)) do %>
+                        <i class="btn btn-primary glyphicon glyphicon-pencil"></i>
+                      <% end %>
+                    <% end %>
+                  </div>
+              </div>
+
+            <% when "Single", "Multiple" %>
+              <div class="row">
+                  <div class='col-xs-10 col-sm-10 col-md-10 col-lg-10 xl-10'>
+                    <% @ua = UserAnswer.where('user_id=? and answer_id=?', current_user.id, a.id).first %>
+                    <% if !@ua %>
+                      <% @ua = UserAnswer.new %>
+                      <% @ua.user_id = current_user.id %>
+                      <% @ua.answer_id = a.id %>
+                      <% @ua.checker = false %>
+                      <% @ua.save %>
+                      <% @ua = UserAnswer.where('user_id=? and answer_id=?', current_user.id, a.id).first %>
+                    <% end %>
+                    <%= a.name %>
+                  </div>
+                  <div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 xl-2'>
+                    <% if @ua %>
+                    <% if @ua.checker %>
+                      <%= link_to home_index15_path(:question_id => @question.id, :user_answer_id => @ua.id) do %>
+                        <i class="btn btn-primary glyphicon glyphicon-check"></i>
+                      <% end %><br>
+                    <% else %>
+                      <%= link_to home_index15_path(:question_id => @question.id, :user_answer_id => @ua.id) do %>
+                        <i class="btn btn-primary glyphicon glyphicon-unchecked"></i>
+                      <% end %><br>
+                    <% end %>
+                    <% end %>
+                  </div>
+              </div>
+        
+          <% end %>
+        
+        <% end %>
+
+      </div>
+    </div>
+</div>

@@ -113,6 +113,17 @@ mcategories = Mcategory.create({ctype:"Artikel", name:"Sonstiges"})
 mcategories = Mcategory.create({ctype:"Artikel", name:"Ferien"})
 mcategories = Mcategory.create({ctype:"Artikel", name:"Geschäftsmodell"})
 
+#create Questionaire categories 85..87
+mcategories = Mcategory.create({ctype:"Fragebogen", name:"Kundenzufriedenheitsumfrage"})
+mcategories = Mcategory.create({ctype:"Fragebogen", name:"Interview"})
+mcategories = Mcategory.create({ctype:"Fragebogen", name:"Abstimmung"})
+
+#create Question categories 87..90
+mcategories = Mcategory.create({ctype:"Fragetyp", name:"Text"})
+mcategories = Mcategory.create({ctype:"Fragetyp", name:"Numerisch"})
+mcategories = Mcategory.create({ctype:"Fragetyp", name:"Single"})
+mcategories = Mcategory.create({ctype:"Fragetyp", name:"Multiple"})
+
 #create some users...
 users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:"horst.wurm@bluewin.ch", password:"password", name:"Horst", lastname:"Wurm", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:true, webmaster:true, avatar:File.open(path+'horst.jpg', 'rb')})
 users = User.create({calendar:true, time_from:8, time_to:20, dateofbirth:"11.2.1970", anonymous:false, status:"OK", active:true, email:"t.oschewsky@bluewin.ch", password:"password", name:"Tanja", lastname:"Oschewsky", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:false, webmaster:false, avatar:File.open(path+'ma_3.jpg', 'rb')})

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170309153155) do
+ActiveRecord::Schema.define(version: 20170330150101) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -19,6 +19,15 @@ ActiveRecord::Schema.define(version: 20170309153155) do
     t.boolean  "is_account_ver"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "answers", force: :cascade do |t|
+    t.integer  "question_id"
+    t.text     "description"
+    t.string   "name"
+    t.float    "num"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "appointment_documents", force: :cascade do |t|
@@ -342,6 +351,16 @@ ActiveRecord::Schema.define(version: 20170309153155) do
     t.datetime "updated_at",          null: false
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.integer  "mobject_id"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "sequence"
+    t.integer  "mcategory_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "searches", force: :cascade do |t|
     t.string   "search_domain"
     t.string   "controller"
@@ -478,6 +497,18 @@ ActiveRecord::Schema.define(version: 20170309153155) do
     t.datetime "updated_at",  null: false
     t.index ["owner_id"], name: "index_transactions_on_owner_id"
     t.index ["owner_type"], name: "index_transactions_on_owner_type"
+  end
+
+  create_table "user_answers", force: :cascade do |t|
+    t.integer  "answer_id"
+    t.integer  "user_id"
+    t.float    "num"
+    t.string   "name"
+    t.boolean  "checker"
+    t.text     "description"
+    t.string   "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "user_positions", force: :cascade do |t|

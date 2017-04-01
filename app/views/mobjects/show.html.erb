@@ -101,7 +101,7 @@
                 <% end %>
                 
                 <% case @mobject.mtype %>
-                   <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding" %>
+                   <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding", "Fragebogen" %>
                      <% if @mobject.msubtype == "Standard" %>
                      <% else %>
                       <% if @mobject.msubtype == "Aktion" %>
@@ -305,6 +305,12 @@
           <%= header("Blog", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.comments.order(created_at: :desc), "comments", "User") %>
+          </div>
+
+        <% when "Fragen" %>
+          <%= header("Fragen", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.questions.order(created_at: :desc), "questions", "User") %>
           </div>
 
         <% when "Ausgaben" %>
