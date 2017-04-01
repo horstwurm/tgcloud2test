@@ -37,7 +37,6 @@ $(document).ready(function(){
     var options = {
       title: 'Antworten',
       colors: ['#ACC550'],
-      curveType: 'function',
       legend: { position: 'bottom' }
     };
     var chart = new google.visualization.ColumnChart(document.getElementById('chart2'));
@@ -49,7 +48,6 @@ $(document).ready(function(){
     var data = google.visualization.arrayToDataTable(dataset_frage);
     var options = {
       title: 'Antworten',
-      curveType: 'function',
       legend: { position: 'bottom' }
     };
     var chart = new google.visualization.PieChart(document.getElementById('chart3'));
