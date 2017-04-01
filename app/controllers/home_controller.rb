@@ -327,7 +327,7 @@ def index15
     if @ua
       if @question.mcategory.name == "Multiple"
         if @ua.checker
-          @ua.check = false
+          @ua.checker = false
         else
           @ua.checker = true
         end
