@@ -66,6 +66,8 @@ class CompaniesController < ApplicationController
     @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Ausschreibungen'), "Ausschreibungen" )
     @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Ausflugsziele'), "Ausflugsziele" )
     @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Stellenanzeigen'), "Stellenanzeigen" )
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Publikationen'), "Publikationen" )
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Umfragen'), "Umfragen" )
     @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Crowdfunding'), "Crowdfunding" )
     @array_s = @company.build_stats(@array_s, @company.mstats, "Crowdfunding Beitraege" )            if false
     @array_s = @company.build_stats(@array_s, @company.customers, "Kundenstatus" )

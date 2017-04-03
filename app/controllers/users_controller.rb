@@ -295,6 +295,9 @@ class UsersController < ApplicationController
       @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Veranstaltungen'), "Veranstaltungen" )
       @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Ausschreibungen'), "Ausschreibungen" )
       @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Ausflugsziele'), "Ausflugsziele" )
+      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Artikel'), "Artikel" )
+      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Publikationen'), "Publikationen" )
+      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Umfragen'), "Umfragen" )
       @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Crowdfunding'), "Crowdfunding" )
       @array_s = @user.build_stats(@array_s, @user.mstats, "Crowdfunding Beitraege" )            if false
       @array_s = @user.build_stats(@array_s, @user.user_tickets, "Tickets" ) 

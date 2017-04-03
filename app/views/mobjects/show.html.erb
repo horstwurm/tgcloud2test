@@ -101,7 +101,7 @@
                 <% end %>
                 
                 <% case @mobject.mtype %>
-                   <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding", "Fragebogen" %>
+                   <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding", "Umfragen" %>
                      <% if @mobject.msubtype == "Standard" %>
                      <% else %>
                       <% if @mobject.msubtype == "Aktion" %>

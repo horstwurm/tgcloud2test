@@ -48,7 +48,7 @@ Rails.application.routes.draw do
   get 'home/index16'
   get 'home/dashboard'
   get 'home/dashboard_data'
-  get 'home/fragebogen_data'
+  get 'home/Umfragen_data'
   
   resources :searches
   resources :partner_links

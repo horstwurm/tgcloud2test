@@ -344,7 +344,7 @@ def index16
   @question = Question.find(params[:question_id])
 end
 
-def fragebogen_data
+def Umfragen_data
 
     @question = Question.find(params[:question_id])
   
@@ -367,5 +367,6 @@ def fragebogen_data
     end
 
 end
+
 
 end

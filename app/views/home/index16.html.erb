@@ -12,12 +12,10 @@
 <%= header("Status Frage "+@question.name, false) %>
 
 <div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
     <div id="chart2"></div>
   </div>
-</div>
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
     <div id="chart3"></div>
   </div>
 </div>
@@ -27,7 +25,8 @@
 <script>
 $(document).ready(function(){
 
-  window.dataset_frage = [["Antwort", "Wert"],["keine Antwort",0]];
+  window.dataset_frage = [['kategorie', 'anzahl'],['keine Antwort',0]];
+  window.dataset_frage2 = [['kategorie','anzahl']]
 
   google.charts.load('current', {'packages':['corechart']});
 
@@ -40,15 +39,39 @@ $(document).ready(function(){
       legend: { position: 'bottom' }
     };
     var chart = new google.visualization.ColumnChart(document.getElementById('chart2'));
+
+    // Wait for the chart to finish drawing before calling the getImageURI() method.
+    // google.visualization.events.addListener(chart, 'ready', function () {
+      // chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+      // console.log(chart_div.innerHTML);
+      // var imgUri = chart.getImageURI();
+      // alert(imgUri);
+      
+      // var request = new XMLHttpRequest();
+      // request.onload = callback;
+      // request.open("post", "https://ostch-horstwurm.c9users.io/home/Umfragen_img?question_id=<%= @question.id %>");
+      // var formData = new FormData();
+      // formData.append('my_data', imgUri)
+      // request.send(formData);
+      
+      // $.ajax({
+      //     method: "POST",
+      //     url: "http://tkbmarkt.herokuapp.com/home/Umfragen_img?question_id=<%= @question.id %>",
+      //     url: "https://ostch-horstwurm.c9users.io/home/Umfragen_img?question_id=<%= @question.id %>&imgdata="+imgUri,
+      //     data: { name: imgUri } });
+      // do something with the image URI, like:
+      // window.open(imgUri);
+    // });
+    
     chart.draw(data, options);
   };
   
   google.charts.setOnLoadCallback(drawChart3);
   function drawChart3() {
-    var data = google.visualization.arrayToDataTable(dataset_frage);
+    var data = google.visualization.arrayToDataTable(dataset_frage2);
     var options = {
       title: 'Antworten',
-      legend: { position: 'bottom' }
+      pieHole: 0.4
     };
     var chart = new google.visualization.PieChart(document.getElementById('chart3'));
     chart.draw(data, options);
@@ -58,7 +81,8 @@ $(document).ready(function(){
         
     function callme() {
         $.ajax({
-            url: "http://tkbmarkt.herokuapp.com/home/fragebogen_data.json?question_id=<%= @question.id %>",
+            url: "http://tkbmarkt.herokuapp.com/home/Umfragen_data.json?question_id=<%= @question.id %>",
+            url: "https://ostch-horstwurm.c9users.io/home/Umfragen_data.json?question_id=<%= @question.id %>",
             //force to handle it as text
             dataType: "text",
             success: function(data) {
@@ -67,10 +91,15 @@ $(document).ready(function(){
                 var json = $.parseJSON(data);
                 //now json variable contains data in json format
                 //let's display a few items
-                window.dataset_frage = [["Antwort", "Wert"],["keine Antwort",0]];
+                window.dataset_frage = [['kategorie', 'anzahl'],['keine Antwort',0]];
+                window.dataset_frage2 = [['kategorie', 'anzahl'],['keine Antwort',0]];
                 for (var i=0;i<json.length;++i)
                 {
                     dataset_frage.push([json[i].kategorie, json[i].anzahl]);
+                    // dataset_frage2.push([json[i].kategorie, json[i].anzahl]);
+                    // dataset_frage2.push(['test',30]);
+                    var y = json[i].anzahl
+                    dataset_frage2.push([json[i].kategorie, parseInt(json[i].anzahl)]);
                 }
 
                 google.charts.setOnLoadCallback(drawChart2);                

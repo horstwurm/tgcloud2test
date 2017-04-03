@@ -719,7 +719,7 @@ def build_medialist2(items, cname, par)
                         end
                       end
                     end
-                    if item.mtype == "Fragebogen"
+                    if item.mtype == "Umfragen"
                       html_string = html_string + link_to(user_answers_path(:mobject_id => item.id, :user_id => current_user.id)) do
                         content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
                       end
@@ -1060,7 +1060,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Privatpersonen",item,"Favoriten",item.favourits.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Publikationen", item.mobjects.where('mtype=?',"Publikationen").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Artikel", item.mobjects.where('mtype=?',"Artikel").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,"Fragebogen", item.mobjects.where('mtype=?',"Fragebogen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Umfragen", item.mobjects.where('mtype=?',"Umfragen").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Kundenbeziehungen", item.customers.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Transaktionen", item.transactions.where('ttype=?', "Payment").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"eMail", Email.where('m_to=? or m_from=?', item.id, item.id).count > 0)
@@ -1086,7 +1086,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Institutionen",item,"Digital Signage (Kampagnen)", item.signage_camps.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Digital Signage (Standorte)", item.signage_locs.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Publikationen", item.mobjects.where('mtype=?',"Publikationen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,"Fragebogen", item.mobjects.where('mtype=?',"Fragebogen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Umfragen", item.mobjects.where('mtype=?',"Umfragen").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Kundenbeziehungen", item.customers.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Transaktionen",item.transactions.where('ttype=?', "Payment").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"eMail", Email.where('m_to=? or m_from=?', item.user.id, item.user.id).count > 0)
@@ -1120,7 +1120,7 @@ def navigate(object,item)
         if item.mtype == "Artikel"
           #html_string = html_string + build_nav("Objekte",item,"Blog",item.comments.count > 0)
         end
-        if item.mtype == "Fragebogen"
+        if item.mtype == "Umfragen"
           html_string = html_string + build_nav("Objekte",item,"Fragen",item.questions.count > 0)
         end
         if item.mtype == "Publikationen"
@@ -1286,7 +1286,7 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(new_company_path :user_id => current_user.id) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Vermietungen", "Veranstaltungen", "Ausflugsziele", "Ausschreibungen", "Publikationen", "Artikel", "Fragebogen"
+            when "Vermietungen", "Veranstaltungen", "Ausflugsziele", "Ausschreibungen", "Publikationen", "Artikel", "Umfragen"
               html_string = html_string + link_to(new_mobject_path :user_id => current_user.id, :mtype => topic, :msubtype => nil) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
@@ -1350,7 +1350,7 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(home_index8_path :company_id => item.id, :mtype => topic) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Vermietungen", "Veranstaltungen", "Ausflugsziele", "Ausschreibungen", "Publikationen", "Fragebogen"
+            when "Vermietungen", "Veranstaltungen", "Ausflugsziele", "Ausschreibungen", "Publikationen", "Umfragen"
               html_string = html_string + link_to(new_mobject_path :company_id => item.id, :mtype => topic, :msubtype => nil) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
@@ -1594,9 +1594,9 @@ def getIcon(iconstring)
       when "Fragen"
         icon = "question-sign"
         icontext = "Fragen"
-      when "Fragebogen"
+      when "Umfragen", "Umfragen"
         icon = "question-sign"
-        icontext = "Fragebogen"
+        icontext = "Umfragen"
       when "Angebote, Services und Aktionen"
         icon = "shopping-cart"
         icontext = "Produkte, Services & Aktionen"
@@ -2127,9 +2127,9 @@ def build_hauptmenue
         html_string = html_string + simple_menue(domain, path)
     end
 
-    if creds.include?("Hauptmenue"+"Fragebogen")
-        domain = "Fragebogen"
-        path = mobjects_path(:mtype => "Fragebogen", :msubtype => nil)
+    if creds.include?("Hauptmenue"+"Umfragen")
+        domain = "Umfragen"
+        path = mobjects_path(:mtype => "Umfragen", :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
@@ -2508,13 +2508,13 @@ def init_apps
     @array = []
 
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "News", "access" => false}
+    hash = {"domain" => "Hauptmenue", "right" => "News", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Privatpersonen", "access" => true}
+    hash = {"domain" => "Hauptmenue", "right" => "Privatpersonen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Institutionen", "access" => true}
+    hash = {"domain" => "Hauptmenue", "right" => "Institutionen", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Hauptmenue", "right" => "Angebote", "access" => false}
@@ -2541,7 +2541,7 @@ def init_apps
     hash = {"domain" => "Hauptmenue", "parent_domain" => "Stellenanzeigen", "right" => "StellenanzeigenSuchen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Veranstaltungen", "access" => false}
+    hash = {"domain" => "Hauptmenue", "right" => "Veranstaltungen", "access" => true}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Hauptmenue", "right" => "Ausflugsziele", "access" => false}
@@ -2556,7 +2556,7 @@ def init_apps
     hash = {"domain" => "Hauptmenue", "right" => "Artikel", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Fragebogen", "access" => true}
+    hash = {"domain" => "Hauptmenue", "right" => "Umfragen", "access" => true}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Hauptmenue", "parent_domain" => "Kleinanzeigen", "right" => "KleinanzeigenAnbieten", "access" => false}
@@ -2635,7 +2635,7 @@ def init_apps
     hash = {"domain" => "Privatpersonen", "right" => "Vermietungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Veranstaltungen", "access" => false}
+    hash = {"domain" => "Privatpersonen", "right" => "Veranstaltungen", "access" => true}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Veranstaltungen (angemeldet)", "access" => false}
@@ -2677,7 +2677,7 @@ def init_apps
     hash = {"domain" => "Privatpersonen", "right" => "Artikel", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Fragebogen", "access" => true}
+    hash = {"domain" => "Privatpersonen", "right" => "Umfragen", "access" => true}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Kundenbeziehungen", "access" => false}
@@ -2726,7 +2726,7 @@ def init_apps
     hash = {"domain" => "Institutionen", "right" => "Vermietungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Veranstaltungen", "access" => false}
+    hash = {"domain" => "Institutionen", "right" => "Veranstaltungen", "access" => true}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Institutionen", "right" => "Sponsorenengagements", "access" => false}
@@ -2756,7 +2756,7 @@ def init_apps
     hash = {"domain" => "Institutionen", "right" => "Publikationen", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Fragebogen", "access" => true}
+    hash = {"domain" => "Institutionen", "right" => "Umfragen", "access" => true}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Institutionen", "right" => "Kundenbeziehungen", "access" => false}

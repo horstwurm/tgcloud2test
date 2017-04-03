@@ -113,12 +113,13 @@ mcategories = Mcategory.create({ctype:"Artikel", name:"Sonstiges"})
 mcategories = Mcategory.create({ctype:"Artikel", name:"Ferien"})
 mcategories = Mcategory.create({ctype:"Artikel", name:"Geschäftsmodell"})
 
-#create Questionaire categories 85..87
-mcategories = Mcategory.create({ctype:"Fragebogen", name:"Kundenzufriedenheitsumfrage"})
-mcategories = Mcategory.create({ctype:"Fragebogen", name:"Interview"})
-mcategories = Mcategory.create({ctype:"Fragebogen", name:"Abstimmung"})
+#create Questionaire categories 85..88
+mcategories = Mcategory.create({ctype:"Umfragen", name:"Kundenzufriedenheitsumfrage"})
+mcategories = Mcategory.create({ctype:"Umfragen", name:"Interview"})
+mcategories = Mcategory.create({ctype:"Umfragen", name:"Abstimmung"})
+mcategories = Mcategory.create({ctype:"Umfragen", name:"Online Abstimmung"})
 
-#create Question categories 87..90
+#create Question categories 89..92
 mcategories = Mcategory.create({ctype:"Fragetyp", name:"Text"})
 mcategories = Mcategory.create({ctype:"Fragetyp", name:"Numerisch"})
 mcategories = Mcategory.create({ctype:"Fragetyp", name:"Single"})
