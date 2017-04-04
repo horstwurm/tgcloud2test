@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   get 'home/index14'
   get 'home/index15'
   get 'home/index16'
+  get 'home/index17'
   get 'home/dashboard'
   get 'home/dashboard_data'
   get 'home/Umfragen_data'

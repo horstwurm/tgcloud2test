@@ -344,6 +344,14 @@ def index16
   @question = Question.find(params[:question_id])
 end
 
+def index17
+  if params[:questionaire_id] 
+    @questionaire = Mobject.find(params[:questionaire_id])
+  else
+    @questionaire = Mobject.where('mtype=?',"Umfragen").first
+  end
+end
+
 def Umfragen_data
 
     @question = Question.find(params[:question_id])

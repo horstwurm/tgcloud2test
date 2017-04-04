@@ -723,6 +723,9 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + link_to(user_answers_path(:mobject_id => item.id, :user_id => current_user.id)) do
                         content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
                       end
+                      html_string = html_string + link_to(home_index17_path(:mobject_id => item.id)) do
+                        content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-stats")
+                      end
                     end
                   end
                   
