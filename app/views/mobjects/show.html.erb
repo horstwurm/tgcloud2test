@@ -490,7 +490,6 @@
     
   </div>
 
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script>
@@ -567,8 +566,8 @@ $(document).ready(function(){
     
     google.charts.load('current', {'packages':['corechart']});
     
-    google.charts.setOnLoadCallback(drawChart1);
-    function drawChart1() {
+    google.charts.setOnLoadCallback(drawChartA);
+    function drawChartA() {
       var data = google.visualization.arrayToDataTable([
         ['Datum', 'Anzahl'],
         <%= raw @anz_s %>
@@ -582,8 +581,8 @@ $(document).ready(function(){
       chart.draw(data, options);
     }
     
-    google.charts.setOnLoadCallback(drawChart2);
-    function drawChart2() {
+    google.charts.setOnLoadCallback(drawChartB);
+    function drawChartB() {
       var data = google.visualization.arrayToDataTable([
         ['Datum', 'Betrag'],
         <%= raw @bet_s %>
@@ -642,6 +641,7 @@ $(document).ready(function(){
   
 });
 </script>
+
 
 <!--<script>-->
 <!--  document.addEventListener("turbolinks:load", function() {init_map(0); drawChart1(); drawChart2(); owlCarousel()})-->
