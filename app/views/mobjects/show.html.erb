@@ -494,6 +494,52 @@
 
 <script>
 $(document).ready(function(){
+
+      google.charts.load('current', {'packages':['corechart']});
+
+      <% if @mobject.mtype == "Umfragen" %>
+
+      <% @mobject.questions.each do |q| %>
+      
+        <% if q.mcategory.name == "Multiple" or q.mcategory.name == "Single" %>
+          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
+          <% q.answers.each do |qa| %>
+            dataset<%= q.id.to_s %>.push(['<%= qa.name %>', <%= qa.user_answers.where('checker=?',true).count %>]);
+          <% end %>
+        <% end %>
+    
+        <% if q.mcategory.name == "Numerisch" %>
+          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
+          <% q.answers.each do |qa| %>
+            dataset<%= q.id.to_s %>.push(['Minimum', <%= qa.user_answers.minimum(:num) %>]);
+            dataset<%= q.id.to_s %>.push(['Maximum', <%= qa.user_answers.maximum(:num) %>]);
+            dataset<%= q.id.to_s %>.push(['Durchschnitt', <%= qa.user_answers.average(:num) %>]);
+          <% end %>
+        <% end %>
+    
+        <% if q.mcategory.name == "Text" %>
+          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
+          <% q.answers.each do |qa| %>
+            dataset<%= q.id.to_s %>.push(['kein Text angegeben', <%= qa.user_answers.where('description=?',"").count %>]);
+            dataset<%= q.id.to_s %>.push(['Text angegeben', <%= qa.user_answers.where('description<>?',"").count %>]);
+          <% end %>
+        <% end %>
+    
+        google.charts.setOnLoadCallback(drawChart<%= q.id.to_s %>);
+        function drawChart<%= q.id.to_s %>() {
+          var data = google.visualization.arrayToDataTable(dataset<%= q.id.to_s %>);
+          var options = {
+            title: 'Antworten',
+            colors: ['#ACC550'],
+            legend: { position: 'bottom' }
+          };
+          var chart = new google.visualization.ColumnChart(document.getElementById('<%="chart"+q.id.to_s %>'));
+          chart.draw(data, options);
+        };
+    
+    <% end %>
+    <% end %>
+
   
     $("nav").hide();
     $("navhide").hide();
@@ -564,8 +610,6 @@ $(document).ready(function(){
         marker.setMap(map);
     }
     
-    google.charts.load('current', {'packages':['corechart']});
-    
     google.charts.setOnLoadCallback(drawChartA);
     function drawChartA() {
       var data = google.visualization.arrayToDataTable([
@@ -596,49 +640,6 @@ $(document).ready(function(){
       chart.draw(data, options);
     }
 
-    <% if @mobject.mtype == "Umfragen" %>
-
-      <% @mobject.questions.each do |q| %>
-      
-        <% if q.mcategory.name == "Multiple" or q.mcategory.name == "Single" %>
-          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
-          <% q.answers.each do |qa| %>
-            dataset<%= q.id.to_s %>.push(['<%= qa.name %>', <%= qa.user_answers.where('checker=?',true).count %>]);
-          <% end %>
-        <% end %>
-    
-        <% if q.mcategory.name == "Numerisch" %>
-          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
-          <% q.answers.each do |qa| %>
-            dataset<%= q.id.to_s %>.push(['Minimum', <%= qa.user_answers.minimum(:num) %>]);
-            dataset<%= q.id.to_s %>.push(['Maximum', <%= qa.user_answers.maximum(:num) %>]);
-            dataset<%= q.id.to_s %>.push(['Durchschnitt', <%= qa.user_answers.average(:num) %>]);
-          <% end %>
-        <% end %>
-    
-        <% if q.mcategory.name == "Text" %>
-          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
-          <% q.answers.each do |qa| %>
-            dataset<%= q.id.to_s %>.push(['kein Text angegeben', <%= qa.user_answers.where('description=?',"").count %>]);
-            dataset<%= q.id.to_s %>.push(['Text angegeben', <%= qa.user_answers.where('description<>?',"").count %>]);
-          <% end %>
-        <% end %>
-    
-        google.charts.setOnLoadCallback(drawChart<%= q.id.to_s %>);
-        function drawChart<%= q.id.to_s %>() {
-          var data = google.visualization.arrayToDataTable(dataset<%= q.id.to_s %>);
-          var options = {
-            title: 'Antworten',
-            colors: ['#ACC550'],
-            legend: { position: 'bottom' }
-          };
-          var chart = new google.visualization.ColumnChart(document.getElementById('<%="chart"+q.id.to_s %>'));
-          chart.draw(data, options);
-        };
-    
-      <% end %>
-    <% end %>
-  
 });
 </script>
 
