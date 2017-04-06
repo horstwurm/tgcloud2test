@@ -532,7 +532,7 @@ $(document).ready(function(){
         firstDay: 1,
         weekNumbers: true,
         events: [<%= raw @array %> ]
-    })
+    });
     
     $("a").tooltip();
     
@@ -641,15 +641,6 @@ $(document).ready(function(){
   
 });
 </script>
-
-<script>
-document.addEventListener("turbolinks:load", function() {
-  <% @mobject.questions.each do |q| %>
-    google.charts.setOnLoadCallback(drawChart<%= q.id.to_s %>);
-  <% end %>
-}
-</script>
-  
 
 <!--<script>-->
 <!--  document.addEventListener("turbolinks:load", function() {init_map(0); drawChart1(); drawChart2(); owlCarousel()})-->
