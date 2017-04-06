@@ -102,6 +102,21 @@
                 
                 <% case @mobject.mtype %>
                    <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding", "Umfragen" %>
+                   
+                    <% if @mobject.mtype == "Umfragen" %>
+                      <div class="row">
+                        <% @mobject.questions.each do |q| %>
+                          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div>
+                              <%= header("Frage "+q.name, false) %>
+                            </div>
+                            <div id="<%="chart"+q.id.to_s %>"></div>
+                          </div>
+                        <% end %>
+                      </div>
+                      <br>
+                    <% end %>
+                    
                      <% if @mobject.msubtype == "Standard" %>
                      <% else %>
                       <% if @mobject.msubtype == "Aktion" %>
@@ -153,7 +168,7 @@
                     <%= @mobject.address2 if @mobject.address2 %><br>
                     <%= @mobject.address3 if @mobject.address3 %><br>
                     <br>
-                    
+
                   <% when "Stellenanzeigen" %>
                       <div class="row">
                         <div class="col-sm-6 col-md-4 col-lg-3">
@@ -599,7 +614,50 @@ $(document).ready(function(){
     })
     
     $("a").tooltip();
+    
+    <% if @mobject.mtype == "Umfragen" %>
+      google.charts.load('current', {'packages':['corechart']});
+    
+      <% @mobject.questions.each do |q| %>
+      
+        <% if q.mcategory.name == "Multiple" or q.mcategory.name == "Single" %>
+          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
+          <% q.answers.each do |qa| %>
+            dataset<%= q.id.to_s %>.push(['<%= qa.name %>', <%= qa.user_answers.where('checker=?',true).count %>]);
+          <% end %>
+        <% end %>
+    
+        <% if q.mcategory.name == "Numerisch" %>
+          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
+          <% q.answers.each do |qa| %>
+            dataset<%= q.id.to_s %>.push(['Minimum', <%= qa.user_answers.minimum(:num) %>]);
+            dataset<%= q.id.to_s %>.push(['Maximum', <%= qa.user_answers.maximum(:num) %>]);
+            dataset<%= q.id.to_s %>.push(['Durchschnitt', <%= qa.user_answers.average(:num) %>]);
+          <% end %>
+        <% end %>
+    
+        <% if q.mcategory.name == "Text" %>
+          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
+          <% q.answers.each do |qa| %>
+            dataset<%= q.id.to_s %>.push(['kein Text angegeben', <%= qa.user_answers.where('description=?',"").count %>]);
+            dataset<%= q.id.to_s %>.push(['Text angegeben', <%= qa.user_answers.where('description<>?',"").count %>]);
+          <% end %>
+        <% end %>
+    
+        google.charts.setOnLoadCallback(drawChart<%= q.id.to_s %>);
+        function drawChart<%= q.id.to_s %>() {
+          var data = google.visualization.arrayToDataTable(dataset<%= q.id.to_s %>);
+          var options = {
+            title: 'Antworten',
+            colors: ['#ACC550'],
+            legend: { position: 'bottom' }
+          };
+          var chart = new google.visualization.ColumnChart(document.getElementById('<%="chart"+q.id.to_s %>'));
+          chart.draw(data, options);
+        };
+    
+      <% end %>
+    <% end %>
   
 });
 </script>
-
