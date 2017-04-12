@@ -723,9 +723,9 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + link_to(user_answers_path(:mobject_id => item.id, :user_id => current_user.id)) do
                         content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
                       end
-                      html_string = html_string + link_to(home_index17_path(:mobject_id => item.id)) do
-                        content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-stats")
-                      end
+                      #html_string = html_string + link_to(home_index17_path(:mobject_id => item.id)) do
+                      #  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-stats")
+                      #end
                     end
                   end
                   
@@ -3122,13 +3122,25 @@ def build_questionaire(questionaire)
         html_string = html_string + "<div class='row'>"
           html_string = html_string + "<inhalt>Inhalt</inhalt>"
           html_string = html_string + "<br><br>"
-          questionaire.questions.order(:sequence).each do |q|
-            html_string = html_string + link_to(home_index15_path(:question_id => q.id)) do
-              content_tag(:div, q.name)
-            end
-            html_string = html_string + "</h4>"
-          end
         html_string = html_string + "</div>"
+        questionaire.questions.order(:sequence).each do |q|
+          html_string = html_string + "<div class='row'>"
+
+            #html_string = html_string + "<div class='col-xs-3 col-sm-3 col-md-3 col-lg-3 xl-3'>"
+            # if current_user.user_answers.answers.where('question_id=?',q.id).count > 0
+            #   html_string = html_string + '<i class="glyphicon glyphicon-check"></i>'              
+            # else
+            #   html_string = html_string + '<i class="glyphicon glyphicon-edit"></i>'
+            # end
+            #html_string = html_string + "</div>"
+            #html_string = html_string + "<div class='col-xs-9 col-sm-9 col-md-9 col-lg-9 xl-9'>"
+              html_string = html_string + link_to(home_index15_path(:question_id => q.id)) do
+                content_tag(:div, q.name)
+              end
+            #html_string = html_string + "</div>"
+
+          html_string = html_string + "</div>"
+        end
 
       html_string = html_string + "</div>"
     html_string = html_string + "</div>"

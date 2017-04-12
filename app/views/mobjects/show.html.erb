@@ -105,7 +105,15 @@
                    
                     <% if @mobject.mtype == "Umfragen" %>
                       <div class="row">
-                        <% @mobject.questions.each do |q| %>
+                        
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                          <div>
+                            <%= header("Antworten pro Frage", false) %>
+                          </div>
+                          <div id="chartq"></div>
+                        </div>
+ 
+                         <% @mobject.questions.each do |q| %>
                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                             <div>
                               <%= header("Frage "+q.name, false) %>
@@ -498,6 +506,27 @@ $(document).ready(function(){
       google.charts.load('current', {'packages':['corechart']});
 
       <% if @mobject.mtype == "Umfragen" %>
+      
+      window.datasetq = [['kategorie', 'anzahl'],['keine Antwort',0]];
+      <% @mobject.questions.each do |q| %>
+        <% anzCount =0 %>
+        <% q.answers.each do |a| %>
+          <% anzCount = anzCount + a.user_answers.count %>
+        <% end %>
+        datasetq.push(['<%= q.name %>', <%= anzCount %>]);
+      <% end %>
+      google.charts.setOnLoadCallback(drawChartq);
+      function drawChartq() {
+        var data = google.visualization.arrayToDataTable(datasetq);
+        var options = {
+          title: 'Antworten',
+          colors: ['#ACC550'],
+          legend: { position: 'bottom' }
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById('chartq'));
+        chart.draw(data, options);
+      };
+        
 
       <% @mobject.questions.each do |q| %>
       
