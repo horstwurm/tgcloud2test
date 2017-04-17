@@ -115,11 +115,17 @@
                           <% end %>
                         <% end %>
                       <% end %>
-                      <% useranswers.each do |us| %>
-                        <%= showImage2(:small, User.find(us), true) %>
-                      <% end %>
                       
-                    
+                      <div class="row">
+                        <div class='col-xs-12'>
+                          <div class='panel-heading header'>
+                            <li_header> 
+                              <%= "Anzahl Teilnehmer "+useranswers.count.to_s %>
+                            </li_header>
+                          </div>
+                        </div>
+                      </div>
+
                       <div class="row">
                         
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -323,8 +329,10 @@
                 <% end %>
               <% end %>
             <% end %>
-            <% useranswers.each do |us| %>
-              <%= showImage2(:small, User.find(us), true) %>
+            <% if false %>
+              <% useranswers.each do |us| %>
+                <%= showImage2(:small, User.find(us), true) %>
+              <% end %>
             <% end %>
             </div>
 
