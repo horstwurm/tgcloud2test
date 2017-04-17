@@ -1129,6 +1129,9 @@ def navigate(object,item)
         if item.mtype == "Publikationen"
           html_string = html_string + build_nav("Objekte",item,"Ausgaben",item.editions.count > 0)
         end
+        if item.mtype == "Umfragen"
+          html_string = html_string + build_nav("Objekte",item,"Umfrageteilnehmer",User.count > 0)
+        end
         if item.mtype == "Crowdfunding"
           html_string = html_string + build_nav("Objekte",item,"CF Statistik",item.mstats.count > 0)
           html_string = html_string + build_nav("Objekte",item,"CF Transaktionen",item.mstats.count > 0)
@@ -1600,6 +1603,9 @@ def getIcon(iconstring)
       when "Umfragen", "Umfragen"
         icon = "question-sign"
         icontext = "Umfragen"
+      when "Umfrageteilnehmer"
+        icon = "user"
+        icontext = "Umfrageteilnehmer"
       when "Angebote, Services und Aktionen"
         icon = "shopping-cart"
         icontext = "Produkte, Services & Aktionen"
@@ -2818,6 +2824,9 @@ def init_apps
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "Blog", "access" => true}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Umfrageteilnehmer", "access" => true}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "Ausgaben", "access" => true}

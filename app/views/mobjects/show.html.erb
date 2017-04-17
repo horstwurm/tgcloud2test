@@ -104,6 +104,22 @@
                    <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding", "Umfragen" %>
                    
                     <% if @mobject.mtype == "Umfragen" %>
+                    
+                      <% useranswers = [] %>
+                      <% @mobject.questions.each do |q| %>
+                        <% q.answers.each do |a| %>
+                          <% a.user_answers.each do |u| %>
+                            <% if !useranswers.include?(u.user_id) %>
+                              <% useranswers << u.user_id %>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                      <% useranswers.each do |us| %>
+                        <%= showImage2(:small, User.find(us), true) %>
+                      <% end %>
+                      
+                    
                       <div class="row">
                         
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -294,7 +310,34 @@
             <%= build_medialist2(@mobject.mdetails.where('mtype=?', "Details"), "mdetails", nil) %>
           </div>
 
-        <% when "Ausschreibungsangebote" %>
+        <% when "Umfrageteilnehmer" %>
+          <%= header("Umfrageteilnehmer", false) %>
+          <div class="panel-body">
+            <% useranswers = [] %>
+            <% @mobject.questions.each do |q| %>
+              <% q.answers.each do |a| %>
+                <% a.user_answers.each do |u| %>
+                  <% if !useranswers.include?(u.user_id) %>
+                    <% useranswers << u.user_id %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+            <% useranswers.each do |us| %>
+              <%= showImage2(:small, User.find(us), true) %>
+            <% end %>
+            </div>
+
+
+          <% if !false %>
+          <%= header("Teilnehmer Umfrage", false) %>
+          <div class="panel-body">
+            <% @users = User.where('ID IN (?)', useranswers) %>
+            <%= build_medialist2(@users, "users", nil) %>
+          </div>
+          <% end %>
+
+         <% when "Ausschreibungsangebote" %>
           <%= header("Angebote", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mdetails.where('mtype=?', "Ausschreibungsangebote"), "mdetails", nil) %>
@@ -506,6 +549,7 @@ $(document).ready(function(){
       google.charts.load('current', {'packages':['corechart']});
 
       <% if @mobject.mtype == "Umfragen" %>
+      
       
       window.datasetq = [['kategorie', 'anzahl'],['keine Antwort',0]];
       <% @mobject.questions.each do |q| %>
