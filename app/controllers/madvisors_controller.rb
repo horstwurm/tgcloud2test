@@ -8,6 +8,7 @@ class MadvisorsController < ApplicationController
     end
     if params[:mobject_id]
       session[:mobject_id] = params[:mobject_id]
+      @mobject = Mobject.find(params[:mobject_id])
     end
     if params[:page]
       session[:page] = params[:page]
@@ -19,6 +20,7 @@ class MadvisorsController < ApplicationController
         @madvisor = Madvisor.new
         @madvisor.user_id = params[:madvisor_id]
         @madvisor.mobject_id = session[:mobject_id]
+        @madvisor.role = @mobject.mtype
       end
       @madvisor.grade = "Berater"
       @madvisor.save
@@ -29,6 +31,7 @@ class MadvisorsController < ApplicationController
         @madvisor = Madvisor.new
         @madvisor.user_id = params[:senior_madvisor_id]
         @madvisor.mobject_id = session[:mobject_id]
+        @madvisor.role = @mobject.mtype
       end
       @madvisor.grade = "Senior Berater"
       @madvisor.save
@@ -61,6 +64,7 @@ class MadvisorsController < ApplicationController
     @madvisor = Madvisor.new
     @madvisor.mobject_id = params[:mobject_id]
     @madvisor.user_id = params[:user_id]
+    @madvisor.role = params[:role]
     @madvisor.grade = params[:grade]
   end
 

@@ -1,0 +1,178 @@
+<div class="row">
+    <div class='col-xs-12'>
+      <div class='panel-body'>
+         <%= link_to mobject_path(:id => @mobject.id) do %>
+          <i class="btn btn-primary glyphicon glyphicon-list"></i>
+         <% end %>
+         <%= link_to new_timetrack_path(:mobject_id => @mobject.id, :user_id => current_user.id) do %>
+          <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+         <% end %>
+
+
+        <% if false %>
+        <%= form_tag (timetracks_path method: :POST) do %>
+          <%= select_tag "period", options_for_select(@period_options, @period), class:"form-control",:onchange => "this.form.submit();" %>
+        <% end %>
+        <% end %>
+
+      </div>
+    </div>
+</div>
+
+<%= header("Zeiterfassung "+@mobject.name, false) %>
+<div class="row">
+    <div class='col-xs-12'>
+      <div class='panel-body'>
+        
+        <% case @c_mode %>
+          <% when "Monat" %>
+            <% btn_m = "active" %>
+            <% btn_y = "inactive" %>
+            <% btn_a = "inactive" %>
+          <% when "Jahr" %>
+            <% btn_y = "active" %>
+            <% btn_m = "inactive" %>
+            <% btn_a = "inactive" %>
+          <% when "alles" %>
+            <% btn_y = "inactive" %>
+            <% btn_m = "inactive" %>
+            <% btn_a = "active" %>
+        <% end %>
+        <% @date_start %>
+        <% @date_end %>
+        
+        <%= link_to timetracks_path(:mobject_id => @mobject.id, :user_id => current_user.id, :year => @c_year, :month => @c_month, :mode => "alles") do %>
+          <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-fullscreen"> alles</i></span>
+        <% end %>
+        <%= link_to timetracks_path(:mobject_id => @mobject.id, :user_id => current_user.id, :year => @c_year, :month => @c_month, :mode => "Monat") do %>
+          <span><i class="btn btn-<%= btn_m %> glyphicon glyphicon-calendar"> <%= @c_month %></i></span>
+        <% end %>
+        <%= link_to timetracks_path(:mobject_id => @mobject.id, :user_id => current_user.id, :year => @c_year, :month => @c_month, :mode => "Jahr")  do %>
+          <span><i class="btn btn-<%= btn_y %> glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
+        <% end %>
+
+        <% if @c_mode != "alles" %>
+          <%= link_to timetracks_path(:mobject_id => @mobject.id, :user_id => current_user.id, :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode)  do %>
+            <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
+          <% end %>
+          <%= link_to timetracks_path(:mobject_id => @mobject.id, :user_id => current_user.id, :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode) do %>
+            <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
+          <% end %>
+       <% end %>
+
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div>
+        <%= header("Alle Stunden (Zeit) ", false) %>
+      </div>
+      <div id="chartdate"></div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div>
+        <%= header("Alle Stunden (Mitarbeiter) ", false) %>
+      </div>
+      <div id="chartuser"></div>
+    </div>
+    <% @timetracks.each do |t| %>
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div>
+          <%= header("User "+User.find(t.user_id).name, false) %>
+        </div>
+        <div id="<%="chart"+t.user_id.to_s %>"></div>
+      </div>
+    <% end %>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script>
+$(document).ready(function(){
+
+  google.charts.load('current', {'packages':['corechart']});
+
+  window.datasetdate = [['kategorie', 'anzahl']];
+  <% case @c_mode %>
+    <% when "alles" %>
+      <% @tts = Timetrack.select("date(datum) as gdate, sum(amount) as sum").where('mobject_id=?',@mobject.id).group("datum").order("gdate") %>
+    <% when "Monat" %>
+      <% @tts = Timetrack.select("date(datum) as gdate, sum(amount) as sum").where('mobject_id=? and datum >=? and datum <=?',@mobject.id, @date_start, @date_end).group("datum").order("gdate") %>
+    <% when "Jahr" %>
+      <% @tts = Timetrack.select("jahrmonat as gdate, sum(amount) as sum").where('mobject_id=? and datum >=? and datum <=?',@mobject.id, @date_start, @date_end).group("jahrmonat").order("gdate") %>
+  <% end %>
+  <% @tts.each do |ts| %>
+    datasetdate.push(['<%= ts.gdate.to_s %>', <%= ts.sum %>]);
+  <% end %>
+  google.charts.setOnLoadCallback(drawChartdate);
+  function drawChartdate() {
+    var data = google.visualization.arrayToDataTable(datasetdate);
+    var options = {
+      title: 'Rapportierte Stunden',
+      colors: ['#F2B857'],
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById('chartdate'));
+    chart.draw(data, options);
+  };
+
+  window.datasetuser = [['kategorie', 'anzahl']];
+  <% if @c_mode == "alles" %>
+    <% @tts = Timetrack.select("user_id, sum(amount) as sum").where('mobject_id=?',@mobject.id).group("user_id") %>
+  <% else %>
+    <% @tts = Timetrack.select("user_id, sum(amount) as sum").where('mobject_id=? and datum >=? and datum <=?',@mobject.id, @date_start, @date_end).group("user_id") %>
+  <% end %>
+  <% @tts.each do |ts| %>
+    <% @user = User.find(ts.user_id) %>
+    datasetuser.push(['<%= @user.name + " " + @user.lastname %>', <%= ts.sum %>]);
+  <% end %>
+  google.charts.setOnLoadCallback(drawChartuser);
+  function drawChartuser() {
+    var data = google.visualization.arrayToDataTable(datasetuser);
+    var options = {
+      title: 'Rapportierte Stunden',
+      colors: ['#F2B857'],
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById('chartuser'));
+    chart.draw(data, options);
+  };
+
+  <% @timetracks.each do |t| %>
+  
+    <% case @c_mode %>
+      <% when "alles" %>
+        <% @tts = Timetrack.select("date(datum) as gdate, sum(amount) as sum").where('user_id=? and mobject_id=?', t.user.id, @mobject.id).group("datum").order("gdate") %>
+      <% when "Monat" %>
+        <% @tts = Timetrack.select("date(datum) as gdate, sum(amount) as sum").where('user_id=? and mobject_id=? and datum >=? and datum <=?', t.user_id, @mobject.id, @date_start, @date_end).group("datum").order("gdate") %>
+      <% when "Jahr" %>
+        <% @tts = Timetrack.select("jahrmonat as gdate, sum(amount) as sum").where('user_id=? and mobject_id=? and datum >=? and datum <=?', t.user_id, @mobject.id, @date_start, @date_end).group("jahrmonat").order("gdate") %>
+    <% end %>
+    <% if @tts %>
+      window.dataset<%= t.user_id.to_s %> = [['kategorie', 'anzahl']];
+      <% @tts.each do |ts| %>
+        dataset<%= t.user_id.to_s %>.push(['<%= ts.gdate.to_s %>', <%= ts.sum %>]);
+      <% end %>
+      google.charts.setOnLoadCallback(drawChart<%= t.user_id.to_s %>);
+      function drawChart<%= t.user_id.to_s %>() {
+        var data = google.visualization.arrayToDataTable(dataset<%= t.user_id.to_s %>);
+        var options = {
+          title: 'Rapportierte Stunden',
+          colors: ['#ACC550'],
+          legend: { position: 'bottom' }
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById('<%="chart"+t.user_id.to_s %>'));
+        chart.draw(data, options);
+      };
+    <% end %>
+
+  <% end %>
+  
+});
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {drawChartuser})
+</script>

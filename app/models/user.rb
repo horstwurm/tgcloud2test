@@ -32,6 +32,8 @@ class User < ActiveRecord::Base
     has_many :participants, dependent: :destroy   
     has_many :mlikes, dependent: :destroy   
     has_many :user_answers, dependent: :destroy   
+    has_many :timetracks, dependent: :destroy 
+    has_many :plannings, dependent: :destroy 
     
     # validates :userid, presence: true, :uniqueness => true
     validates :lastname, presence: true    
@@ -76,9 +78,5 @@ class User < ActiveRecord::Base
       end
       return array_s
     end
-    
-    def online?
-      !Redis.new.get("user_#{self.id}_online").nil?
-    end    
     
 end

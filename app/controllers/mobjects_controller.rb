@@ -37,8 +37,12 @@ class MobjectsController < ApplicationController
             session[:msubtype] = nil
       end
     end
+
+    if params[:parent]
+      session[:parent] = params[:parent]
+    end
     
-    @mobjects = Mobject.search(nil, nil, params[:filter_id], session[:mtype], session[:msubtype], params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
+    @mobjects = Mobject.search(nil, nil, params[:filter_id], session[:mtype], session[:msubtype], params[:search], params[:parent]).order(created_at: :desc).page(params[:page]).per_page(10)
     @mobanz = @mobjects.count
     @mtype = session[:mtype]
     @msubtype = session[:msubtype]
@@ -196,6 +200,61 @@ class MobjectsController < ApplicationController
       end
       
    end
+   
+   if @topic == "Auftragscontrolling"
+      if params[:year]
+        @c_year = params[:year]
+      else
+        @c_year = Date.today.year
+      end
+      if params[:month]
+        @c_month = params[:month]
+      else
+        @c_month = Date.today.month
+      end
+      if params[:mode]
+        @c_mode = params[:mode]
+      else
+        @c_mode = "Jahr"
+      end
+      if params[:dir] == ">"
+        if @c_mode == "Monat"
+          if @c_month.to_i == 12
+            @c_month =  1
+            @c_year = @c_year.to_i + 1
+          else
+            @c_month = @c_month.to_i + 1
+          end
+        end
+        if @c_mode == "Jahr"
+          @c_year = @c_year.to_i + 1
+        end
+      end
+      if params[:dir] == "<"
+        if @c_mode == "Monat"
+          if @c_month.to_i == 1
+            @c_month =  12
+            @c_year = @c_year.to_i - 1
+          else
+            @c_month = @c_month.to_i - 1
+          end
+        end
+        if @c_mode == "Jahr"
+          @c_year = @c_year.to_i - 1
+        end
+      end
+      case @c_mode
+        when "Monat"
+          @date_start = Date.new(@c_year.to_i,@c_month.to_i,1)
+          @date_end = @date_start.end_of_month
+        when "Jahr"
+          @date_start = Date.new(@c_year.to_i,1,1)
+          @date_end = Date.new(@c_year.to_i,12,31)
+        when "alles"
+      end
+      
+    end
+
     
   end
 
@@ -227,6 +286,11 @@ class MobjectsController < ApplicationController
     @mobject.sum_amount = 0
     @mobject.sum_rating = 0
 
+    if params[:parent]
+      @mobject.parent = params[:parent]
+    else
+      @mobject.parent = 0
+    end
     if params[:user_id]
       @mobject.owner_id = params[:user_id]
       @mobject.owner_type = "User"
@@ -309,7 +373,7 @@ class MobjectsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def mobject_params
-      params.require(:mobject).permit(:online_pub, :eventpart, :owner_id, :owner_type, :mtype, :msubtype, :mcategory_id, :company_id, :user_id, :status, :name, :description, :reward, :interest_rate, :due_date, :date_from, :date_to, :time_from, :time_to, :days, :amount, :price, :tasks, :skills, :offers, :social, :price_reg, :price_new, :active, :keywords, :homepage, :address1, :address2, :address3, :latitude, :longitude, :geo_address)
+      params.require(:mobject).permit(:parent, :online_pub, :eventpart, :owner_id, :owner_type, :mtype, :msubtype, :mcategory_id, :company_id, :user_id, :status, :name, :description, :reward, :interest_rate, :due_date, :date_from, :date_to, :time_from, :time_to, :days, :amount, :price, :tasks, :skills, :offers, :social, :price_reg, :price_new, :active, :keywords, :homepage, :address1, :address2, :address3, :latitude, :longitude, :geo_address)
     end
 
 end

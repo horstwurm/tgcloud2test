@@ -261,6 +261,11 @@ angebote_options, stellenanzeigen_options, kleinanzeigen_options, crowdfunding_o
     color: white;
 }
 
+.color_kapa_booked {
+    background-color:$color1;
+    color: white;
+}
+
 .form-control {
     border-color: $color1!important;
 }

@@ -15,6 +15,8 @@ has_many :comments, dependent: :destroy
 has_many :editions, dependent: :destroy 
 has_many :mlikes, dependent: :destroy 
 has_many :questions, dependent: :destroy 
+has_many :timetracks, dependent: :destroy 
+has_many :plannings, dependent: :destroy 
 
 before_validation :update_geo_address
 geocoded_by :geo_address
@@ -25,7 +27,7 @@ def update_geo_address
 end
 
 
-def self.search(cw, year, filter, mtype, msubtype, search)
+def self.search(cw, year, filter, mtype, msubtype, search, parent)
 if cw and year
       start_date = Date.commercial(year,cw,1)
       end_date = Date.commercial(year,cw,7)
@@ -57,7 +59,11 @@ if cw and year
                 if msubtype
                     where('status=? and mtype=? and msubtype=? and active=?', "OK", mtype, msubtype, true)
                 else
-                    where('status=? and mtype=? and active=?', "OK", mtype, true)
+                    if parent and mtype == "Projekte"
+                        where('parent=? and status=? and active=?', parent, "OK", true)
+                    else
+                        where('status=? and mtype=? and active=?', "OK", mtype, true)
+                    end
                 end
             end
         end

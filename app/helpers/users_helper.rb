@@ -699,6 +699,11 @@ def build_medialist2(items, cname, par)
                     access = true
                   end
                   if cname == "mobjects"
+                    if item.mtype == "Projekte"
+                      html_string = html_string + link_to(timetracks_path(:mobject_id => item.id)) do 
+                        content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+                      end
+                    end
                     if item.mtype == "Veranstaltungen" 
                       if item.eventpart
                         if @angemeldet
@@ -1064,6 +1069,9 @@ def navigate(object,item)
         html_string = html_string + build_nav("Privatpersonen",item,"Publikationen", item.mobjects.where('mtype=?',"Publikationen").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Artikel", item.mobjects.where('mtype=?',"Artikel").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Umfragen", item.mobjects.where('mtype=?',"Umfragen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Projekte", item.mobjects.where('mtype=? and parent=?',"Projekte",0).count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Zeiterfassung", item.timetracks.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Ressourcenplanung", item.plannings.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Kundenbeziehungen", item.customers.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Transaktionen", item.transactions.where('ttype=?', "Payment").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"eMail", Email.where('m_to=? or m_from=?', item.id, item.id).count > 0)
@@ -1090,6 +1098,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Institutionen",item,"Digital Signage (Standorte)", item.signage_locs.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Publikationen", item.mobjects.where('mtype=?',"Publikationen").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Umfragen", item.mobjects.where('mtype=?',"Umfragen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Projekte", item.mobjects.where('mtype=? and parent=?',"Projekte",0).count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Kundenbeziehungen", item.customers.count > 0)
         html_string = html_string + build_nav("Institutionen",item,"Transaktionen",item.transactions.where('ttype=?', "Payment").count > 0)
         html_string = html_string + build_nav("Institutionen",item,"eMail", Email.where('m_to=? or m_from=?', item.user.id, item.user.id).count > 0)
@@ -1131,6 +1140,11 @@ def navigate(object,item)
         end
         if item.mtype == "Umfragen"
           html_string = html_string + build_nav("Objekte",item,"Umfrageteilnehmer",User.count > 0)
+        end
+        if item.mtype == "Projekte"
+          html_string = html_string + build_nav("Objekte",item,"Substruktur", Mobject.where('parent=?',item.id).count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Berechtigungen", item.madvisors.where('role=?',item.mtype).count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Auftragscontrolling", item.timetracks.count > 0)
         end
         if item.mtype == "Crowdfunding"
           html_string = html_string + build_nav("Objekte",item,"CF Statistik",item.mstats.count > 0)
@@ -1292,7 +1306,7 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(new_company_path :user_id => current_user.id) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Vermietungen", "Veranstaltungen", "Ausflugsziele", "Ausschreibungen", "Publikationen", "Artikel", "Umfragen"
+            when "Vermietungen", "Veranstaltungen", "Ausflugsziele", "Ausschreibungen", "Publikationen", "Artikel", "Umfragen", "Projekte"
               html_string = html_string + link_to(new_mobject_path :user_id => current_user.id, :mtype => topic, :msubtype => nil) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
@@ -1356,7 +1370,7 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(home_index8_path :company_id => item.id, :mtype => topic) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Vermietungen", "Veranstaltungen", "Ausflugsziele", "Ausschreibungen", "Publikationen", "Umfragen"
+            when "Vermietungen", "Veranstaltungen", "Ausflugsziele", "Ausschreibungen", "Publikationen", "Umfragen", "Projekte"
               html_string = html_string + link_to(new_mobject_path :company_id => item.id, :mtype => topic, :msubtype => nil) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
@@ -1380,10 +1394,36 @@ def action_buttons2(object, item, topic)
         end
         
       when "Objekte"
-         html_string = html_string + link_to(mobjects_path :mtype => item.mtype, :msubtype => item.msubtype, :page => session[:page]) do
+         html_string = html_string + link_to(mobjects_path :mtype => item.mtype, :msubtype => item.msubtype, :page => session[:page], :parent => session[:parent]) do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
+          if item.parent and item.parent > 0 
+            html_string = html_string + link_to(mobject_path :id => item.parent, :mtype => "Projekte", :msubtype => nil, :topic => "Substruktur") do
+              content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-level-up")
+            end
+          end 
          case topic
+
+            when "Berechtigungen"
+               if user_signed_in?
+                 if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
+                    html_string = html_string + link_to(madvisors_path :user_id => item.owner_id, :mobject_id => item.id, :role => item.mtype) do
+                      content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+                    end
+                 end
+                end
+
+            when "Substruktur"
+              if item.owner_type == "User"
+                html_string = html_string + link_to(new_mobject_path :user_id => item.owner_id, :mtype => "Projekte", :msubtype => nil, :parent => item.id) do
+                  content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+                end
+              end
+              if item.owner_type == "Company"
+                html_string = html_string + link_to(new_mobject_path :company_id => item.owner_id, :mtype => "Projekte", :msubtype => nil, :parent => item.id) do
+                  content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+                end
+              end
 
             when "Info"
                if user_signed_in?
@@ -1466,7 +1506,7 @@ def action_buttons2(object, item, topic)
               end
             when "Ansprechpartner"
               if user_signed_in?
-                if (item.owner_type == "User" and item.owner_id == current_user.id)
+                if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                   html_string = html_string + link_to(madvisors_path :mobject_id => item.id) do
                     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                   end
@@ -1597,6 +1637,24 @@ def getIcon(iconstring)
     icontext = nil
     case iconstring
 
+      when "Auftragscontrolling"
+        icon = "eye-open"
+        icontext = "Auftragscontrolling"
+      when "Berechtigungen"
+        icon = "user"
+        icontext = "Zugriffsberechtigungen"
+      when "Ressourcenplanung"
+        icon = "road"
+        icontext = "Ressourcenplanung"
+      when "Zeiterfassung"
+        icon = "time"
+        icontext = "Zeiterfassung"
+      when "Substruktur"
+        icon = "tasks"
+        icontext = "Projekte, Teilprojekte, Aufträge, Tasks"
+      when "Projekte/Aufträge", "Projekte"
+        icon = "tasks"
+        icontext = "Projekte & Aufträge"
       when "Fragen"
         icon = "question-sign"
         icontext = "Fragen"
@@ -2142,6 +2200,12 @@ def build_hauptmenue
         html_string = html_string + simple_menue(domain, path)
     end
 
+    if creds.include?("Hauptmenue"+"Projekte")
+        domain = "Projekte/Aufträge"
+        path = mobjects_path(:mtype => "Projekte", :msubtype => "Root", :parent => 0)
+        html_string = html_string + simple_menue(domain, path)
+    end
+
     if creds.include?("Hauptmenue"+"Stellenanzeigen")
         hasharray = []
         domain = "Stellenanzeigen"
@@ -2568,6 +2632,9 @@ def init_apps
     hash = {"domain" => "Hauptmenue", "right" => "Umfragen", "access" => true}
     @array << hash
     hash = Hash.new
+    hash = {"domain" => "Hauptmenue", "right" => "Projekte", "access" => true}
+    @array << hash
+    hash = Hash.new
     hash = {"domain" => "Hauptmenue", "parent_domain" => "Kleinanzeigen", "right" => "KleinanzeigenAnbieten", "access" => false}
     @array << hash
     hash = Hash.new
@@ -2689,6 +2756,15 @@ def init_apps
     hash = {"domain" => "Privatpersonen", "right" => "Umfragen", "access" => true}
     @array << hash
     hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Projekte/Aufträge", "access" => true}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Zeiterfassung", "access" => true}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Ressourcenplanung", "access" => true}
+    @array << hash
+    hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Kundenbeziehungen", "access" => false}
     @array << hash
     hash = Hash.new
@@ -2768,6 +2844,9 @@ def init_apps
     hash = {"domain" => "Institutionen", "right" => "Umfragen", "access" => true}
     @array << hash
     hash = Hash.new
+    hash = {"domain" => "Institutionen", "right" => "Projekte/Aufträge", "access" => true}
+    @array << hash
+    hash = Hash.new
     hash = {"domain" => "Institutionen", "right" => "Kundenbeziehungen", "access" => false}
     @array << hash
     hash = Hash.new
@@ -2809,6 +2888,12 @@ def init_apps
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "Ansprechpartner", "access" => false}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Berechtigungen", "access" => true}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Auftragscontrolling", "access" => true}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "Kalender (Vermietungen)", "access" => false}
@@ -3156,6 +3241,81 @@ def build_questionaire(questionaire)
     
   html_string = html_string + "</div>"
   return html_string.html_safe
+end
+
+def current_period(p, item)
+  case p
+  when "Jahr"
+      if Date.today.strftime("%m").to_i == item
+          return true
+      end
+  when "Monat"
+      if Date.today.strftime("%W").to_i == item
+          return true
+      end
+  when "Woche"
+      if Date.today == item
+          return true
+      end
+  end
+  return false
+end
+
+def plans (header, period, w, data, c_year, c_month, c_week)
+    
+  total = []
+    
+  html = ""
+  html << content_tag(:tr, class:"plans_row") do
+      
+      concat(content_tag(:td, class:"plans_col") do
+            showFirstImage2(:small, w,w.mdetails)
+          end)
+      
+      concat(content_tag(:td, w.name, class:"plans_col"))
+
+      for i in 0..header.length-1 do
+          
+          total[i] = 0
+          
+          @plans = eval_plan(period, w, data[i], c_year, c_month, c_week)
+
+          if @plans.count != 0
+              concat(content_tag(:td, class:"info") do
+                  @plans.each do |pl|
+                      total[i] = total[i] + pl.percentage
+                      concat(pl.percentage.to_s)
+                      concat(link_to "", pl, :method => :delete, :data => {:confirm => "You Sure?"}, class:"plans_col btn btn-default btn-xs glyphicon glyphicon-trash pull-right").html_safe
+                      concat(link_to "", edit_planning_path(pl.id), class:"btn btn-default btn-xs glyphicon glyphicon-time pull-right").html_safe
+
+                      concat(link_to "", new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :date => data[i], :year => c_year, :month => c_month, :week => c_week, :period => period), class:"btn btn-default btn-xs glyphicon glyphicon-plus pull-right").html_safe
+                  end
+              end)
+          else
+
+              concat(content_tag(:td, "", class:"plans_col") do
+                  concat(link_to "", new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :date => data[i], :year => c_year, :month => c_month, :week => c_week, :period => period), class:"btn btn-default btn-xs glyphicon glyphicon-plus pull-right").html_safe
+              end)
+          end
+          
+      end
+      
+  end
+  return {:html => html.html_safe, :total => total}
+end
+
+def eval_plan(period, w, item, c_year, c_month, c_week)
+  case period
+  when "Jahr"
+      @plans = Planning.where("user_id=? and mobject_id=? and year=? and month=? and period=?", current_user.id, w.id, c_year, item, period)
+
+  when "Monat"
+      @plans = Planning.where("user_id=? and mobject_id=? and year=? and month=? and week=? and period=?", current_user.id, w.id, c_year, c_month, item, period)
+
+  when "Woche"
+      @plans = Planning.where("user_id=? and mobject_id=? and day=? and period=?", current_user.id, w.id, item, period)
+  end
+  return @plans
 end
 
 end    

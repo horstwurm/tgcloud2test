@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Plannings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Mobject</th>
+      <th>Period</th>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Week</th>
+      <th>Day</th>
+      <th>Percentage</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @plannings.each do |planning| %>
+      <tr>
+        <td><%= planning.user_id %></td>
+        <td><%= planning.mobject_id %></td>
+        <td><%= planning.period %></td>
+        <td><%= planning.year %></td>
+        <td><%= planning.month %></td>
+        <td><%= planning.week %></td>
+        <td><%= planning.day %></td>
+        <td><%= planning.percentage %></td>
+        <td><%= link_to 'Show', planning %></td>
+        <td><%= link_to 'Edit', edit_planning_path(planning) %></td>
+        <td><%= link_to 'Destroy', planning, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Planning', new_planning_path %>

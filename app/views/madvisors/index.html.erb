@@ -13,7 +13,12 @@
   </div>
 
   <div class="row">
-      <%= header("Ansprechpartner " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
+      <% case @mobject_type %>
+        <% when "Angebote" %>
+          <%= header("Ansprechpartner " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
+        <% when "Projekte" %>
+          <%= header("Zugriffsberechtigungen für " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
+      <% end %>
   </div>
   
 	<div class="row">
@@ -29,13 +34,20 @@
           <% @users.each do |u| %>
             <tr>
               <td>
-                <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page] do %>
-                  <i class="btn btn-primary glyphicon glyphicon-tags"></i>
+                <% case @mobject.mtype %>
+                  <% when "Angebote" %>
+                    <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id do %>
+                      <i class="btn btn-primary glyphicon glyphicon-tags"></i>
+                    <% end %>
+                    <%= link_to madvisors_path :madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id do %>
+                      <i class="btn btn-primary glyphicon glyphicon-tag"></i>
+                    <% end %>
+                  <% when "Projekte" %>
+                    <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
+                      <i class="btn btn-primary glyphicon glyphicon-check"></i>
+                    <% end %>
                 <% end %>
-                <%= link_to madvisors_path :madvisor_id => u.id, :page => session[:page]  do %>
-                  <i class="btn btn-primary glyphicon glyphicon-tag"></i>
-                <% end %>
-                <%= link_to madvisors_path :delete_madvisor_id => u.id, :page => session[:page] do %>
+                <%= link_to madvisors_path :delete_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id do %>
                   <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                 <% end %>
               </td>

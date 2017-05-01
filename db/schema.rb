@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418175046) do
+ActiveRecord::Schema.define(version: 20170430080757) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(version: 20170418175046) do
     t.string   "grade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "role"
   end
 
   create_table "mcalendars", force: :cascade do |t|
@@ -282,6 +283,7 @@ ActiveRecord::Schema.define(version: 20170418175046) do
     t.float    "sum_amount"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "parent"
     t.index ["owner_id"], name: "index_mobjects_on_owner_id"
     t.index ["owner_type"], name: "index_mobjects_on_owner_type"
   end
@@ -339,6 +341,20 @@ ActiveRecord::Schema.define(version: 20170418175046) do
     t.string   "link"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+  end
+
+  create_table "plannings", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "mobject_id"
+    t.string   "period"
+    t.string   "year"
+    t.string   "month"
+    t.string   "week"
+    t.string   "day"
+    t.float    "percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "jahrmonat"
   end
 
   create_table "qrcodes", force: :cascade do |t|
@@ -477,6 +493,17 @@ ActiveRecord::Schema.define(version: 20170418175046) do
     t.integer  "contingent"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "timetracks", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "mobject_id"
+    t.string   "activity"
+    t.float    "amount"
+    t.date     "datum"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "jahrmonat"
   end
 
   create_table "transactions", force: :cascade do |t|

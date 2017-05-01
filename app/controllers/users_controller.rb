@@ -78,9 +78,85 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     
-    if params[:header] != nil and params[:body] != nil
-      UserMailer.send_message(params[:id], params[:header], params[:body]).deliver_now
-    end
+      if params[:year]
+        @c_year = params[:year]
+      else
+        @c_year = Date.today.year
+      end
+      if params[:month]
+        @c_month = params[:month]
+      else
+        @c_month = Date.today.month
+      end
+      if params[:week]
+        @c_week = params[:week]
+      else
+        @c_week = Date.today.cweek
+      end
+      
+      if params[:mode]
+        @c_mode = params[:mode]
+      else
+        @c_mode = "Jahr"
+      end
+      
+      if params[:dir] == ">"
+        if @c_mode == "Woche"
+          if @c_week.to_i == 52
+            @c_week =  1
+            @c_year = @c_year.to_i + 1
+          else
+            @c_week = @c_week.to_i + 1
+          end
+        end
+        if @c_mode == "Monat"
+          if @c_month.to_i == 12
+            @c_month =  1
+            @c_year = @c_year.to_i + 1
+          else
+            @c_month = @c_month.to_i + 1
+          end
+        end
+        if @c_mode == "Jahr"
+          @c_year = @c_year.to_i + 1
+        end
+      end
+      if params[:dir] == "<"
+        if @c_mode == "Woche"
+          if @c_week.to_i == 1
+            @c_week =  52
+            @c_year = @c_year.to_i - 1
+          else
+            @c_week = @c_week.to_i - 1
+          end
+        end 
+        if @c_mode == "Monat"
+          if @c_month.to_i == 1
+            @c_month =  12
+            @c_year = @c_year.to_i - 1
+          else
+            @c_month = @c_month.to_i - 1
+          end
+        end
+        if @c_mode == "Jahr"
+          @c_year = @c_year.to_i - 1
+        end
+      end
+      case @c_mode
+        when "Monat"
+          @date_start = Date.new(@c_year.to_i,@c_month.to_i,1)
+          @date_end = @date_start.end_of_month
+        when "Jahr"
+          @date_start = Date.new(@c_year.to_i,1,1)
+          @date_end = Date.new(@c_year.to_i,12,31)
+        when "alles"
+      end
+
+      @mymobjects = Mobject.where('mtype=?',"Projekte")
+    
+      if params[:header] != nil and params[:body] != nil
+        UserMailer.send_message(params[:id], params[:header], params[:body]).deliver_now
+      end
     
      if params[:trx_status_ok_id]
        @trx = Transaction.find(params[:trx_status_ok_id])

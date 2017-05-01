@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :plannings
+  resources :timetracks
   resources :user_answers
   resources :answers
   resources :questions

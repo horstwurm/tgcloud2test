@@ -198,6 +198,13 @@
                     <%= @mobject.address2 if @mobject.address2 %><br>
                     <%= @mobject.address3 if @mobject.address3 %><br>
                     <br>
+                    
+                   <% when "Projekte" %>
+                    <%= header("Projekte, Teilprojekte, Aufträge, Tasks", false) %>
+                    <div class="panel-body">
+                      <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "User") %>
+                    </div>
+                    <br>
 
                   <% when "Stellenanzeigen" %>
                       <div class="row">
@@ -375,6 +382,90 @@
             <%= build_medialist2(@mobject.madvisors, "madvisors", "User") %>
           </div>
 
+        <% when "Berechtigungen" %>
+          <%= header("Zugriffsberechtigungen", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "User") %>
+          </div>
+
+        <% when "Auftragscontrolling" %>
+          <%= header("Soll/Ist Vergleich", false) %>
+          <div class="panel-body">
+
+              <% case @c_mode %>
+                <% when "Monat" %>
+                  <% btn_m = "active" %>
+                  <% btn_y = "inactive" %>
+                  <% btn_a = "inactive" %>
+                <% when "Jahr" %>
+                  <% btn_y = "active" %>
+                  <% btn_m = "inactive" %>
+                  <% btn_a = "inactive" %>
+                <% when "alles" %>
+                  <% btn_y = "inactive" %>
+                  <% btn_m = "inactive" %>
+                  <% btn_a = "active" %>
+              <% end %>
+              <% @date_start %>
+              <% @date_end %>
+
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "alles")  do %>
+                <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-fullscreen"> alles</i></span>
+              <% end %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "Jahr")  do %>
+                <span><i class="btn btn-<%= btn_y %> glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
+              <% end %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "Monat")  do %>
+                <span><i class="btn btn-<%= btn_m %> glyphicon glyphicon-calendar"> <%= @c_month %></i></span>
+              <% end %>
+              <% if @c_mode != "alles" %>
+                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode) do %>
+                  <i class="btn btn btn-primary glyphicon glyphicon-chevron-left"></i>
+                <% end %>
+                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode ) do %>
+                  <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
+                <% end %>
+              <% end %>
+             <br><br>
+             
+            <% if @c_mode == "alles" %>
+              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=?',@mobject.id).group("jahrmonat") %>
+              <% @pts = Planning.select("jahrmonat, sum(percentage) as sum").where('mobject_id=?',@mobject.id).group("jahrmonat") %>
+            <% else %>        
+              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and datum>=? and datum<=?', @mobject.id, @date_start, @date_end).group("jahrmonat") %>
+              <% if @c_mode == "Monat" %>
+                <% @pts = Planning.select("jahrmonat, sum(percentage) as sum").where('mobject_id=? and year=? and month=?', @mobject.id, @c_year, @c_month).group("jahrmonat") %>
+              <% end %>
+              <% if @c_mode == "Jahr" %>
+                <% @pts = Planning.select("jahrmonat, sum(percentage) as sum").where('mobject_id=? and year=?',@mobject.id, @c_year).group("jahrmonat") %>
+              <% end %>
+            <% end %>
+            <% @plans = [] %>
+            <% @pts.each do |p| %>
+              <% if p.sum > 0 %>
+                <% h = Hash.new %>
+                <% h = {:jahrmonat => p.jahrmonat.to_s, :kapa => (p.sum * 20) / 100} %>
+                <% @plans << h %>
+              <% end %>
+            <% end %>
+            <% @istsoll = [] %>
+            <% @istsoll << ['kategorie', 'IST','PLAN'] %>
+            <% @tts.each do |t| %>
+              <% kapa = 0 %>
+              <% for i in 0..@plans.length-1 %>
+                <% if @plans[i][:jahrmonat] == t.jahrmonat %>
+                  <% kapa = @plans[i][:kapa] %>
+                <% end %>
+              <% end %>
+              <% @istsoll << [t.jahrmonat, t.sum, kapa] %>
+            <% end %>
+            
+            <%= @istsoll %>
+            
+             <div id="auftragschartall"></div>
+
+          </div>
+
         <% when "Blog" %>
           <%= header("Blog", false) %>
           <div class="panel-body">
@@ -391,6 +482,12 @@
           <%= header("Ausgaben", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.editions.order(created_at: :desc), "editions", "User") %>
+          </div>
+
+        <% when "Substruktur" %>
+          <%= header("Projekte, Teilprojekte, Aufträge, Tasks", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "User") %>
           </div>
 
         <% when "Teilnehmer (Veranstaltungen)" %>
@@ -555,6 +652,26 @@
 $(document).ready(function(){
 
       google.charts.load('current', {'packages':['corechart']});
+      
+      <% if @topic == "Auftragscontrolling" %>
+        google.charts.load('current', {'packages':['corechart']});
+        window.datasetall = [['kategorie', 'IST','SOLL']];
+        <% @tts.each do |ts| %>
+          datasetall.push(['<%= ts.jahrmonat %>', <%= ts.sum %>, <%= ts.sum %>]);
+        <% end %>
+        google.charts.setOnLoadCallback(drawChartall);
+        function drawChartall() {
+          var data = google.visualization.arrayToDataTable(<%= raw @istsoll %>);
+          var options = {
+            title: 'Rapportierte Stunden',
+            colors: ['#ACC550','#2E6B33'],
+            // legend: { position: 'bottom' }
+          };
+          // var chart = new google.visualization.ColumnChart(document.getElementById("auftragschartall"));
+          var chart = new google.visualization.ColumnChart(document.getElementById("auftragschartall"));
+          chart.draw(data, options);
+        };
+    <% end %>
 
       <% if @mobject.mtype == "Umfragen" %>
       
