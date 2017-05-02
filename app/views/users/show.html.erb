@@ -229,8 +229,10 @@
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                       <div>
 
-                        <%= link_to new_timetrack_path(:user_id => @user.id, :mobject_id => t.mobject_id) do %>
-                          <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-plus"></i></span>
+                        <% if Madvisor.where('mobject_id=? and role=?', t.mobject_id, t.mobject.mtype).count > 0 %>
+                          <%= link_to new_timetrack_path(:user_id => @user.id, :mobject_id => t.mobject_id) do %>
+                            <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-plus"></i></span>
+                          <% end %>
                         <% end %>
 
                         <%= header("Projekt/Auftrag "+Mobject.find(t.mobject_id).name, false) %>

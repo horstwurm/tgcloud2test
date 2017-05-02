@@ -151,8 +151,12 @@ class UsersController < ApplicationController
           @date_end = Date.new(@c_year.to_i,12,31)
         when "alles"
       end
-
-      @mymobjects = Mobject.where('mtype=?',"Projekte")
+      
+      myobs = []
+      @user.madvisors.each do |a|
+        myobs << a.mobject_id 
+      end
+      @mymobjects = Mobject.where('mtype=? and id IN (?)',"Projekte", myobs)
     
       if params[:header] != nil and params[:body] != nil
         UserMailer.send_message(params[:id], params[:header], params[:body]).deliver_now

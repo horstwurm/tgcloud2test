@@ -1644,7 +1644,7 @@ def getIcon(iconstring)
         icon = "user"
         icontext = "Zugriffsberechtigungen"
       when "Ressourcenplanung"
-        icon = "road"
+        icon = "screenshot"
         icontext = "Ressourcenplanung"
       when "Zeiterfassung"
         icon = "time"

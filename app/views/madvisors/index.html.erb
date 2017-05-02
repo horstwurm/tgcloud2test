@@ -3,8 +3,15 @@
     <div class="row">
       <div class="col-md-12">
         <div class="digg_pagination">
-            <%= link_to(mobject_path(@mobject, :topic => "Advisors")) do %>
-              <i class="btn btn-primary glyphicon glyphicon-list"></i>
+            <% case @mobject.mtype %>
+            <% when "Angebote" %>
+              <%= link_to(mobject_path(:id => @mobject.id, :topic => "Ansprechpartner")) do %>
+                <i class="btn btn-primary glyphicon glyphicon-list"></i>
+              <% end %>
+            <% when "Projekte" %>
+              <%= link_to(mobject_path(:id => @mobject.id, :topic => "Berechtigungen")) do %>
+                <i class="btn btn-primary glyphicon glyphicon-list"></i>
+              <% end %>
             <% end %>
             <%= will_paginate @users, :container => false, previous_label: "<", next_label: ">" %>
         </div>
@@ -13,7 +20,7 @@
   </div>
 
   <div class="row">
-      <% case @mobject_type %>
+      <% case @mobject.mtype %>
         <% when "Angebote" %>
           <%= header("Ansprechpartner " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
         <% when "Projekte" %>
@@ -34,6 +41,14 @@
           <% @users.each do |u| %>
             <tr>
               <td>
+                <% found = false %>
+                <% grade = nil %>
+                <% for i in 0..@array.length-1 %>
+                  <% if @array[i]["key"].to_i == u.id %>
+                    <% found = true %>
+                    <% grade = @array[i]["grade"] %>
+                  <% end %>
+                <% end %>
                 <% case @mobject.mtype %>
                   <% when "Angebote" %>
                     <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id do %>
@@ -42,28 +57,25 @@
                     <%= link_to madvisors_path :madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id do %>
                       <i class="btn btn-primary glyphicon glyphicon-tag"></i>
                     <% end %>
-                  <% when "Projekte" %>
-                    <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
-                      <i class="btn btn-primary glyphicon glyphicon-check"></i>
+                    <% if grade %>
+                      <%= link_to madvisors_path :delete_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id do %>
+                        <i class="btn btn-danger glyphicon glyphicon-remove-sign"></i>
+                      <% end %>
                     <% end %>
-                <% end %>
-                <%= link_to madvisors_path :delete_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id do %>
-                  <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                  <% when "Projekte" %>
+                    <% if !grade %>
+                      <%= link_to madvisors_path :madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
+                        <i class="btn btn-primary glyphicon glyphicon-ok-sign"></i>
+                      <% end %>
+                    <% else %>
+                      <%= link_to madvisors_path :delete_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id do %>
+                        <i class="btn btn-danger glyphicon glyphicon-remove-sign"></i>
+                      <% end %>
+                    <% end %>
                 <% end %>
               </td>
               <td>
-                <% found = false %>
-                <% grade = "" %>
-                <% for i in 0..@array.length-1 %>
-                  <% if @array[i]["key"].to_i == u.id %>
-                    <% found = true %>
-                    <% grade = @array[i]["grade"] %>
-                  <% end %>
-                <% end %>
-                <% case grade %>
-                  <% when "Senior Berater" %>
-                    <senior_berater><%= grade %></senior_berater>
-                  <% when "Berater" %>
+                <% if grade %>
                     <berater><%= grade %></berater>
                 <% end %>
               </td>
