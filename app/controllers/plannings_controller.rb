@@ -18,8 +18,8 @@ class PlanningsController < ApplicationController
     @planning.percentage = 50
     @planning.mobject_id = params[:mobject_id]
     @planning.user_id = params[:user_id]
-    @planning.jahr = params[:year]
-    @planning.monat = params[:month]
+    @planning.jahr = params[:year].to_s
+    @planning.monat = params[:month].to_s
   end
 
   # GET /plannings/1/edit
@@ -33,7 +33,7 @@ class PlanningsController < ApplicationController
 
     respond_to do |format|
       if @planning.save
-        format.html { redirect_to user_path(:id => @planning.user_id, :topic => "Ressourcenplanung", :year => @planning.jahr, :month => @planning.monat, :mode => @planning.period), notice: 'Planning was successfully created.' }
+        format.html { redirect_to user_path(:id => @planning.user_id, :topic => "Ressourcenplanung", :year => @planning.jahr, :month => @planning.monat), notice: 'Planning was successfully created.' }
         format.json { render :show, status: :created, location: @planning }
       else
         format.html { render :new }
@@ -47,7 +47,7 @@ class PlanningsController < ApplicationController
   def update
     respond_to do |format|
       if @planning.update(planning_params)
-        format.html { redirect_to user_path(:id => @planning.user_id, :topic => "Ressourcenplanung", :year => @planning.jahr, :month => @planning.monat, :mode => @planning.period), notice: 'Planning was successfully updated.' }
+        format.html { redirect_to user_path(:id => @planning.user_id, :topic => "Ressourcenplanung", :year => @planning.jahr, :month => @planning.monat), notice: 'Planning was successfully updated.' }
         format.json { render :show, status: :ok, location: @planning }
       else
         format.html { render :edit }
@@ -75,6 +75,6 @@ class PlanningsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def planning_params
-      params.require(:planning).permit(:user_id, :mobject_id, :period, :jahr, :monat, :percentage)
+      params.require(:planning).permit(:user_id, :mobject_id, :jahr, :monat, :percentage)
     end
 end
