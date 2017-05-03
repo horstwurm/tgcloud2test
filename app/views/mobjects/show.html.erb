@@ -435,10 +435,10 @@
             <% else %>        
               <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and datum>=? and datum<=?', @mobject.id, @date_start, @date_end).group("jahrmonat") %>
               <% if @c_mode == "Monat" %>
-                <% @pts = Planning.select("jahrmonat, sum(percentage) as sum").where('mobject_id=? and jahr=? and monat=?', @mobject.id, @c_year, @c_month).group("jahrmonat") %>
+                <% @pts = Planning.select("jahrmonat, sum(percentage) as sum").where('mobject_id=? and jahr=? and monat=?', @mobject.id, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
               <% end %>
               <% if @c_mode == "Jahr" %>
-                <% @pts = Planning.select("jahrmonat, sum(percentage) as sum").where('mobject_id=? and jahr=?',@mobject.id, @c_year).group("jahrmonat") %>
+                <% @pts = Planning.select("jahrmonat, sum(percentage) as sum").where('mobject_id=? and jahr=?',@mobject.id, @c_year.to_s).group("jahrmonat") %>
               <% end %>
             <% end %>
             <% @plans = [] %>
@@ -471,10 +471,10 @@
             <% else %>        
               <% @tts = Timetrack.select("user_id, sum(amount) as sum").where('mobject_id=? and datum>=? and datum<=?', @mobject.id, @date_start, @date_end).group("user_id") %>
               <% if @c_mode == "Monat" %>
-                <% @pts = Planning.select("user_id, sum(percentage) as sum").where('mobject_id=? and jahr=? and monat=?', @mobject.id, @c_year, @c_month).group("user_id") %>
+                <% @pts = Planning.select("user_id, sum(percentage) as sum").where('mobject_id=? and jahr=? and monat=?', @mobject.id, @c_year.to_s, @c_month.to_s).group("user_id") %>
               <% end %>
               <% if @c_mode == "Jahr" %>
-                <% @pts = Planning.select("user_id, sum(percentage) as sum").where('mobject_id=? and jahr=?',@mobject.id, @c_year).group("user_id") %>
+                <% @pts = Planning.select("user_id, sum(percentage) as sum").where('mobject_id=? and jahr=?',@mobject.id, @c_year.to_s).group("user_id") %>
               <% end %>
             <% end %>
             <% @plans = [] %>
@@ -518,10 +518,10 @@
                       <% else %>        
                         <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and datum>=? and datum<=?', @mobject.id, t.user_id, @date_start, @date_end).group("jahrmonat") %>
                         <% if @c_mode == "Monat" %>
-                          <% @pts = Planning.select("jahrmonat, sum(percentage) as sum").where('mobject_id=? and user_id=? and jahr=? and monat=?', @mobject.id, t.user_id, @c_year, @c_month).group("jahrmonat") %>
+                          <% @pts = Planning.select("jahrmonat, sum(percentage) as sum").where('mobject_id=? and user_id=? and jahr=? and monat=?', @mobject.id, t.user_id, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
                         <% end %>
                         <% if @c_mode == "Jahr" %>
-                          <% @pts = Planning.select("jahrmonat, sum(percentage) as sum").where('mobject_id=? and user_id=? and jahr=?',@mobject.id, t.user_id, @c_year).group("jahrmonat") %>
+                          <% @pts = Planning.select("jahrmonat, sum(percentage) as sum").where('mobject_id=? and user_id=? and jahr=?',@mobject.id, t.user_id, @c_year.to_s).group("jahrmonat") %>
                         <% end %>
                       <% end %>
                       <% @plans = [] %>
