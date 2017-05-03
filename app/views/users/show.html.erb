@@ -338,7 +338,7 @@
                       <tr>            
 
                         <% plans = [] %>
-                        <% @plannings = Planning.where('mobject_id=? and user_id=? and jahr=?', w.id, current_user.id, @c_year) %>
+                        <% @plannings = Planning.where('mobject_id=? and user_id=? and jahr=?', w.id, current_user.id, @c_year.to_s) %>
                         <% @plannings.each do |p| %>
                           <% h = Hash.new %>
                           <% h = {:id => p.id, :monat => p.monat.to_i, :kapa => p.percentage} %>
