@@ -287,7 +287,7 @@ class MobjectsController < ApplicationController
     @mobject.sum_rating = 0
 
     if params[:parent]
-      @mobject.parent = params[:parent]
+      @mobject.parent = params[:parent].to_i
     else
       @mobject.parent = 0
     end
