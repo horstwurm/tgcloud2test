@@ -699,9 +699,11 @@ def build_medialist2(items, cname, par)
                     access = true
                   end
                   if cname == "mobjects"
-                    if item.mtype == "Projekte"
-                      html_string = html_string + link_to(timetracks_path(:mobject_id => item.id)) do 
-                        content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+                    if user_signed_in?
+                      if item.mtype == "Projekte" and item.madvisors.where('role=? and user_id=?',item.mtype, current_user.id).count > 0
+                        html_string = html_string + link_to(timetracks_path(:mobject_id => item.id)) do 
+                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+                        end
                       end
                     end
                     if item.mtype == "Veranstaltungen" 

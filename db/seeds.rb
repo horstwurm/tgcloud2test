@@ -730,6 +730,73 @@ mobjects = Mobject.create({status:"OK", active:true, mtype:"Artikel", msubtype:n
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Twint 2.0 in a nutshell", description:"hier steht die Problemstellung", avatar:File.open(path+'mp.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lösungsansatz Twint", description:"hier stehen die Lösungsansätze", avatar:File.open(path+'marketplace.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
+#Umfragen
+co = rand(capanz)+1
+comp = Company.find(4)
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Umfragen", msubtype:nil, name:"Unser Personalrestaurant", owner_type:"Company", owner_id: comp.id, mcategory_id:88, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+@mob = Mobject.where('name=?', "Unser Personalrestaurant").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'kantine.jpg', 'rb'), document:File.open(path+'std.pdf', 'rb')})
+
+questions = Question.create({mobject_id: @mob.id, name:"Wie gefällt Ihnen unser Angebot?", description:"", mcategory_id:91, sequence:1})
+answers = Answer.create({question_id:Question.last.id, name:"sehr gut (6)"})
+answers = Answer.create({question_id:Question.last.id, name:"gut (5)"})
+answers = Answer.create({question_id:Question.last.id, name:"befriedigend (4)"})
+answers = Answer.create({question_id:Question.last.id, name:"ausreichend (3)"})
+answers = Answer.create({question_id:Question.last.id, name:"mangelhaft (2)"})
+answers = Answer.create({question_id:Question.last.id, name:"ungenügend (1)"})
+
+questions = Question.create({mobject_id: @mob.id, name:"Wie finden Sie unseren Service?", description:"", mcategory_id:91, sequence:2})
+answers = Answer.create({question_id:Question.last.id, name:"sehr gut (6)"})
+answers = Answer.create({question_id:Question.last.id, name:"gut (5)"})
+answers = Answer.create({question_id:Question.last.id, name:"befriedigend (4)"})
+answers = Answer.create({question_id:Question.last.id, name:"ausreichend (3)"})
+answers = Answer.create({question_id:Question.last.id, name:"mangelhaft (2)"})
+answers = Answer.create({question_id:Question.last.id, name:"ungenügend (1)"})
+
+questions = Question.create({mobject_id: @mob.id, name:"Wie bewerten Sie unsere Qualität?", description:"", mcategory_id:91, sequence:3})
+answers = Answer.create({question_id:Question.last.id, name:"sehr gut (6)"})
+answers = Answer.create({question_id:Question.last.id, name:"gut (5)"})
+answers = Answer.create({question_id:Question.last.id, name:"befriedigend (4)"})
+answers = Answer.create({question_id:Question.last.id, name:"ausreichend (3)"})
+answers = Answer.create({question_id:Question.last.id, name:"mangelhaft (2)"})
+answers = Answer.create({question_id:Question.last.id, name:"ungenügend (1)"})
+
+questions = Question.create({mobject_id: @mob.id, name:"Wie beurteilen Sie unsere Preise?", description:"", mcategory_id:91, sequence:4})
+answers = Answer.create({question_id:Question.last.id, name:"sehr gut (6)"})
+answers = Answer.create({question_id:Question.last.id, name:"gut (5)"})
+answers = Answer.create({question_id:Question.last.id, name:"befriedigend (4)"})
+answers = Answer.create({question_id:Question.last.id, name:"ausreichend (3)"})
+answers = Answer.create({question_id:Question.last.id, name:"mangelhaft (2)"})
+answers = Answer.create({question_id:Question.last.id, name:"ungenügend (1)"})
+
+questions = Question.create({mobject_id: @mob.id, name:"Was fällt Ihnen zu uns ein?", description:"", mcategory_id:92, sequence:5})
+answers = Answer.create({question_id:Question.last.id, name:"engageiert"})
+answers = Answer.create({question_id:Question.last.id, name:"freundlich"})
+answers = Answer.create({question_id:Question.last.id, name:"innovativ"})
+answers = Answer.create({question_id:Question.last.id, name:"langweilig"})
+answers = Answer.create({question_id:Question.last.id, name:"teuer"})
+answers = Answer.create({question_id:Question.last.id, name:"angenehm"})
+
+#Umfragen
+co = rand(capanz)+1
+comp = Company.find(4)
+mobjects = Mobject.create({parent:0, status:"OK", active:true, mtype:"Projekte", msubtype:nil, name:"Digitalisierung", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+@mobi = Mobject.where('name=?', "Digitalisierung").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mobi.id, name:"", description:"", avatar:File.open(path+'dig1.png', 'rb')})
+
+comp = Company.find(4)
+mobjects = Mobject.create({parent: @mobi.id, status:"OK", active:true, mtype:"Projekte", msubtype:nil, name:"Plattform", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+@mob = Mobject.where('name=?', "Plattform").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'dig1.png', 'rb')})
+comp = Company.find(4)
+mobjects = Mobject.create({parent: @mobi.id, status:"OK", active:true, mtype:"Projekte", msubtype:nil, name:"Kundenwebportal KWP", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+@mob = Mobject.where('name=?', "Kundenwebportal KWP").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'dig2.png', 'rb')})
+comp = Company.find(4)
+mobjects = Mobject.create({parent: @mobi.id, status:"OK", active:true, mtype:"Projekte", msubtype:nil, name:"Redesign WebSite", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+@mob = Mobject.where('name=?', "Redesign WebSite").first
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'dig3.png', 'rb')})
+
 #Bewertungen
 obanz = Mobject.count-1
 obj = rand(obanz)+1
@@ -745,3 +812,5 @@ for i in 1..200
     @user = User.find(us)
     mratings = Mrating.create({status:"OK", mobject_id:@object.id, user_id: @user.id, comment: "ok", rating: rat})
 end
+
+

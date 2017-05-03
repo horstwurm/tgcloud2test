@@ -98,7 +98,7 @@ class MadvisorsController < ApplicationController
 
   # DELETE /madvisors/1
   def destroy
-    @id = @madvisors.mobject_id
+    @id = @madvisor.mobject_id
     @madvisor.destroy
       redirect_to mobject_path(:id => @id, :topic => "Ansprechpartner"), notice: 'Ansprechpartner was successfully destroyed.'
   end
