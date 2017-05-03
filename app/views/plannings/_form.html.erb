@@ -16,10 +16,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading header">
                       <li_header>
-                        <%= link_to user_path(:id => @planning.user_id, :topic => "Ressourcenplanung", :year => @planning.year, :mode => "Jahr") do %>
+                        <%= link_to user_path(:id => @planning.user_id, :topic => "Ressourcenplanung", :year => @planning.jahr, :mode => "Jahr") do %>
                           <i class="btn btn-primary glyphicon glyphicon-list"></i>
                         <% end %>
-                        Ressourcenplanung <%= @planning.user.name + " " + @planning.user.lastname + " " + @planning.mobject.name + " " + @planning.year + "/" + @planning.month %>
+                        Ressourcenplanung <%= @planning.user.name + " " + @planning.user.lastname + " " + @planning.mobject.name + " " + @planning.jahr + "/" + @planning.monat %>
                       </li_header>
                     </div>
                 </div>
@@ -38,8 +38,8 @@
                     </div>
                     <%= f.hidden_field :user_id, class:"form-control"  %>
                     <%= f.hidden_field :mobject_id, class:"form-control"  %>
-                    <%= f.hidden_field :year, class:"form-control"  %>
-                    <%= f.hidden_field :month, class:"form-control"  %>
+                    <%= f.hidden_field :jahr, class:"form-control"  %>
+                    <%= f.hidden_field :monat, class:"form-control"  %>
                 </div>
             </div>
         </div>

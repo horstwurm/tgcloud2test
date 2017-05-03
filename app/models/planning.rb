@@ -5,10 +5,10 @@ class Planning < ApplicationRecord
     after_validation :update_jahrmonat
     
     def update_jahrmonat
-      if self.month.length == 1
-        self.month = "0"+self.month
+      if self.monat.length == 1
+        self.monat = "0"+self.monat
       end
-      self.jahrmonat = self.year+"-"+self.month
+      self.jahrmonat = self.jahr+"-"+self.monat
 
     end
 

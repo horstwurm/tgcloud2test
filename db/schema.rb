@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170430080757) do
+ActiveRecord::Schema.define(version: 20170503181535) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(version: 20170430080757) do
     t.boolean  "access"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.boolean  "pilot"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -346,11 +345,8 @@ ActiveRecord::Schema.define(version: 20170430080757) do
   create_table "plannings", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "mobject_id"
-    t.string   "period"
-    t.string   "year"
-    t.string   "month"
-    t.string   "week"
-    t.string   "day"
+    t.string   "jahr"
+    t.string   "monat"
     t.float    "percentage"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
