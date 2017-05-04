@@ -38,8 +38,12 @@ class MobjectsController < ApplicationController
       end
     end
 
-    if params[:parent]
-      session[:parent] = params[:parent]
+    if session[:mtype] == "Projekte"
+      if params[:parent]
+        session[:parent] = params[:parent]
+      end
+    else
+      session[:parent] = nil
     end
     
     @mobjects = Mobject.search(nil, nil, params[:filter_id], session[:mtype], session[:msubtype], params[:search], params[:parent]).order(created_at: :desc).page(params[:page]).per_page(10)

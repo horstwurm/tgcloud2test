@@ -60,7 +60,7 @@ if cw and year
                     where('status=? and mtype=? and msubtype=? and active=?', "OK", mtype, msubtype, true)
                 else
                     if parent and mtype == "Projekte"
-                        where('parent=? and status=? and active=?', parent, "OK", true)
+                        where('parent=? and status=? and mtype=? and active=?', parent, "OK", mtype, true)
                     else
                         where('status=? and mtype=? and active=?', "OK", mtype, true)
                     end

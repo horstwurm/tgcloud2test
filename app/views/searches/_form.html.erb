@@ -174,6 +174,18 @@
                             <%= f.text_field :date_to, class:"form-control"%>
                           </div>
 
+                        <% when "Umfragen" %>
+                          <div class="form-group">
+                            <%= f.label "Kategorie" %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Umfragen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                          </div>
+
+                        <% when "Projekte" %>
+                          <div class="form-group">
+                            <%= f.label "Kategorie" %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Projekte").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                          </div>
+
                         <% when "Ausflugsziele" %>
                           <div class="form-group">
                             <%= f.label "Kategorie" %><br/>

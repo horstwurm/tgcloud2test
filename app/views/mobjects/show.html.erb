@@ -445,7 +445,7 @@
             <% @pts.each do |p| %>
               <% if p.sum > 0 %>
                 <% h = Hash.new %>
-                <% h = {:jahrmonat => p.jahrmonat.to_s, :kapa => (p.sum * 20) / 100} %>
+                <% h = {:jahrmonat => p.jahrmonat.to_s, :kapa => (p.sum * 170) / 100} %>
                 <% @plans << h %>
               <% end %>
             <% end %>
@@ -481,7 +481,7 @@
             <% @pts.each do |p| %>
               <% if p.sum > 0 %>
                 <% h = Hash.new %>
-                <% h = {:user_id => p.user_id, :kapa => (p.sum * 20) / 100} %>
+                <% h = {:user_id => p.user_id, :kapa => (p.sum * 170) / 100} %>
                 <% @plans << h %>
               <% end %>
             <% end %>
@@ -528,7 +528,7 @@
                       <% @pts.each do |p| %>
                         <% if p.sum > 0 %>
                           <% h = Hash.new %>
-                          <% h = {:jahrmonat => p.jahrmonat.to_s, :kapa => (p.sum * 20) / 100} %>
+                          <% h = {:jahrmonat => p.jahrmonat, :kapa => (p.sum * 170)/100} %>
                           <% @plans << h %>
                         <% end %>
                       <% end %>

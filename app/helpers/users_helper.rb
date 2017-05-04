@@ -661,7 +661,7 @@ def build_medialist2(items, cname, par)
                   end
                 when "editions"
     	            html_string = html_string + link_to(edition_arcticles_path(:edition_id => item)) do 
-                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-book")
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-text-background")
                   end
                   if (item.mobject.owner_type == "User" and item.mobject.owner_id == current_user.id) or (item.mobject.owner_type == "Company" and item.mobject.owner.user_id == current_user.id)
                     access = true
@@ -3139,7 +3139,7 @@ def build_article(article)
                   
                     html_string = html_string + "<h4 class='panel panel-blog'>"
                       html_string = html_string + "<a role='button' data-toggle='collapse' data-parent='#accordionB"+article.id.to_s+"' href='#collapseTwoB"+article.id.to_s+"' aria-expanded='true' aria-controls='collapseOne'>"
-                        html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_header> "
+                        html_string = html_string + "<artikel_subheader><i class='glyphicon glyphicon-chevron-down'> </i>"+ d.name + "</artikel_header> "
                         #html_string = html_string + link_to(mobject_path :mobject_id => article.id, :topic => "Bewertungen") do
                         if user_signed_in?
                           html_string = html_string + link_to(new_mrating_path(:mobject_id => article.id, :user_id => current_user.id)) do
@@ -3164,7 +3164,7 @@ def build_article(article)
                   
                     html_string = html_string + "<h4 class='panel panel-blog'>"
                       html_string = html_string + "<a role='button' data-toggle='collapse' data-parent='#accordionG"+article.id.to_s+"' href='#collapseTwoG"+article.id.to_s+"' aria-expanded='true' aria-controls='collapseOne'>"
-                        html_string = html_string + "<artikel_subheader>"+ d.name + "</artikel_header> "
+                        html_string = html_string + "<artikel_subheader><i class='glyphicon glyphicon-chevron-down'> </i>" + d.name + "</artikel_header> "
                         #html_string = html_string + link_to(mobject_path :mobject_id => article.id, :topic => "Blog") do
                         if user_signed_in?
                           html_string = html_string + link_to(new_comment_path(:mobject_id => article.id, :user_id => current_user.id)) do

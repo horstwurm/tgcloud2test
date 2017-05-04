@@ -777,7 +777,7 @@ answers = Answer.create({question_id:Question.last.id, name:"langweilig"})
 answers = Answer.create({question_id:Question.last.id, name:"teuer"})
 answers = Answer.create({question_id:Question.last.id, name:"angenehm"})
 
-#Umfragen
+#Projekte
 co = rand(capanz)+1
 comp = Company.find(4)
 mobjects = Mobject.create({parent:0, status:"OK", active:true, mtype:"Projekte", msubtype:nil, name:"Digitalisierung", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})

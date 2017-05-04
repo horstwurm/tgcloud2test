@@ -224,8 +224,11 @@
                   </div>
                 </div>
 
+                <% @mob = [] %>
                 <div class="row">
                   <% @timetracks.each do |t| %>
+                  
+                    <% @mob << t.mobject_id %>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                       <div>
 
@@ -240,6 +243,21 @@
                       <div id="<%="auftragschart"+t.mobject_id.to_s %>"></div>
                     </div>
                   <% end %>
+                </div>
+                
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div>
+                      <%= header("Projekte/Aufträge berechtigt",false) %>
+                    </div>
+                    <% @user.madvisors.where('role=?',"Projekte").each do |m| %>
+                      <% if !@mob.include?(m.mobject_id) %>
+                        <%= link_to new_timetrack_path(:user_id => @user.id, :mobject_id => m.mobject_id) do %>
+                          <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-plus"><%= m.mobject.name %></i></span>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </div>
                 </div>
 
                 <% if @c_mode == "Monat" %>

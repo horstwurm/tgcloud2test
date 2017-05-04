@@ -132,7 +132,7 @@ class TimetracksController < ApplicationController
     @timetrack_user_id = @timetrack.user_id
     @timetrack.destroy
     respond_to do |format|
-      format.html { redirect_to timetracks_path(:mobject_id => @timetrack_mobject_id), notice: 'Timetrack was successfully destroyed.' }
+      #format.html { redirect_to timetracks_path(:mobject_id => @timetrack_mobject_id), notice: 'Timetrack was successfully destroyed.' }
       format.html { redirect_to user_path(:id => @timetrack_user_id, :topic => "Zeiterfassung"), notice: 'Timetrack was successfully created.' }
       format.json { head :no_content }
     end
