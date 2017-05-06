@@ -86,35 +86,21 @@ class UsersController < ApplicationController
 
     case @topic
       when "Info"
-        counter = 0 
-        @locs = "["
-        @wins = "["
+
+        @locs = []
+        @wins = []
         @up = @user.user_positions.limit(20).order(created_at: :desc)
         @count = @up.count
         @up.each do |u|
           if u.longitude and u.latitude and u.geo_address
-            @locs = @locs + "["
-            @locs = @locs + "'" + u.user.fullname + "', "
-            @locs = @locs + u.latitude.to_s + ", "
-            @locs = @locs + u.longitude.to_s
-            if counter+1 == @up.count
-              @locs = @locs + "]"
-            else
-              @locs = @locs + "],"
-            end
-    
-            @wins = @wins + "["
-            @wins = @wins + "'<h3>" + u.created_at.strftime("%d.%m.%Y") + "</h3><p>" + u.geo_address + "</p>'"
-            if counter+1 == @up.count
-              @wins = @wins + "]"
-            else
-              @wins = @wins + "],"
-            end
+            @locs << [u.user.fullname, u.latitude, u.longitude]
+            @wins << ["<h3>" + u.created_at.strftime("%d.%m.%Y") + "</h3><p>" + u.geo_address + "</p>"]
           end
-          counter = counter + 1
         end
-        @locs = @locs + "]"
-        @wins = @wins + "]"
+        if @locs.length == 0
+            @locs << ["Adresse", @user.latitude, @user.longitude]
+            @wins << ["<h3> keine weiteren Positionen gespeichert </h3>" + @user.geo_address ]
+          end
 
         @stats = [["Aktivtät","Anzahl"]]
         @stats << ["Institutionen", @user.companies.count]
