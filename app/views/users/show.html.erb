@@ -1,9 +1,9 @@
 
-  <div class="row">
-    <action>
-    <%= action_buttons2("Privatpersonen", @user, @topic) %>
-    </action>
-  </div>
+  <!--<div class="row">-->
+  <!--  <action>-->
+  <!--  <%= action_buttons2("Privatpersonen", @user, @topic) %>-->
+  <!--  </action>-->
+  <!--</div>-->
 
   <div class="row">
     <header>
@@ -22,10 +22,11 @@
 
       <% case @topic %>
         <% when "Info" %>
+          <%= header2("Privatpersonen", @user, @topic, "Informationen", false) %>
 
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-              <%= header("Kontaktdaten", false) %>
+              <%= header2("Privatpersonen", @user, @topic, "Kontaktinformationen", false) %>
               <div class="panel-body">
 
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -466,40 +467,8 @@
           </div>
           
         <% when "Kalendereintraege" %>
-          <% if false %>
-          <%= header("Kalender KW " + session[:cw].to_s, false) %>
-          <!--<div class='col-xs-12'><div class="panel-body">-->
-          <div class="panel-body">
-        		<table class="table table-striped">
-              <thead>
-                <tr>
-                  <th><small_cal>Uhrzeit<small_cal></th>
-                  <% for i in 0..6 %>
-                    <% if @start+i == Date.today %>
-                      <th class="color_today">
-                    <% else %>
-                      <th>
-                    <% end %>
-                      <%= $wochentage[i] %><br>
-                      <small_cal>
-                        <%= (@start+i).strftime("%d.%m") %>
-                      </small_cal>
-                    </th>
-                  <% end %>
-                </tr>
-              </thead>
-              <tbody>
-                <%= AppItem(@user, @appointments, @start) %>
-              </tbody>
-            </table>
-            <angefragt>?</angefragt><abgelehnt>NOK</abgelehnt><bestaetigt>OK</bestaetigt><geblockt>N/A</geblockt><br><br>
-          <!--</div></div>-->
-          </div>
-          <% end %>
-
-          <div id='calendar'></div>
-          
           <%= header("Terminübersicht", false) %>
+          <div id='calendar'></div>
           <div class="panel-body">
           	<table class="table table-striped">
               <thead>
@@ -981,4 +950,32 @@ $(document).ready(function(){
     <script>
       document.addEventListener("turbolinks:load", function() {init_map(0); initialize(); drawChart();})
     </script>
+
+  <% when "Kalendereintraege" %>
+    <script>
+      document.addEventListener("turbolinks:load", function() {
+        $('#calendar').fullCalendar({
+            now: '<%= DateTime.now %>',
+            allDaySlot: false,
+            timeFormat: 'H(:mm)',
+            defaultView: 'basicWeek',
+            defaultView: 'basicDay',
+            defaultView: 'basicWeek',
+            defaultView: 'listYear',
+            defaultView: 'month',
+            defaultView: 'agendaWeek',
+            slotDuration: '1:00:00',
+            contentHeight: 'auto',
+            <% if @user.time_from and @user.time_to %>
+              minTime: '<%= @user.time_from %>:00',
+              maxTime: '<%= @user.time_to %>:00',
+            <% end %>
+            textColor: 'white',
+            firstDay: 1,
+            weekNumbers: true,
+            events: [<%= raw @array %> ]
+        });
+      })
+    </script>
+
 <% end %>

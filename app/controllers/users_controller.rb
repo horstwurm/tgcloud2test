@@ -35,43 +35,20 @@ class UsersController < ApplicationController
     @filter = params[:filter_id]
     @users = User.search(params[:filter_id],params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
     @usanz = @users.count
-     counter = 0 
-     @locs = "["
-     @wins = "["
-     @users.each do |u|
 
-        if u.longitude and u.latitude and u.geo_address
-       
-          @locs = @locs + "["
-          @locs = @locs + "'" + u.fullname + "', "
-          @locs = @locs + u.latitude.to_s + ", "
-          @locs = @locs + u.longitude.to_s
-          if counter+1 == @usanz
-            @locs = @locs + "]"
-          else
-            @locs = @locs + "],"
-          end
-  
-          @wins = @wins + "["
-          @wins = @wins + "'<img src=" + u.avatar(:small) + "<br><h3>" + u.fullname + "</h3><p>" + u.geo_address + "</p>'"
-          if counter+1 == @usanz
-            @wins = @wins + "]"
-          else
-            @wins = @wins + "],"
-          end
-
-        end
-
-        counter = counter + 1
+    @locs = []
+    @wins = []
+    @users.each do |u|
+      if u.longitude and u.latitude and u.geo_address
+        @locs << [u.fullname, u.latitude, u.longitude]
+        @wins << ["<img src=" + u.avatar(:small) + "<br><h3>" + u.created_at.strftime("%d.%m.%Y") + "</h3><p>" + u.geo_address + "</p>"]
       end
-      @locs = @locs + "]"
-      @wins = @wins + "]"
-     
-    respond_to do |format|
-      format.html
-      format.json { render :json => @users }
     end
-     
+    if @locs.length == 0
+        @locs << ["Adresse", 100, 100]
+        @wins << ["<h3> keine Geodaten vorhanden </h3>" ]
+    end
+    
   end
   
   # GET /users/1
