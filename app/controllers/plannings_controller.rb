@@ -15,7 +15,7 @@ class PlanningsController < ApplicationController
   # GET /plannings/new
   def new
     @planning = Planning.new
-    @planning.percentage = 50
+    @planning.amount = 50
     @planning.mobject_id = params[:mobject_id]
     @planning.user_id = params[:user_id]
     @planning.jahr = params[:year].to_s
@@ -75,6 +75,6 @@ class PlanningsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def planning_params
-      params.require(:planning).permit(:user_id, :mobject_id, :jahr, :monat, :percentage)
+      params.require(:planning).permit(:user_id, :costortime, :mobject_id, :jahr, :monat, :amount)
     end
 end

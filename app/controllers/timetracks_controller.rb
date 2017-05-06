@@ -146,6 +146,6 @@ class TimetracksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def timetrack_params
-      params.require(:timetrack).permit(:jahrmonat, :user_id, :mobject_id, :activity, :amount, :datum)
+      params.require(:timetrack).permit(:costortime, :jahrmonat, :user_id, :mobject_id, :activity, :amount, :datum)
     end
 end
