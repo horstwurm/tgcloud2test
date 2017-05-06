@@ -1404,6 +1404,11 @@ def action_buttons2(object, item, topic)
                html_string = html_string + link_to(mobjects_path(:mtype => item.mtype, :msubtype => item.msubtype, :page => session[:page], :parent => session[:parent]), title: "Übersicht "+item.mtype, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
                end
+               if session[:edition_id]
+                 html_string = html_string + link_to(edition_path(:id => session[:edition_id], :topic => "Info"), title: "Zurück zur Ausgabe ", 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-book")
+                 end
+               end 
                 if item.parent and item.parent > 0 
                   html_string = html_string + link_to(mobject_path(:id => item.parent, :mtype => "Projekte", :msubtype => nil, :topic => "Substruktur"), title: "Eine Hierachie-Stufe zurück ", 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
                     content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-level-up")

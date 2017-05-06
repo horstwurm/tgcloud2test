@@ -92,7 +92,7 @@
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
               <% if $activeapps.include?("PrivatpersonenAktivitaeten") or (user_signed_in? and current_user.superuser) %>
                 <%= header("Aktivitätsübersicht", false) %>
-                <%= @stats %>
+                <% @stats %>
                 <div class="panel-body">
                   <i class="glyphicon glyphicon-map-marker pull-left" onclick="return drawChart();"></i>
                   <div id="piechart"></div>
