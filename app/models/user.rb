@@ -67,16 +67,4 @@ class User < ActiveRecord::Base
         [name, lastname, email].join(' ')        
     end
 
-
-    def build_stats(array_s, records, label)
-      if records != nil
-        anz = records.count
-        if anz > 0
-          array_s = array_s + "['" + label + "'," + anz.to_s + "],"
-          return array_s
-        end
-      end
-      return array_s
-    end
-    
 end

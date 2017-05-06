@@ -78,248 +78,34 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     
-      if params[:year]
-        @c_year = params[:year]
-      else
-        @c_year = Date.today.year
-      end
-      if params[:month]
-        @c_month = params[:month]
-      else
-        @c_month = Date.today.month
-      end
-      if params[:week]
-        @c_week = params[:week]
-      else
-        @c_week = Date.today.cweek
-      end
-      
-      if params[:mode]
-        @c_mode = params[:mode]
-      else
-        @c_mode = "Jahr"
-      end
-      
-      if params[:dir] == ">"
-        if @c_mode == "Woche"
-          if @c_week.to_i == 52
-            @c_week =  1
-            @c_year = @c_year.to_i + 1
-          else
-            @c_week = @c_week.to_i + 1
-          end
-        end
-        if @c_mode == "Monat"
-          if @c_month.to_i == 12
-            @c_month =  1
-            @c_year = @c_year.to_i + 1
-          else
-            @c_month = @c_month.to_i + 1
-          end
-        end
-        if @c_mode == "Jahr"
-          @c_year = @c_year.to_i + 1
-        end
-      end
-      if params[:dir] == "<"
-        if @c_mode == "Woche"
-          if @c_week.to_i == 1
-            @c_week =  52
-            @c_year = @c_year.to_i - 1
-          else
-            @c_week = @c_week.to_i - 1
-          end
-        end 
-        if @c_mode == "Monat"
-          if @c_month.to_i == 1
-            @c_month =  12
-            @c_year = @c_year.to_i - 1
-          else
-            @c_month = @c_month.to_i - 1
-          end
-        end
-        if @c_mode == "Jahr"
-          @c_year = @c_year.to_i - 1
-        end
-      end
-      case @c_mode
-        when "Monat"
-          @date_start = Date.new(@c_year.to_i,@c_month.to_i,1)
-          @date_end = @date_start.end_of_month
-        when "Jahr"
-          @date_start = Date.new(@c_year.to_i,1,1)
-          @date_end = Date.new(@c_year.to_i,12,31)
-        when "alles"
-      end
-      
-      myobs = []
-      @user.madvisors.each do |a|
-        myobs << a.mobject_id 
-      end
-      @mymobjects = Mobject.where('mtype=? and id IN (?)',"Projekte", myobs)
-    
-      if params[:header] != nil and params[:body] != nil
-        UserMailer.send_message(params[:id], params[:header], params[:body]).deliver_now
-      end
-    
-     if params[:trx_status_ok_id]
-       @trx = Transaction.find(params[:trx_status_ok_id])
-       if @trx
-         @trx.status = "freigegeben"
-         @trx.save
-       end
-     end
-     if params[:trx_status_ausgefuehrt_id]
-       @trx = Transaction.find(params[:trx_status_ausgefuehrt_id])
-       if @trx
-         @trx.status = "ausgeführt"
-         @trx.save
-       end
-     end
+   if params[:topic]
+     @topic = params[:topic]
+   else 
+     @topic = "Info"
+   end 
 
-     if params[:topic]
-       @topic = params[:topic]
-     else 
-       @topic = "Info"
-     end 
-
-    if params[:topic] == "Kalendereintraege"
-     if false
-     if !session[:cw]
-        session[:cw] = Date.today.cweek.to_i
-      end
-      if !session[:year]
-        session[:year] = Date.today.cwyear.to_i
-      end
-      if params[:dir]
-        case params[:dir]
-          when ">"
-            if session[:cw] == 52
-              session[:cw] = 1
-              session[:year] = session[:year].to_i + 1
-            else
-              session[:cw] = session[:cw].to_i + 1
-            end
-          when "<"
-            if session[:cw] == 1
-              session[:cw] = 52
-              session[:year] = session[:year].to_i - 1
-            else
-              session[:cw] = session[:cw].to_i - 1
-            end
-        end
-      end
-      end
-      
-      if params[:confirm_id]
-        @appoint = Appointment.find(params[:confirm_id])
-        if @appoint
-          @appoint.confirmed = true
-          @appoint.save
-        end
-      end
-      if params[:noconfirm_id]
-        @appoint = Appointment.find(params[:noconfirm_id])
-        if @appoint
-          @appoint.confirmed = false
-          @appoint.save
-        end
-      end
-      if false
-      @start = Date.commercial(session[:year],session[:cw],1)
-      @appointments = Appointment.search(@user.id, session[:cw], session[:year]).order(app_date: :asc)
-      @appanz = @appointments.count
-      @subject = params[:subject]
-      end
-
-      counter = 0 
-      @array = ""
-      @cals = Appointment.where('user_id1=? and active=?', @user.id, true)
-      @anz = @cals.count
-      @cals.each do |c|
-
-      time_from = c.time_from.to_s
-      if c.time_from.to_s.length == 1
-        time_from = "0"+c.time_from.to_s
-      end
-      time_to = c.time_to.to_s
-      if c.time_to.to_s.length == 1
-        time_to = "0"+c.time_to.to_s
-      end
-      @calstart = c.app_date.strftime("%Y-%m-%d")+"T"+time_from+":00"
-      @calend = c.app_date.strftime("%Y-%m-%d")+"T"+time_to+":00"
-      
-      counter = counter + 1
-      @array = @array + "{"
-      if c.user_id1 == c.user_id2
-        @array = @array + "color: '#E0E0E0',"
-      else
-        if c.confirmed
-          @array = @array + "color: '#ACC550',"
-        else
-          @array = @array + "color: '#61A6A7',"
-        end
-      end
-      @array = @array + "textColor: 'white',"
-      user = User.find(c.user_id2)
-      case c.channel
-        when "Geschäftsstelle"
-           icon = '<i class="glyphicon glyphicon-briefcase"></i>'
-        when "Treffpunkt"
-           icon = '<i class="glyphicon glyphicon-map-marker"></i>'
-        when "Wohnort Berater"
-           icon = '<i class="glyphicon glyphicon-home"></i>'
-        when "Wohnort Kunde"
-           icon = '<i class="glyphicon glyphicon-home"></i>'
-        when "Telefon"
-           icon = '<i class="glyphicon glyphicon-phone-alt"></i>'
-        when "VideoChat"
-           icon = '<i class="glyphicon glyphicon-facetime-video"></i>'
-        else
-           icon = '<i class="glyphicon glyphicon-question-sign"></i>'
-      end
-      @array = @array + "icon: '" + icon + "', "
-      if user
-        @array = @array + "title: '" + user.name + " " + user.lastname + "', "
-      else
-        @array = @array + "title: 'unknown', "
-      end
-      @array = @array + "start: '" + @calstart + "', "
-      @array = @array + "end: '" + @calend + "', "
-      @array = @array + "url: '" + user_path(:id => c.user_id2, :topic => "Info") +"'" 
-      @array = @array + "}"
-      if @cals.count >= counter
-        @array = @array + ", "
-      end
-      
-   end
-      
-      
-      
-    end
-
-    if @topic == "Favoriten"
-     counter = 0 
-     @locs = "["
-     @wins = "["
-     @favourits = Favourit.where('user_id=? and object_name=?', @user.id, "User") 
-     @favourits.each do |f|
-        u = UserPosition.where('user_id=?',f.object_id).last
-        if u
+    case @topic
+      when "Info"
+        counter = 0 
+        @locs = "["
+        @wins = "["
+        @up = @user.user_positions.limit(20).order(created_at: :desc)
+        @count = @up.count
+        @up.each do |u|
           if u.longitude and u.latitude and u.geo_address
             @locs = @locs + "["
             @locs = @locs + "'" + u.user.fullname + "', "
             @locs = @locs + u.latitude.to_s + ", "
             @locs = @locs + u.longitude.to_s
-            if counter+1 == @favourits.count
+            if counter+1 == @up.count
               @locs = @locs + "]"
             else
               @locs = @locs + "],"
             end
     
             @wins = @wins + "["
-            @wins = @wins + "'<img src=" + u.user.avatar(:medium) + "<br><h3>" + u.user.fullname + "</h3><p>" + u.user.geo_address + "</p>'"
-            if counter+1 == @favourits.count
+            @wins = @wins + "'<h3>" + u.created_at.strftime("%d.%m.%Y") + "</h3><p>" + u.geo_address + "</p>'"
+            if counter+1 == @up.count
               @wins = @wins + "]"
             else
               @wins = @wins + "],"
@@ -327,67 +113,247 @@ class UsersController < ApplicationController
           end
           counter = counter + 1
         end
-      end
-      @locs = @locs + "]"
-      @wins = @wins + "]"
-    end
+        @locs = @locs + "]"
+        @wins = @wins + "]"
 
-    if @topic == "Info"
-     counter = 0 
-     @locs = "["
-     @wins = "["
-     @up = @user.user_positions.limit(20).order(created_at: :desc)
-     @count = @up.count
-     @up.each do |u|
-        if u.longitude and u.latitude and u.geo_address
-          @locs = @locs + "["
-          @locs = @locs + "'" + u.user.fullname + "', "
-          @locs = @locs + u.latitude.to_s + ", "
-          @locs = @locs + u.longitude.to_s
-          if counter+1 == @up.count
-            @locs = @locs + "]"
-          else
-            @locs = @locs + "],"
+        @stats = [["Aktivtät","Anzahl"]]
+        @stats << ["Institutionen", @user.companies.count]
+        @stats << ["Kalendereinträge", Appointment.where('user_id1=? or user_id2=?',@user.id,@user.id).count]
+        @stats << ["Angebote", @user.mobjects.where('mtype=?','Angebote').count]
+        @stats << ["Ansprechpartner", @user.madvisors.count]
+        @stats << ["Kleinanzeigen", @user.mobjects.where('mtype=?','Kleinanzeigen').count ]
+        @stats << ["Stellenanzeigen", @user.mobjects.where('mtype=?','Stellenanzeigen').count ]
+        @stats << ["Veranstaltungen", @user.mobjects.where('mtype=?','Veranstaltungen').count ]
+        @stats << ["Ausschreibungen", @user.mobjects.where('mtype=?','Ausschreibungen').count ]
+        @stats << ["Ausflugsziele", @user.mobjects.where('mtype=?','Ausflugsziele').count ]
+        @stats << ["Artikel", @user.mobjects.where('mtype=?','Artikel').count ]
+        @stats << ["Publikationen", @user.mobjects.where('mtype=?','Publikationen').count ]
+        @stats << ["Umfragen", @user.mobjects.where('mtype=?','Umfragen').count ]
+        @stats << ["Projekte/Tasks", @user.mobjects.where('mtype=?','Projekte').count ]
+        @stats << ["Crowdfunding", @user.mobjects.where('mtype=?','Crowdfunding').count ]
+        @stats << ["Crowdfunding Beiträge", @user.mstats.count ]
+        @stats << ["Tickets", @user.user_tickets.count ]
+        @stats << ["Bewertungen", @user.mratings.count ]
+        @stats << ["Favoriten", @user.favourits.count ]
+        @stats << ["Kundenverbindungen", @user.customers.count ]
+        @stats << ["ZV Transaktionen", @user.transactions.where('ttype=?', "Payment").count]
+        @stats << ["Messages", Email.where('m_to=? or m_from=?', @user.id, @user.id).count ]
+        @stats << ["Abfragen", @user.searches.count]
+    
+      when "Ressourcenplanung", "Zeiterfassung"
+
+        if params[:year]
+          @c_year = params[:year]
+        else
+          @c_year = Date.today.year
+        end
+        if params[:month]
+          @c_month = params[:month]
+        else
+          @c_month = Date.today.month
+        end
+        if params[:week]
+          @c_week = params[:week]
+        else
+          @c_week = Date.today.cweek
+        end
+        
+        if params[:mode]
+          @c_mode = params[:mode]
+        else
+          @c_mode = "Jahr"
+        end
+        
+        if params[:dir] == ">"
+          if @c_mode == "Woche"
+            if @c_week.to_i == 52
+              @c_week =  1
+              @c_year = @c_year.to_i + 1
+            else
+              @c_week = @c_week.to_i + 1
+            end
           end
-  
-          @wins = @wins + "["
-          @wins = @wins + "'<h3>" + u.created_at.strftime("%d.%m.%Y") + "</h3><p>" + u.geo_address + "</p>'"
-          if counter+1 == @up.count
-            @wins = @wins + "]"
-          else
-            @wins = @wins + "],"
+          if @c_mode == "Monat"
+            if @c_month.to_i == 12
+              @c_month =  1
+              @c_year = @c_year.to_i + 1
+            else
+              @c_month = @c_month.to_i + 1
+            end
+          end
+          if @c_mode == "Jahr"
+            @c_year = @c_year.to_i + 1
           end
         end
-        counter = counter + 1
-      end
-      @locs = @locs + "]"
-      @wins = @wins + "]"
-    end
+        if params[:dir] == "<"
+          if @c_mode == "Woche"
+            if @c_week.to_i == 1
+              @c_week =  52
+              @c_year = @c_year.to_i - 1
+            else
+              @c_week = @c_week.to_i - 1
+            end
+          end 
+          if @c_mode == "Monat"
+            if @c_month.to_i == 1
+              @c_month =  12
+              @c_year = @c_year.to_i - 1
+            else
+              @c_month = @c_month.to_i - 1
+            end
+          end
+          if @c_mode == "Jahr"
+            @c_year = @c_year.to_i - 1
+          end
+        end
+        
+        case @c_mode
+          when "Monat"
+            @date_start = Date.new(@c_year.to_i,@c_month.to_i,1)
+            @date_end = @date_start.end_of_month
+          when "Jahr"
+            @date_start = Date.new(@c_year.to_i,1,1)
+            @date_end = Date.new(@c_year.to_i,12,31)
+          when "alles"
+        end
+        
+        myobs = []
+        @user.madvisors.each do |a|
+          myobs << a.mobject_id 
+        end
+        @mymobjects = Mobject.where('mtype=? and id IN (?)',"Projekte", myobs)
 
-      @array_s = ""
-      @array_s = @user.build_stats(@array_s, Appointment.where('user_id1=? or user_id2=?',@user.id,@user.id), "Kalendereintraege" )
-      @array_s = @user.build_stats(@array_s, @user.companies, "Institutionen" )
-      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Angebote'), "Angebote" )
-      @array_s = @user.build_stats(@array_s, @user.madvisors, "Ansprechpartner" )
-      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Kleinanzeigen'), "Kleinanzeigen" )
-      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Stellenanzeigen'), "Stellenanzeigen" )
-      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Vermietungen'), "Vermietungen" )
-      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Veranstaltungen'), "Veranstaltungen" )
-      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Ausschreibungen'), "Ausschreibungen" )
-      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Ausflugsziele'), "Ausflugsziele" )
-      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Artikel'), "Artikel" )
-      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Publikationen'), "Publikationen" )
-      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Umfragen'), "Umfragen" )
-      @array_s = @user.build_stats(@array_s, @user.mobjects.where('mtype=?','Crowdfunding'), "Crowdfunding" )
-      @array_s = @user.build_stats(@array_s, @user.mstats, "Crowdfunding Beitraege" )            if false
-      @array_s = @user.build_stats(@array_s, @user.user_tickets, "Tickets" ) 
-      @array_s = @user.build_stats(@array_s, @user.mratings, "Bewertungen" )
-      @array_s = @user.build_stats(@array_s, @user.favourits, "Favoriten" )
-      @array_s = @user.build_stats(@array_s, @user.customers, "Kundenstatus" )
-      @array_s = @user.build_stats(@array_s, @user.transactions.where('ttype=?', "Payment"),"Transaktionen")
-      @array_s = @user.build_stats(@array_s, Email.where('m_to=? or m_from=?', @user.id, @user.id), "Nachrichten" )
-      @array_s = @user.build_stats(@array_s, @user.searches, "Abfragen" )
-      @array_s = @array_s[0, @array_s.length - 1]
+      when "Kalendereintraege"
+        if params[:confirm_id]
+          @appoint = Appointment.find(params[:confirm_id])
+          if @appoint
+            @appoint.confirmed = true
+            @appoint.save
+          end
+        end
+        if params[:noconfirm_id]
+          @appoint = Appointment.find(params[:noconfirm_id])
+          if @appoint
+            @appoint.confirmed = false
+            @appoint.save
+          end
+        end
+  
+        counter = 0 
+        @array = ""
+        @cals = Appointment.where('user_id1=? and active=?', @user.id, true)
+        @anz = @cals.count
+        @cals.each do |c|
+          time_from = c.time_from.to_s
+          if c.time_from.to_s.length == 1
+            time_from = "0"+c.time_from.to_s
+          end
+          time_to = c.time_to.to_s
+          if c.time_to.to_s.length == 1
+            time_to = "0"+c.time_to.to_s
+          end
+          @calstart = c.app_date.strftime("%Y-%m-%d")+"T"+time_from+":00"
+          @calend = c.app_date.strftime("%Y-%m-%d")+"T"+time_to+":00"
+          
+          counter = counter + 1
+          @array = @array + "{"
+          if c.user_id1 == c.user_id2
+            @array = @array + "color: '#E0E0E0',"
+          else
+            if c.confirmed
+              @array = @array + "color: '#ACC550',"
+            else
+              @array = @array + "color: '#61A6A7',"
+            end
+          end
+          @array = @array + "textColor: 'white',"
+          user = User.find(c.user_id2)
+          case c.channel
+            when "Geschäftsstelle"
+               icon = '<i class="glyphicon glyphicon-briefcase"></i>'
+            when "Treffpunkt"
+               icon = '<i class="glyphicon glyphicon-map-marker"></i>'
+            when "Wohnort Berater"
+               icon = '<i class="glyphicon glyphicon-home"></i>'
+            when "Wohnort Kunde"
+               icon = '<i class="glyphicon glyphicon-home"></i>'
+            when "Telefon"
+               icon = '<i class="glyphicon glyphicon-phone-alt"></i>'
+            when "VideoChat"
+               icon = '<i class="glyphicon glyphicon-facetime-video"></i>'
+            else
+               icon = '<i class="glyphicon glyphicon-question-sign"></i>'
+          end
+          @array = @array + "icon: '" + icon + "', "
+          if user
+            @array = @array + "title: '" + user.name + " " + user.lastname + "', "
+          else
+            @array = @array + "title: 'unknown', "
+          end
+          @array = @array + "start: '" + @calstart + "', "
+          @array = @array + "end: '" + @calend + "', "
+          @array = @array + "url: '" + user_path(:id => c.user_id2, :topic => "Info") +"'" 
+          @array = @array + "}"
+          if @cals.count >= counter
+            @array = @array + ", "
+          end
+        end
+
+      when "Favoriten"
+         counter = 0 
+         @locs = "["
+         @wins = "["
+         @favourits = Favourit.where('user_id=? and object_name=?', @user.id, "User") 
+         @favourits.each do |f|
+            u = UserPosition.where('user_id=?',f.object_id).last
+            if u
+              if u.longitude and u.latitude and u.geo_address
+                @locs = @locs + "["
+                @locs = @locs + "'" + u.user.fullname + "', "
+                @locs = @locs + u.latitude.to_s + ", "
+                @locs = @locs + u.longitude.to_s
+                if counter+1 == @favourits.count
+                  @locs = @locs + "]"
+                else
+                  @locs = @locs + "],"
+                end
+        
+                @wins = @wins + "["
+                @wins = @wins + "'<img src=" + u.user.avatar(:medium) + "<br><h3>" + u.user.fullname + "</h3><p>" + u.user.geo_address + "</p>'"
+                if counter+1 == @favourits.count
+                  @wins = @wins + "]"
+                else
+                  @wins = @wins + "],"
+                end
+              end
+              counter = counter + 1
+            end
+          end
+          @locs = @locs + "]"
+          @wins = @wins + "]"
+
+    end
+    
+    if params[:header] != nil and params[:body] != nil
+      UserMailer.send_message(params[:id], params[:header], params[:body]).deliver_now
+    end
+  
+   if params[:trx_status_ok_id]
+     @trx = Transaction.find(params[:trx_status_ok_id])
+     if @trx
+       @trx.status = "freigegeben"
+       @trx.save
+     end
+   end
+
+   if params[:trx_status_ausgefuehrt_id]
+     @trx = Transaction.find(params[:trx_status_ausgefuehrt_id])
+     if @trx
+       @trx.status = "ausgeführt"
+       @trx.save
+     end
+   end
+
   end
 
   # GET /users/new

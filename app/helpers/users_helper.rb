@@ -1621,19 +1621,6 @@ def action_buttons2(object, item, topic)
     return html_string.html_safe
 end
 
-def build_stats(array, records, label)
-  if records != nil
-    anz = records.count
-    if anz > 0
-      hash = Hash.new
-      hash = {"label" => label, "value" => anz}
-      array << hash
-      return array
-    end
-  end
-  return array
-end
-
 def getIcon(iconstring)
     icon = nil
     icontext = nil
