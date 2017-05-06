@@ -207,6 +207,12 @@ a:active {
     color: $color1!important;
     box-shadow: 2px 2px 10px $color1;
 }
+.btn-special {
+   background-color: $orange!important;
+   border-color: $orange!important;
+   color: white!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
 
 /*******************************************************************************************************/
 /* Text Elements */

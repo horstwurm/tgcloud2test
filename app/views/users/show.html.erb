@@ -22,11 +22,11 @@
 
       <% case @topic %>
         <% when "Info" %>
-          <%= header2("Privatpersonen", @user, @topic, "Informationen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Account Informationen", false) %>
 
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-              <%= header2("Privatpersonen", @user, @topic, "Kontaktinformationen", false) %>
+              <%= header("Adresse", false) %>
               <div class="panel-body">
 
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -117,77 +117,58 @@
           </div>
           
         <% when "Institutionen" %>
-          <%= header("Institutionen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Firmen, Gewerbe, Institutionen", false) %>
           <%= build_medialist2(@user.companies, "companies", nil) %>
-        <% when "Angebote" %>
-          <%= header("Angebote", false) %>
-          <%= build_medialist2(@user.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard"), "mobjects", nil) %>
-        <% when "Aktionen" %>
-          <%= header("Aktionen", false) %>
-          <%= build_medialist2(@user.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion"), "mobjects", nil) %>
         <% when "Angebote, Services und Aktionen" %>
-          <%= header("Angebote & Aktionen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Angebote, Services & Aktionen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Angebote"), "mobjects", nil) %>
         <% when "Ansprechpartner" %>
-          <%= header("Ansprechpartner", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Ansprechpartner", false) %>
           <%= build_medialist2(@user.madvisors, "madvisors", "Object") %>
         <% when "Kleinanzeigen" %>
-          <%= header("Kleinanzeigen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Kleinanzeigen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Kleinanzeigen"), "mobjects", nil) %>
         <% when "Stellenanzeigen" %>
-          <%= header("Stellenanzeigen", false) %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"Stellenanzeigen"), "mobjects", nil) %>
-        <% when "Stellenanzeigen" %>
-          <%= header("Stellenanzeigen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Stellenanzeigen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Stellenanzeigen"), "mobjects", nil) %>
         <% when "Vermietungen" %>
-          <%= header("Vermietungen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Vermietungen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Vermietungen"), "mobjectss", nil) %>
         <% when "Veranstaltungen" %>
-          <%= header("Veranstaltungen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Veranstaltungen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Veranstaltungen"), "mobjects", nil) %>
         <% when "Ausflugsziele" %>
-          <%= header("Ausflugsziele", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Ausflugsziele", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Ausflugsziele"), "mobjects", nil) %>
         <% when "Ausschreibungen" %>
-          <%= header("Ausschreibungen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Ausschreibungen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Ausschreibungen"), "mobjects", nil) %>
-        <% when "Crowdfunding (Spenden)" %>
-          <%= header("Crowdfunding Spenden", false) %>
-          <%= build_medialist2(@user.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden"), "mobjects", nil) %>
-        <% when "Crowdfunding (Belohnungen)" %>
-          <%= header("Crowdfunding Belohnungen", false) %>
-          <%= build_medialist2(@user.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen"), "mobjects", nil) %>
-        <% when "Crowdfunding (Zinsen)" %>
-          <%= header("Crowdfunding Zinsen", false) %>
-          <%= build_medialist2(@user.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen"), "mobjects", nil) %>
         <% when "Crowdfunding Initiativen" %>
-          <%= header("Crowdfunding Initiativen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Crowdfunding Initiativen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Crowdfunding"), "mobjects", nil) %>
         <% when "Crowdfunding (Beitraege)" %>
-          <%= header("Crowdfunding Beitraege", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Crowdfunding Beiträge", false) %>
           <%= build_medialist2(@user.mstats, "mstats", "CF") %>
         <% when "Projekte" %>
-          <%= header("Projekte", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Projekte, Aufträge", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=? and parent=?',"Projekte",0), "mobjects", nil) %>
         <% when "Umfragen" %>
-          <%= header("Umfragen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Umfragen & Interviews", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Umfragen"), "mobjects", nil) %>
         <% when "Publikationen" %>
-          <%= header("Publikationen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Publikationen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Publikationen"), "mobjects", nil) %>
         <% when "Artikel" %>
-          <%= header("Artikel", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Artikel, Beiträge, Newsletter", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Artikel"), "mobjects", nil) %>
         <% when "Bewertungen" %>
-            <%= header("Bewertungen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Bewertungen", false) %>
             <%= build_medialist2(@user.mratings, "mratings", "Object") %>
         <% when "Veranstaltungen (angemeldet)" %>
-            <%= header("Veranstaltungen (angemeldet)", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Veranstaltungsanmeldungen", false) %>
             <%= build_medialist2(@user.participants, "participants", "Object") %>
-
         <% when "Zeiterfassung" %>
-          <%= header("Zeiterfassung", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Arbeitszeiterfassung", false) %>
           <div class="row">
               <div class='col-xs-12'>
                 <div class='panel-body'>
@@ -325,7 +306,7 @@
           </div>
 
         <% when "Ressourcenplanung" %>
-          <%= header("Ressourcenplanung "+@c_mode, false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Arbeits- & Ressourcenplanung", false) %>
           <div class="row">
               <div class='col-xs-12'>
                 <div class='panel-body'>
@@ -467,7 +448,8 @@
           </div>
           
         <% when "Kalendereintraege" %>
-          <%= header("Terminübersicht", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Terminübersicht", false) %>
+          <!--<%= header("Terminübersicht", false) %>-->
           <div id='calendar'></div>
           <div class="panel-body">
           	<table class="table table-striped">
@@ -588,7 +570,7 @@
           </div>
 
     	 <% when "Tickets" %>
-          <%= header("Tickets", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Ticketübersicht", false) %>
           <div class="panel-body">
             <% @user.user_tickets.where('status<>?', "Filter Kampagne").each do |ut| %>
             
@@ -663,7 +645,7 @@
           </div>
             
     	 <% when "Favoriten" %>
-          <%= header("Favoriten", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Favoriten", false) %>
           <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
           <div class="panel-body">
             <%= build_medialist2(@user.favourits, "favourits", nil) %>
@@ -680,7 +662,7 @@
     	 <% when "Kundenbeziehungen" %>
           <% hash = Hash.new %>
           <% hash = {:user_id => @user.id} %>
-          <%= header("Kundenstatus", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Kundenbeziehungen", false) %>
           <div class="panel-body">
             <%= build_medialist2(@user.customers, "partners", hash) %>
           </div>
@@ -690,13 +672,13 @@
           </div>
 
     	 <% when "Transaktionen" %>
-          <%= header("Transaktionen", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Transaktionsübersicht", false) %>
           <div class="panel-body">
             <%= build_medialist2(@user.transactions, "transactions", hash) %>
           </div>
 
     	 <% when "eMail" %>
-          <%= header("Kommunikation", false) %>
+          <%= header2("Privatpersonen", @user, @topic, "Mitteilungen", false) %>
           <div class="panel-body">
             <table class="table-striped" width="100%">
             <% emails = Email.where('m_to=? or m_from=?', @user.id, @user.id).order(created_at: :desc) %>
@@ -740,6 +722,36 @@
               </tr>
             <% end %>
             </table>
+          </div>
+
+    	 <% when "Zugriffsberechtigungen" %>
+          <%= header2("Privatpersonen", @user, @topic, "Zugriffsberechtigungen", false) %>
+          <div class="row">
+              <%= header("Hauptmenü", true) %>
+          </div>
+          <%= build_kachel_access("Hauptmenue", "User", @user) %>
+          <div class="row">
+              <%= header("Funktionen Privatpersonen", true) %>
+          </div>
+          <%= build_kachel_access("Privatpersonen", "User", @user) %>
+          <div class="row">
+              <%= header("Funktionen Institutionen", true) %>
+          </div>
+          <%= build_kachel_access("Institutionen", "User", @user) %>
+          <div class="row">
+              <%= header("Funktionen Business Objekte", true) %>
+          </div>
+          <%= build_kachel_access("Objekte", "User", @user) %>
+          <div class="row">
+              <%= header("Funktionen Kampagnen", true) %>
+          </div>
+          <%= build_kachel_access("Kampagnen", "User", @user) %>
+          <div class="row">
+              <%= header("Funktionen Standorte", true) %>
+          </div>
+          <%= build_kachel_access("Standorte", "User", @user) %>
+          <div class="panel-body">
+            <%= build_medialist2(@user.transactions, "transactions", hash) %>
           </div>
 
         <% end %>

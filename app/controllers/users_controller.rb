@@ -263,37 +263,35 @@ class UsersController < ApplicationController
         end
 
       when "Favoriten"
-         counter = 0 
-         @locs = "["
-         @wins = "["
-         @favourits = Favourit.where('user_id=? and object_name=?', @user.id, "User") 
-         @favourits.each do |f|
-            u = UserPosition.where('user_id=?',f.object_id).last
-            if u
-              if u.longitude and u.latitude and u.geo_address
-                @locs = @locs + "["
-                @locs = @locs + "'" + u.user.fullname + "', "
-                @locs = @locs + u.latitude.to_s + ", "
-                @locs = @locs + u.longitude.to_s
-                if counter+1 == @favourits.count
-                  @locs = @locs + "]"
-                else
-                  @locs = @locs + "],"
-                end
-        
-                @wins = @wins + "["
-                @wins = @wins + "'<img src=" + u.user.avatar(:medium) + "<br><h3>" + u.user.fullname + "</h3><p>" + u.user.geo_address + "</p>'"
-                if counter+1 == @favourits.count
-                  @wins = @wins + "]"
-                else
-                  @wins = @wins + "],"
-                end
-              end
-              counter = counter + 1
-            end
+
+        @locs = []
+        @wins = []
+        @favourits = Favourit.where('user_id=? and object_name=?', @user.id, "User") 
+        @favourits.each do |f|
+          u = UserPosition.where('user_id=?',f.object_id).last
+          if u and u.longitude and u.latitude and u.geo_address
+            @locs << [u.user.fullname, u.latitude, u.longitude]
+            @wins << ["<img src=" + u.user.avatar(:medium) + "<h3>" + u.user.fullname + "</h3><p>" + u.geo_address + "</p>"]
           end
-          @locs = @locs + "]"
-          @wins = @wins + "]"
+        end
+        if @locs.length == 0
+            @locs << ["Adresse", @user.latitude, @user.longitude]
+            @wins << ["<h3> keine weiteren Positionen gespeichert </h3>" + @user.geo_address ]
+        end
+
+      when "Zugriffsberechtigungen"
+        if params[:credential_id]
+          @c = Credential.find(params[:credential_id])
+          if @c
+            #@c.edit
+            if @c.access
+              @c.access=false
+            else
+              @c.access=true
+            end
+            @c.save
+          end
+        end
 
     end
     

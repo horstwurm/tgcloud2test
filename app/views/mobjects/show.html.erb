@@ -1,4 +1,6 @@
-<div class="row">
+
+<% if @edition_id %>
+  <div class="row">
     <action>
     <% if @edition_id %>
       <% @edition = Edition.find(@edition_id) %>
@@ -8,6 +10,7 @@
     <% end %>
     </action> 
   </div>
+<% end %>
 
   <div class="row">
     <header>
@@ -26,7 +29,7 @@
 
       <% case @topic %>
         <% when "Info" %>
-          <%= header("Informationen", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Objektinformationen", false) %>
           <div class="panel-body">
             
               <% if @mobject.mtype != "Artikel" %>
@@ -41,7 +44,6 @@
                 <b> Status</b>
                 <br>
                 <%= carousel2(@mobject, :medium) %>
-          			</p>
                 <br><br>
                 <% case @mobject.msubtype %>
                   <% when "Spenden" %>
@@ -318,13 +320,13 @@
 
 
         <% when "Details" %>
-          <%= header("Details", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Detailinformationen", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mdetails.where('mtype=?', "Details"), "mdetails", nil) %>
           </div>
 
         <% when "Umfrageteilnehmer" %>
-          <%= header("Umfrageteilnehmer", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Umfrageteilnehmer", false) %>
           <div class="panel-body">
             <% useranswers = [] %>
             <% @mobject.questions.each do |q| %>
@@ -343,53 +345,44 @@
             <% end %>
             </div>
 
-
-          <% if !false %>
-          <%= header("Teilnehmer Umfrage", false) %>
-          <div class="panel-body">
-            <% @users = User.where('ID IN (?)', useranswers) %>
-            <%= build_medialist2(@users, "users", nil) %>
-          </div>
-          <% end %>
-
          <% when "Ausschreibungsangebote" %>
-          <%= header("Angebote", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Ausschreibungsangebote", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mdetails.where('mtype=?', "Ausschreibungsangebote"), "mdetails", nil) %>
           </div>
 
         <% when "Sponsorenengagements" %>
-          <%= header("Sponsoren", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Sponsorenengagements", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.msponsors, "msponsors", "Company") %>
           </div>
           
         <% when "Eintrittskarten" %>
-          <%= header("Eintrittskarten", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Eintrittskarten", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.tickets, "tickets", nil) %>
           </div>
 
         <% when "Bewertungen" %>
-          <%= header("Bewertungen", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Bewertungen", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mratings, "mratings", "User") %>
           </div>
 
         <% when "Ansprechpartner" %>
-          <%= header("Ansprechpartner", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Ansprechpartner", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.madvisors, "madvisors", "User") %>
           </div>
 
         <% when "Berechtigungen" %>
-          <%= header("Zugriffsberechtigungen", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Zugriffsberechtigungen", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "User") %>
           </div>
 
         <% when "Auftragscontrolling" %>
-          <%= header("Soll/Ist Vergleich", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Soll / Ist Vergleich", false) %>
           <div class="panel-body">
 
               <% case @c_mode %>
@@ -556,91 +549,38 @@
           </div>
 
         <% when "Blog" %>
-          <%= header("Blog", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Blog", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.comments.order(created_at: :desc), "comments", "User") %>
           </div>
 
         <% when "Fragen" %>
-          <%= header("Fragen", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Fragen", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.questions.order(created_at: :desc), "questions", "User") %>
           </div>
 
         <% when "Ausgaben" %>
-          <%= header("Ausgaben", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Ausgaben/Editionen", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.editions.order(created_at: :desc), "editions", "User") %>
           </div>
 
         <% when "Substruktur" %>
-          <%= header("Projekte, Teilprojekte, Aufträge, Tasks", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Teilprojekte, Teilaufträge ", false) %>
           <div class="panel-body">
             <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "User") %>
           </div>
 
         <% when "Teilnehmer (Veranstaltungen)" %>
-          <%= header("Teilnehmer", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Veranstaltungsteilnehmer", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.participants, "participants", "User") %>
           </div>
 
         <% when "Kalender (Vermietungen)" %>
-
-          <% if false %>
-          <%= header("Kalender KW "+ session[:cw].to_s, false) %>
-          <div class="panel-body">
-        		<table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Uhrzeit</th>
-                  <% for i in 0..6 %>
-                    <% if @start+i == Date.today %>
-                      <th class="color_today">
-                    <% else %>
-                      <th>
-                    <% end %>
-                      <%= $wochentage[i] %><br>
-                      <small_cal>
-                      <%= (@start+i).strftime("%d.%m") %>
-                      </small_cal>
-                    </th>
-                  <% end %>
-                </tr>
-              </thead>
-              
-              <tbody>
-      
-                  <% @items = CalItem2(@mobject.mcalendars,@start) %>
-                  <% for hour in 0..@anz_stunden-1 %>
-                    <tr>
-                      <td><small_cal><%= (@mobject.time_from + hour).to_s + " Uhr" %></small_cal></td>
-                    <% for day in 0..@anz_tage-1 %>
-                        <% if @array[hour][day] != 0 %>
-                          <td class="blocked" align="center">
-                          <%= link_to(edit_mcalendar_path(:id => @array[hour][day])) do %>
-                            <i class="glyphicon glyphicon-info-sign"></i>
-                            <% if false %>
-                              <%= showImage2(:small, User.find( Mcalendar.find(@array[hour][day]).user_id),false) %>
-                            <% end %>
-                          <% end %>
-                        <% else %>
-                          <td class="free">
-                        <% end %>
-                        <% @array[hour][day] %>
-                        </td>                
-                    <% end %>
-                    </tr>
-                  <% end %>
-
-              </tbody>
-            </table>
-          </div>
-          <% end %>
-
+          <%= header2("Objekte", @mobject, @topic, "Kalender für Vermietungen", false) %>
           <div id='calendar'></div>
-
-          <%= header("Terminübersicht", false) %>
           <div class="panel-body">
           	<table class="table table-striped">
               <thead>
@@ -701,23 +641,23 @@
           </div>
           
         <% when "CF Statistik" %>
-          <%= header("Statistik (Anzahl)", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Statistik (Anzahl Transaktionen)", false) %>
           <div class="panel-body">
             <div id="curve_chart1"></div>
           </div>
-          <%= header("Statistik (Betrag)", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Statistik (Beträge)", false) %>
           <div class="panel-body">
             <div id="curve_chart2"></div>
           </div>
           
         <% when "CF Transaktionen" %>
-          <%= header("Transaktionen", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Transaktionen", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mstats.order(amount: :desc), "mstats", "Owner") %>
           </div>
 
         <% when "Standort" %>
-          <%= header("Standort", false) %>
+          <%= header2("Objekte", @mobject, @topic, "Standort", false) %>
           <div class="panel-body">
             <div id="map">
               <div id="map-canvas"></div>
@@ -726,12 +666,6 @@
 
       <% end %>
     </div>
-    
-      <% if false %>
-      <div class='col-xs-2'>
-        <%= navigate("Objekte", @mobject) %>
-      </div>
-      <% end %>
     
   </div>
 
