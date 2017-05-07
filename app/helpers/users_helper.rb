@@ -1535,7 +1535,7 @@ def action_buttons2(object, item, topic)
          html_string = html_string + link_to(company_path(:id => item.owner_id, :topic => "Digital Signage (Kampagnen)"), title: "Werbekampagnen", 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
-         html_string = html_string + link_to(home_index11_path(:camp_id => item.id), title: "Kampagne ansehen"+item.mtype, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+         html_string = html_string + link_to(home_index11_path(:camp_id => item.id), title: "Kampagne ansehen", 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-film")
          end
          case topic
