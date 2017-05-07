@@ -454,6 +454,20 @@
               <% @istsoll << [t.jahrmonat, t.sum, kapa] %>
             <% end %>
             <% @istsoll %>
+            
+            <% @istsollkum = [] %>
+            <% @istsollkum << ['kategorie', 'IST','PLAN'] %>
+            <% for i in 1..@istsoll.length-1 %>
+              <% if i==1 %>
+                <% @istsollkum << [@istsoll[i][0], @istsoll[i][1].to_i, @istsoll[i][2]]%>
+              <% else %>
+                <% @istsollkum << [@istsoll[i][0], @istsollkum[i-1][1].to_f + @istsoll[i][1].to_f, @istsollkum[i-1][2].to_f + @istsoll[i][2].to_f] %>
+              <% end %>
+            <% end %>
+            <% @istsollkum %>
+
+            <div id="auftragschartallkum"></div>
+            <br><br>
             <div id="auftragschartall"></div>
             <br><br>
 
@@ -681,7 +695,7 @@ $(document).ready(function(){
         function drawChartall() {
           var data = google.visualization.arrayToDataTable(<%= raw @istsoll %>);
           var options = {
-            title: 'Rapportierte Stunden',
+            title: 'Rapportierte Stunden (Monat)',
             colors: ['#ACC550','#2E6B33'],
             // legend: { position: 'bottom' }
           };
@@ -690,11 +704,24 @@ $(document).ready(function(){
           chart.draw(data, options);
         };
 
+        google.charts.setOnLoadCallback(drawChartallkum);
+        function drawChartallkum() {
+          var data = google.visualization.arrayToDataTable(<%= raw @istsollkum %>);
+          var options = {
+            title: 'Rapportierte Stunden (kumuliert)',
+            colors: ['#ACC550','#2E6B33'],
+            // legend: { position: 'bottom' }
+          };
+          // var chart = new google.visualization.ColumnChart(document.getElementById("auftragschartall"));
+          var chart = new google.visualization.LineChart(document.getElementById("auftragschartallkum"));
+          chart.draw(data, options);
+        };
+
         google.charts.setOnLoadCallback(drawChartuser);
         function drawChartuser() {
           var data = google.visualization.arrayToDataTable(<%= raw @istsollau %>);
           var options = {
-            title: 'Rapportierte Stunden',
+            title: 'Rapportierte Stunden (User)',
             colors: ['#ACC550','#2E6B33'],
             // legend: { position: 'bottom' }
           };
