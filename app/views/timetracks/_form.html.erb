@@ -19,7 +19,7 @@
                         <%= link_to timetracks_path(:user_id => @timetrack.user_id, :mobject_id => @timetrack.mobject_id) do %>
                           <i class="btn btn-primary glyphicon glyphicon-list"></i>
                         <% end %>
-                        Stundenerfassung <%= @timetrack.user.name + " " + @timetrack.user.lastname %> für <%= @timetrack.mobject.name %>
+                        Erfassung  <%= @timetrack.costortime + " " + @timetrack.user.name + " " + @timetrack.user.lastname %> für <%= @timetrack.mobject.name %>
                       </li_header>
                     </div>
                 </div>
@@ -29,14 +29,26 @@
             <div class="col-md-6">
                 <div class="panel-body">
 
-                    <div class="form-group">
-                      <%= f.label "Anzahl Stunden" %><br>
-                      <%= f.number_field :amount, class:"form-control" %>
-                    </div>
-                    <div class="form-group">
-                      <%= f.label "Aktivität" %><br>
-                      <%= f.text_field :activity, class:"form-control" %>
-                    </div>
+                    <% if @timetrack.costortime == "Aufwand" %>
+                      <div class="form-group">
+                        <%= f.label "Anzahl Stunden" %><br>
+                        <%= f.number_field :amount, class:"form-control" %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label "Aktivität" %><br>
+                        <%= f.text_field :activity, class:"form-control" %>
+                      </div>
+                    <% end %>
+                     <% if @timetrack.costortime == "Kosten" %>
+                      <div class="form-group">
+                        <%= f.label "Betrag" %><br>
+                        <%= f.number_field :amount, class:"form-control" %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label "Kostenposition" %><br>
+                        <%= f.text_field :activity, class:"form-control" %>
+                      </div>
+                    <% end %>
                     <div class="form-group">
                       <%= f.label "Datum" %><br>
                       <%= f.text_field :datum, class:"form-control" %>

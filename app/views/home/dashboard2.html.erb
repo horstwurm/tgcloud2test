@@ -1,0 +1,217 @@
+<%= header("Dashboard", false) %>
+
+<% @cats = Mobject.select("mtype").distinct %>
+<div class="row">
+  <% @cats.each do |m| %>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-3">
+      <div class="panel panel-dashboard">
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <%= content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(m.mtype)["icon"], style:"font-size:4em") %>
+            <huge>
+            <p id="<%= m.mtype %>">1000</p>
+            </huge>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <div class="row" align="Center">
+              <div id="chart<%= m.mtype %>"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row mar">
+            <huge>
+           <%= m.mtype %>
+          </huge>
+        </div>
+      </div>
+    </div>  
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <div id="chart1"></div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <div id="chart2"></div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <div id="chart3"></div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <div id="chart4"></div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <div id="chart5"></div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script>
+$(document).ready(function(){
+  
+   google.charts.load('current', {'packages':['corechart']});
+
+  <% @cats.each do |c| %>
+    window.gdataset_<%= c.mtype %> = [["Zeit", "Wert"],[Date(),0]];
+    google.charts.setOnLoadCallback(<%= c.mtype %>);
+    function <%= c.mtype %>() {
+      var data = google.visualization.arrayToDataTable(gdataset_<%= c.mtype %>);
+      var options = {
+        title: '<%= c.mtype %>',
+        colors: ['#ACC550'],
+        curveType: 'function',
+        width:150,
+        height:150,
+        legend: { position: 'bottom' }
+      };
+      var chart = new google.visualization.LineChart(document.getElementById('chart<%= c.mtype %>'));
+      chart.draw(data, options);
+    }
+  <% end %>
+
+  window.dataset_users = [["Zeit", "Wert"],[Date(),0]];
+  window.dataset_users_online = [["Zeit", "Wert"],[Date(),0]];
+  window.dataset_publikationen = [["Zeit", "Wert"],[Date(),0]];
+  window.dataset_artikel = [["Zeit", "Wert"],[Date(),0]];
+  window.dataset_events = [["Zeit", "Wert"],[Date(),0]];
+
+  google.charts.setOnLoadCallback(drawChart1);
+  function drawChart1() {
+    var data = google.visualization.arrayToDataTable(dataset_users);
+    var options = {
+      title: 'User Registriert',
+      colors: ['#ACC550'],
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('chart1'));
+    chart.draw(data, options);
+  }
+  google.charts.setOnLoadCallback(drawChart2);
+  function drawChart2() {
+    var data = google.visualization.arrayToDataTable(dataset_users_online);
+    var options = {
+      title: 'User Online',
+      colors: ['#ACC550'],
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('chart2'));
+    chart.draw(data, options);
+  }
+  google.charts.setOnLoadCallback(drawChart3);
+  function drawChart3() {
+    var data = google.visualization.arrayToDataTable(dataset_publikationen);
+    var options = {
+      title: 'Publikationen',
+      colors: ['#ACC550'],
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('chart3'));
+    chart.draw(data, options);
+  }
+  google.charts.setOnLoadCallback(drawChart4);
+  function drawChart4() {
+    var data = google.visualization.arrayToDataTable(dataset_artikel);
+    var options = {
+      title: 'Artikel',
+      colors: ['#ACC550'],
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('chart4'));
+    chart.draw(data, options);
+  }
+  google.charts.setOnLoadCallback(drawChart5);
+  function drawChart5() {
+    var data = google.visualization.arrayToDataTable(dataset_events);
+    var options = {
+      title: 'Veranstaltungen',
+      colors: ['#ACC550'],
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('chart5'));
+    chart.draw(data, options);
+  }
+  
+    window.setInterval( callme, 15000 );
+
+    // window.setInterval( updateme, 100 );
+    
+    function updateme() {
+      <% @cats.each do |c| %>
+        var i = Number($("#<%= c.mtype %>").text());
+        i = i + 25;
+        // var i= 205;
+        $("#<%= c.mtype %>").text(i.toString());
+      <% end %>
+    }
+        
+    function callme() {
+        $.ajax({
+            // url: "http://tkbmarkt.herokuapp.com/home/dashboard_data.json",
+            url: "https://market20-horstwurm.c9users.io/home/dashboard2_data.json",
+            //force to handle it as text
+            dataType: "text",
+            success: function(data) {
+                //data downloaded so we call parseJSON function 
+                //and pass downloaded data
+                var json = $.parseJSON(data);
+                
+                
+                // alert(json[0].kategorie + " " + json[0].anzahl);
+                // alert(json[1].kategorie + " " + json[1].anzahl);
+                // alert(json[2].kategorie + " " + json[2].anzahl);
+
+                <% if true %>
+                <% @cats.each do |c| %>
+                  for (var i=0;i<json.length-1;++i)
+                  {
+                    <% if true %>
+                      if (json[i].kategorie == "<%= c.mtype %>") {
+                        $("#<%= c.mtype %>").text(json[i].anzahl);
+                        gdataset_<%= c.mtype %>.push([Date(), json[i].anzahl]);
+                        google.charts.setOnLoadCallback(<%= c.mtype %>);
+                      }
+                    <% end %>
+                  }
+                  // var d = new Date;
+                  // var m = d.getMilliseconds();
+                  // $("#<%= c.mtype %>").text(json[0].anzahl);
+                <% end %>
+                <% end %>
+                dataset_users.push([Date(), json[0].anzahl]);
+                google.charts.setOnLoadCallback(drawChart1);
+
+                dataset_users_online.push([Date(), json[1].anzahl]);
+                google.charts.setOnLoadCallback(drawChart2);
+
+                dataset_publikationen.push([Date(), json[2].anzahl]);
+                google.charts.setOnLoadCallback(drawChart3);
+
+                dataset_artikel.push([Date(), json[3].anzahl]);
+                google.charts.setOnLoadCallback(drawChart4);
+
+                dataset_events.push([Date(), json[4].anzahl]);
+                google.charts.setOnLoadCallback(drawChart5);
+
+                //now json variable contains data in json format
+                //let's display a few items
+                // for (var i=0;i<json.length;++i)
+                // {
+                //     $('#results').append('<div class="name">' + json[i].anzahl + '</>');
+                // }
+                // i=Math.round(Math.random()*1000);
+                // dataset.push([Date(), i]);
+                // $("#results").append('test');
+
+            }
+        });
+    }
+
+});
+</script>

@@ -19,7 +19,7 @@
                         <%= link_to user_path(:id => @planning.user_id, :topic => "Ressourcenplanung", :year => @planning.jahr, :mode => "Jahr") do %>
                           <i class="btn btn-primary glyphicon glyphicon-list"></i>
                         <% end %>
-                        Ressourcenplanung <%= @planning.user.name + " " + @planning.user.lastname + " " + @planning.mobject.name + " " + @planning.jahr + "/" + @planning.monat %>
+                        Planung <%= @planning.costortime + " " + @planning.user.name + " " + @planning.user.lastname + " " + @planning.mobject.name + " " + @planning.jahr + "/" + @planning.monat %>
                       </li_header>
                     </div>
                 </div>
@@ -29,10 +29,18 @@
             <div class="col-md-6">
                 <div class="panel-body">
 
-                    <div class="form-group">
-                      <%= f.label "Prozentsatz" %><br>
-                      <%= f.number_field :amount, class:"form-control" %>
-                    </div>
+                    <% if @planning.costortime == "Aufwand" %>
+                        <div class="form-group">
+                          <%= f.label "Prozentsatz" %><br>
+                          <%= f.number_field :amount, class:"form-control" %>
+                        </div>
+                    <% end %>
+                    <% if @planning.costortime == "Kosten" %>
+                        <div class="form-group">
+                          <%= f.label "Betrag" %><br>
+                          <%= f.number_field :amount, class:"form-control" %>
+                        </div>
+                    <% end %>
                     <div class="actions">
                        <%= f.submit "Speichern", class:"btn btn-primary btn-lg"%>
                     </div>

@@ -173,6 +173,14 @@
               <div class='col-xs-12'>
                 <div class='panel-body'>
                   
+                  <% case @c_scope %>
+                    <% when "Aufwand" %>
+                      <% btn_sa = "active" %>
+                      <% btn_sc = "inactive" %>
+                    <% when "Kosten" %>
+                      <% btn_sa = "inactive" %>
+                      <% btn_sc = "active" %>
+                  <% end %>
                   <% case @c_mode %>
                     <% when "Monat" %>
                       <% btn_m = "active" %>
@@ -190,28 +198,35 @@
                   <% @date_start %>
                   <% @date_end %>
                   
-                  <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung", :year => @c_year, :month => @c_month, :mode => "alles") do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung", :year => @c_year, :month => @c_month, :mode => "alles", :scope => @c_scope) do %>
                     <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-fullscreen"> alles</i></span>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Monat") do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Monat", :scope => @c_scope) do %>
                     <span><i class="btn btn-<%= btn_m %> glyphicon glyphicon-calendar"> <%= @c_month %></i></span>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr")  do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope)  do %>
                     <span><i class="btn btn-<%= btn_y %> glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
+                  <% end %>
+
+                  <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => "Kosten")  do %>
+                    <span><i class="btn btn-<%= btn_sc %> glyphicon glyphicon-euro"></i></span>
+                  <% end %>
+                  <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => "Aufwand")  do %>
+                    <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
                   <% end %>
           
                   <% if @c_mode != "alles" %>
-                    <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode)  do %>
+                    <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope)  do %>
                       <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
                     <% end %>
-                    <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode) do %>
+                    <%= link_to user_path(:id => @user.id, :topic => "Zeiterfassung", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
                       <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
                     <% end %>
                  <% end %>
                  <% if @c_mode == "alles" %>
-                   <% @timetracks = Timetrack.select("mobject_id").where('user_id=?', @user.id).distinct %>
+                   <% @timetracks = Timetrack.select("mobject_id").where('user_id=? and costortime=?', @user.id, @c_scope).distinct %>
                  <% else %>
-                   <% @timetracks = Timetrack.select("mobject_id").where('user_id=? and datum >=? and datum <=?', @user.id, @date_start, @date_end).distinct %>
+                   <% @timetracks = Timetrack.select("mobject_id").where('user_id=? and costortime=? and datum >=? and datum <=?', @user.id, @c_scope, @date_start, @date_end).distinct %>
                  <% end  %>
                  <br><br>
                 
@@ -233,7 +248,7 @@
                       <div>
                         <%= header("Projekt/Auftrag "+Mobject.find(t.mobject_id).name, false) %>
                         <% if Madvisor.where('mobject_id=? and role=?', t.mobject_id, t.mobject.mtype).count > 0 %>
-                          <%= link_to new_timetrack_path(:user_id => @user.id, :mobject_id => t.mobject_id) do %>
+                          <%= link_to new_timetrack_path(:user_id => @user.id, :mobject_id => t.mobject_id, :scope => @c_scope) do %>
                             <span><i class="btn btn-special %> glyphicon glyphicon-plus"></i></span>
                           <% end %>
                         <% end %>
@@ -250,7 +265,7 @@
                     </div>
                     <% @user.madvisors.where('role=?',"Projekte").each do |m| %>
                       <% if !@mob.include?(m.mobject_id) %>
-                        <%= link_to new_timetrack_path(:user_id => @user.id, :mobject_id => m.mobject_id) do %>
+                        <%= link_to new_timetrack_path(:user_id => @user.id, :mobject_id => m.mobject_id, :scope => @c_scope) do %>
                           <span><i class="btn btn-special glyphicon glyphicon-plus"><%= m.mobject.name %></i></span>
                         <% end %>
                       <% end %>
@@ -275,7 +290,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                          <% @activities = Timetrack.where('user_id=? and datum >=? and datum <=?', @user.id, @date_start, @date_end).order(datum: :desc) %>
+                          <% @activities = Timetrack.where('user_id=? and costortime=? and datum >=? and datum <=?', @user.id, @c_scope, @date_start, @date_end).order(datum: :desc) %>
                           <% @activities.each do |a| %>
                             <tr>
                               <td>
@@ -315,13 +330,31 @@
                   <% for i in 1..12 %>
                     <% @data << i %>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => "Ressourcenplanung", :year => @c_year)  do %>
+                  
+                  <% case @c_scope %>
+                    <% when "Aufwand" %>
+                      <% btn_sa = "active" %>
+                      <% btn_sc = "inactive" %>
+                    <% when "Kosten" %>
+                      <% btn_sa = "inactive" %>
+                      <% btn_sc = "active" %>
+                  <% end %>
+                  
+                  <%= link_to user_path(:id => @user.id, :topic => "Ressourcenplanung", :year => @c_year, :scope => @c_scope)  do %>
                     <span><i class="btn btn-active glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => "Ressourcenplanung", :dir => "<", :year => @c_year, :mode => @c_mode )  do %>
+
+                  <%= link_to user_path(:id => @user.id, :topic => "Ressourcenplanung", :year => @c_year, :scope => "Kosten")  do %>
+                    <span><i class="btn btn-<%= btn_sc %> glyphicon glyphicon-euro"></i></span>
+                  <% end %>
+                   <%= link_to user_path(:id => @user.id, :topic => "Ressourcenplanung", :year => @c_year, :scope => "Aufwand")  do %>
+                    <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
+                  <% end %>
+                  
+                  <%= link_to user_path(:id => @user.id, :topic => "Ressourcenplanung", :dir => "<", :year => @c_year, :mode => @c_mode, :scope => @c_scope )  do %>
                     <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => "Ressourcenplanung", :dir => ">", :year => @c_year, :mode => @c_mode ) do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "Ressourcenplanung", :dir => ">", :year => @c_year, :mode => @c_mode , :scope => @c_scope) do %>
                     <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
                   <% end %>
                  <br><br>
@@ -354,7 +387,7 @@
                       <tr>            
 
                         <% plans = [] %>
-                        <% @plannings = Planning.where('mobject_id=? and user_id=? and jahr=?', w.id, current_user.id, @c_year.to_s) %>
+                        <% @plannings = Planning.where('mobject_id=? and user_id=? and costortime=? and jahr=?', w.id, current_user.id, @c_scope, @c_year.to_s) %>
                         <% @plannings.each do |p| %>
                           <% h = Hash.new %>
                           <% h = {:id => p.id, :monat => p.monat.to_i, :kapa => p.amount} %>
@@ -370,28 +403,54 @@
 
                         <% for i in 0..@header.length-1 do %>
 
-                          <% kapa = false %>
-                          <% for k in 0..plans.length-1 do %>
-                            <% if plans[k][:monat].to_i == @data[i].to_i %>
-                              <td class="color_kapa_booked">
-                              <%= plans[k][:kapa].to_s+" %" %><br>
-              				        <%= link_to edit_planning_path(:id => plans[k][:id]) do %>
-                                <i class="btn btn-primary btn-xs glyphicon glyphicon-pencil"></i>
+                          <% if @c_scope == "Kosten" %>
+                          
+                            <% moto = 0 %>
+                            <% for k in 0..plans.length-1 do %>
+                              <% if plans[k][:monat].to_i == @data[i].to_i %>
+                                <% moto = moto + plans[k][:kapa] %>
                               <% end %>
-              				        <%= link_to Planning.find(plans[k][:id]), method: :delete, data: { confirm: 'Are you sure?' } do %>
-                                <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
-                              <% end %>
-                              <% @total[i] = @total[i] + plans[k][:kapa] %>
-                              <% kapa = true %>
                             <% end %>
-                          <% end  %>
-                          <% if !kapa %>
-                              <td>
-              				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year) do %>
-                                <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
-                              <% end %>
+                            
+                            <% if moto > 0%>
+                              <td class="color_kapa_booked" align="right">
+                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                <% end %>
+                               <%= moto.to_s+" CHF" %><br>
+                            <% else %>
+                                <td>
+                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                <% end %>
+                            <% end %>
+                            </td>
                           <% end %>
-                          </td>
+                        
+                          <% if @c_scope == "Aufwand" %>
+                            <% kapa = false %>
+                            <% for k in 0..plans.length-1 do %>
+                              <% if plans[k][:monat].to_i == @data[i].to_i %>
+                                <td class="color_kapa_booked">
+                                <%= plans[k][:kapa].to_s+" %" %><br>
+                				        <%= link_to edit_planning_path(:id => plans[k][:id]) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-pencil"></i>
+                                <% end %>
+                				        <%= link_to Planning.find(plans[k][:id]), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                  <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                                <% end %>
+                                <% @total[i] = @total[i] + plans[k][:kapa] %>
+                                <% kapa = true %>
+                              <% end %>
+                            <% end  %>
+                            <% if !kapa %>
+                                <td>
+                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                <% end %>
+                            <% end %>
+                            </td>
+                          <% end %>
 
                         <% end %>
 
@@ -400,46 +459,90 @@
                     <% end %>
 
                   <!-- finally add totals and progress bar-->
-                  <tr>
-                    <td>Total</td>
-                    <td></td>
-                    <% for i in 0..@header.length-1 do %>
-                      <% if @total[i] > 100 %>
-                          <td class="danger">
-                      <% else %>
-                          <td>
+                  <% if @c_scope == "Aufwand" %>
+                    <tr>
+                      <td>Total</td>
+                      <td></td>
+                      <% for i in 0..@header.length-1 do %>
+                        <% if @total[i] > 100 %>
+                            <td class="danger">
+                        <% else %>
+                            <td>
+                        <% end %>
+                        <%= @total[i] %>
+                        </td>
                       <% end %>
-                      <%= @total[i] %>
-                      </td>
-                    <% end %>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <% for i in 0..@header.length-1 do %>
+                        <td>
+                        <div class="progress">
+                        <% if @total[i] <=40 %>
+                          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% end %>
+                        <% if @total[i] >40 and @total[i]<=60 %>
+                          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% end %>
+                        <% if @total[i] >60 and @total[i]<=100 %>
+                          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% end %>
+                        <% if @total[i] >100 and @total[i]<=125 %>
+                          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% end %>
+                        <% if @total[i] >125 %>
+                          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% end %>
+                        </div>
+                        </td>
+                      <% end %>
                   </tr>
+                  <% end %>
                 
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <% for i in 0..@header.length-1 do %>
-                      <td>
-                      <div class="progress">
-                      <% if @total[i] <=40 %>
-                        <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
-                      <% end %>
-                      <% if @total[i] >40 and @total[i]<=60 %>
-                        <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
-                      <% end %>
-                      <% if @total[i] >60 and @total[i]<=100 %>
-                        <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= @total[i] %>%" >
-                      <% end %>
-                      <% if @total[i] >100 and @total[i]<=125 %>
-                        <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
-                      <% end %>
-                      <% if @total[i] >125 %>
-                        <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
-                      <% end %>
-                      </div>
-                      </td>
-                    <% end %>
-                  </tr>
                 </table>
+                
+                <% if @c_scope == "Kosten" %>
+                  <br><br>
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                      <div>
+                        <%= header("Kostenpositionen", false) %>
+                        
+                    		<table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Datum</th>            
+                              <th colspan=2>Projekt/Auftrag</th>
+                              <th>Betrag</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          <% @plannings = Planning.where('user_id=? and costortime=?', @user.id, @c_scope).order(jahrmonat: :desc) %>
+                          <% @plannings.each do |a| %>
+                            <tr>
+                              <td>
+                                <%= link_to edit_planning_path(a) do %>
+                                  <i class="btn btn-primary btn btn-xs glyphicon glyphicon-wrench"></i>
+                                <% end %>
+                      	        <%= link_to a, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                  <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                                <% end %>
+                              </td>
+                              <td><%= a.jahrmonat %></td>
+                              <td><%= showFirstImage2(:small, Mobject.find(a.mobject_id),Mobject.find(a.mobject_id).mdetails) %></td>
+                              <td><%= Mobject.find(a.mobject_id).name %></td>
+                              <td><%= a.amount %></td>
+                            </tr>
+                          <% end %>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+
 
               </div>
             </div>
@@ -901,9 +1004,9 @@ $(document).ready(function(){
       google.charts.load('current', {'packages':['corechart']});
 
       <% if @c_mode == "alles" %>
-          <% @tts = Timetrack.select("mobject_id, sum(amount) as sum").where('user_id=?', @user.id).group("mobject_id") %>
+          <% @tts = Timetrack.select("mobject_id, sum(amount) as sum").where('user_id=? and costortime=?', @user.id, @c_scope).group("mobject_id") %>
       <% else %>
-          <% @tts = Timetrack.select("mobject_id, sum(amount) as sum").where('user_id=? and datum >=? and datum <=?', @user.id, @date_start, @date_end).group("mobject_id") %>
+          <% @tts = Timetrack.select("mobject_id, sum(amount) as sum").where('user_id=? and costortime=? and datum >=? and datum <=?', @user.id, @c_scope, @date_start, @date_end).group("mobject_id") %>
       <% end %>
       window.datasetall = [['kategorie', 'anzahl']];
       <% @tts.each do |ts| %>
@@ -913,7 +1016,12 @@ $(document).ready(function(){
       function drawChartall() {
         var data = google.visualization.arrayToDataTable(datasetall);
         var options = {
+          <% if @c_scope == "Aufwand" %>
           title: 'Rapportierte Stunden',
+          <% end %>
+          <% if @c_scope == "Kosten" %>
+          title: 'Rapportierte Kosten',
+          <% end %>
           // colors: ['#ACC550'],
           // legend: { position: 'bottom' }
         };
@@ -925,11 +1033,11 @@ $(document).ready(function(){
       <% @timetracks.each do |t| %>
         <% case @c_mode %>
           <% when "alles" %>
-            <% @tts = Timetrack.select("jahrmonat as gdate, sum(amount) as sum").where('user_id=? and mobject_id=?', @user.id, t.mobject_id).group("jahrmonat").order("gdate") %>
+            <% @tts = Timetrack.select("jahrmonat as gdate, sum(amount) as sum").where('user_id=? and costortime=? and mobject_id=?', @user.id, @c_scope, t.mobject_id).group("jahrmonat").order("gdate") %>
           <% when "Monat" %>
-            <% @tts = Timetrack.select("date(datum) as gdate, sum(amount) as sum").where('user_id=? and mobject_id=? and datum >=? and datum <=?', @user.id, t.mobject.id, @date_start, @date_end).group("datum").order("datum") %>
+            <% @tts = Timetrack.select("date(datum) as gdate, sum(amount) as sum").where('user_id=? and costortime=? and mobject_id=? and datum >=? and datum <=?', @user.id, @c_scope, t.mobject.id, @date_start, @date_end).group("datum").order("datum") %>
           <% when "Jahr" %>
-            <% @tts = Timetrack.select("jahrmonat as gdate, sum(amount) as sum").where('user_id=? and mobject_id=? and datum >=? and datum <=?', @user.id, t.mobject_id, @date_start, @date_end).group("jahrmonat").order("gdate") %>
+            <% @tts = Timetrack.select("jahrmonat as gdate, sum(amount) as sum").where('user_id=? and costortime=? and mobject_id=? and datum >=? and datum <=?', @user.id, @c_scope, t.mobject_id, @date_start, @date_end).group("jahrmonat").order("gdate") %>
         <% end %>
         <% if @tts %>
           window.dataset<%= t.mobject_id.to_s %> = [['kategorie', 'anzahl']];
@@ -940,7 +1048,12 @@ $(document).ready(function(){
           function drawChart<%= t.mobject_id.to_s %>() {
             var data = google.visualization.arrayToDataTable(dataset<%= t.mobject_id.to_s %>);
             var options = {
+              <% if @c_scope == "Aufwand" %>
               title: 'Rapportierte Stunden',
+              <% end %>
+              <% if @c_scope == "Kosten" %>
+              title: 'Rapportierte Kosten',
+              <% end %>
               colors: ['#ACC550'],
               legend: { position: 'bottom' }
             };

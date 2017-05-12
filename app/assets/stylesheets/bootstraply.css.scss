@@ -369,6 +369,36 @@ geblockt {
 /*******************************************************************************************************/
 /* PANELS */
 /*******************************************************************************************************/
+.panel-test {
+  background: lightgreen!important;
+  min-height: 400;
+  max-height: 400;
+//   overflow-y: scroll;
+}
+.panel-dashboard {
+   height: 300px;
+   background: orange!important;
+   padding: 10px!important;
+   margin: 10px !important;
+   box-shadow: 10px 10px 10px #B1B1B1;
+   color: white;
+   
+   .mar {
+      padding:5px!important; 
+      margin:5px!important; 
+   }
+   
+   dashtext,p {
+       font-size: 150%;
+       color: white;
+   };
+   huge,p {
+       font-size: 150%;
+       font-weight:bold;
+       color: white;
+   };
+}
+
 .panel-nav {
   border-color: $color5!important;
    padding: 3px!important;

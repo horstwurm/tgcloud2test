@@ -50,7 +50,11 @@ Rails.application.routes.draw do
   get 'home/index16'
   get 'home/index17'
   get 'home/dashboard'
+  get 'home/dashboard2'
+  get 'home/dashboard_project'
   get 'home/dashboard_data'
+  get 'home/dashboard2_data'
+  get 'home/dashboard_projectdata'
   get 'home/Umfragen_data'
   
   resources :searches

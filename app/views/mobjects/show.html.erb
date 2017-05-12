@@ -385,6 +385,14 @@
           <%= header2("Objekte", @mobject, @topic, "Soll / Ist Vergleich", false) %>
           <div class="panel-body">
 
+              <% case @c_scope %>
+                <% when "Aufwand" %>
+                  <% btn_sa = "active" %>
+                  <% btn_sc = "inactive" %>
+                <% when "Kosten" %>
+                  <% btn_sa = "inactive" %>
+                  <% btn_sc = "active" %>
+              <% end %>
               <% case @c_mode %>
                 <% when "Monat" %>
                   <% btn_m = "active" %>
@@ -402,20 +410,28 @@
               <% @date_start %>
               <% @date_end %>
 
-              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "alles")  do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "alles", :scope => @c_scope)  do %>
                 <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-fullscreen"> alles</i></span>
               <% end %>
-              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "Jahr")  do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope)  do %>
                 <span><i class="btn btn-<%= btn_y %> glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
               <% end %>
-              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "Monat")  do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "Monat", :scope => @c_scope)  do %>
                 <span><i class="btn btn-<%= btn_m %> glyphicon glyphicon-calendar"> <%= @c_month %></i></span>
               <% end %>
+              
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => "Kosten") do %>
+                <span><i class="btn btn-<%= btn_sc %> glyphicon glyphicon-euro"></i></span>
+              <% end %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => "Aufwand") do %>
+                <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
+              <% end %>
+              
               <% if @c_mode != "alles" %>
-                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode) do %>
+                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
                   <i class="btn btn btn-primary glyphicon glyphicon-chevron-left"></i>
                 <% end %>
-                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode ) do %>
+                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
                   <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
                 <% end %>
               <% end %>
@@ -423,10 +439,10 @@
 
             <!--Sicht Monat-->
             <% if @c_mode == "alles" %>
-              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=?',@mobject.id).group("jahrmonat") %>
+              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("jahrmonat") %>
               <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=?',@mobject.id).group("jahrmonat") %>
             <% else %>        
-              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and datum>=? and datum<=?', @mobject.id, @date_start, @date_end).group("jahrmonat") %>
+              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, @c_scope, @date_start, @date_end).group("jahrmonat") %>
               <% if @c_mode == "Monat" %>
                 <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and jahr=? and monat=?', @mobject.id, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
               <% end %>
@@ -473,10 +489,10 @@
 
             <!--Sicht User-->
             <% if @c_mode == "alles" %>
-              <% @tts = Timetrack.select("user_id, sum(amount) as sum").where('mobject_id=?',@mobject.id).group("user_id") %>
+              <% @tts = Timetrack.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("user_id") %>
               <% @pts = Planning.select("user_id, sum(amount) as sum").where('mobject_id=?',@mobject.id).group("user_id") %>
             <% else %>        
-              <% @tts = Timetrack.select("user_id, sum(amount) as sum").where('mobject_id=? and datum>=? and datum<=?', @mobject.id, @date_start, @date_end).group("user_id") %>
+              <% @tts = Timetrack.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, @c_scope, @date_start, @date_end).group("user_id") %>
               <% if @c_mode == "Monat" %>
                 <% @pts = Planning.select("user_id, sum(amount) as sum").where('mobject_id=? and jahr=? and monat=?', @mobject.id, @c_year.to_s, @c_month.to_s).group("user_id") %>
               <% end %>
@@ -511,7 +527,7 @@
             <div class="row">
   
                 <% @iso = [] %>
-                <% @timetracks = Timetrack.select("user_id").where('mobject_id=?', @mobject.id).distinct %>
+                <% @timetracks = Timetrack.select("user_id").where('mobject_id=? and costortime=?', @mobject.id, @c_scope).distinct %>
                 <% @timetracks.each do |t| %>
                   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div>
@@ -520,10 +536,10 @@
                       
                       <!--Sicht Monat/MA -->
                       <% if @c_mode == "alles" %>
-                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=?',@mobject.id, t.user_id).group("jahrmonat") %>
+                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=?',@mobject.id, t.user_id, @c_scope).group("jahrmonat") %>
                         <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=?',@mobject.id, t.user_id).group("jahrmonat") %>
                       <% else %>        
-                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and datum>=? and datum<=?', @mobject.id, t.user_id, @date_start, @date_end).group("jahrmonat") %>
+                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, t.user_id, @c_scope, @date_start, @date_end).group("jahrmonat") %>
                         <% if @c_mode == "Monat" %>
                           <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and jahr=? and monat=?', @mobject.id, t.user_id, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
                         <% end %>

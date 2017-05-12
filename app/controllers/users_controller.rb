@@ -126,6 +126,11 @@ class UsersController < ApplicationController
         else
           @c_mode = "Jahr"
         end
+        if params[:scope]
+          @c_scope = params[:scope]
+        else
+          @c_scope = "Aufwand"
+        end
         
         if params[:dir] == ">"
           if @c_mode == "Woche"

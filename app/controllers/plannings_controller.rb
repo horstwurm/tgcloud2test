@@ -20,6 +20,11 @@ class PlanningsController < ApplicationController
     @planning.user_id = params[:user_id]
     @planning.jahr = params[:year].to_s
     @planning.monat = params[:month].to_s
+    if params[:scope]
+      @planning.costortime = params[:scope]
+    else
+      @planning.costortime = "Aufwand"
+    end
   end
 
   # GET /plannings/1/edit

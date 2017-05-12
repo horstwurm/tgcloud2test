@@ -296,6 +296,40 @@ def dashboard_data
     end
 end
 
+def dashboard2_data
+    respond_to do |format|
+      format.json 
+        msg = []
+        msg << {:kategorie => "User", :anzahl => User.all.count}
+        msg << {:kategorie => "UserOnline", :anzahl => User.where("updated_at > ?", 10.minutes.ago).count}
+        @cats = Mobject.select("mtype").distinct
+        @cats.each do |c|
+          count = Mobject.where('mtype=?', c.mtype).count
+          if count > 0
+            msg << {:kategorie => c.mtype, :anzahl => count}
+          end
+        end
+        render :json => msg.to_json
+    end
+end
+
+def dashboard_projectdata
+    respond_to do |format|
+      format.json 
+
+        @projects = Mobject.where("mtype=?", "Projekte")
+        msg = []
+        @projects.each do |p|
+          @kosten = Timetrack.select("sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Kosten").first
+          @aufwand = Timetrack.select("sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Aufwand").first
+          msg << {:id => p.id, :kategorie => "Kosten", :summe => @kosten.summe}
+          msg << {:id => p.id, :kategorie => "Aufwand", :summe => @aufwand.summe}
+        end
+        render :json => msg.to_json
+        
+    end
+end
+
 def dashboard
 end
 
@@ -376,5 +410,7 @@ def Umfragen_data
 
 end
 
+def dashboard_project
+end
 
 end

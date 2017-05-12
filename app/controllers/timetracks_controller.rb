@@ -84,6 +84,11 @@ class TimetracksController < ApplicationController
     if params[:user_id]
       @timetrack.user_id = params[:user_id]
     end
+    if params[:scope]
+      @timetrack.costortime = params[:scope]
+    else
+      @timetrack.costortime = "Aufwand"
+    end
     @timetrack.datum=Date.today.strftime('%Y-%m-%d')
     @timetrack.amount = 8.5
     @timetrack.activity = "Aktivität..."
