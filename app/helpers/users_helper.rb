@@ -1170,6 +1170,7 @@ def navigate(object,item)
           html_string = html_string + build_nav("Objekte",item,"Substruktur", Mobject.where('parent=?',item.id).count > 0)
           html_string = html_string + build_nav("Objekte",item,"Berechtigungen", item.madvisors.where('role=?',item.mtype).count > 0)
           html_string = html_string + build_nav("Objekte",item,"Auftragscontrolling", item.timetracks.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Projektdashboard", item.timetracks.count > 0)
         end
         if item.mtype == "Crowdfunding"
           html_string = html_string + build_nav("Objekte",item,"CF Statistik",item.mstats.count > 0)
@@ -1610,6 +1611,9 @@ def getIcon(iconstring)
     icontext = nil
     case iconstring
 
+      when "Projektdashboard"
+        icon = "dashboard"
+        icontext = "Online Dashboard"
       when "Zugriffsberechtigungen"
         icon = "lock"
         icontext = "Zugriffsberechtigungen"
@@ -2872,6 +2876,9 @@ def init_apps
     hash = {"domain" => "Objekte", "right" => "Auftragscontrolling", "access" => true}
     @array << hash
     hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Projektdashboard", "access" => true}
+    @array << hash
+    hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "Kalender (Vermietungen)", "access" => false}
     @array << hash
     hash = Hash.new
@@ -3241,6 +3248,123 @@ def current_period(p, item)
       end
   end
   return false
+end
+
+def exportWriter (mobject, istsoll, istsollkum, istsollau, iso)
+  filename = "public/workorder_" + DateTime.now.to_s + ".xls"
+  workbook = WriteExcel.new(filename)
+        
+  # Add worksheet(s)
+  worksheet  = workbook.add_worksheet
+
+  # header format
+  f_header0 = workbook.add_format
+  f_header0.set_bold
+  # f_header0.set_color('blue')
+  f_header0.set_size(20)
+  # format.set_align('right')
+
+  f_header1 = workbook.add_format
+  f_header1.set_color('white')
+  #f_header1.set_bg_color('black')
+  f_header1.set_bg_color(57)
+
+  f_param = workbook.add_format
+  f_param.set_bold
+  f_param.set_color('red')
+
+  # col sizes
+  worksheet.set_column(0,20,20)
+  
+  row = 0
+  col = 0
+  worksheet.write(row, col, "Auftragscontrolling " + DateTime.now.strftime("%d.%m.%y-%H:%M"), f_header0)
+  row = row + 2
+  worksheet.write(row, col, "Parameter:", f_header1)
+  row = row + 1
+  worksheet.write(row, col, "Periode:")
+  worksheet.write(row, col+1, @c_mode, f_param)
+  row = row + 1
+  worksheet.write(row, col, "Fokus:")
+  worksheet.write(row, col+1, @c_scope, f_param)
+  row = row + 1
+  worksheet.write(row, col, "Projekt/Auftrag:")
+  worksheet.write(row, col+1, mobject.name, f_param)
+  row = row + 1
+  worksheet.write(row, col, "Substrukturen inkludieren:")
+  if @include_sub
+    wosub = "Ja"
+  else
+    wosub = "Nein"
+  end
+  worksheet.write(row, col+1, wosub, f_param)
+  row=row+2
+
+  worksheet.write(row, 0, "Zeitraum", f_header1)
+  worksheet.write(row+1, 0, "IST")
+  worksheet.write(row+2, 0, "SOLL")
+  worksheet.write(row+3, 0, "Delta")
+  for i in 1..istsoll.length-1
+    worksheet.write(row, i, istsoll[i][0],f_header1)
+    worksheet.write(row+1, i, istsoll[i][1])
+    worksheet.write(row+2, i, istsoll[i][2])
+    if istsoll[i][2]-istsoll[i][1] < 0
+      worksheet.write(row+3, i, istsoll[i][2]-istsoll[i][1], f_param)
+    else
+      worksheet.write(row+3, i, istsoll[i][2]-istsoll[i][1])
+    end 
+  end
+  
+  row=row+6
+  worksheet.write(row, 0, "kumuliert", f_header1)
+  worksheet.write(row+1, 0, "IST")
+  worksheet.write(row+2, 0, "SOLL")
+  worksheet.write(row+3, 0, "Delta")
+  for i in 1..istsollkum.length-1
+    worksheet.write(row, i, istsollkum[i][0],f_header1)
+    worksheet.write(row+1, i, istsollkum[i][1])
+    worksheet.write(row+2, i, istsollkum[i][2])
+    if istsollkum[i][2]-istsollkum[i][1] < 0
+      worksheet.write(row+3, i, istsollkum[i][2]-istsollkum[i][1], f_param)
+    else
+      worksheet.write(row+3, i, istsollkum[i][2]-istsollkum[i][1])
+    end 
+  end
+
+  row=row+6
+  for k in 0..iso.length-1
+
+    maiso = iso[k]
+    @user = User.find(maiso[i][0])
+    if @user
+      @name = @user.name + " " + @user.lastname
+    else
+      @name = "unbekannt"
+    end
+    
+    worksheet.write(row, 0, @name, f_header1)
+    worksheet.write(row+1, 0, "IST")
+    worksheet.write(row+2, 0, "SOLL")
+    worksheet.write(row+3, 0, "Delta")
+
+    for i in 1..maiso.length-1
+      worksheet.write(row, i, maiso[i][1],f_header1)
+      worksheet.write(row+1, i, maiso[i][2])
+      worksheet.write(row+2, i, maiso[i][3])
+      if maiso[i][3] - maiso[i][2] < 0
+        worksheet.write(row+3, i, maiso[i][3] - maiso[i][2], f_param)
+      else
+        worksheet.write(row+3, i, maiso[i][3] - maiso[i][2])
+      end 
+    end
+
+    row = row + 4
+
+  end
+
+  workbook.close
+  return filename
+
 end
 
 end    

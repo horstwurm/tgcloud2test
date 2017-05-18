@@ -214,6 +214,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     will_paginate (3.1.5)
+    writeexcel (1.0.5)
 
 PLATFORMS
   ruby
@@ -252,6 +253,7 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   web-console
   will_paginate
+  writeexcel
 
 BUNDLED WITH
-   1.13.6
+   1.14.4

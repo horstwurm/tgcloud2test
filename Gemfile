@@ -47,6 +47,8 @@ gem 'redis'
 gem 'fullcalendar.io-rails'
 gem 'momentjs-rails'
 
+gem 'writeexcel'
+
 group :development, :test do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

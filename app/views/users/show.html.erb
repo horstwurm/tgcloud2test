@@ -286,7 +286,12 @@
                               <th></th>
                               <th>Datum</th>            
                               <th colspan=2>Projekt/Auftrag</th>
-                              <th>Anzahl h</th>
+                              <% if @c_scope == "Aufwand" %>
+                                <th>Anzahl h</th>
+                              <% end %>
+                              <% if @c_scope == "Kosten" %>
+                                <th>Betrag </th>
+                              <% end %>
                             </tr>
                           </thead>
                           <tbody>
@@ -304,7 +309,7 @@
                               <td><%= a.datum.strftime('%d-%m-%Y') %></td>
                               <td><%= showFirstImage2(:small, Mobject.find(a.mobject_id),Mobject.find(a.mobject_id).mdetails) %></td>
                               <td><%= Mobject.find(a.mobject_id).name %></td>
-                              <td><%= a.amount %></td>
+                              <td align="right"><%= a.amount %></td>
                             </tr>
                           <% end %>
                           </tbody>

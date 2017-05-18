@@ -207,6 +207,9 @@ class MobjectsController < ApplicationController
    end
    
    if @topic == "Auftragscontrolling"
+      if params[:export]
+        @export = true
+      end
       if params[:year]
         @c_year = params[:year]
       else

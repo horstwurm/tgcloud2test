@@ -90,8 +90,14 @@ class TimetracksController < ApplicationController
       @timetrack.costortime = "Aufwand"
     end
     @timetrack.datum=Date.today.strftime('%Y-%m-%d')
-    @timetrack.amount = 8.5
-    @timetrack.activity = "Aktivität..."
+    if @timetrack.costortime == "Aufwand"
+      @timetrack.amount = 8.5
+      @timetrack.activity = "Aktivität..."
+    end
+    if @timetrack.costortime == "Kosten"
+      @timetrack.amount = 25000
+      @timetrack.activity = "Kosten..."
+    end
   end
 
   # GET /timetracks/1/edit
@@ -105,8 +111,8 @@ class TimetracksController < ApplicationController
 
     respond_to do |format|
       if @timetrack.save
-        #format.html { redirect_to timetracks_path(:mobject_id => @timetrack.mobject_id), notice: 'Timetrack was successfully created.' }
-        format.html { redirect_to user_path(:id => @timetrack.user_id, :topic => "Zeiterfassung"), notice: 'Timetrack was successfully created.' }
+        #format.html { redirect_to timetracks_path(:mobject_id => @timetrack.mobject_id, :scope => @timetrack.costortime), notice: 'Timetrack was successfully created.' }
+        format.html { redirect_to user_path(:id => @timetrack.user_id, :topic => "Zeiterfassung", :scope => @timetrack.costortime), notice: 'Timetrack was successfully created.' }
         format.json { render :show, status: :created, location: @timetrack }
       else
         format.html { render :new }
@@ -121,7 +127,7 @@ class TimetracksController < ApplicationController
     respond_to do |format|
       if @timetrack.update(timetrack_params)
         #format.html { redirect_to timetracks_path(:mobject_id => @timetrack.mobject_id), notice: 'Timetrack was successfully updated.' }
-        format.html { redirect_to user_path(:id => @timetrack.user_id, :topic => "Zeiterfassung"), notice: 'Timetrack was successfully created.' }
+        format.html { redirect_to user_path(:id => @timetrack.user_id, :topic => "Zeiterfassung", :scope => @timetrack.costortime), notice: 'Timetrack was successfully created.' }
         format.json { render :show, status: :ok, location: @timetrack }
       else
         format.html { render :edit }
@@ -135,10 +141,11 @@ class TimetracksController < ApplicationController
   def destroy
     #@timetrack_mobject_id = @timetrack.mobject_id
     @timetrack_user_id = @timetrack.user_id
+    @timetrack_costorid = @timetrack.costortime
     @timetrack.destroy
     respond_to do |format|
       #format.html { redirect_to timetracks_path(:mobject_id => @timetrack_mobject_id), notice: 'Timetrack was successfully destroyed.' }
-      format.html { redirect_to user_path(:id => @timetrack_user_id, :topic => "Zeiterfassung"), notice: 'Timetrack was successfully created.' }
+      format.html { redirect_to user_path(:id => @timetrack_user_id, :topic => "Zeiterfassung", :scope => @timetrack_costortime), notice: 'Timetrack was successfully created.' }
       format.json { head :no_content }
     end
   end

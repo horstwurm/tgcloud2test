@@ -416,8 +416,18 @@
               <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope)  do %>
                 <span><i class="btn btn-<%= btn_y %> glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
               <% end %>
+              <% if false %>
               <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "Monat", :scope => @c_scope)  do %>
                 <span><i class="btn btn-<%= btn_m %> glyphicon glyphicon-calendar"> <%= @c_month %></i></span>
+              <% end %>
+              <% end %>
+              <% if @c_mode != "alles" %>
+                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
+                  <i class="btn btn btn-primary glyphicon glyphicon-chevron-left"></i>
+                <% end %>
+                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
+                  <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
+                <% end %>
               <% end %>
               
               <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => "Kosten") do %>
@@ -427,47 +437,115 @@
                 <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
               <% end %>
               
-              <% if @c_mode != "alles" %>
-                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
-                  <i class="btn btn btn-primary glyphicon glyphicon-chevron-left"></i>
-                <% end %>
-                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
-                  <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
-                <% end %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope, :export => true) do %>
+                <span><i class="btn btn-inactive glyphicon glyphicon-book"></i></span>
               <% end %>
+              
              <br><br>
 
             <!--Sicht Monat-->
             <% if @c_mode == "alles" %>
-              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("jahrmonat") %>
-              <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=?',@mobject.id).group("jahrmonat") %>
+              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("jahrmonat").order(:jahrmonat) %>
+              <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("jahrmonat") %>
             <% else %>        
-              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, @c_scope, @date_start, @date_end).group("jahrmonat") %>
+              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, @c_scope, @date_start, @date_end).group("jahrmonat").order(:jahrmonat) %>
               <% if @c_mode == "Monat" %>
-                <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and jahr=? and monat=?', @mobject.id, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
+                <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=? and jahr=? and monat=?', @mobject.id, @c_scope, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
               <% end %>
               <% if @c_mode == "Jahr" %>
-                <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and jahr=?',@mobject.id, @c_year.to_s).group("jahrmonat") %>
+                <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=? and jahr=?',@mobject.id, @c_scope, @c_year.to_s).group("jahrmonat") %>
               <% end %>
             <% end %>
+
+            <% @range = [] %>
+            <% @start = "2000-01" %>
+            <% @ende = "2000-01" %>
+            <% @startp = "2000-01" %>
+            <% @endep = "2000-01" %>
+            
+            <% if @tts %>
+              <% @start = @tts.first.jahrmonat if @tts.first %>
+              <% @ende = @tts.last.jahrmonat if @tts.last %>
+            <% end %>
+            <% if @pts %>
+              <% @startp = @pts.first.jahrmonat if @pts.first %>
+              <% @endep = @pts.last.jahrmonat if @pts.last %>
+            <% end %>
+              <% if @startp < @start %>
+              <% @start = @startp %>
+            <% end %>
+            <% if @endep > @ende %>
+              <% @ende = @endep %>
+            <% end %>
+
+            <% vjahr = @start[0..3].to_i %>
+            <% vmonat = @start[5..6].to_i %>
+            <% vdatum = @start %>
+            <% @range = [] %>
+            <% while vdatum <= @ende %>
+
+              <% @range << vdatum %>
+
+              <% if vmonat == 12 %>
+                <% vmonat = 1 %>
+                <% vjahr = vjahr + 1 %>
+              <% else %>
+                <% vmonat = vmonat + 1 %>
+              <% end %>
+
+              <% monats = vmonat.to_s %>
+              <% jahrs = vjahr.to_s %>
+              <% if monats.length == 1 %>
+              <%   monats = "0" + monats %>
+              <% end %>
+              <% vdatum = jahrs + "-" + monats %>
+              
+            <% end %>
+            <% @range %><br><br>
+
             <% @plans = [] %>
-            <% @pts.each do |p| %>
-              <% if p.sum > 0 %>
-                <% h = Hash.new %>
-                <% h = {:jahrmonat => p.jahrmonat.to_s, :kapa => (p.sum * 170) / 100} %>
-                <% @plans << h %>
-              <% end %>
+            <% @pts.each do |t| %>
+              <% @plans << [t.jahrmonat, t.sum] %>
             <% end %>
+            <% @ists = [] %>
+            <% @tts.each do |t| %>
+              <% @ists << [t.jahrmonat, t.sum] %>
+            <% end %>
+
             <% @istsoll = [] %>
             <% @istsoll << ['kategorie', 'IST','PLAN'] %>
-            <% @tts.each do |t| %>
-              <% kapa = 0 %>
-              <% for i in 0..@plans.length-1 %>
-                <% if @plans[i][:jahrmonat] == t.jahrmonat %>
-                  <% kapa = @plans[i][:kapa] %>
+            <% for i in 0..@range.length-1 %>
+            
+                <% plan = 0 %>
+                <% found = false %>
+                <% for k in 0..@plans.length-1 %>
+                  <% if !found %>
+                    <% if @plans[k][0] == @range[i] %>
+                      <% plan = @plans[k][1] %>
+                      <% found = true %>
+                    <% end %>
+                  <% end %>
                 <% end %>
-              <% end %>
-              <% @istsoll << [t.jahrmonat, t.sum, kapa] %>
+
+                <% ist = 0 %>
+                <% found = false %>
+                <% for k in 0..@ists.length-1 %>
+                  <% if !found %>
+                    <% if @ists[k][0] == @range[i] %>
+                      <% ist = @ists[k][1] %>
+                      <% found = true %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
+                <% if @c_scope == "Aufwand" %>
+                  <% h = [@range[i], (ist * 170 /100), (plan * 170) / 100] %>
+                <% end %>
+                <% if @c_scope == "Kosten" %>
+                  <% h = [@range[i], ist, soll] %>
+                <% end %>
+                <% @istsoll << h %>
+
             <% end %>
             <% @istsoll %>
             
@@ -490,21 +568,26 @@
             <!--Sicht User-->
             <% if @c_mode == "alles" %>
               <% @tts = Timetrack.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("user_id") %>
-              <% @pts = Planning.select("user_id, sum(amount) as sum").where('mobject_id=?',@mobject.id).group("user_id") %>
+              <% @pts = Planning.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("user_id") %>
             <% else %>        
               <% @tts = Timetrack.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, @c_scope, @date_start, @date_end).group("user_id") %>
               <% if @c_mode == "Monat" %>
-                <% @pts = Planning.select("user_id, sum(amount) as sum").where('mobject_id=? and jahr=? and monat=?', @mobject.id, @c_year.to_s, @c_month.to_s).group("user_id") %>
+                <% @pts = Planning.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=? and jahr=? and monat=?', @mobject.id, @c_scope, @c_year.to_s, @c_month.to_s).group("user_id") %>
               <% end %>
               <% if @c_mode == "Jahr" %>
-                <% @pts = Planning.select("user_id, sum(amount) as sum").where('mobject_id=? and jahr=?',@mobject.id, @c_year.to_s).group("user_id") %>
+                <% @pts = Planning.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=? and jahr=?',@mobject.id, @c_scope, @c_year.to_s).group("user_id") %>
               <% end %>
             <% end %>
             <% @plans = [] %>
             <% @pts.each do |p| %>
               <% if p.sum > 0 %>
                 <% h = Hash.new %>
-                <% h = {:user_id => p.user_id, :kapa => (p.sum * 170) / 100} %>
+                <% if @c_scope == "Aufwand" %>
+                  <% h = {:user_id => p.user_id, :kapa => (p.sum * 170) / 100} %>
+                <% end %>
+                <% if @c_scope == "Kosten" %>
+                  <% h = {:user_id => p.user_id, :kapa => p.sum} %>
+                <% end %>
                 <% @plans << h %>
               <% end %>
             <% end %>
@@ -527,55 +610,145 @@
             <div class="row">
   
                 <% @iso = [] %>
+                <% @isoall = [] %>
                 <% @timetracks = Timetrack.select("user_id").where('mobject_id=? and costortime=?', @mobject.id, @c_scope).distinct %>
-                <% @timetracks.each do |t| %>
+                <% @timetracks.each do |u| %>
                   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div>
-                      <% @user = User.find(t.user_id) %>
+                      <% @user = User.find(u.user_id) %>
                       <%= header("User " + @user.name + " " + @user.lastname, false) %>
                       
                       <!--Sicht Monat/MA -->
                       <% if @c_mode == "alles" %>
-                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=?',@mobject.id, t.user_id, @c_scope).group("jahrmonat") %>
-                        <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=?',@mobject.id, t.user_id).group("jahrmonat") %>
+                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=?',@mobject.id, u.user_id, @c_scope).group("jahrmonat") %>
+                        <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=?',@mobject.id, u.user_id, @c_scope).group("jahrmonat") %>
                       <% else %>        
-                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, t.user_id, @c_scope, @date_start, @date_end).group("jahrmonat") %>
+                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, u.user_id, @c_scope, @date_start, @date_end).group("jahrmonat") %>
                         <% if @c_mode == "Monat" %>
-                          <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and jahr=? and monat=?', @mobject.id, t.user_id, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
+                          <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=? and jahr=? and monat=?', @mobject.id, u.user_id, @c_scope, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
                         <% end %>
                         <% if @c_mode == "Jahr" %>
-                          <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and jahr=?',@mobject.id, t.user_id, @c_year.to_s).group("jahrmonat") %>
+                          <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=? and jahr=?',@mobject.id, u.user_id, @c_scope, @c_year.to_s).group("jahrmonat") %>
                         <% end %>
                       <% end %>
-                      <% @plans = [] %>
-                      <% @pts.each do |p| %>
-                        <% if p.sum > 0 %>
-                          <% h = Hash.new %>
-                          <% h = {:jahrmonat => p.jahrmonat, :kapa => (p.sum * 170)/100} %>
-                          <% @plans << h %>
-                        <% end %>
+                      
+                      <% @pts.each do |t| %>
+                        <% @plans << [t.jahrmonat, t.sum] %>
                       <% end %>
-                      <% @istsollall = [] %>
-                      <% @istsollall << ['kategorie', 'IST','PLAN'] %>
+                      <% @ists = [] %>
                       <% @tts.each do |t| %>
-                        <% kapa = 0 %>
-                        <% for i in 0..@plans.length-1 %>
-                          <% if @plans[i][:jahrmonat] == t.jahrmonat %>
-                            <% kapa = @plans[i][:kapa] %>
-                          <% end %>
-                        <% end %>
-                        <% @istsollall << [t.jahrmonat, t.sum, kapa] %>
+                        <% @ists << [t.jahrmonat, t.sum] %>
                       <% end %>
-                      <% @istsollall %>
-                      <% @iso << @istsollall %>
+          
+                      <% @istsollall = [] %>
+                      <% @istsollallgraph = [] %>
+                      <% @istsollall << ['user', 'kategorie', 'IST','PLAN'] %>
+                      <% @istsollallgraph << ['kategorie', 'IST','PLAN'] %>
+                      <% for i in 0..@range.length-1 %>
+                      
+                          <% plan = 0 %>
+                          <% found = false %>
+                          <% for k in 0..@plans.length-1 %>
+                            <% if !found %>
+                              <% if @plans[k][0] == @range[i] %>
+                                <% plan = @plans[k][1] %>
+                                <% found = true %>
+                              <% end %>
+                            <% end %>
+                          <% end %>
+          
+                          <% ist = 0 %>
+                          <% found = false %>
+                          <% for k in 0..@ists.length-1 %>
+                            <% if !found %>
+                              <% if @ists[k][0] == @range[i] %>
+                                <% ist = @ists[k][1] %>
+                                <% found = true %>
+                              <% end %>
+                            <% end %>
+                          <% end %>
+          
+                          <% if @c_scope == "Aufwand" %>
+                            <% h = [@user.id, @range[i], (ist * 170 /100), (plan * 170) / 100] %>
+                          <% end %>
+                          <% if @c_scope == "Kosten" %>
+                            <% h = [@user.id, @range[i], ist, soll] %>
+                          <% end %>
+                          <% @istsollall << h %>
+                          <% @istsollallgraph << h[1..3] %>
+          
+                      <% end %>
+
+                      <% @iso << @istsollallgraph %>
+                      <% @isoall << @istsollall %>
+                                
                       <div id="<%="chart" + (@iso.length-1).to_s %>"></div>
 
                     </div>
                   </div>
                 <% end %>
-                <% @iso %>
+                <% @isoall %>
             </div>
+            <% if @export %>
+              <% @filename = exportWriter(@mobject, @istsoll, @istsollkum, @istsollau, @isoall) %>
+              <% link_to @filename, @filename.remove("public") %>
+    	        <%= link_to @filename.remove("public") do %>
+                <span><i class="btn btn-active glyphicon glyphicon-cloud-download"></i></span>
+              <% end %>
+            <% end %>
+            
+          </div>
 
+        <% when "Projektdashboard" %>
+          <%= header2("Objekte", @mobject, @topic, "Projektdashboard", false) %>
+          <div class="panel-body">
+            
+            <% @projects = Mobject.where("mtype=?", "Projekte") %>
+            <% @projects = Mobject.where("mtype=? and id in (?)", "Projekte", [@mobject.id]) %>
+            
+            <div class="row">
+              <% @projects.each do |m| %>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <div class="panel panel-dashboard">
+                    <div class="row">
+                      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <%= content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon("Projekte")["icon"], style:"font-size:4em") %>
+                      </div>
+                      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <huge>
+                        <%= m.name %><br><br>
+                        </huge>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="row" align="Center">
+                          <div id="costchart<%= m.id %>"></div>
+                        </div>
+                      </div>
+                      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="row" align="Center">
+                          <div id="effortchart<%= m.id %>"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <huge>
+                        <p id="cost<%= m.id %>"></p>
+                        </huge>
+                      </div>
+                      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <huge>
+                        <p id="effort<%= m.id %>"></p>
+                        </huge>
+                      </div>
+                    </div>
+                  </div>
+                </div>  
+              <% end %>
+            </div>
+            
           </div>
 
         <% when "Blog" %>
@@ -707,29 +880,46 @@ $(document).ready(function(){
       google.charts.load('current', {'packages':['corechart']});
       
       <% if @topic == "Auftragscontrolling" %>
-        google.charts.setOnLoadCallback(drawChartall);
-        function drawChartall() {
-          var data = google.visualization.arrayToDataTable(<%= raw @istsoll %>);
-          var options = {
-            title: 'Rapportierte Stunden (Monat)',
-            colors: ['#ACC550','#2E6B33'],
-            // legend: { position: 'bottom' }
-          };
-          // var chart = new google.visualization.ColumnChart(document.getElementById("auftragschartall"));
-          var chart = new google.visualization.LineChart(document.getElementById("auftragschartall"));
-          chart.draw(data, options);
-        };
 
         google.charts.setOnLoadCallback(drawChartallkum);
         function drawChartallkum() {
           var data = google.visualization.arrayToDataTable(<%= raw @istsollkum %>);
           var options = {
-            title: 'Rapportierte Stunden (kumuliert)',
+            <% if @c_scope == "Aufwand" %>
+              title: 'Rapportierte Stunden (kumuliert)',
+            <% end %>
+            <% if @c_scope == "Kosten" %>
+              title: 'Rapportierte Kosten (kumuliert)',
+            <% end %>
             colors: ['#ACC550','#2E6B33'],
             // legend: { position: 'bottom' }
           };
-          // var chart = new google.visualization.ColumnChart(document.getElementById("auftragschartall"));
-          var chart = new google.visualization.LineChart(document.getElementById("auftragschartallkum"));
+          <% if @c_mode == "Monat" %>
+            var chart = new google.visualization.ColumnChart(document.getElementById("auftragschartallkum"));
+          <% else %>
+            var chart = new google.visualization.LineChart(document.getElementById("auftragschartallkum"));
+          <% end %>
+          chart.draw(data, options);
+        };
+
+        google.charts.setOnLoadCallback(drawChartall);
+        function drawChartall() {
+          var data = google.visualization.arrayToDataTable(<%= raw @istsoll %>);
+          var options = {
+            <% if @c_scope == "Aufwand" %>
+              title: 'Rapportierte Stunden (Monat)',
+            <% end %>
+            <% if @c_scope == "Kosten" %>
+              title: 'Rapportierte Kosten (Monat)',
+            <% end %>
+            colors: ['#ACC550','#2E6B33'],
+            // legend: { position: 'bottom' }
+          };
+          <% if @c_mode == "Monat" %>
+            var chart = new google.visualization.ColumnChart(document.getElementById("auftragschartall"));
+          <% else %>
+            var chart = new google.visualization.LineChart(document.getElementById("auftragschartall"));
+          <% end %>
           chart.draw(data, options);
         };
 
@@ -737,7 +927,12 @@ $(document).ready(function(){
         function drawChartuser() {
           var data = google.visualization.arrayToDataTable(<%= raw @istsollau %>);
           var options = {
-            title: 'Rapportierte Stunden (User)',
+            <% if @c_scope == "Aufwand" %>
+              title: 'Rapportierte Stunden (User)',
+            <% end %>
+            <% if @c_scope == "Kosten" %>
+              title: 'Rapportierte Kosten (User)',
+            <% end %>
             colors: ['#ACC550','#2E6B33'],
             // legend: { position: 'bottom' }
           };
@@ -751,11 +946,20 @@ $(document).ready(function(){
             function drawChart<%= i.to_s %>() {
               var data = google.visualization.arrayToDataTable(<%= raw @iso[i] %>);
               var options = {
-                title: 'Rapportierte Stunden',
+                <% if @c_scope == "Aufwand" %>
+                  title: 'Rapportierte Stunden (User)',
+                <% end %>
+                <% if @c_scope == "Kosten" %>
+                  title: 'Rapportierte Kosten (User)',
+                <% end %>
                 colors: ['#ACC550','#2E6B33'],
                 // legend: { position: 'bottom' }
               };
-              var chart = new google.visualization.LineChart(document.getElementById('<%="chart"+i.to_s %>'));
+              <% if @c_mode == "Monat" %>
+                var chart = new google.visualization.ColumnChart(document.getElementById('<%="chart"+i.to_s %>'));
+              <% else %>
+                var chart = new google.visualization.LineChart(document.getElementById('<%="chart"+i.to_s %>'));
+              <% end %>
               chart.draw(data, options);
             };
             <% i = i + 1 %>
@@ -828,7 +1032,106 @@ $(document).ready(function(){
     
     <% end %>
     <% end %>
+    
+    <% if @mobject.mtype == "Projekte" and @topic == "Projektdashboard" %>
+    
+   google.charts.load('current', {'packages':['corechart']});
 
+  <% @projects.each do |p| %>
+  
+    window.costdataset_<%= p.id %> = [["Zeit", "Wert"],[Date(),0]];
+    google.charts.setOnLoadCallback(costfunc<%= p.id %>);
+    function costfunc<%= p.id %>() {
+      var data = google.visualization.arrayToDataTable(costdataset_<%= p.id %>);
+      var options = {
+        title: 'Kosten',
+        colors: ['#ACC550'],
+        curveType: 'function',
+        width:150,
+        height:150,
+        legend: { position: 'bottom' }
+      };
+      var chart = new google.visualization.LineChart(document.getElementById('costchart<%= p.id %>'));
+      chart.draw(data, options);
+    }
+
+    window.effortdataset_<%= p.id %> = [["Zeit", "Wert"],[Date(),0]];
+    google.charts.setOnLoadCallback(effortfunc<%= p.id %>);
+    function effortfunc<%= p.id %>() {
+      var data = google.visualization.arrayToDataTable(effortdataset_<%= p.id %>);
+      var options = {
+        title: 'Aufwand',
+        colors: ['#ACC550'],
+        curveType: 'function',
+        width:150,
+        height:150,
+        legend: { position: 'bottom' }
+      };
+      var chart = new google.visualization.LineChart(document.getElementById('effortchart<%= p.id %>'));
+      chart.draw(data, options);
+    }
+  <% end %>
+
+    window.setInterval( callme, 15000 );
+
+    // window.setInterval( updateme, 100 );
+    
+    function updateme() {
+      <% @projects.each do |c| %>
+        var i = Number($("#<%= c.mtype %>").text());
+        i = i + 25;
+        // var i= 205;
+        $("#<%= c.mtype %>").text(i.toString());
+      <% end %>
+    }
+        
+    function callme() {
+        $.ajax({
+            // url: "http://tkbmarkt.herokuapp.com/home/dashboard_data.json",
+            // url: "https://market20-horstwurm.c9users.io/home/dashboard_projectdata.json",
+            url: "http://tkbmarkt.herokuapp.com/home/dashboard_projectdata.json",
+            //force to handle it as text
+            dataType: "text",
+            success: function(data) {
+                //data downloaded so we call parseJSON function 
+                //and pass downloaded data
+                var json = $.parseJSON(data);
+                
+                // alert(json[0].id + json[0].kategorie + " " + json[0].summe);
+                
+                // alert(json[0].kategorie + " " + json[0].anzahl);
+                // alert(json[1].kategorie + " " + json[1].anzahl);
+                // alert(json[2].kategorie + " " + json[2].anzahl);
+
+                <% if true %>
+                <% @projects.each do |p| %>
+                  for (var i=0;i<json.length;++i)
+                  {
+                    <% if true %>
+                      if (json[i].id == <%= p.id %>) {
+                        if (json[i].kategorie == "Kosten") {
+                          $("#cost<%= p.id  %>").text(json[i].summe + " CHF");
+                          costdataset_<%= p.id %>.push([Date(), json[i].summe]);
+                          google.charts.setOnLoadCallback(costfunc<%= p.id %>);
+                        }
+                        if (json[i].kategorie == "Aufwand") {
+                          $("#effort<%= p.id  %>").text( parseInt( (json[i].summe)/8.5) + " PT");
+                          effortdataset_<%= p.id %>.push([Date(), json[i].summe]);
+                          google.charts.setOnLoadCallback(effortfunc<%= p.id %>);
+                        }
+                      }
+                    <% end %>
+                  }
+                  // var d = new Date;
+                  // var m = d.getMilliseconds();
+                  // $("#<%= p.id %>").text(json[0].anzahl);
+                <% end %>
+                <% end %>
+
+            }
+        });
+    }
+    <% end %>
   
     $("nav").hide();
     $("navhide").hide();
@@ -930,6 +1233,7 @@ $(document).ready(function(){
       var chart = new google.visualization.LineChart(document.getElementById('curve_chart2'));
       chart.draw(data, options);
     }
+    
 
 });
 </script>
