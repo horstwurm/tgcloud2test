@@ -445,10 +445,10 @@
 
             <!--Sicht Monat-->
             <% if @c_mode == "alles" %>
-              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("jahrmonat").order(:jahrmonat) %>
+              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("jahrmonat") %>
               <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("jahrmonat") %>
             <% else %>        
-              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, @c_scope, @date_start, @date_end).group("jahrmonat").order(:jahrmonat) %>
+              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, @c_scope, @date_start, @date_end).group("jahrmonat") %>
               <% if @c_mode == "Monat" %>
                 <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=? and jahr=? and monat=?', @mobject.id, @c_scope, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
               <% end %>
