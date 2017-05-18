@@ -445,15 +445,15 @@
 
             <!--Sicht Monat-->
             <% if @c_mode == "alles" %>
-              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("jahrmonat") %>
-              <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("jahrmonat") %>
+              <% @tts = Timetrack.select("jahrmonat, sum(amount) as summe").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("jahrmonat").order(:jahrmonat) %>
+              <% @pts = Planning.select("jahrmonat, sum(amount) as summe").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("jahrmonat").order(:jahrmonat) %>
             <% else %>        
-              <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, @c_scope, @date_start, @date_end).group("jahrmonat") %>
+              <% @tts = Timetrack.select("jahrmonat, sum(amount) as summe").where('mobject_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, @c_scope, @date_start, @date_end).group("jahrmonat").order(:jahrmonat) %>
               <% if @c_mode == "Monat" %>
-                <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=? and jahr=? and monat=?', @mobject.id, @c_scope, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
+                <% @pts = Planning.select("jahrmonat, sum(amount) as summe").where('mobject_id=? and costortime=? and jahr=? and monat=?', @mobject.id, @c_scope, @c_year.to_s, @c_month.to_s).group("jahrmonat").order(:jahrmonat) %>
               <% end %>
               <% if @c_mode == "Jahr" %>
-                <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and costortime=? and jahr=?',@mobject.id, @c_scope, @c_year.to_s).group("jahrmonat") %>
+                <% @pts = Planning.select("jahrmonat, sum(amount) as summe").where('mobject_id=? and costortime=? and jahr=?',@mobject.id, @c_scope, @c_year.to_s).group("jahrmonat").order(:jahrmonat) %>
               <% end %>
             <% end %>
 
@@ -505,11 +505,11 @@
 
             <% @plans = [] %>
             <% @pts.each do |t| %>
-              <% @plans << [t.jahrmonat, t.sum] %>
+              <% @plans << [t.jahrmonat, t.summe] %>
             <% end %>
             <% @ists = [] %>
             <% @tts.each do |t| %>
-              <% @ists << [t.jahrmonat, t.sum] %>
+              <% @ists << [t.jahrmonat, t.summe] %>
             <% end %>
 
             <% @istsoll = [] %>
@@ -567,26 +567,26 @@
 
             <!--Sicht User-->
             <% if @c_mode == "alles" %>
-              <% @tts = Timetrack.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("user_id") %>
-              <% @pts = Planning.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("user_id") %>
+              <% @tts = Timetrack.select("user_id, sum(amount) as summe").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("user_id") %>
+              <% @pts = Planning.select("user_id, sum(amount) as summe").where('mobject_id=? and costortime=?',@mobject.id, @c_scope).group("user_id") %>
             <% else %>        
-              <% @tts = Timetrack.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, @c_scope, @date_start, @date_end).group("user_id") %>
+              <% @tts = Timetrack.select("user_id, sum(amount) as summe").where('mobject_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, @c_scope, @date_start, @date_end).group("user_id") %>
               <% if @c_mode == "Monat" %>
-                <% @pts = Planning.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=? and jahr=? and monat=?', @mobject.id, @c_scope, @c_year.to_s, @c_month.to_s).group("user_id") %>
+                <% @pts = Planning.select("user_id, sum(amount) as summe").where('mobject_id=? and costortime=? and jahr=? and monat=?', @mobject.id, @c_scope, @c_year.to_s, @c_month.to_s).group("user_id") %>
               <% end %>
               <% if @c_mode == "Jahr" %>
-                <% @pts = Planning.select("user_id, sum(amount) as sum").where('mobject_id=? and costortime=? and jahr=?',@mobject.id, @c_scope, @c_year.to_s).group("user_id") %>
+                <% @pts = Planning.select("user_id, sum(amount) as summe").where('mobject_id=? and costortime=? and jahr=?',@mobject.id, @c_scope, @c_year.to_s).group("user_id") %>
               <% end %>
             <% end %>
             <% @plans = [] %>
             <% @pts.each do |p| %>
-              <% if p.sum > 0 %>
+              <% if p.summe > 0 %>
                 <% h = Hash.new %>
                 <% if @c_scope == "Aufwand" %>
-                  <% h = {:user_id => p.user_id, :kapa => (p.sum * 170) / 100} %>
+                  <% h = {:user_id => p.user_id, :kapa => (p.summe * 170) / 100} %>
                 <% end %>
                 <% if @c_scope == "Kosten" %>
-                  <% h = {:user_id => p.user_id, :kapa => p.sum} %>
+                  <% h = {:user_id => p.user_id, :kapa => p.summe} %>
                 <% end %>
                 <% @plans << h %>
               <% end %>
@@ -601,7 +601,7 @@
                 <% end %>
               <% end %>
               <% @user = User.find(t.user_id) %>
-              <% @istsollau << [@user.name + " " + @user.lastname, t.sum, kapa] %>
+              <% @istsollau << [@user.name + " " + @user.lastname, t.summe, kapa] %>
             <% end %>
             <% @istsollau %>
             <div id="chartalluser"></div>
@@ -620,24 +620,24 @@
                       
                       <!--Sicht Monat/MA -->
                       <% if @c_mode == "alles" %>
-                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=?',@mobject.id, u.user_id, @c_scope).group("jahrmonat") %>
-                        <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=?',@mobject.id, u.user_id, @c_scope).group("jahrmonat") %>
+                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as summe").where('mobject_id=? and user_id=? and costortime=?',@mobject.id, u.user_id, @c_scope).group("jahrmonat") %>
+                        <% @pts = Planning.select("jahrmonat, sum(amount) as summe").where('mobject_id=? and user_id=? and costortime=?',@mobject.id, u.user_id, @c_scope).group("jahrmonat") %>
                       <% else %>        
-                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, u.user_id, @c_scope, @date_start, @date_end).group("jahrmonat") %>
+                        <% @tts = Timetrack.select("jahrmonat, sum(amount) as summe").where('mobject_id=? and user_id=? and costortime=? and datum>=? and datum<=?', @mobject.id, u.user_id, @c_scope, @date_start, @date_end).group("jahrmonat") %>
                         <% if @c_mode == "Monat" %>
-                          <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=? and jahr=? and monat=?', @mobject.id, u.user_id, @c_scope, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
+                          <% @pts = Planning.select("jahrmonat, sum(amount) as summe").where('mobject_id=? and user_id=? and costortime=? and jahr=? and monat=?', @mobject.id, u.user_id, @c_scope, @c_year.to_s, @c_month.to_s).group("jahrmonat") %>
                         <% end %>
                         <% if @c_mode == "Jahr" %>
-                          <% @pts = Planning.select("jahrmonat, sum(amount) as sum").where('mobject_id=? and user_id=? and costortime=? and jahr=?',@mobject.id, u.user_id, @c_scope, @c_year.to_s).group("jahrmonat") %>
+                          <% @pts = Planning.select("jahrmonat, sum(amount) as summe").where('mobject_id=? and user_id=? and costortime=? and jahr=?',@mobject.id, u.user_id, @c_scope, @c_year.to_s).group("jahrmonat") %>
                         <% end %>
                       <% end %>
                       
                       <% @pts.each do |t| %>
-                        <% @plans << [t.jahrmonat, t.sum] %>
+                        <% @plans << [t.jahrmonat, t.summe] %>
                       <% end %>
                       <% @ists = [] %>
                       <% @tts.each do |t| %>
-                        <% @ists << [t.jahrmonat, t.sum] %>
+                        <% @ists << [t.jahrmonat, t.summe] %>
                       <% end %>
           
                       <% @istsollall = [] %>
