@@ -314,27 +314,30 @@ def dashboard2_data
 end
 
 def dashboard_projectdata
-    if params[:project_id]
-      @project = Mobject.find(params[:project_id])
-      respond_to do |format|
-        format.json 
-  
-          msg = []
-          if false
-          @projects.each do |p|
-            @kosten = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Kosten").group("id").order(:id).first
-            @aufwand = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Aufwand").group("id").order(:id).first
-            msg << {:id => p.id, :kategorie => "Kosten", :summe => @kosten.summe}
-            msg << {:id => p.id, :kategorie => "Aufwand", :summe => @aufwand.summe}
-          end
-          end
-          @kosten = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',@project.id, "Kosten").group("id").order(:id).first
-          @aufwand = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',@project.id, "Aufwand").group("id").order(:id).first
-          msg << {:id => p.id, :kategorie => "Kosten", :summe => @kosten.summe}
-          msg << {:id => p.id, :kategorie => "Aufwand", :summe => @aufwand.summe}
-          render :json => msg.to_json
+  respond_to do |format|
+    format.json 
+
+      if params[:project_id]
+        @project = Mobject.find(params[:project_id])
+      else 
+        @project = Mobject.first
       end
-    end
+
+      msg = []
+      if false
+      @projects.each do |p|
+        @kosten = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Kosten").group("id").order(:id).first
+        @aufwand = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Aufwand").group("id").order(:id).first
+        msg << {:id => p.id, :kategorie => "Kosten", :summe => @kosten.summe}
+        msg << {:id => p.id, :kategorie => "Aufwand", :summe => @aufwand.summe}
+      end
+      end
+      @kosten = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',@project.id, "Kosten").group("id").order(:id).first
+      @aufwand = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',@project.id, "Aufwand").group("id").order(:id).first
+      msg << {:id => p.id, :kategorie => "Kosten", :summe => @kosten.summe}
+      msg << {:id => p.id, :kategorie => "Aufwand", :summe => @aufwand.summe}
+      render :json => msg.to_json
+  end
 end
 
 def dashboard
