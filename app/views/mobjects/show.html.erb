@@ -1089,7 +1089,7 @@ $(document).ready(function(){
         $.ajax({
             // url: "http://tkbmarkt.herokuapp.com/home/dashboard_data.json",
             // url: "https://market20-horstwurm.c9users.io/home/dashboard_projectdata.json",
-            url: "http://tkbmarkt.herokuapp.com/home/dashboard_projectdata.json?project_id=<%= [@mobject.id] %>"",
+            url: "http://tkbmarkt.herokuapp.com/home/dashboard_projectdata.json?project_id="+<%= [@mobject.id] %>,
             //force to handle it as text
             dataType: "text",
             success: function(data) {
