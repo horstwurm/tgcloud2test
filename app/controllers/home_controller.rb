@@ -314,10 +314,11 @@ def dashboard2_data
 end
 
 def dashboard_projectdata
+    @project = params[:project_id]
     respond_to do |format|
       format.json 
 
-        @projects = Mobject.where("mtype=? and id=?", "Projekte", params[:project_id])
+        @projects = Mobject.where("mtype=? and id=?", "Projekte", @project.id)
         msg = []
         @projects.each do |p|
           @kosten = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',@mobject.id, "Kosten").group("id").order(:id).first
