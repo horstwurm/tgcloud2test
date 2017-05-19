@@ -703,9 +703,9 @@
           <%= header2("Objekte", @mobject, @topic, "Projektdashboard", false) %>
           <div class="panel-body">
             
-            <% @prolist  = [@mobject.id] %>
+            <% @prolist  = [@mobject.id.to_i] %>
             <% wo_iterate(@mobject.id, true, @prolist) %>
-            <%= @prolist %>
+            <% @prolist %>
             <% @projects = Mobject.where("mtype=? and id in (?)", "Projekte", @prolist) %>
 
             <div class="row">
