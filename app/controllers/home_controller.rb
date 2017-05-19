@@ -314,20 +314,20 @@ def dashboard2_data
 end
 
 def dashboard_projectdata
-    @project = params[:project_id]
-    respond_to do |format|
-      format.json 
-
-        @projects = Mobject.where("mtype=? and id=?", "Projekte", @project)
-        msg = []
-        @projects.each do |p|
-          @kosten = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Kosten").group("id").order(:id).first
-          @aufwand = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Aufwand").group("id").order(:id).first
-          msg << {:id => p.id, :kategorie => "Kosten", :summe => @kosten.summe}
-          msg << {:id => p.id, :kategorie => "Aufwand", :summe => @aufwand.summe}
-        end
-        render :json => msg.to_json
-        
+    if params[:project_id]
+      respond_to do |format|
+        format.json 
+  
+          @projects = Mobject.where("mtype=? and id=?", "Projekte", params[:project_id])
+          msg = []
+          @projects.each do |p|
+            @kosten = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Kosten").group("id").order(:id).first
+            @aufwand = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Aufwand").group("id").order(:id).first
+            msg << {:id => p.id, :kategorie => "Kosten", :summe => @kosten.summe}
+            msg << {:id => p.id, :kategorie => "Aufwand", :summe => @aufwand.summe}
+          end
+          render :json => msg.to_json
+      end
     end
 end
 
