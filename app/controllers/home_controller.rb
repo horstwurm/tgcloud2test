@@ -323,8 +323,8 @@ def dashboard_projectdata
   @projects.each do |p|
     #@kosten = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Kosten").group("id").order(:id).first
     #@aufwand = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Aufwand").group("id").order(:id).first
-    @kosten = Timetrack.select("mobject_id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Kosten").group("id")
-    @aufwand = Timetrack.select("mobject_id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Aufwand").group("id")
+    @kosten = Timetrack.select("sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Kosten")
+    @aufwand = Timetrack.select("sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Aufwand")
     if @kosten.first 
       msg << {:id => p.id, :kategorie => "Kosten", :summe => @kosten.first.summe}
     end
