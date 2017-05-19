@@ -318,7 +318,7 @@ def dashboard_projectdata
     respond_to do |format|
       format.json 
 
-        @projects = Mobject.where("mtype=? and id=?", "Projekte", @project.id)
+        @projects = Mobject.where("mtype=? and id=?", "Projekte", @project)
         msg = []
         @projects.each do |p|
           @kosten = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',@mobject.id, "Kosten").group("id").order(:id).first
