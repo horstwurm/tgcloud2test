@@ -3367,4 +3367,14 @@ def exportWriter (mobject, istsoll, istsollkum, istsollau, iso)
 
 end
 
+def wo_iterate(wo, include_sub, wolist)
+  if include_sub
+    subs = Mobject.where("parent=?", wo)
+    subs.each do |s|
+      wolist << s.id
+      wo_iterate(s.id, include_sub, wolist)
+    end
+  end
+end
+
 end    

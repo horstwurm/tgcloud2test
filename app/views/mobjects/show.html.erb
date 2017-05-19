@@ -703,8 +703,10 @@
           <%= header2("Objekte", @mobject, @topic, "Projektdashboard", false) %>
           <div class="panel-body">
             
-            <% @projects = Mobject.where("mtype=?", "Projekte") %>
-            <% @projects = Mobject.where("mtype=? and id in (?)", "Projekte", [@mobject.id]) %>
+            <% @prolist  = [@mobject.id] %>
+            <% wo_iterate(@mobject.id, true, @prolist) %>
+            <%= @prolist %>
+            <% @projects = Mobject.where("mtype=? and id in (?)", "Projekte", @prolist) %>
 
             <div class="row">
               <% @projects.each do |m| %>
@@ -1087,9 +1089,8 @@ $(document).ready(function(){
         
     function callme() {
         $.ajax({
-            // url: "http://tkbmarkt.herokuapp.com/home/dashboard_data.json",
-            // url: "https://market20-horstwurm.c9users.io/home/dashboard_projectdata.json&project_id=",
-            url: "http://tkbmarkt.herokuapp.com/home/dashboard_projectdata.json&project_id=<%= @mobject.id %>",
+            url: "https://market20-horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
+            url: "tkbmarkt.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
             //force to handle it as text
             dataType: "text",
             success: function(data) {
@@ -1097,8 +1098,7 @@ $(document).ready(function(){
                 //and pass downloaded data
                 var json = $.parseJSON(data);
                 
-                // alert(json[0].id + json[0].kategorie + " " + json[0].summe);
-                
+                //alert(json[0].id + json[0].kategorie + " " + json[0].summe);
                 // alert(json[0].kategorie + " " + json[0].anzahl);
                 // alert(json[1].kategorie + " " + json[1].anzahl);
                 // alert(json[2].kategorie + " " + json[2].anzahl);

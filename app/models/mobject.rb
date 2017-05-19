@@ -70,6 +70,16 @@ if cw and year
     end
 end
 
+def wo_iterate(wo, include_sub, wolist)
+  if include_sub
+    subs = Mobject.where("parent=?", wo)
+    subs.each do |s|
+      wolist << s.id
+      wo_iterate(s.id, include_sub, wolist)
+    end
+  end
+end
+
 def avg_rating2()
     #rat = Mrating.where("mobject_id=?", self.id).average(:rating)
     rat = self.mratings.average(:rating)
