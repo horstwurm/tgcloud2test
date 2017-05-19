@@ -20893,3 +20893,465 @@ Processing by HomeController#dashboard_projectdata as JSON
 Completed 200 OK in 11ms (Views: 0.2ms | ActiveRecord: 3.1ms)
 
 
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:20:10 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (1.1ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 139ms (Views: 0.7ms | ActiveRecord: 7.7ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:20:25 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 14ms (Views: 0.1ms | ActiveRecord: 3.1ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:20:40 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.8ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.6ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 21ms (Views: 0.2ms | ActiveRecord: 4.9ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:20:55 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (1.0ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.9ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (1.4ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 20ms (Views: 0.1ms | ActiveRecord: 6.1ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:21:10 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (3.7ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (1.1ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (1.0ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.9ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.9ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.8ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 26ms (Views: 0.1ms | ActiveRecord: 10.1ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:21:25 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.7ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.5ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 14ms (Views: 0.2ms | ActiveRecord: 3.4ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:21:40 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (1.0ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 16ms (Views: 0.2ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:21:55 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.6ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.4ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.4ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 202ms (Views: 0.2ms | ActiveRecord: 5.0ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:22:10 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.8ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 17ms (Views: 0.2ms | ActiveRecord: 4.1ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:22:25 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 15ms (Views: 0.2ms | ActiveRecord: 4.3ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:22:40 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 11ms (Views: 0.2ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:22:55 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.6ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 12ms (Views: 0.2ms | ActiveRecord: 3.7ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:23:10 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.6ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 14ms (Views: 0.3ms | ActiveRecord: 4.4ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:23:25 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 15ms (Views: 0.2ms | ActiveRecord: 4.2ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:23:40 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 12ms (Views: 0.2ms | ActiveRecord: 3.6ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:23:55 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 12ms (Views: 0.1ms | ActiveRecord: 3.3ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:24:10 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 12ms (Views: 0.2ms | ActiveRecord: 3.2ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:24:25 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 12ms (Views: 0.1ms | ActiveRecord: 3.5ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:24:40 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.6ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 14ms (Views: 0.2ms | ActiveRecord: 4.2ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:24:55 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.5ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 104ms (Views: 0.2ms | ActiveRecord: 4.7ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:25:10 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 13ms (Views: 0.2ms | ActiveRecord: 3.8ms)
+
+
+Started GET "/home/dashboard_projectdata.json?pid=49" for 46.140.136.238 at 2017-05-19 16:25:25 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#dashboard_projectdata as JSON
+  Parameters: {"pid"=>"49"}
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=49)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=50)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=51)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=52)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='Projekte' and id in (49,50,51,52))[0m
+  [1m[36mTimetrack Load (0.4ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=49 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=50 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=51 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Kosten') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  mobject_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=52 and costortime='Aufwand') GROUP BY "timetracks"."mobject_id" ORDER BY "timetracks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 200 OK in 17ms (Views: 0.2ms | ActiveRecord: 4.6ms)
+
+
