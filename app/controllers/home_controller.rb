@@ -321,6 +321,7 @@ def dashboard_projectdata
         msg = []
         @projects.each do |p|
           @kosten = Timetrack.select("sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Kosten").first
+          @kosten = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',@mobject.id, "Kosten").group("id").order(:id).first
           @aufwand = Timetrack.select("sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Aufwand").first
           msg << {:id => p.id, :kategorie => "Kosten", :summe => @kosten.summe}
           msg << {:id => p.id, :kategorie => "Aufwand", :summe => @aufwand.summe}
