@@ -266,6 +266,12 @@
                 <% if @mobject.mtype == "Projekte" %>
                   <% ist = @mobject.sum_pkosten_ist %>
                   <% soll = @mobject.sum_pkosten_plan %>
+                  <% if !ist %>
+                    <% ist = 0 %>
+                  <% end %>
+                  <% if !soll %>
+                    <% soll = 0 %>
+                  <% end %>
                   <b>Kosten</b><br>
                   <b><ntext>noch </ntext></b><restlaufzeits><%= soll - ist %></restlaufzeits> <b><ntext> CHF</ntext></b>
                   <br>
@@ -277,6 +283,12 @@
 
                   <% ist = @mobject.sum_paufwand_ist.to_i %>
                   <% soll = @mobject.sum_paufwand_plan %>
+                  <% if !ist %>
+                    <% ist = 0 %>
+                  <% end %>
+                  <% if !soll %>
+                    <% soll = 0 %>
+                  <% end %>
                   <b>Aufwand</b><br>
                   <b><ntext>noch </ntext></b><restlaufzeits><%= soll - ist %></restlaufzeits> <b><ntext> PT</ntext></b>
                   <br>
