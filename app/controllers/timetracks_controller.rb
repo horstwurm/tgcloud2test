@@ -1,5 +1,6 @@
 class TimetracksController < ApplicationController
   before_action :set_timetrack, only: [:show, :edit, :update, :destroy]
+  after_action :update_mobject,  only: [:edit, :update, :destroy]
 
   # GET /timetracks
   # GET /timetracks.json
@@ -160,4 +161,16 @@ class TimetracksController < ApplicationController
     def timetrack_params
       params.require(:timetrack).permit(:costortime, :jahrmonat, :user_id, :mobject_id, :activity, :amount, :datum)
     end
+    
+    def update_mobject
+      @mobject = @timetrack.mobject
+      if @timetrack.costortime == "Kosten"
+        @mobject.sum_pkosten_ist = @mobject.timetracks.where('costortime=?',"Kosten").sum(:amount)
+      end
+      if @timetrack.costortime == "Aufwand"
+        @mobject.sum_paufwand_ist = @mobject.timetracks.where('costortime=?',"Aufwand").sum(:amount)/8.5
+      end 
+      @mobject.save
+    end
+    
 end

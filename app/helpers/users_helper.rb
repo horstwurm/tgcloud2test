@@ -530,6 +530,98 @@ def build_medialist2(items, cname, par)
                               end
                             end
 
+                        when "Projekte"
+                          if !item.date_from
+                            item.date_from = Date.today
+                          end
+                          if !item.date_to
+                            item.date_to = Date.today
+                          end
+                          if !item.risk
+                            item.risk = "tief"
+                          end
+                          if !item.quality
+                            item.quality = "hoch"
+                          end
+
+                          html_string = html_string + "<br>"
+                          html_string = html_string + "<div class='row'>"
+                            html_string = html_string + "<div class='col-xs-4'>"
+                              html_string = html_string + "Termin<br>" + item.date_to.strftime("%d.%m.%Y")
+                            html_string = html_string + "</div>"
+                            html_string = html_string + "<div class='col-xs-8'>"
+                              soll = (item.date_to.to_date - item.date_from.to_date).to_i
+                              ist = (DateTime.now.to_date - item.date_from.to_date).to_i
+                              if soll > 0 and ist > 0
+                                html_string = html_string + '<div class="progress">'
+                                html_string = html_string + '<div class="progress-bar progress-bar-warning" role="progressbar2" aria-valuenow="' + ist.to_s + '" aria-valuemin="0" aria-valuemax="' + soll.to_s + '" style="width:' + (ist*100/soll).to_s + '%">'
+                                html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
+                                html_string = html_string + '</div>'
+                                html_string = html_string + '</div>'
+                              end
+                            html_string = html_string + "</div>"
+                          html_string = html_string + "</div>"
+
+                          html_string = html_string + "<div class='row'>"
+                            html_string = html_string + "<div class='col-xs-4'>"
+                              html_string = html_string + "Kosten<br>"+item.sum_pkosten_plan.to_s
+                            html_string = html_string + "</div>"
+                            html_string = html_string + "<div class='col-xs-8'>"
+                              if item.sum_pkosten_plan and item.sum_pkosten_ist
+                                html_string = html_string + '<div class="progress">'
+                                html_string = html_string + '<div class="progress-bar progress-bar-warning" role="progressbar2" aria-valuenow="' + item.sum_pkosten_ist.to_s + '" aria-valuemin="0" aria-valuemax="' + item.sum_pkosten_plan.to_s + '" style="width:' + (item.sum_pkosten_ist*100/item.sum_pkosten_plan).to_s + '%">'
+                                html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
+                                html_string = html_string + '</div>'
+                                html_string = html_string + '</div>'
+                              end
+                            html_string = html_string + "</div>"
+                          html_string = html_string + "</div>"
+
+                          html_string = html_string + "<div class='row'>"
+                            html_string = html_string + "<div class='col-xs-4'>"
+                              html_string = html_string + "Aufwand<br>"+item.sum_paufwand_plan.to_s
+                            html_string = html_string + "</div>"
+                            html_string = html_string + "<div class='col-xs-8'>"
+                              if item.sum_paufwand_plan and item.sum_paufwand_ist
+                                html_string = html_string + '<div class="progress">'
+                                html_string = html_string + '<div class="progress-bar progress-bar-warning" role="progressbar2" aria-valuenow="' + item.sum_paufwand_ist.to_s + '" aria-valuemin="0" aria-valuemax="' + item.sum_paufwand_plan.to_s + '" style="width:' + (item.sum_paufwand_ist*100/item.sum_paufwand_plan).to_s + '%">'
+                                html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
+                                html_string = html_string + '</div>'
+                                html_string = html_string + '</div>'
+                              end
+                            html_string = html_string + "</div>"
+                          html_string = html_string + "</div>"
+
+                          html_string = html_string + "<div class='row'>"
+                            html_string = html_string + "<div class='col-xs-4'>"
+                            html_string = html_string + "</div>"
+                            html_string = html_string + "<div class='col-xs-8'>"
+                              html_string = html_string + "<div class='col-xs-6' align='center' >"
+                                html_string = html_string + "Qualität"
+                              html_string = html_string + "</div>"
+                              html_string = html_string + "<div class='col-xs-6' align='center' >"
+                                html_string = html_string + "Risiko"
+                              html_string = html_string + "</div>"
+                            html_string = html_string + "</div>"
+                          html_string = html_string + "</div>"
+
+                          html_string = html_string + "<div class='row'>"
+                            html_string = html_string + "<div class='col-xs-4'>"
+                            html_string = html_string + "</div>"
+                            html_string = html_string + "<div class='col-xs-8'>"
+                              html_string = html_string + "<div class='col-xs-6' align='center' style='font-size:4em'>"
+                                html_string = html_string + "<div class='quality"+ item.quality + "'>"
+                                  html_string = html_string + '<i class="glyphicon glyphicon-stop"></i>'
+                                html_string = html_string + "</div>"
+                              html_string = html_string + "</div>"
+                              html_string = html_string + "<div class='col-xs-6' align='center' style='font-size:4em'>"
+                                html_string = html_string + "<div class='risk"+ item.risk + "'>"
+                                  html_string = html_string + '<i class="glyphicon glyphicon-stop"></i>'
+                                html_string = html_string + "</div>"
+                              html_string = html_string + "</div>"
+                            html_string = html_string + "</div>"
+                          html_string = html_string + "</div>"
+
                         when "Ausschreibungen", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding"
                           html_string = html_string + '<i class="glyphicon glyphicon-calendar"></i> '
                           html_string = html_string +  item.date_from.strftime("%d.%m.%Y") + " - " + item.date_to.strftime("%d.%m.%Y") + '<br>'
@@ -714,11 +806,11 @@ def build_medialist2(items, cname, par)
                   end
                   if cname == "mobjects"
                     if user_signed_in?
-                      if item.mtype == "Projekte" and item.madvisors.where('role=? and user_id=?',item.mtype, current_user.id).count > 0
-                        html_string = html_string + link_to(timetracks_path(:mobject_id => item.id)) do 
-                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
-                        end
-                      end
+                      # if item.mtype == "Projekte" and item.madvisors.where('role=? and user_id=?',item.mtype, current_user.id).count > 0
+                      #   html_string = html_string + link_to(timetracks_path(:mobject_id => item.id)) do 
+                      #     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+                      #   end
+                      # end
                     end
                     if item.mtype == "Veranstaltungen" 
                       if item.eventpart

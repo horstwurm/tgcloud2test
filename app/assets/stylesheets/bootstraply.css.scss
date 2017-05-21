@@ -366,6 +366,30 @@ geblockt {
   color: $color1;
 }
 
+.riskhoch {
+    color:red;
+}
+
+.riskmittel {
+    color:orange;
+}
+
+.risktief {
+    color:lightgreen;
+}
+
+.qualityhoch {
+    color:lightgreen;
+}
+
+.qualitymittel {
+    color:orange;
+}
+
+.qualitytief {
+    color:red;
+}
+
 /*******************************************************************************************************/
 /* PANELS */
 /*******************************************************************************************************/

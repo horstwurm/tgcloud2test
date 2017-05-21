@@ -29,25 +29,25 @@
             <div class="col-md-6">
                 <div class="panel-body">
                     <div class="form-group">
-                       <%= f.label "Photo" %><br/>
+                       <%= f.label "Photo" %>
                        <%= image_tag @user.avatar.url(:medium) %><br>
                        <%= f.file_field :avatar, class:"form-control" %>
                     </div>
                     <div class="form-group">
-                      <%= f.label "Email" %><br/>
+                      <%= f.label "Email" %>
                       <%= f.text_field :email, :readonly => true, class:"form-control"%>
                     </div>
                     <!--<%= f.hidden_field :password %>-->
                     <div class="form-group">
-                      <%= f.label "Nachname" %><br/>
+                      <%= f.label "Nachname" %>
                       <%= f.text_field :lastname, autofocus: true, class:"form-control"%>
                     </div>
                     <div class="form-group">
-                      <%= f.label "Vorname" %><br/>
+                      <%= f.label "Vorname" %>
                       <%= f.text_field :name, class:"form-control"%>
                     </div>
                     <div class="form-group">
-                      <%= f.label "Geburtsdatum" %><br/>
+                      <%= f.label "Geburtsdatum" %>
                       <%= f.text_field :dateofbirth, class:"form-control"%>
                     </div>
                     <div class="form-group">
@@ -69,15 +69,21 @@
                         </div>
                     <% end %>
                     <div class="form-group">
-                       <%= f.label "Adresse" %><br/>
+                       <%= f.label "Adresse" %>
                        <%= f.text_field :address1, class:"form-control" %>
                        <%= f.text_field :address2, class:"form-control" %>
                        <%= f.text_field :address3, class:"form-control" %>
                     </div>
                     <div class="form-group">
-                       <%= f.label "Telefon" %><br/>
+                       <%= f.label "Telefon" %>
                        <%= f.text_field :phone1, class:"form-control" %>
                        <%= f.text_field :phone2, class:"form-control" %>
+                    </div>
+                    <div class="form-group">
+                       <%= f.label "Kostenstelle" %>
+                       <%= f.text_field :costinfo, class:"form-control" %>
+                       <%= f.label "Stundensatz (STD)" %><br/>
+                       <%= f.number_field :rate, class:"form-control" %>
                     </div>
                     <div class="form-group">
                       <input type="checkbox" name="my-checkbox3" checked>

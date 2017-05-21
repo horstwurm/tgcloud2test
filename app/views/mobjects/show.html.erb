@@ -73,17 +73,25 @@
                 <br>
                 <% if @mobject.mtype == "Crowdfunding" %>
                 
-                  <% if @mobject.sum_amount and @mobject.sum_amount >= @mobject.amount %>
+                  <% if @mobject.mtype == "Crowdfunding" and @mobject.sum_amount and @mobject.sum_amount >= @mobject.amount %>
                     <%= render("mobjects/form_crowdfunding_service") %>
                   <% end %>
                 
                   <% soll = @mobject.amount %>
-                  <% if @mobject.mstats != nil %>
-                    <% ist  = @mobject.mstats.sum(:amount) %>
-                  <% else %>
+                  <% if @mobject.mtype == "Crowdfunding" %>
+                    <% if @mobject.mstats != nil %>
+                      <% ist  = @mobject.mstats.sum(:amount) %>
+                    <% else %>
+                      <% ist = 0 %>
+                    <% end %>
+                    <b>Betrag</b><br>
+                  <% end %>
+                  <% if !ist %>
                     <% ist = 0 %>
                   <% end %>
-                  <b>Betrag</b><br>
+                  <% if !soll %>
+                    <% soll = 0 %>
+                  <% end %>
                   <%= sprintf("%05.2f CHF", ist) %>
                   <br><br>
                   <div class="progress">
@@ -103,8 +111,8 @@
                 <% end %>
                 
                 <% case @mobject.mtype %>
-                   <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding", "Umfragen" %>
-                   
+                   <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding", "Umfragen", "Projekte" %>
+
                     <% if @mobject.mtype == "Umfragen" %>
                     
                       <% useranswers = [] %>
@@ -254,7 +262,42 @@
                         </div>
                     </div>
                 <% end %>
-                <br><br>
+                
+                <% if @mobject.mtype == "Projekte" %>
+                  <% ist = @mobject.sum_pkosten_ist %>
+                  <% soll = @mobject.sum_pkosten_plan %>
+                  <b>Kosten</b><br>
+                  <b><ntext>noch </ntext></b><restlaufzeits><%= soll - ist %></restlaufzeits> <b><ntext> CHF</ntext></b>
+                  <br>
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist/soll*100) %>%">
+                      <span class="sr-only">40% Complete (success)</span>
+                    </div>
+                  </div>
+
+                  <% ist = @mobject.sum_paufwand_ist.to_i %>
+                  <% soll = @mobject.sum_paufwand_plan %>
+                  <b>Aufwand</b><br>
+                  <b><ntext>noch </ntext></b><restlaufzeits><%= soll - ist %></restlaufzeits> <b><ntext> PT</ntext></b>
+                  <br>
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist/soll*100) %>%">
+                      <span class="sr-only">40% Complete (success)</span>
+                    </div>
+                  </div>
+
+                  <b>Qualität</b><br>
+                  <div class="quality<%= @mobject.quality %>", style="font-size:4em">
+                    <i class="glyphicon glyphicon-stop"></i>
+                  </div>
+                  <b>Risiko</b><br>
+                  <div class="risk<%= @mobject.risk %>", style="font-size:4em">
+                    <span><i class="glyphicon glyphicon-stop"></i></span>
+                  </div>
+
+                  <br>
+
+                <% end %>
                 
                 <b>Bewertung</b><br>
                 <% avg_rating2(@mobject.id).times do %>
@@ -291,7 +334,6 @@
                   <% end %>
                   <br><br>
                 <% end %>
-                <b>Verantwortlich:</b><br>
 
               <% else %>
 
@@ -299,6 +341,16 @@
                	<%= build_article(@mobject) %>
 
               <% end %>
+
+               <% if @mobject.mtype == "Projekte" %>
+                <%= header("Projekte, Teilprojekte, Aufträge, Tasks", false) %>
+                <div class="panel-body">
+                  <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "User") %>
+                </div>
+                <br>
+              <% end %>
+            
+                <b>Verantwortlich:</b><br>
               <%= showImage2(:small, @mobject.owner, true) %><br>
               <% if @mobject.owner_type == "User" %>
                 <%= @mobject.owner.name + " " + @mobject.owner.lastname %>

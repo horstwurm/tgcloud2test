@@ -16,7 +16,7 @@
             <div class="col-md-12">
               <div class="panel panel-heading header">
               <li_header>
-                <%= link_to @mobject.owner do %>
+                <%= link_to @mobject.owner(:topic => @mobject.mtype) do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
                 <%= @mobject.mtype.upcase %>
@@ -29,14 +29,23 @@
             <div class="col-md-6">
               <div class="panel-body">
                 <div class="form-group">
-                  <%= f.label "Bezeichnung" %><br/>
+                  <%= f.label "Bezeichnung" %>
                   <%= f.text_field :name, autofocus: true, class:"form-control"%>
                 </div>
                 <div class="form-group">
-                  <%= f.label "Beschreibung" %><br/>
+                  <%= f.label "Beschreibung" %>
                   <%= f.text_area :description, rows: 5, class:"form-control"%>
                 </div>
                 
+                <% if @mobject.mtype == "Projekte" %>
+                  <div class="form-group">
+                    <%= f.label "Risiko" %>
+                    <%= f.select :risk, options_for_select(["hoch", "mittel", "tief"], @mobject.risk), {}, class:"form-control" %>
+                    <%= f.label "Qualität" %>
+                    <%= f.select :quality, options_for_select(["hoch", "mittel", "tief"], @mobject.quality), {}, class:"form-control" %>
+                  </div>
+                <% end %>
+
                 <% if @mobject.mtype == "Stellenanzeigen" %>
                   <div class="form-group">
                     <% if @mobject.msubtype == "Suchen" %>
@@ -62,11 +71,11 @@
                   <% end %>
                 </div>
                 <div class="form-group">
-                  <%= f.label "Homepage" %><br/>
+                  <%= f.label "Homepage" %>
                   <%= f.text_field :homepage, class:"form-control"%>
                 </div>
                 <% case @mobject.mtype %>
-                  <% when "Veranstaltungen", "Ausschreibungen", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding", "Umfragen" %>
+                  <% when "Veranstaltungen", "Ausschreibungen", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding", "Umfragen", "Projekte" %>
                     <% if @mobject.msubtype != "Standard" %>
                       <div class="form-group">
                         <%= f.label "Datum von-bis:" %>
@@ -84,6 +93,24 @@
                         <div class="form-group">
                           <%= f.label "Betrag:" %>
                           <%= f.number_field :amount, class:"form-control"%>
+                        </div>
+                    <% end %>
+                    <% if @mobject.mtype == "Projekte" %>
+                        <div class="form-group">
+                          <% if !@mobject.sum_paufwand_ist %>
+                            <% @mobject.sum_paufwand_ist = 0 %>
+                          <% end %>
+                          <% if !@mobject.sum_pkosten_ist %>
+                            <% @mobject.sum_pkosten_ist = 0 %>
+                          <% end %>
+                          <b><%= "PlanKosten (" + @mobject.sum_pkosten_ist.to_s + ")" %></b>
+                          <%= f.number_field :sum_pkosten_plan, class:"form-control"%>
+                          <b><%= "PlanAufwand (" + @mobject.sum_paufwand_ist.to_s + ")" %></b>
+                          <%= f.number_field :sum_paufwand_plan, class:"form-control"%>
+                          <% if @mobject.mtype == "Projekte" %>
+                            <%= f.label "Kostenstelle:" %>
+                            <%= f.text_field :costinfo, class:"form-control"%>
+                          <% end %>
                         </div>
                     <% end %>
                     <% if @mobject.mtype == "Kleinanzeigen" and @mobject.msubtype == "Anbieten" %>
@@ -154,7 +181,7 @@
                       <% end %>
                 <% end %>
                 <div class="form-group">
-                   <%= f.label "Adresse" %><br/>
+                   <%= f.label "Adresse" %>
                    <%= f.text_field :address1, class:"form-control" %>
                    <%= f.text_field :address2, class:"form-control" %>
                    <%= f.text_field :address3, class:"form-control" %>

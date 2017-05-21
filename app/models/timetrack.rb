@@ -4,7 +4,7 @@ class Timetrack < ApplicationRecord
 
     validates :datum, presence: true
     after_validation :update_jahrmonat
-    
+
     def update_jahrmonat
       self.jahrmonat = self.datum.strftime('%Y')+"-"+self.datum.strftime('%m') 
     end
