@@ -62,7 +62,7 @@
                 <% end %>
                 
                 <div class="form-group">
-                  <%= f.label "Kategorie" %><br/>
+                  <%= f.label "Kategorie" %>
                   <% case @mobject.mtype %>
                     <% when "Ausschreibungen", "Stellenanzeigen" %>
                       <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Branche").order(:name), :id, :name, {}, :readonly => true, class:"form-control" %>
@@ -79,8 +79,14 @@
                     <% if @mobject.msubtype != "Standard" %>
                       <div class="form-group">
                         <%= f.label "Datum von-bis:" %>
-                        <%= f.text_field :date_from, class:"form-control"%>
-                        <%= f.text_field :date_to, class:"form-control"%>
+                        <div class="input-group">
+                          <%= f.text_field :date_from, :value => (@mobject.date_from), :style => "text-align: Right", class:"form-control" %>
+                          <div class="input-group-addon"> Datum von</div>
+                        </div>
+                        <div class="input-group">
+                          <%= f.text_field :date_to, :value => (@mobject.date_to), :style => "text-align: Right", class:"form-control" %>
+                          <div class="input-group-addon"> Datum bis</div>
+                        </div>
                       </div>
                     <% end %>
                     <% if @mobject.mtype == "Veranstaltungen" %>
@@ -92,7 +98,10 @@
                     <% if @mobject.mtype == "Crowdfunding" %>
                         <div class="form-group">
                           <%= f.label "Betrag:" %>
-                          <%= f.number_field :amount, class:"form-control"%>
+                          <div class="input-group">                          
+                            <%= f.number_field :amount, :value => number_with_precision(@mobject.amount, :precision => 2), :style => "text-align: Right", class:"form-control" %>
+                            <div class="input-group-addon">CHF</div>
+                          </div>
                         </div>
                     <% end %>
                     <% if @mobject.mtype == "Projekte" %>
@@ -101,29 +110,41 @@
                             <% @mobject.sum_paufwand_ist = 0 %>
                           <% end %>
                           <% if !@mobject.sum_pkosten_ist %>
-                            <% @mobject.sum_pkosten_ist = 0 %>
+                            <% @mobject.sum_pkosten_ist = 0 %>sprintf("%05.2f CHF",item.price_new) 
                           <% end %>
-                          <b><%= "PlanKosten (" + @mobject.sum_pkosten_ist.to_s + ")" %></b>
-                          <%= f.number_field :sum_pkosten_plan, class:"form-control"%>
-                          <b><%= "PlanAufwand (" + @mobject.sum_paufwand_ist.to_s + ")" %></b>
-                          <%= f.number_field :sum_paufwand_plan, class:"form-control"%>
+                          <b><%= "PlanKosten (IstKosten: " + sprintf("%05.2f CHF", @mobject.sum_pkosten_ist) + ")" %></b>
+                          <div class="input-group">                          
+                            <%= f.number_field :sum_pkosten_plan, :value => number_with_precision(@mobject.sum_pkosten_plan, :precision => 2), :style => "text-align: Right", class:"form-control" %>
+                            <div class="input-group-addon">CHF</div>
+                          </div>
+                          <b><%= "PlanAufwand (IstAufwand: " + sprintf("%05.2f PT", @mobject.sum_paufwand_ist) + ")" %></b>
+                          <div class="input-group">                          
+                            <%= f.number_field :sum_paufwand_plan, :value => number_with_precision(@mobject.sum_paufwand_plan, :precision => 2), :style => "text-align: Right", class:"form-control" %>
+                            <div class="input-group-addon">PT</div>
+                          </div>
                           <% if @mobject.mtype == "Projekte" %>
                             <%= f.label "Kostenstelle:" %>
-                            <%= f.text_field :costinfo, class:"form-control"%>
+                              <%= f.text_field :costinfo, class:"form-control"%>
                           <% end %>
                         </div>
                     <% end %>
                     <% if @mobject.mtype == "Kleinanzeigen" and @mobject.msubtype == "Anbieten" %>
                         <div class="form-group">
                           <%= f.label "Preis:" %>
-                          <%= f.number_field :price, class:"form-control"%>
+                          <div class="input-group">                          
+                              <%= f.number_field :price, :value => number_with_precision(@mobject.price, :precision => 2), :style => "text-align: Right", class:"form-control" %>
+                              <div class="input-group-addon">CHF</div>
+                          </div>
                         </div>
                     <% end %>
                     <% case @mobject.msubtype %>
                       <% when "Belohnungen" %>
                           <div class="form-group">
                             <%= f.label "Stückelung" %><br/>
-                            <%= f.number_field :price, class:"form-control"%>
+                            <div class="input-group">                          
+                              <%= f.number_field :price, :value => number_with_precision(@mobject.price, :precision => 2), :style => "text-align: Right", class:"form-control" %>
+                              <div class="input-group-addon">CHF</div>
+                            </div>
                           </div>
                          <div class="form-group">
                             <%= f.label "Belohnung" %><br/>
@@ -132,11 +153,17 @@
                       <% when "Zinsen" %>
                           <div class="form-group">
                             <%= f.label "Zinssatz in %" %><br/>
-                            <%= f.number_field :interest_rate, class:"form-control"%>
+                            <div class="input-group">                          
+                              <%= f.number_field :interest_rate, :value => number_with_precision(@mobject.interest_rate, :precision => 1), :style => "text-align: Right", class:"form-control" %>
+                              <div class="input-group-addon">%</div>
+                            </div>
                           </div>
                           <div class="form-group">
                             <%= f.label "Rückzahlung am:" %>
-                            <%= f.text_field :due_date, class:"form-control"%>
+                            <div class="input-group">
+                              <%= f.text_field :due_date, :value => (@mobject.due_date), :style => "text-align: Right", class:"form-control" %>
+                              <div class="input-group-addon"> Datum</div>
+                            </div>
                           </div>
                     <% end %>
                   <% when "Publikationen" %>
@@ -159,8 +186,14 @@
                       <% if @mobject.msubtype == "Aktion" %>
                         <div class="form-group">
                           <%= f.label "Datum von-bis:" %>
-                          <%= f.text_field :date_from, class:"form-control"%>
-                          <%= f.text_field :date_to, class:"form-control"%>
+                          <div class="input-group">
+                            <%= f.text_field :date_from, :value => (@mobject.date_from), :style => "text-align: Right", class:"form-control" %>
+                            <div class="input-group-addon"> Datum von</div>
+                          </div>
+                          <div class="input-group">
+                            <%= f.text_field :date_to, :value => (@mobject.date_to), :style => "text-align: Right", class:"form-control" %>
+                            <div class="input-group-addon"> Datum bis</div>
+                          </div>
                         </div>
                         <div class="form-group">
                           <%= f.label "Preis:" %>
@@ -169,14 +202,20 @@
                         <% if @mobject.msubtype == "Aktion" %>
                           <div class="form-group">
                             <%= f.label "Aktionspreis:" %>
-                            <%= f.text_field :price_new, class:"form-control"%>
+                            <div class="input-group">                          
+                              <%= f.number_field :price_new, :value => number_with_precision(@mobject.price_new, :precision => 2), :style => "text-align: Right", class:"form-control" %>
+                              <div class="input-group-addon">%</div>
+                            </div>
                           </div>
                         <% end %>
                       <% end %>
                       <% if @mobject.msubtype == "Standard" %>
                         <div class="form-group">
                           <%= f.label "Preis:" %>
-                          <%= f.text_field :price_reg, class:"form-control"%>
+                          <div class="input-group">
+                            <%= f.number_field :price_reg, :value => number_with_precision(@mobject.price_reg, :precision => 2), :style => "text-align: Right", class:"form-control" %>
+                            <div class="input-group-addon">%</div>
+                          </div>
                         </div>
                       <% end %>
                 <% end %>

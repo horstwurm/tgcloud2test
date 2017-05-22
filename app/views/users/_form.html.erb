@@ -48,7 +48,10 @@
                     </div>
                     <div class="form-group">
                       <%= f.label "Geburtsdatum" %>
-                      <%= f.text_field :dateofbirth, class:"form-control"%>
+                      <div class="input-group">
+                        <%= f.text_field :dateofbirth, :value => (@user.dateofbirth), :style => "text-align: Right", class:"form-control" %>
+                        <div class="input-group-addon"> Datum</div>
+                      </div>
                     </div>
                     <div class="form-group">
                       <input type="checkbox" name="my-checkbox2" checked>
@@ -82,8 +85,11 @@
                     <div class="form-group">
                        <%= f.label "Kostenstelle" %>
                        <%= f.text_field :costinfo, class:"form-control" %>
-                       <%= f.label "Stundensatz (STD)" %><br/>
-                       <%= f.number_field :rate, class:"form-control" %>
+                       <%= f.label "Standardstundensatz" %>
+                        <div class="input-group">                          
+                          <%= f.number_field :rate, :value => number_with_precision(@user.rate, :precision => 2), :style => "text-align: Right", class:"form-control" %>
+                          <div class="input-group-addon">CHF</div>
+                        </div>
                     </div>
                     <div class="form-group">
                       <input type="checkbox" name="my-checkbox3" checked>
