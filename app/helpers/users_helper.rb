@@ -564,7 +564,7 @@ def build_medialist2(items, cname, par)
 
                           html_string = html_string + "<div class='row'>"
                             html_string = html_string + "<div class='col-xs-4'>"
-                              html_string = html_string + "Kosten<br>"+item.sum_pkosten_plan.to_s
+                              html_string = html_string + "Kosten<br>"+ sprintf("%5.2f CHF",item.sum_pkosten_plan)
                             html_string = html_string + "</div>"
                             html_string = html_string + "<div class='col-xs-8'>"
                               if item.sum_pkosten_plan and item.sum_pkosten_ist
@@ -579,7 +579,7 @@ def build_medialist2(items, cname, par)
 
                           html_string = html_string + "<div class='row'>"
                             html_string = html_string + "<div class='col-xs-4'>"
-                              html_string = html_string + "Aufwand<br>"+item.sum_paufwand_plan.to_s
+                              html_string = html_string + "Aufwand<br>"+sprintf("%5.1f PT",item.sum_paufwand_plan)
                             html_string = html_string + "</div>"
                             html_string = html_string + "<div class='col-xs-8'>"
                               if item.sum_paufwand_plan and item.sum_paufwand_ist
