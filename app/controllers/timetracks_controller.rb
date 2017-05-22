@@ -1,6 +1,6 @@
 class TimetracksController < ApplicationController
   before_action :set_timetrack, only: [:show, :edit, :update, :destroy]
-  after_action :update_mobject,  only: [:edit, :update, :destroy]
+  after_action :update_mobject,  only: [:edit, :create, :update, :destroy]
 
   # GET /timetracks
   # GET /timetracks.json
