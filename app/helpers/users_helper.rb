@@ -562,6 +562,13 @@ def build_medialist2(items, cname, par)
                             html_string = html_string + "</div>"
                           html_string = html_string + "</div>"
 
+                          if !item.sum_pkosten_plan
+                            item.sum_pkosten_plan = 0.0
+                          end
+                          if !item.sum_paufwand_plan
+                            item.sum_paufwand_plan = 0.0
+                          end
+
                           html_string = html_string + "<div class='row'>"
                             html_string = html_string + "<div class='col-xs-4'>"
                               html_string = html_string + "Kosten<br>"+ sprintf("%5.2f CHF",item.sum_pkosten_plan)
