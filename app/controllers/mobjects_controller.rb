@@ -298,6 +298,12 @@ class MobjectsController < ApplicationController
     @mobject.due_date = Date.today + 365
     @mobject.sum_amount = 0
     @mobject.sum_rating = 0
+    @mobject.sum_pkosten_ist = 0
+    @mobject.sum_pkosten_plan = 100000
+    @mobject.sum_paufwand_ist = 0
+    @mobject.sum_paufwand_plan = 100
+    @mobject.quality = "hoch"
+    @mobject.risk = "tief"
 
     if params[:parent]
       @mobject.parent = params[:parent].to_i

@@ -96,7 +96,7 @@ class TimetracksController < ApplicationController
       @timetrack.activity = "Aktivität..."
     end
     if @timetrack.costortime == "Kosten"
-      @timetrack.amount = 25000
+      @timetrack.amount = 25000.00
       @timetrack.activity = "Kosten..."
     end
   end

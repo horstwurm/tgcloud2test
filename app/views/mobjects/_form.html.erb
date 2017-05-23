@@ -110,7 +110,7 @@
                             <% @mobject.sum_paufwand_ist = 0 %>
                           <% end %>
                           <% if !@mobject.sum_pkosten_ist %>
-                            <% @mobject.sum_pkosten_ist = 0 %>sprintf("%05.2f CHF",item.price_new) 
+                            <% @mobject.sum_pkosten_ist = 0 %>
                           <% end %>
                           <b><%= "PlanKosten (IstKosten: " + sprintf("%05.2f CHF", @mobject.sum_pkosten_ist) + ")" %></b>
                           <div class="input-group">                          
