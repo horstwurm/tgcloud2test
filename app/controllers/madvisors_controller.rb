@@ -24,6 +24,7 @@ class MadvisorsController < ApplicationController
         case @mobject.mtype
           when "Projekte"
             @madvisor.grade = "berechtigt"
+            @madvisor.rate = User.find(@madvisor.user_id).rate
           when "Angebote"
             @madvisor.grade = "Berater"
         end
@@ -40,6 +41,7 @@ class MadvisorsController < ApplicationController
         case @mobject.mtype
           when "Projekte"
             @madvisor.grade = "Projektleiter"
+            @madvisor.rate = User.find(@madvisor.user_id).rate
           when "Angebote"
             @madvisor.grade = "Senior Berater"
         end
@@ -86,7 +88,7 @@ class MadvisorsController < ApplicationController
   def create
     @madvisor = Madvisor.new(madvisor_params)
     if @madvisor.save
-      redirect_to mobject_path(:id => @madvisors.mobject_id, :topic => "Ansprechpartner"), notice: 'Ansprechpartner was successfully created.'
+      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => "Ansprechpartner"), notice: 'Ansprechpartner was successfully created.'
     else
       render :new
     end
@@ -94,8 +96,14 @@ class MadvisorsController < ApplicationController
 
   # PUT /madvisors/1
   def update
+    if @madvisor.mobject.mtype == "Projekte"
+      @topic = "Berechtigungen"
+    end
+    if @madvisor.mobject.mtype == "Angebote"
+      @topic = "Ansprechpartner"
+    end
     if @madvisor.update(madvisor_params)
-      redirect_to mobject_path(:id => @madvisors.mobject_id, :topic => "Ansprechpartner"), notice: 'Ansprechpartner was successfully updated.'
+      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => @topic), notice: 'Ansprechpartner was successfully updated.'
     else
       render :edit
     end
@@ -104,8 +112,14 @@ class MadvisorsController < ApplicationController
   # DELETE /madvisors/1
   def destroy
     @id = @madvisor.mobject_id
+    if @madvisor.mobject.mtype == "Projekte"
+      @topic = "Berechtigungen"
+    end
+    if @madvisor.mobject.mtype == "Angebote"
+      @topic = "Ansprechpartner"
+    end
     @madvisor.destroy
-      redirect_to mobject_path(:id => @id, :topic => "Ansprechpartner"), notice: 'Ansprechpartner was successfully destroyed.'
+      redirect_to mobject_path(:id => @id, :topic => @topic), notice: 'Ansprechpartner was successfully destroyed.'
   end
 
   private
@@ -116,7 +130,7 @@ class MadvisorsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def madvisor_params
-      params.require(:madvisor).permit(:mobject_id, :user_id, :grade)
+      params.require(:madvisor).permit(:mobject_id, :user_id, :grade, :rate)
     end
     
     

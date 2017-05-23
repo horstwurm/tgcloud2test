@@ -1,21 +1,54 @@
-<%= form_for(@madvisor) do |f| %>
-  <% if @madvisor.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@madvisor.errors.count, "error") %> prohibited this madvisor from being saved:</h2>
+    <%= form_for @madvisor do |f| %>
 
-      <ul>
-      <% @madvisor.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+        <% if @madvisor.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@madvisor.errors.count, "error") %> prohibited this calender from being saved:</h2>
+              <ul>
+                  <% @madvisor.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+              </ul>
+            </div>
+        <% end %>
 
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading header">
+                      <li_header>
+                        <% if @madvisor.mobject.mtype == "Projekte" %>
+                          <%= link_to mobject_path(:id => @madvisor.mobject_id, :topic => "Berechtigungen") do %>
+                            <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                          <% end %>
+                          Erfassung  Stundensatz <%= @madvisor.user.name + " " + @madvisor.user.lastname %> für <%= @madvisor.mobject.name %>
+                        <% end %>
+                        <% if @madvisor.mobject.mtype == "Angebote" %>
+                          <%= link_to mobject_path(:id => @madvisor.mobject_id, :topic => "Ansprechpartner") do %>
+                            <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                          <% end %>
+                          Erfassung  Stundensatz <%= @madvisor.user.name + " " + @madvisor.user.lastname %> für <%= @madvisor.mobject.name %>
+                        <% end %>
+                      </li_header>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel-body">
+                    <div class="form-group">
+                      <%= f.label "Stundensatz" %><br>
+                      <div class="input-group">                          
+                        <%= f.number_field :rate, :value => number_with_precision(@madvisor.rate, :precision => 2), :style => "text-align: Right", class:"form-control" %>
+                        <div class="input-group-addon">h</div>
+                      </div>
+                    </div>
+                    <div class="actions">
+                       <%= f.submit "Speichern", class:"btn btn-primary btn-lg"%>
+                    </div>
+                    <%= f.hidden_field :user_id, class:"form-control"  %>
+                    <%= f.hidden_field :mobject_id, class:"form-control"  %>
+                </div>
+            </div>
+        </div>
+    <% end %>

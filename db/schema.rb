@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(version: 20170503181535) do
     t.integer  "mobject_id"
     t.integer  "user_id"
     t.string   "grade"
+    t.float    "rate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "role"

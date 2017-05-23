@@ -686,6 +686,13 @@ def build_medialist2(items, cname, par)
                       when "madvisors"
                           html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
                           html_string = html_string + item.grade + "<br>"
+                          if item.mobject.mtype == "Projekte"
+                            html_string = html_string + '<i class="glyphicon glyphicon-euro"></i> '
+                            if !item.rate
+                              item.rate = 0
+                            end
+                            html_string = html_string + sprintf("%5.2f",item.rate) + "<br>"
+                          end
                       when "participants"
                           html_string = html_string + '<i class="glyphicon glyphicon-time"></i> '
                           html_string = html_string + item.created_at.strftime("%d.%m.%Y") 
@@ -946,13 +953,16 @@ def build_medialist2(items, cname, par)
                     content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
                   end
                 when "madvisors"
-                  if par == "User"
-      	            html_string = html_string + link_to(user_path(:id => item.user_id, :topic => "Kalendereintraege")) do 
-                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-calendar")
-                    end
-      	            html_string = html_string + link_to(new_email_path(:m_from_id => current_user.id, :m_to_id => item.user_id)) do 
-                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-envelope")
-                    end
+                  # if par == "User"
+      	           # html_string = html_string + link_to(user_path(:id => item.user_id, :topic => "Kalendereintraege")) do 
+                  #     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-calendar")
+                  #   end
+      	           # html_string = html_string + link_to(new_email_path(:m_from_id => current_user.id, :m_to_id => item.user_id)) do 
+                  #     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-envelope")
+                  #   end
+                  # end
+    	            html_string = html_string + link_to(edit_madvisor_path(:id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
                   end
     	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
                     content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
