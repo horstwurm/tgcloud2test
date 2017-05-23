@@ -784,9 +784,11 @@ def build_medialist2(items, cname, par)
                     if (item.owner.owner_id == current_user.id) or (item.owner.owner_type == "Company" and item.owner.user_id == current_user.id)
                       access = true
                     end
-                    if item.user_tickets.count < item.contingent
-        	            html_string = html_string + link_to(new_user_ticket_path(:ticket_id => item.id, :user_id => current_user.id)) do 
-                        content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-shopping-cart")
+                    if item.user_tickets and item.contingent
+                      if item.user_tickets.count < item.contingent
+          	            html_string = html_string + link_to(new_user_ticket_path(:ticket_id => item.id, :user_id => current_user.id)) do 
+                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-shopping-cart")
+                        end
                       end
                     end
                   end
