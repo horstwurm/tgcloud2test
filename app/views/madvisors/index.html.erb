@@ -64,8 +64,11 @@
                     <% end %>
                   <% when "Projekte" %>
                     <% if !grade %>
+                      <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
+                        <i class="btn btn-primary glyphicon glyphicon-king"></i>
+                      <% end %>
                       <%= link_to madvisors_path :madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
-                        <i class="btn btn-primary glyphicon glyphicon-ok-sign"></i>
+                        <i class="btn btn-primary glyphicon glyphicon-pawn"></i>
                       <% end %>
                     <% else %>
                       <%= link_to madvisors_path :delete_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id do %>

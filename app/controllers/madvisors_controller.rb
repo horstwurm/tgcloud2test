@@ -37,8 +37,13 @@ class MadvisorsController < ApplicationController
         @madvisor.user_id = params[:senior_madvisor_id]
         @madvisor.mobject_id = session[:mobject_id]
         @madvisor.role = @mobject.mtype
+        case @mobject.mtype
+          when "Projekte"
+            @madvisor.grade = "Projektleiter"
+          when "Angebote"
+            @madvisor.grade = "Senior Berater"
+        end
       end
-      @madvisor.grade = "Senior Berater"
       @madvisor.save
     end
     if params[:delete_madvisor_id]
