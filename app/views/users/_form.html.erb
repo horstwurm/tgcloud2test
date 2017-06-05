@@ -90,6 +90,8 @@
                           <%= f.number_field :rate, :value => number_with_precision(@user.rate, :precision => 2), :style => "text-align: Right", class:"form-control" %>
                           <div class="input-group-addon">CHF</div>
                         </div>
+                       <%= f.label "Organisation" %>
+                       <%= f.text_field :org, class:"form-control" %>
                     </div>
                     <div class="form-group">
                       <input type="checkbox" name="my-checkbox3" checked>

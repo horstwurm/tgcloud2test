@@ -2672,7 +2672,7 @@ def init_apps
     @array = []
 
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "News", "access" => true}
+    hash = {"domain" => "Hauptmenue", "right" => "News", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Hauptmenue", "right" => "Privatpersonen", "access" => false}
@@ -2714,10 +2714,10 @@ def init_apps
     hash = {"domain" => "Hauptmenue", "right" => "Kleinanzeigen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Publikationen", "access" => true}
+    hash = {"domain" => "Hauptmenue", "right" => "Publikationen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => "Artikel", "access" => true}
+    hash = {"domain" => "Hauptmenue", "right" => "Artikel", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Hauptmenue", "right" => "Umfragen", "access" => true}
@@ -2790,7 +2790,7 @@ def init_apps
     hash = {"domain" => "Privatpersonen", "right" => "Ansprechpartner", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Institutionen", "access" => true}
+    hash = {"domain" => "Privatpersonen", "right" => "Institutionen", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Stellenanzeigen", "access" => false}
@@ -2832,16 +2832,16 @@ def init_apps
     hash = {"domain" => "Privatpersonen", "right" => "Crowdfunding (Beitraege)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Bewertungen", "access" => true}
+    hash = {"domain" => "Privatpersonen", "right" => "Bewertungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Favoriten", "access" => true}
+    hash = {"domain" => "Privatpersonen", "right" => "Favoriten", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Publikationen", "access" => true}
+    hash = {"domain" => "Privatpersonen", "right" => "Publikationen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => "Artikel", "access" => true}
+    hash = {"domain" => "Privatpersonen", "right" => "Artikel", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Umfragen", "access" => true}
@@ -2902,7 +2902,7 @@ def init_apps
     hash = {"domain" => "Institutionen", "right" => "Vermietungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Veranstaltungen", "access" => true}
+    hash = {"domain" => "Institutionen", "right" => "Veranstaltungen", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Institutionen", "right" => "Sponsorenengagements", "access" => false}
@@ -2929,7 +2929,7 @@ def init_apps
     hash = {"domain" => "Institutionen", "right" => "Crowdfunding (Beitraege)", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => "Publikationen", "access" => true}
+    hash = {"domain" => "Institutionen", "right" => "Publikationen", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Institutionen", "right" => "Umfragen", "access" => true}
@@ -2999,10 +2999,10 @@ def init_apps
     hash = {"domain" => "Objekte", "right" => "Ausschreibungsangebote", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Bewertungen", "access" => true}
+    hash = {"domain" => "Objekte", "right" => "Bewertungen", "access" => false}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Blog", "access" => true}
+    hash = {"domain" => "Objekte", "right" => "Blog", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "Fragen", "access" => true}
@@ -3014,7 +3014,7 @@ def init_apps
     hash = {"domain" => "Objekte", "right" => "Substruktur", "access" => true}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => "Ausgaben", "access" => true}
+    hash = {"domain" => "Objekte", "right" => "Ausgaben", "access" => false}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "CF Statistik", "access" => false}
