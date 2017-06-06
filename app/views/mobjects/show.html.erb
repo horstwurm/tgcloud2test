@@ -445,6 +445,12 @@
             <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "User") %>
           </div>
 
+        <% when "Gruppenmitglieder" %>
+          <%= header2("Objekte", @mobject, @topic, "Gruppenmitglieder", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "User") %>
+          </div>
+
         <% when "Auftragscontrolling" %>
           <%= header2("Objekte", @mobject, @topic, "Soll / Ist Vergleich", false) %>
           <div class="panel-body">

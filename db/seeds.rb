@@ -125,7 +125,7 @@ mcategories = Mcategory.create({ctype:"Fragetyp", name:"Numerisch"})
 mcategories = Mcategory.create({ctype:"Fragetyp", name:"Single"})
 mcategories = Mcategory.create({ctype:"Fragetyp", name:"Multiple"})
 
-#create Question categories 96..101
+#create Question categories 96..103
 mcategories = Mcategory.create({ctype:"Projekte", name:"Business Projekte"})
 mcategories = Mcategory.create({ctype:"Projekte", name:"IT Projekte"})
 mcategories = Mcategory.create({ctype:"Projekte", name:"Strategie Projekte"})
@@ -134,6 +134,9 @@ mcategories = Mcategory.create({ctype:"Projekte", name:"Auftragsportfolio"})
 mcategories = Mcategory.create({ctype:"Projekte", name:"Projektportfolio"})
 mcategories = Mcategory.create({ctype:"Projekte", name:"Auftrag"})
 mcategories = Mcategory.create({ctype:"Projekte", name:"Administration"})
+
+#create Question categories 96..103
+mcategories = Mcategory.create({ctype:"Gruppen", name:"Organisationseinheit"})
 
 #create some users...
 users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:"horst.wurm@bluewin.ch", password:"password", name:"Horst", lastname:"Wurm", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:true, webmaster:true, avatar:File.open(path+'horst.jpg', 'rb')})

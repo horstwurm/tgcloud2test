@@ -1211,6 +1211,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Privatpersonen",item,"Projekte", item.mobjects.where('mtype=? and parent=?',"Projekte",0).count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Zeiterfassung", item.timetracks.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Ressourcenplanung", item.plannings.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Gruppen", item.mobjects.where('mtype=?',"Gruppen").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Kundenbeziehungen", item.customers.count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"Transaktionen", item.transactions.where('ttype=?', "Payment").count > 0)
         html_string = html_string + build_nav("Privatpersonen",item,"eMail", Email.where('m_to=? or m_from=?', item.id, item.id).count > 0)
@@ -1276,6 +1277,9 @@ def navigate(object,item)
         end
         if item.mtype == "Publikationen"
           html_string = html_string + build_nav("Objekte",item,"Ausgaben",item.editions.count > 0)
+        end
+        if item.mtype == "Gruppen"
+          html_string = html_string + build_nav("Objekte",item,"Gruppenmitglieder", item.madvisors.where('role=?',item.mtype).count > 0)
         end
         if item.mtype == "Projekte"
           html_string = html_string + build_nav("Objekte",item,"Substruktur", Mobject.where('parent=?',item.id).count > 0)
@@ -1428,7 +1432,7 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(new_company_path(:user_id => current_user.id)) do
                 content_tag(:i, content_tag(:b," Neu"), class: "btn btn-special glyphicon glyphicon-plus")
               end
-            when "Vermietungen", "Veranstaltungen", "Ausflugsziele", "Ausschreibungen", "Publikationen", "Artikel", "Umfragen", "Projekte"
+            when "Vermietungen", "Veranstaltungen", "Ausflugsziele", "Ausschreibungen", "Publikationen", "Artikel", "Umfragen", "Projekte", "Gruppen"
               html_string = html_string + link_to(new_mobject_path(:user_id => current_user.id, :mtype => topic, :msubtype => nil)) do
                 content_tag(:i, content_tag(:b, "Neu"), class: "btn btn-special glyphicon glyphicon-plus")
               end
@@ -1547,6 +1551,15 @@ def action_buttons2(object, item, topic)
                 end
                 
             when "Berechtigungen"
+               if user_signed_in?
+                 if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
+                    html_string = html_string + link_to(madvisors_path :user_id => item.owner_id, :mobject_id => item.id, :role => item.mtype) do
+                      content_tag(:i, content_tag(:b, " Neu"), class: "btn btn-special glyphicon glyphicon-plus")
+                    end
+                 end
+                end
+
+            when "Gruppenmitglieder"
                if user_signed_in?
                  if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                     html_string = html_string + link_to(madvisors_path :user_id => item.owner_id, :mobject_id => item.id, :role => item.mtype) do
@@ -1722,6 +1735,12 @@ def getIcon(iconstring)
     icontext = nil
     case iconstring
 
+      when "Gruppen"
+        icon = "th"
+        icontext = "Benutzergruppen"
+      when "Gruppenmitglieder"
+        icon = "user"
+        icontext = "Mitglieder der Gruppe"
       when "Projektdashboard"
         icon = "dashboard"
         icontext = "Online Dashboard"
@@ -2838,6 +2857,9 @@ def init_apps
     hash = {"domain" => "Privatpersonen", "right" => "Favoriten", "access" => false}
     @array << hash
     hash = Hash.new
+    hash = {"domain" => "Privatpersonen", "right" => "Gruppen", "access" => true}
+    @array << hash
+    hash = Hash.new
     hash = {"domain" => "Privatpersonen", "right" => "Publikationen", "access" => false}
     @array << hash
     hash = Hash.new
@@ -3009,6 +3031,9 @@ def init_apps
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "Umfrageteilnehmer", "access" => true}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => "Gruppenmitglieder", "access" => true}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => "Substruktur", "access" => true}

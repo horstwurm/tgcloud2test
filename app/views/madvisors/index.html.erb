@@ -12,6 +12,10 @@
               <%= link_to(mobject_path(:id => @mobject.id, :topic => "Berechtigungen")) do %>
                 <i class="btn btn-primary glyphicon glyphicon-list"></i>
               <% end %>
+            <% when "Gruppen" %>
+              <%= link_to(mobject_path(:id => @mobject.id, :topic => "Gruppenmitglieder")) do %>
+                <i class="btn btn-primary glyphicon glyphicon-list"></i>
+              <% end %>
             <% end %>
             <%= will_paginate @users, :container => false, previous_label: "<", next_label: ">" %>
         </div>
@@ -25,6 +29,8 @@
           <%= header("Ansprechpartner " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
         <% when "Projekte" %>
           <%= header("Zugriffsberechtigungen für " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
+        <% when "Gruppen" %>
+          <%= header("Gruppenmitglieder von " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
       <% end %>
   </div>
   
@@ -66,6 +72,21 @@
                     <% if !grade %>
                       <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
                         <i class="btn btn-primary glyphicon glyphicon-king"></i>
+                      <% end %>
+                      <%= link_to madvisors_path :madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
+                        <i class="btn btn-primary glyphicon glyphicon-pawn"></i>
+                      <% end %>
+                    <% else %>
+                      <%= link_to madvisors_path :delete_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id do %>
+                        <i class="btn btn-danger glyphicon glyphicon-remove-sign"></i>
+                      <% end %>
+                    <% end %>
+                  <% when "Gruppen" %>
+                    <% if !grade %>
+                      <% if false %>
+                      <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
+                        <i class="btn btn-primary glyphicon glyphicon-king"></i>
+                      <% end %>
                       <% end %>
                       <%= link_to madvisors_path :madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
                         <i class="btn btn-primary glyphicon glyphicon-pawn"></i>

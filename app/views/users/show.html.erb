@@ -158,6 +158,9 @@
         <% when "Publikationen" %>
           <%= header2("Privatpersonen", @user, @topic, "Publikationen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Publikationen"), "mobjects", nil) %>
+        <% when "Gruppen" %>
+          <%= header2("Privatpersonen", @user, @topic, "Benutzergruppen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Gruppen"), "mobjects", nil) %>
         <% when "Artikel" %>
           <%= header2("Privatpersonen", @user, @topic, "Artikel, Beiträge, Newsletter", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Artikel"), "mobjects", nil) %>

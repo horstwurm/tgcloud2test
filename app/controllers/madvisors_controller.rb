@@ -27,6 +27,8 @@ class MadvisorsController < ApplicationController
             @madvisor.rate = User.find(@madvisor.user_id).rate
           when "Angebote"
             @madvisor.grade = "Berater"
+          when "Gruppen"
+            @madvisor.grade = "Mitglied"
         end
       end
       @madvisor.save
@@ -44,6 +46,8 @@ class MadvisorsController < ApplicationController
             @madvisor.rate = User.find(@madvisor.user_id).rate
           when "Angebote"
             @madvisor.grade = "Senior Berater"
+          when "Gruppen"
+            @madvisor.grade = "Gruppenlead"
         end
       end
       @madvisor.save
@@ -102,6 +106,9 @@ class MadvisorsController < ApplicationController
     if @madvisor.mobject.mtype == "Angebote"
       @topic = "Ansprechpartner"
     end
+     if @madvisor.mobject.mtype == "Gruppen"
+      @topic = "Gruppenmitglieder"
+    end
     if @madvisor.update(madvisor_params)
       redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => @topic), notice: 'Ansprechpartner was successfully updated.'
     else
@@ -117,6 +124,9 @@ class MadvisorsController < ApplicationController
     end
     if @madvisor.mobject.mtype == "Angebote"
       @topic = "Ansprechpartner"
+    end
+     if @madvisor.mobject.mtype == "Gruppen"
+      @topic = "Gruppenmitglieder"
     end
     @madvisor.destroy
       redirect_to mobject_path(:id => @id, :topic => @topic), notice: 'Ansprechpartner was successfully destroyed.'
