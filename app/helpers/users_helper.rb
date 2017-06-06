@@ -1272,8 +1272,10 @@ def navigate(object,item)
           #html_string = html_string + build_nav("Objekte",item,"Blog",item.comments.count > 0)
         end
         if item.mtype == "Umfragen"
-          html_string = html_string + build_nav("Objekte",item,"Fragen",item.questions.count > 0)
-          html_string = html_string + build_nav("Objekte",item,"Umfrageteilnehmer",User.count > 0)
+          if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
+            html_string = html_string + build_nav("Objekte",item,"Fragen",item.questions.count > 0)
+            html_string = html_string + build_nav("Objekte",item,"Umfrageteilnehmer",User.count > 0)
+          end
         end
         if item.mtype == "Publikationen"
           html_string = html_string + build_nav("Objekte",item,"Ausgaben",item.editions.count > 0)

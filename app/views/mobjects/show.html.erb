@@ -407,7 +407,8 @@
                 <%= showImage2(:small, User.find(us), true) %>
               <% end %>
             <% end %>
-            </div>
+            <%= build_medialist2(User.where("id IN (?)", useranswers), "users", nil) %>
+          </div>
 
          <% when "Ausschreibungsangebote" %>
           <%= header2("Objekte", @mobject, @topic, "Ausschreibungsangebote", false) %>
