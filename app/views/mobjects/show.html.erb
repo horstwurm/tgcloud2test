@@ -452,6 +452,255 @@
             <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "User") %>
           </div>
 
+        <% when "Ressourcenplanung" %>
+          <%= header2("Objekte", @mobject, @topic, "Ressourcenplanung", false) %>
+          <div class="row">
+              <div class='col-xs-12'>
+                <div class='panel-body'>
+
+                  <% @header = [] %>
+                  <% @data = [] %>
+                  <% @header = %w[Jan Feb Mar Apr May Jun Jul Aug Sep Okt Nov Dez] %>
+                  <% for i in 1..12 %>
+                    <% @data << i %>
+                  <% end %>
+                  
+                  <% case @c_scope %>
+                    <% when "Aufwand" %>
+                      <% btn_sa = "active" %>
+                      <% btn_sc = "inactive" %>
+                    <% when "Kosten" %>
+                      <% btn_sa = "inactive" %>
+                      <% btn_sc = "active" %>
+                  <% end %>
+                  
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => "Ressourcenplanung", :year => @c_year, :scope => @c_scope)  do %>
+                    <span><i class="btn btn-active glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
+                  <% end %>
+
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => "Ressourcenplanung", :year => @c_year, :scope => "Kosten")  do %>
+                    <span><i class="btn btn-<%= btn_sc %> glyphicon glyphicon-euro"></i></span>
+                  <% end %>
+                   <%= link_to mobject_path(:id => @mobject.id, :topic => "Ressourcenplanung", :year => @c_year, :scope => "Aufwand")  do %>
+                    <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
+                  <% end %>
+                  
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => "Ressourcenplanung", :dir => "<", :year => @c_year, :mode => @c_mode, :scope => @c_scope )  do %>
+                    <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
+                  <% end %>
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => "Ressourcenplanung", :dir => ">", :year => @c_year, :mode => @c_mode , :scope => @c_scope) do %>
+                    <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
+                  <% end %>
+                 <br><br>
+                 
+                 <% @gruppenmitglieder = @mobject.madvisors %>
+
+                 <% @gruppenmitglieder.each do |gm| %>
+                 <table class="table">
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td colspan= <%= @header.length %>></td> 
+                    </tr>
+                    <tr>
+                      <th colspan="2"><%= showImage2(:small, User.find(gm.user.id), true) + gm.user.name + " " + gm.user.lastname %></th>
+                        <% @total = [] %>
+                        <% for i in 0..@header.length-1 do %>
+                          <!-- set initialize total per column -->
+                          <% @total[i] = 0 %>
+                          <!-- set color of header according to actual day, wekk or month -->
+                          <% if Date.today.strftime('%m').to_i == @data[i] and Date.today.strftime('%Y').to_i == @c_year.to_i %>
+                                <th class="warning">
+                          <% else %>
+                                <th>
+                          <% end %>
+                          <%= @header[i] %>
+                        </th>
+                      <% end %>
+                    </tr>
+
+                    <% myobs = [] %>
+                    <% gm.user.madvisors.each do |a| %>
+                      <% myobs << a.mobject_id %>
+                    <% end %>
+                    <% @mymobjects = Mobject.where('mtype=? and id IN (?)',"Projekte", myobs) %>
+
+                    <% @mymobjects.each do |w| %>
+
+                      <tr>            
+
+                        <% plans = [] %>
+                        <% @plannings = Planning.where('mobject_id=? and user_id=? and costortime=? and jahr=?', w.id, gm.user.id, @c_scope, @c_year.to_s) %>
+                        <% @plannings.each do |p| %>
+                          <% h = Hash.new %>
+                          <% h = {:id => p.id, :monat => p.monat.to_i, :kapa => p.amount} %>
+                          <% plans << h %>
+                        <% end %>
+
+                        <td>
+                          <%= showFirstImage2(:small, w,w.mdetails) %>
+                        </td>
+                        <td>
+                          <%= w.name %>
+                        </td>
+
+                        <% for i in 0..@header.length-1 do %>
+
+                          <% if @c_scope == "Kosten" %>
+                          
+                            <% moto = 0 %>
+                            <% for k in 0..plans.length-1 do %>
+                              <% if plans[k][:monat].to_i == @data[i].to_i %>
+                                <% moto = moto + plans[k][:kapa] %>
+                              <% end %>
+                            <% end %>
+                            
+                            <% if moto > 0%>
+                              <td class="color_kapa_booked" align="right">
+                                <% if false %>
+                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                <% end %>
+                                <% end %>
+                               <%= moto.to_s+" CHF" %><br>
+                            <% else %>
+                                <td>
+                                <% if false %>
+                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                <% end %>
+                                <% end %>
+                            <% end %>
+                            </td>
+                          <% end %>
+                        
+                          <% if @c_scope == "Aufwand" %>
+                            <% kapa = false %>
+                            <% for k in 0..plans.length-1 do %>
+                              <% if plans[k][:monat].to_i == @data[i].to_i %>
+                                <td class="color_kapa_booked">
+                                <%= plans[k][:kapa].to_s+" %" %><br>
+                                <% if false %>
+                				        <%= link_to edit_planning_path(:id => plans[k][:id]) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-pencil"></i>
+                                <% end %>
+                				        <%= link_to Planning.find(plans[k][:id]), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                  <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                                <% end %>
+                                <% end %>
+                                <% @total[i] = @total[i] + plans[k][:kapa] %>
+                                <% kapa = true %>
+                              <% end %>
+                            <% end  %>
+                            <% if !kapa %>
+                                <td>
+                                <% if false %>
+                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                <% end %>
+                                <% end %>
+                            <% end %>
+                            </td>
+                          <% end %>
+
+                        <% end %>
+
+                      </tr>
+
+                    <% end %>
+
+                  <!-- finally add totals and progress bar-->
+                  <% if @c_scope == "Aufwand" %>
+                    <tr>
+                      <td>Total</td>
+                      <td></td>
+                      <% for i in 0..@header.length-1 do %>
+                        <% if @total[i] > 100 %>
+                            <td class="danger">
+                        <% else %>
+                            <td>
+                        <% end %>
+                        <%= @total[i] %>
+                        </td>
+                      <% end %>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <% for i in 0..@header.length-1 do %>
+                        <td>
+                        <div class="progress">
+                        <% if @total[i] <=40 %>
+                          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% end %>
+                        <% if @total[i] >40 and @total[i]<=60 %>
+                          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% end %>
+                        <% if @total[i] >60 and @total[i]<=100 %>
+                          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% end %>
+                        <% if @total[i] >100 and @total[i]<=125 %>
+                          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% end %>
+                        <% if @total[i] >125 %>
+                          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% end %>
+                        </div>
+                        </td>
+                      <% end %>
+                  </tr>
+                  <% end %>
+                
+                </table>
+                <% end %>
+                
+                <% if false %>
+                <% if @c_scope == "Kosten" %>
+                  <br><br>
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                      <div>
+                        <%= header("Kostenpositionen", false) %>
+                        
+                    		<table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Datum</th>            
+                              <th colspan=2>Projekt/Auftrag</th>
+                              <th>Betrag</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          <% @plannings = Planning.where('user_id=? and costortime=?', gm.user.id, @c_scope).order(jahrmonat: :desc) %>
+                          <% @plannings.each do |a| %>
+                            <tr>
+                              <td>
+                                <%= link_to edit_planning_path(a) do %>
+                                  <i class="btn btn-primary btn btn-xs glyphicon glyphicon-wrench"></i>
+                                <% end %>
+                      	        <%= link_to a, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                  <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                                <% end %>
+                              </td>
+                              <td><%= a.jahrmonat %></td>
+                              <td><%= showFirstImage2(:small, Mobject.find(a.mobject_id),Mobject.find(a.mobject_id).mdetails) %></td>
+                              <td><%= Mobject.find(a.mobject_id).name %></td>
+                              <td><%= a.amount %></td>
+                            </tr>
+                          <% end %>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <% end %>
+
+              </div>
+            </div>
+          </div>
+
         <% when "Auftragscontrolling" %>
           <%= header2("Objekte", @mobject, @topic, "Soll / Ist Vergleich", false) %>
           <div class="panel-body">
