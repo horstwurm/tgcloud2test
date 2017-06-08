@@ -505,9 +505,11 @@
                     <tr>
                       <th colspan="2"><%= showImage2(:small, User.find(gm.user.id), true) + gm.user.name + " " + gm.user.lastname %></th>
                         <% @total = [] %>
+                        <% @totalt = [] %>
                         <% for i in 0..@header.length-1 do %>
                           <!-- set initialize total per column -->
                           <% @total[i] = 0 %>
+                          <% @totalt[i] = 0 %>
                           <!-- set color of header according to actual day, wekk or month -->
                           <% if Date.today.strftime('%m').to_i == @data[i] and Date.today.strftime('%Y').to_i == @c_year.to_i %>
                                 <th class="warning">
@@ -533,7 +535,13 @@
                         <% @plannings = Planning.where('mobject_id=? and user_id=? and costortime=? and jahr=?', w.id, gm.user.id, @c_scope, @c_year.to_s) %>
                         <% @plannings.each do |p| %>
                           <% h = Hash.new %>
-                          <% h = {:id => p.id, :monat => p.monat.to_i, :kapa => p.amount} %>
+                          <% if @c_scope == "Kosten" %>
+                            <% kapa = p.amount %>
+                          <% end %>
+                          <% if @c_scope == "Aufwand" %>
+                            <% kapa = p.amount*20/100 %>
+                          <% end %>
+                          <% h = {:id => p.id, :monat => p.monat.to_i, :kapa => kapa} %>
                           <% plans << h %>
                         <% end %>
 
@@ -578,8 +586,8 @@
                             <% kapa = false %>
                             <% for k in 0..plans.length-1 do %>
                               <% if plans[k][:monat].to_i == @data[i].to_i %>
-                                <td class="color_kapa_booked">
-                                <%= plans[k][:kapa].to_s+" %" %><br>
+                                <td class="color_kapa_booked" align="right">
+                                <%= plans[k][:kapa].to_s + " PT" %><br>
                                 <% if false %>
                 				        <%= link_to edit_planning_path(:id => plans[k][:id]) do %>
                                   <i class="btn btn-primary btn-xs glyphicon glyphicon-pencil"></i>
@@ -607,20 +615,117 @@
 
                       </tr>
 
+                      <!--/* hha-->
+
+                      <tr>            
+
+                        <% tts = [] %>
+                        <% @timetracks = Timetrack.select("jahrmonat as gdate, sum(amount) as sum").where('user_id=? and costortime=? and mobject_id=? and datum >=? and datum <=?', gm.user.id, @c_scope, w.id, @date_start, @date_end).group("jahrmonat").order("gdate") %>
+                        <% @timetracks.each do |t| %>
+                          <% h = Hash.new %>
+                          <% if @c_scope == "Kosten" %>
+                            <% ist = t.sum %>
+                          <% end %>
+                          <% if @c_scope == "Aufwand" %>
+                            <% ist = t.sum / 8.5 %>
+                          <% end %>
+                          <% h = {:monat => t.gdate[5,2], :kapa => ist.to_f } %>
+                          <% tts << h %>
+                        <% end %>
+
+                        <td>
+                          <% if false %>
+                          <%= showFirstImage2(:small, w,w.mdetails) %>
+                          <% end %>
+                        </td>
+                        <td>
+                          <% if false %>
+                          <%= w.name %>
+                          <% end %>
+                        </td>
+
+                        <% for i in 0..@header.length-1 do %>
+
+                          <% if @c_scope == "Kosten" %>
+                          
+                            <% moto = 0 %>
+                            <% for k in 0..tts.length-1 do %>
+                              <% if tts[k][:monat].to_i == @data[i].to_i %>
+                                <% moto = moto + tts[k][:kapa] %>
+                              <% end %>
+                            <% end %>
+                            
+                            <% if moto > 0%>
+                              <td class="color_kapa_booked" align="right">
+                                <% if false %>
+                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                <% end %>
+                                <% end %>
+                               <%= moto.to_s+" CHF" %><br>
+                            <% else %>
+                                <td>
+                                <% if false %>
+                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                <% end %>
+                                <% end %>
+                            <% end %>
+                            </td>
+                          <% end %>
+                        
+                          <% if @c_scope == "Aufwand" %>
+                            <% kapa = false %>
+                            <% for k in 0..tts.length-1 do %>
+                              <% if tts[k][:monat].to_i == @data[i].to_i %>
+                                <td class="color_kapa_booked" align="right">
+                                <%= sprintf("%5.1f PT", tts[k][:kapa]) %><br>
+                                <% if false %>
+                				        <%= link_to edit_planning_path(:id => plans[k][:id]) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-pencil"></i>
+                                <% end %>
+                				        <%= link_to Planning.find(plans[k][:id]), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                  <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                                <% end %>
+                                <% end %>
+                                <% @totalt[i] = @totalt[i] + tts[k][:kapa] %>
+                                <% kapa = true %>
+                              <% end %>
+                            <% end  %>
+                            <% if !kapa %>
+                                <td>
+                                <% if false %>
+                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                <% end %>
+                                <% end %>
+                            <% end %>
+                            </td>
+                          <% end %>
+
+                        <% end %>
+
+                      </tr>
+
                     <% end %>
 
                   <!-- finally add totals and progress bar-->
                   <% if @c_scope == "Aufwand" %>
                     <tr>
-                      <td>Total</td>
+                      <td>Total PLAN</td>
                       <td></td>
                       <% for i in 0..@header.length-1 do %>
-                        <% if @total[i] > 100 %>
-                            <td class="danger">
-                        <% else %>
-                            <td>
-                        <% end %>
-                        <%= @total[i] %>
+                        <td align="right">
+                        <%= @total[i].to_s + " PT" %>
+                        </td>
+                      <% end %>
+                    </tr>
+                    <tr>
+                      <td>Total IST</td>
+                      <td></td>
+                      <% for i in 0..@header.length-1 do %>
+                        <td align="right">
+                        <%= sprintf("%5.1f PT", @totalt[i]) %>
                         </td>
                       <% end %>
                     </tr>
@@ -630,25 +735,19 @@
                       <% for i in 0..@header.length-1 do %>
                         <td>
                         <div class="progress">
-                        <% if @total[i] <=40 %>
-                          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% if (@total[i] - @totalt[i]).abs > 5 %>
+                          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= 100 %>%" >
                         <% end %>
-                        <% if @total[i] >40 and @total[i]<=60 %>
-                          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% if (@total[i] - @totalt[i]).abs > 3 and (@total[i] - @totalt[i]).abs <= 5 %>
+                          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= 100 %>%" >
                         <% end %>
-                        <% if @total[i] >60 and @total[i]<=100 %>
-                          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= @total[i] %>%" >
-                        <% end %>
-                        <% if @total[i] >100 and @total[i]<=125 %>
-                          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= @total[i] %>%" >
-                        <% end %>
-                        <% if @total[i] >125 %>
-                          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= @total[i] %>%" >
+                        <% if (@total[i] - @totalt[i]).abs <= 3 %>
+                          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= 100 %>%" >
                         <% end %>
                         </div>
                         </td>
                       <% end %>
-                  </tr>
+                    </tr>
                   <% end %>
                 
                 </table>
