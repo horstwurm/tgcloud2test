@@ -354,7 +354,7 @@
 
               <% end %>
 
-               <% if @mobject.mtype == "Projekte" %>
+              <% if @mobject.mtype == "Projekte" %>
                 <%= header("Projekte, Teilprojekte, Aufträge, Tasks", false) %>
                 <div class="panel-body">
                   <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "User") %>
@@ -362,7 +362,15 @@
                 <br>
               <% end %>
             
-                <b>Verantwortlich:</b><br>
+              <% if @mobject.mtype == "Gruppen" %>
+                <%= header("Mitglieder der Benutzergruppe", false) %>
+                <div class="panel-body">
+                  <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "User") %>
+                </div>
+                <br>
+              <% end %>
+
+              <b>Verantwortlich:</b><br>
               <%= showImage2(:small, @mobject.owner, true) %><br>
               <% if @mobject.owner_type == "User" %>
                 <%= @mobject.owner.name + " " + @mobject.owner.lastname %>
@@ -381,7 +389,6 @@
                   <div id="map-canvas"></div>
                 </div>
               </div>
-
 
         <% when "Details" %>
           <%= header2("Objekte", @mobject, @topic, "Detailinformationen", false) %>
@@ -734,17 +741,35 @@
                       <td></td>
                       <% for i in 0..@header.length-1 do %>
                         <td>
-                        <div class="progress">
-                        <% if (@total[i] - @totalt[i]).abs > 5 %>
-                          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= 100 %>%" >
+                          
+                        <% showme = false %>
+                        <% if Date.today.strftime('%Y').to_i < @c_year.to_i %>
+                          <% showme = false %>
                         <% end %>
-                        <% if (@total[i] - @totalt[i]).abs > 3 and (@total[i] - @totalt[i]).abs <= 5 %>
-                          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= 100 %>%" >
+                        <% if Date.today.strftime('%Y').to_i > @c_year.to_i %>
+                          <% showme = true %>
                         <% end %>
-                        <% if (@total[i] - @totalt[i]).abs <= 3 %>
-                          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= 100 %>%" >
+                        <% if Date.today.strftime('%m').to_i >= @data[i] and Date.today.strftime('%Y').to_i == @c_year.to_i %>
+                          <% showme = true %>
                         <% end %>
-                        </div>
+
+                        <% if showme %>
+                          <div class="progress">
+                          <% if (@total[i] - @totalt[i]).abs > 5 %>
+                            <class="riskhoch">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <%= 100 %>%" >
+                          <% end %>
+                          <% if (@total[i] - @totalt[i]).abs > 3 and (@total[i] - @totalt[i]).abs <= 5 %>
+                            <class="riskmittel">
+                            <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <%= 100 %>%" >
+                          <% end %>
+                          <% if (@total[i] - @totalt[i]).abs <= 3 %>
+                            <class="risktief">
+                            <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= 100 %>%" >
+                          <% end %>
+                          </div>
+                        <% end %>
+                        
                         </td>
                       <% end %>
                     </tr>

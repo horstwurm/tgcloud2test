@@ -1284,7 +1284,7 @@ def navigate(object,item)
         end
         if item.mtype == "Gruppen"
           html_string = html_string + build_nav("Objekte",item,"Gruppenmitglieder", item.madvisors.where('role=?',item.mtype).count > 0)
-          html_string = html_string + build_nav("Objekte",item,"Zeiterfassung", item.madvisors.where('role=?',item.mtype).count > 0)
+          # html_string = html_string + build_nav("Objekte",item,"Zeiterfassung", item.madvisors.where('role=?',item.mtype).count > 0)
           html_string = html_string + build_nav("Objekte",item,"Ressourcenplanung", item.madvisors.where('role=?',item.mtype).count > 0)
         end
         if item.mtype == "Projekte"
