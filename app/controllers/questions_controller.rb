@@ -16,7 +16,15 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @question.mobject_id = params[:mobject_id]
-    @question.sequence = 0
+    @mobject = Mobject.find(params[:mobject_id])
+    if @mobject
+      num = @mobject.questions.maximum(:sequence)
+    end 
+    if num 
+      @question.sequence = num + 1
+    else
+      @question.sequence = 1
+    end
     @question.name = "Frage Nr.x"
   end
 

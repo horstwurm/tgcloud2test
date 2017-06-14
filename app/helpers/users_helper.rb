@@ -32,15 +32,16 @@ def small_carousel(company, size)
     html = html +  '<div class="owl-show2">'
     mobjects = company.mobjects
     mobjects.each do |m|
-      m.mdetails.each do |s|
-        if s.avatar_file_name
-          html = html + "<div align=center>"+ (image_tag s.avatar(:medium), class:"img-rounded") + "<h4>" + m.mtype + ": " + m.name + "</h4><p>" + s.description + "</p></div>"
-        end
-      end
+
+      #m.mdetails.each do |s|
+        #if s.avatar_file_name
+          html = html + "<div align=center>"+ (showFirstImage2(:medium, m, m.mdetails)) + "<h4>" + m.mtype + ": " + m.name + "</h4><p>" + "</p></div>"
+        #end
+      #end
       
       m.mratings.last(1).each do |r|
         if r.user.avatar_file_name
-          html = html + "<div align=center>"+ (image_tag r.user.avatar(:medium), class:"img-rounded") + "<h4>" + r.comment + "</h4><p>" + r.user.name + " " + r.user.lastname + "</p></div>"
+          html = html + "<div align=center>"+ (showImage2(:medium, r.user, true)) + "<h4>" + r.comment + "</h4><p>" + r.user.name + " " + r.user.lastname + "</p></div>"
         end
       end
     end
@@ -1025,6 +1026,9 @@ def build_medialist2(items, cname, par)
                 when "questions"
     	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
                     content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                  end
+    	            html_string = html_string + link_to(mobject_path(:id => item.mobject_id, :topic => "Fragen", :dir => "left", :q_id => item.id)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-chevron-left")
                   end
     	            html_string = html_string + link_to(edit_question_path(:id => item)) do 
                     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")

@@ -1204,9 +1204,10 @@
           </div>
 
         <% when "Fragen" %>
+          <% @ques %>
           <%= header2("Objekte", @mobject, @topic, "Fragen", false) %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.questions.order(created_at: :desc), "questions", "User") %>
+            <%= build_medialist2(@mobject.questions.order(:sequence), "questions", "User") %>
           </div>
 
         <% when "Ausgaben" %>

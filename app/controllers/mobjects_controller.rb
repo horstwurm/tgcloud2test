@@ -350,7 +350,45 @@ class MobjectsController < ApplicationController
           when "alles"
         end
       end
+      
+      if @topic == "Fragen"
+        if params[:dir]
+          
+          @ques=[]
+          @mobject.questions.order(:sequence).each do |q|
+            h = Hash.new
+            h = {:id => q.id, :seq => q.sequence}
+            @ques << h
+          end
 
+          @myq = Question.find(params[:q_id])
+          if params[:dir] == "left"
+
+            if @myq and @myq.sequence > 1
+
+              @myq.sequence = @myq.sequence - 1
+              @myq.save
+
+              index = -1
+              for i in 0..@ques.length-1
+                if @myq.id == @ques[i][:id]
+                  index = i-1
+                end
+              end
+              if index > -1
+                @myq2 = Question.find(@ques[index][:id])
+                if @myq2
+                  @myq2.sequence = @myq2.sequence + 1
+                  @myq2.save
+                end
+              end
+
+            end
+
+          end
+
+        end
+      end
     
   end
 
