@@ -135,8 +135,11 @@ mcategories = Mcategory.create({ctype:"Projekte", name:"Projektportfolio"})
 mcategories = Mcategory.create({ctype:"Projekte", name:"Auftrag"})
 mcategories = Mcategory.create({ctype:"Projekte", name:"Administration"})
 
-#create Question categories 96..103
+#create Question categories 104
 mcategories = Mcategory.create({ctype:"Gruppen", name:"Organisationseinheit"})
+
+#create Question categories 105
+mcategories = Mcategory.create({ctype:"Innovationswettbewerbe", name:"Innovationswettbewerb"})
 
 #create some users...
 users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:"horst.wurm@bluewin.ch", password:"password", name:"Horst", lastname:"Wurm", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:true, webmaster:true, avatar:File.open(path+'horst.jpg', 'rb')})

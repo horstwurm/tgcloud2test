@@ -17,6 +17,9 @@ has_many :mlikes, dependent: :destroy
 has_many :questions, dependent: :destroy 
 has_many :timetracks, dependent: :destroy 
 has_many :plannings, dependent: :destroy 
+has_many :ideas, dependent: :destroy 
+has_many :crits, dependent: :destroy
+has_many :prices, dependent: :destroy
 
 before_validation :update_geo_address
 geocoded_by :geo_address

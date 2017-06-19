@@ -75,7 +75,7 @@
                   <%= f.text_field :homepage, class:"form-control"%>
                 </div>
                 <% case @mobject.mtype %>
-                  <% when "Veranstaltungen", "Ausschreibungen", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding", "Umfragen", "Projekte" %>
+                  <% when "Veranstaltungen", "Ausschreibungen", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding", "Umfragen", "Projekte", "Innovationswettbewerbe" %>
                     <% if @mobject.msubtype != "Standard" %>
                       <div class="form-group">
                         <%= f.label "Datum von-bis:" %>

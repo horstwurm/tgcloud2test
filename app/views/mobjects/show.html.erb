@@ -417,6 +417,30 @@
             <%= build_medialist2(User.where("id IN (?)", useranswers), "users", nil) %>
           </div>
 
+         <% when "Ideen" %>
+          <%= header2("Objekte", @mobject, @topic, "Ideen", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.ideas.order(rating: :desc), "ideas", "User") %>
+          </div>
+
+        <% when "Jury" %>
+          <%= header2("Objekte", @mobject, @topic, "Jury", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.madvisors, "madvisors", "User") %>
+          </div>
+
+        <% when "Preise" %>
+          <%= header2("Objekte", @mobject, @topic, "Wettbewerbspreise", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.prices, "prices", nil) %>
+          </div>
+
+        <% when "Bewertungskriterien" %>
+          <%= header2("Objekte", @mobject, @topic, "Bewertungskriterien", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.crits, "crits", nil) %>
+          </div>
+
          <% when "Ausschreibungsangebote" %>
           <%= header2("Objekte", @mobject, @topic, "Ausschreibungsangebote", false) %>
           <div class="panel-body">
@@ -1204,7 +1228,7 @@
           </div>
 
         <% when "Fragen" %>
-          <% @ques %>
+          <%= @ques %>
           <%= header2("Objekte", @mobject, @topic, "Fragen", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.questions.order(:sequence), "questions", "User") %>

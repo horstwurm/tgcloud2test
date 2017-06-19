@@ -114,6 +114,9 @@
         <% when "Projekte" %>
           <%= header2("Institutionen", @company, @topic, "Projekte & Aufträge", false) %>
           <%= build_medialist2(@company.mobjects.where('mtype=? and parent=?',"Projekte",0), "mobjects", nil) %>
+        <% when "Innovationswettbewerbe" %>
+          <%= header2("Institutionen", @company, @topic, "Innovations-Wettbewerbe", false) %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"Innovationswettbewerbe"), "mobjects", nil) %>
         <% when "Umfragen" %>
           <%= header2("Institutionen", @company, @topic, "Umfragen & Interviews", false) %>
           <%= build_medialist2(@company.mobjects.where('mtype=?',"Umfragen"), "mobjects", nil) %>

@@ -34,7 +34,10 @@ class User < ActiveRecord::Base
     has_many :user_answers, dependent: :destroy   
     has_many :timetracks, dependent: :destroy 
     has_many :plannings, dependent: :destroy 
-    
+    has_many :ideas, dependent: :destroy 
+    has_many :idea_ratings, dependent: :destroy 
+    has_many :idea_crowdratings, dependent: :destroy 
+
     # validates :userid, presence: true, :uniqueness => true
     validates :lastname, presence: true    
     validates :name, presence: true

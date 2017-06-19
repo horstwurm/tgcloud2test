@@ -1,0 +1,1 @@
+json.array! @crits, partial: 'crits/crit', as: :crit

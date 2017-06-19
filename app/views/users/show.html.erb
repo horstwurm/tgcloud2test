@@ -152,6 +152,12 @@
         <% when "Projekte" %>
           <%= header2("Privatpersonen", @user, @topic, "Projekte, Aufträge", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=? and parent=?',"Projekte",0), "mobjects", nil) %>
+        <% when "Innovationswettbewerbe" %>
+          <%= header2("Privatpersonen", @user, @topic, "Innovations-Wettbewerbe", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Innovationswettbewerbe"), "mobjects", nil) %>
+        <% when "Ideen" %>
+          <%= header2("Privatpersonen", @user, @topic, "meine Ideen", false) %>
+          <%= build_medialist2(@user.ideas, "ideas", "Idee") %>
         <% when "Umfragen" %>
           <%= header2("Privatpersonen", @user, @topic, "Umfragen & Interviews", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Umfragen"), "mobjects", nil) %>

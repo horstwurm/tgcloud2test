@@ -1,0 +1,12 @@
+
+  <div class="row">
+      <%= header("Ideenbewertung für " + @idea.header, true) %>
+  </div>
+  
+  <%= action_buttons2("CrowdIdeenbewertung", @idea, nil) %>
+
+  <%= build_medialist2(@idea.idea_crowdratings, "idea_crowdratings", nil) %>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {initMap()})
+</script>

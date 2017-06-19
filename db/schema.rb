@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503181535) do
+ActiveRecord::Schema.define(version: 20170619093007) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -111,6 +111,15 @@ ActiveRecord::Schema.define(version: 20170503181535) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "crits", force: :cascade do |t|
+    t.integer  "mobject_id"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "rating"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "customers", force: :cascade do |t|
     t.integer  "owner_id"
     t.string   "owner_type"
@@ -172,6 +181,44 @@ ActiveRecord::Schema.define(version: 20170503181535) do
     t.boolean  "active"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "idea_crowdratings", force: :cascade do |t|
+    t.integer  "idea_id"
+    t.integer  "user_id"
+    t.integer  "rating"
+    t.text     "rating_text"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "idea_ratings", force: :cascade do |t|
+    t.integer  "idea_id"
+    t.integer  "crit_id"
+    t.integer  "user_id"
+    t.integer  "rating"
+    t.text     "rating_text"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "ideas", force: :cascade do |t|
+    t.integer  "mobject_id"
+    t.integer  "user_id"
+    t.float    "rating"
+    t.float    "crowdrating"
+    t.string   "header"
+    t.text     "description"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "madvisors", force: :cascade do |t|
@@ -288,8 +335,8 @@ ActiveRecord::Schema.define(version: 20170503181535) do
     t.float    "sum_pkosten_ist"
     t.float    "sum_paufwand_plan"
     t.float    "sum_pkosten_plan"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "parent"
     t.index ["owner_id"], name: "index_mobjects_on_owner_id"
     t.index ["owner_type"], name: "index_mobjects_on_owner_type"
@@ -356,11 +403,24 @@ ActiveRecord::Schema.define(version: 20170503181535) do
     t.string   "jahr"
     t.string   "monat"
     t.float    "amount"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "jahrmonat"
     t.string   "costortime"
     t.string   "description"
+  end
+
+  create_table "prices", force: :cascade do |t|
+    t.integer  "mobject_id"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "sequence"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "qrcodes", force: :cascade do |t|

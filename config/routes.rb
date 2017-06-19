@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :idea_crowdratings
+  resources :prices
+  resources :crits
+  resources :idea_ratings
+  resources :criterias
+  resources :ideas
   resources :plannings
   resources :timetracks
   resources :user_answers
