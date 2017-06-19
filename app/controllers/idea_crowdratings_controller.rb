@@ -1,6 +1,6 @@
 class IdeaCrowdratingsController < ApplicationController
   before_action :set_idea_crowdrating, only: [:show, :edit, :update, :destroy]
-  after_action :calc_idea_crowdrating, only: [:edit, :update, :destroy]
+  after_action :calc_idea_crowdrating, only: [:create, :edit, :update, :destroy]
 
   # GET /idea_crowdratings
   # GET /idea_crowdratings.json
