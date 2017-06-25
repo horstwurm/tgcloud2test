@@ -63,7 +63,6 @@ ActiveRecord::Schema.define(version: 20170619093007) do
     t.string   "domain"
     t.string   "parent_domain"
     t.string   "right"
-    t.string   "icon"
     t.boolean  "access"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false

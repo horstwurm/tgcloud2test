@@ -2119,7 +2119,7 @@ def build_hauptmenue
 
     domain = :innovationswettbewerbe
     if creds.include?("Hauptmenue"+domain.to_s)
-        path = mobjects_path(:mtype => "innovationswettbewerbe", :msubtype => "Root", :parent => 0)
+        path = mobjects_path(:mtype => "innovationswettbewerbe")
         html_string = html_string + simple_menue(domain, path)
     end
 
@@ -2835,7 +2835,7 @@ def init_apps
         c.parent_domain = "Root"
       end
       c.right = @array[i]["right"]
-      c.icon = @array[i]["icon"]
+      #c.icon = @array[i]["icon"]
       c.access = @array[i]["access"]
       c.save
     end
