@@ -29,7 +29,7 @@ class AnswersController < ApplicationController
 
     respond_to do |format|
       if @answer.save
-        format.html { redirect_to mobject_path(:id => @answer.question.mobject_id, :topic => "Fragen"), notice: (I(I18n.t :act_create) }
+        format.html { redirect_to mobject_path(:id => @answer.question.mobject_id, :topic => "Fragen"), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @answer }
       else
         format.html { render :new }
