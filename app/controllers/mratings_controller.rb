@@ -46,7 +46,7 @@ class MratingsController < ApplicationController
       else
         @topic = "Bewertungen"
       end
-      redirect_to mobject_path(:id => @mrating.mobject_id, :topic => @topic), notice: (I18n.:t :act_update)
+      redirect_to mobject_path(:id => @mrating.mobject_id, :topic => @topic), notice: (I18n.t :act_update)
     else
       render :edit
     end
