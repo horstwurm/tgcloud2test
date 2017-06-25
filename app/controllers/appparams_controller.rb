@@ -53,7 +53,7 @@ class AppparamsController < ApplicationController
     @appparam = Appparam.new(appparam_params)
 
     if @appparam.save
-      redirect_to appparams_path :page => session[:page], notice: (I18n.t act_create)
+      redirect_to appparams_path :page => session[:page], notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -71,7 +71,7 @@ class AppparamsController < ApplicationController
   # DELETE /appparams/1
   def destroy
     @appparam.destroy
-    redirect_to appparams_path :page => session[:page], notice: (I18n.t ::act_delete)
+    redirect_to appparams_path :page => session[:page], notice: (I18n.t :act_delete)
   end
 
   private

@@ -36,7 +36,7 @@ class AccountsController < ApplicationController
     @account = Account.new(account_params)
 
     if @account.save
-      redirect_to accounts_path :customer_id => @account.customer_id, notice: (I18n.t act_create)
+      redirect_to accounts_path :customer_id => @account.customer_id, notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -55,7 +55,7 @@ class AccountsController < ApplicationController
   def destroy
     @customer_id = @account.customer_id
     @account.destroy
-    redirect_to accounts_path :customer_id => @customer_id, notice: (I18n.t ::act_delete)
+    redirect_to accounts_path :customer_id => @customer_id, notice: (I18n.t :act_delete)
   end
 
   private

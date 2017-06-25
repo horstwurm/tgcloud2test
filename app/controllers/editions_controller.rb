@@ -31,7 +31,7 @@ class EditionsController < ApplicationController
 
     respond_to do |format|
       if @edition.save
-        format.html { redirect_to mobject_path(:id => @edition.mobject_id, :topic => "Ausgaben"), notice: (I18n.t act_create) }
+        format.html { redirect_to mobject_path(:id => @edition.mobject_id, :topic => "Ausgaben"), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @edition }
       else
         format.html { render :new }
@@ -60,7 +60,7 @@ class EditionsController < ApplicationController
     @mobject_id = @edition.mobject_id
     @edition.destroy
     respond_to do |format|
-      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => "Ausgaben"), notice: (I18n.t ::act_delete) }
+      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => "Ausgaben"), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

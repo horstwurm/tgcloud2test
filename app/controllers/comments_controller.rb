@@ -35,7 +35,7 @@ class CommentsController < ApplicationController
         else
           @topic = "Blog"
         end
-        format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => @topic), notice: (I18n.t act_create) }
+        format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => @topic), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
@@ -74,7 +74,7 @@ class CommentsController < ApplicationController
     end
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => @topic), notice: (I18n.t ::act_delete) }
+      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => @topic), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

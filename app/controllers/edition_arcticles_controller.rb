@@ -34,7 +34,7 @@ end
 
     respond_to do |format|
       if @edition_arcticle.save
-        format.html { redirect_to edition_arcticles_path(:edition_id => @edition_arcticle.edition_id), notice: (I18n.t act_create) }
+        format.html { redirect_to edition_arcticles_path(:edition_id => @edition_arcticle.edition_id), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @edition_arcticle }
       else
         format.html { render :new }
@@ -63,7 +63,7 @@ end
     @edition_id = @edition_arcticle.edition_id
     @edition_arcticle.destroy
     respond_to do |format|
-      format.html { redirect_to edition_arcticles_path(:edition_id => @edition_id), notice: (I18n.t ::act_delete) }
+      format.html { redirect_to edition_arcticles_path(:edition_id => @edition_id), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

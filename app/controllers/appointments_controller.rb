@@ -84,7 +84,7 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(appointment_params)
     if @appointment.save
-      redirect_to user_path(:id => @appointment.user_id1, :topic => "Kalendereintraege"), notice: (I18n.t act_create)
+      redirect_to user_path(:id => @appointment.user_id1, :topic => "Kalendereintraege"), notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -104,7 +104,7 @@ class AppointmentsController < ApplicationController
   def destroy
     @usersave = @appointment.user_id1
     @appointment.destroy
-    redirect_to user_path(:id => @usersave, :topic => "Kalendereintraege"), notice: (I18n.t ::act_delete)
+    redirect_to user_path(:id => @usersave, :topic => "Kalendereintraege"), notice: (I18n.t :act_delete)
   end
 
   private

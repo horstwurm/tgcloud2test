@@ -46,7 +46,7 @@ class CredentialsController < ApplicationController
 
     respond_to do |format|
       if @credential.save
-        format.html { redirect_to user_path(:id => @credential.user_id, :topic => "Zugriffsberechtigungen"), notice: (I18n.t act_create) }
+        format.html { redirect_to user_path(:id => @credential.user_id, :topic => "Zugriffsberechtigungen"), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @credential }
       else
         format.html { render :new }
@@ -74,7 +74,7 @@ class CredentialsController < ApplicationController
   def destroy
     @credential.destroy
     respond_to do |format|
-      format.html { redirect_to user_path(:id => @credential.user_id, :topic => "Zugriffsberechtigungen"), notice: (I18n.t ::act_delete) }
+      format.html { redirect_to user_path(:id => @credential.user_id, :topic => "Zugriffsberechtigungen"), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

@@ -31,7 +31,7 @@ class CritsController < ApplicationController
 
     respond_to do |format|
       if @crit.save
-        format.html { redirect_to mobject_path(:id => @crit.mobject_id, :topic => "Bewertungskriterien"), notice: (I18n.t act_create)}
+        format.html { redirect_to mobject_path(:id => @crit.mobject_id, :topic => "Bewertungskriterien"), notice: (I18n.t :act_create)}
         format.json { render :show, status: :created, location: @crit }
       else
         format.html { render :new }
@@ -60,7 +60,7 @@ class CritsController < ApplicationController
     @crit_mobject_id = @crit.mobject_id
     @crit.destroy
     respond_to do |format|
-      format.html { redirect_to mobject_path(:id => @crit_mobject_id, :topic => "Bewertungskriterien"), notice: (I18n.t ::act_delete) }
+      format.html { redirect_to mobject_path(:id => @crit_mobject_id, :topic => "Bewertungskriterien"), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

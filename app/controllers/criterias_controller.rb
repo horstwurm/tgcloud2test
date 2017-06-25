@@ -32,7 +32,7 @@ class CriteriasController < ApplicationController
 
     respond_to do |format|
       if @criteria.save
-        format.html { redirect_to @criteria, notice: (I18n.t act_create) }
+        format.html { redirect_to @criteria, notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @criteria }
       else
         format.html { render :new }
@@ -60,7 +60,7 @@ class CriteriasController < ApplicationController
   def destroy
     @criteria.destroy
     respond_to do |format|
-      format.html { redirect_to criteria_url, (I18n.t ::act_delete) }
+      format.html { redirect_to criteria_url, (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

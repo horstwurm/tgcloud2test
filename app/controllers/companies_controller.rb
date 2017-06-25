@@ -97,7 +97,7 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     if @company.save
-      redirect_to user_path(:id => @company.user_id, :topic => :institutionen), notice: (I18n.t act_create)
+      redirect_to user_path(:id => @company.user_id, :topic => :institutionen), notice: (I18n.t :act_create)
       # redirect_to @company, notice: 'Company was successfully created.'
     else
       render :new
@@ -117,7 +117,7 @@ class CompaniesController < ApplicationController
   def destroy
     @us = @company.user_id
     @company.destroy
-    redirect_to user_path(:id => @us, :topic => :institutionen),  notice: (I18n.t ::act_delete)
+    redirect_to user_path(:id => @us, :topic => :institutionen),  notice: (I18n.t :act_delete)
   end
 
   private

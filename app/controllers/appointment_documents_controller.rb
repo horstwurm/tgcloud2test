@@ -25,7 +25,7 @@ class AppointmentDocumentsController < ApplicationController
     @appointment_document = AppointmentDocument.new(appointment_document_params)
 
     if @appointment_document.save
-      redirect_to user_path(:id => @appointment_document.appointment.user_id1, :topic => "Kalendereintraege"), notice: (I18n.t act_create)
+      redirect_to user_path(:id => @appointment_document.appointment.user_id1, :topic => "Kalendereintraege"), notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -45,7 +45,7 @@ class AppointmentDocumentsController < ApplicationController
     @user_id = @appointment_document.appointment.user_id1
     @appointment_document.destroy
 
-    redirect_to user_path(:id => @user_id, :topic => "Kalendereintraege"), notice: (I18n.t ::act_delete)
+    redirect_to user_path(:id => @user_id, :topic => "Kalendereintraege"), notice: (I18n.t :act_delete)
   end
 
   private

@@ -36,7 +36,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
     if @customer.save
       if @customer.owner_type == "User" 
-        redirect_to user_path(:id => @customer.owner_id, :topic => "Kundenbeziehungen"), notice: (I18n.t act_create)
+        redirect_to user_path(:id => @customer.owner_id, :topic => "Kundenbeziehungen"), notice: (I18n.t :act_create)
       else
         redirect_to company_path(:id => @customer.owner_id, :topic => "Kundenbeziehungen"), notice: 'Customer was successfully created.'
       end
@@ -64,7 +64,7 @@ class CustomersController < ApplicationController
     @owner_type = @customer.owner_type
     @customer.destroy
       if @owner_type == "User"
-        redirect_to user_path(:id => @owner_id, :topic => "Kundenbeziehungen"), notice: (I18n.t ::act_delete)
+        redirect_to user_path(:id => @owner_id, :topic => "Kundenbeziehungen"), notice: (I18n.t :act_delete)
       else
         redirect_to company_path(:id => @owner_id, :topic => "Kundenbeziehungen"), notice: 'Customer was successfully created.'
       end
