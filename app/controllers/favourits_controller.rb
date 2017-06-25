@@ -42,7 +42,7 @@ class FavouritsController < ApplicationController
     @favourit = Favourit.new(favourit_params)
 
     if @favourit.save
-      redirect_to @favourit, notice: 'Favourit was successfully created.'
+      redirect_to @favourit, notice: (I18n.t act_create)
     else
       render :new
     end
@@ -51,7 +51,7 @@ class FavouritsController < ApplicationController
   # PUT /favourits/1
   def update()
     if @favourit.update(favourit_params)
-      redirect_to @favourit.user, notice: 'Favourit was successfully updated.'
+      redirect_to @favourit.user, notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -61,7 +61,7 @@ class FavouritsController < ApplicationController
   def destroy
     @item = @favourit.user
     @favourit.destroy
-    redirect_to user_path(:id => @item, :topic => "Favoriten"), notice: 'Favourit was successfully destroyed.'
+    redirect_to user_path(:id => @item, :topic => "Favoriten"), notice: (I18n.t ::act_delete)
   end
 
   private

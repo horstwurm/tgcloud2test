@@ -97,7 +97,7 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     if @company.save
-      redirect_to user_path(:id => @company.user_id, :topic => :institutionen), notice: 'Company was successfully created'
+      redirect_to user_path(:id => @company.user_id, :topic => :institutionen), notice: (I18n.t act_create)
       # redirect_to @company, notice: 'Company was successfully created.'
     else
       render :new
@@ -107,7 +107,7 @@ class CompaniesController < ApplicationController
   # PUT /companies/1
   def update
     if @company.update(company_params)
-      redirect_to @company, notice: 'Company was successfully updated'
+      redirect_to @company, notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -117,7 +117,7 @@ class CompaniesController < ApplicationController
   def destroy
     @us = @company.user_id
     @company.destroy
-    redirect_to user_path(:id => @us, :topic => :institutionen),  notice: 'Company was successfully destroyed.'
+    redirect_to user_path(:id => @us, :topic => :institutionen),  notice: (I18n.t ::act_delete)
   end
 
   private

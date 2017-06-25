@@ -32,7 +32,7 @@ class AppparamsController < ApplicationController
         end
       end
     end
-    redirect_to appparams_path :page => session[:page], notice: 'Appparam was successfully created.'
+    redirect_to appparams_path :page => session[:page], notice: (I18n.t :act_update)
   end
 
   # GET /appparams/1
@@ -53,7 +53,7 @@ class AppparamsController < ApplicationController
     @appparam = Appparam.new(appparam_params)
 
     if @appparam.save
-      redirect_to appparams_path :page => session[:page], notice: 'Appparam was successfully created.'
+      redirect_to appparams_path :page => session[:page], notice: (I18n.t act_create)
     else
       render :new
     end
@@ -62,7 +62,7 @@ class AppparamsController < ApplicationController
   # PUT /appparams/1
   def update
     if @appparam.update(appparam_params)
-      redirect_to appparams_path :page => session[:page], notice: 'Appparam was successfully updated.'
+      redirect_to appparams_path :page => session[:page], notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -71,7 +71,7 @@ class AppparamsController < ApplicationController
   # DELETE /appparams/1
   def destroy
     @appparam.destroy
-    redirect_to appparams_path :page => session[:page], notice: 'Appparam was successfully destroyed.'
+    redirect_to appparams_path :page => session[:page], notice: (I18n.t ::act_delete)
   end
 
   private

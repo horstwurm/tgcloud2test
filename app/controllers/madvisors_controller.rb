@@ -96,7 +96,7 @@ class MadvisorsController < ApplicationController
   def create
     @madvisor = Madvisor.new(madvisor_params)
     if @madvisor.save
-      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => "Ansprechpartner"), notice: (In18.t erfolgreichgespeichert)
+      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => "Ansprechpartner"), notice: (In18.t :act_create)
     else
       render :new
     end
@@ -117,7 +117,7 @@ class MadvisorsController < ApplicationController
       @topic = :jury
     end
     if @madvisor.update(madvisor_params)
-      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => @topic), notice: (I18n.t erfolgreichgeaendert)
+      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => @topic), notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -139,7 +139,7 @@ class MadvisorsController < ApplicationController
       @topic = :jury
     end
     @madvisor.destroy
-      redirect_to mobject_path(:id => @id, :topic => @topic), notice: (I18n.t :erfolgreichgeloescht)
+      redirect_to mobject_path(:id => @id, :topic => @topic), notice: (I18n.t :act_delete)
   end
 
   private

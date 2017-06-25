@@ -32,7 +32,7 @@ class MratingsController < ApplicationController
       else
         @topic = "Bewertungen"
       end
-      redirect_to mobject_path(:id => @mrating.mobject_id, :topic => @topic), notice: 'Rating was successfully created.'
+      redirect_to mobject_path(:id => @mrating.mobject_id, :topic => @topic), notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -46,7 +46,7 @@ class MratingsController < ApplicationController
       else
         @topic = "Bewertungen"
       end
-      redirect_to mobject_path(:id => @mrating.mobject_id, :topic => @topic), notice: 'Rating was successfully updated.'
+      redirect_to mobject_path(:id => @mrating.mobject_id, :topic => @topic), notice: (I18n.:t :act_update)
     else
       render :edit
     end
@@ -61,7 +61,7 @@ class MratingsController < ApplicationController
       @topic = "Bewertungen"
     end
     @mrating.destroy
-      redirect_to mobject_path(:id => @id, :topic => @topic), notice: 'Rating was successfully destroyed.'
+      redirect_to mobject_path(:id => @id, :topic => @topic), notice: (I18n.t :act_delete)
   end
 
   private

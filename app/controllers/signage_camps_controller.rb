@@ -124,7 +124,7 @@ class SignageCampsController < ApplicationController
 
     respond_to do |format|
       if @signage_camp.save
-        format.html { redirect_to company_path(:id => @signage_camp.owner_id, :topic => "Digital Signage (Kampagnen)"), notice: 'Signage camp was successfully created.' }
+        format.html { redirect_to company_path(:id => @signage_camp.owner_id, :topic => "Digital Signage (Kampagnen)"), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @signage_camp }
       else
         format.html { render :new }
@@ -138,7 +138,7 @@ class SignageCampsController < ApplicationController
   def update
     respond_to do |format|
       if @signage_camp.update(signage_camp_params)
-        format.html { redirect_to company_path(:id => @signage_camp.owner_id, :topic => "Digital Signage (Kampagnen)"), notice: 'Signage camp was successfully updated.' }
+        format.html { redirect_to company_path(:id => @signage_camp.owner_id, :topic => "Digital Signage (Kampagnen)"), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @signage_camp }
       else
         format.html { render :edit }
@@ -153,7 +153,7 @@ class SignageCampsController < ApplicationController
     @id = @signage_camp.owner_id
     @signage_camp.destroy
     respond_to do |format|
-      format.html { redirect_to company_path(:id => @id, :topic => "Digital Signage (Kampagnen)"), notice: 'Signage camp was successfully destroyed.' }
+      format.html { redirect_to company_path(:id => @id, :topic => "Digital Signage (Kampagnen)"), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

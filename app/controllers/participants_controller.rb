@@ -28,7 +28,7 @@ class ParticipantsController < ApplicationController
 
     respond_to do |format|
       if @participant.save
-        format.html { redirect_to @participant, notice: 'Participant was successfully created.' }
+        format.html { redirect_to @participant, notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @participant }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class ParticipantsController < ApplicationController
   def update
     respond_to do |format|
       if @participant.update(participant_params)
-        format.html { redirect_to @participant, notice: 'Participant was successfully updated.' }
+        format.html { redirect_to @participant, notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @participant }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class ParticipantsController < ApplicationController
   def destroy
     @participant.destroy
     respond_to do |format|
-      format.html { redirect_to participants_url, notice: 'Participant was successfully destroyed.' }
+      format.html { redirect_to participants_url, notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

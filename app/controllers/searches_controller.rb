@@ -39,7 +39,7 @@ class SearchesController < ApplicationController
         @usertickets.each do |ut|
           ut.status = "übergeben"
           #content = "Ticket_ID:"+ut.id.to_s+ " für " + ut.ticket.name + " für " + ut.user.name + " " + ut.user.lastname + " für Event " + ut.ticket.owner.mobject.name + " gesponsort von " + ut.ticket.owner.company.name + " CRM Ticket"
-          content = "http://tkbmarkt.herokuapp.com/home/index1?me="+ut.id.to_s
+          content = "http://tkbinfo.herokuapp.com/home/index1?me="+ut.id.to_s
           ut.avatar = ut.buildQRCode(content)
           ut.save
         end
@@ -123,7 +123,7 @@ class SearchesController < ApplicationController
     @search = Search.new(search_params)
     if @search.save
         @search.build_sql
-        redirect_to searches_path(:user_id => current_user.id, :search_domain => @search.search_domain, :mtype => @search.mtype, :msubtype => @search.msubtype, :controller_name => @search.controller, :ticket_id => @search.ticket_id), notice: 'Search was successfully updated.'
+        redirect_to searches_path(:user_id => current_user.id, :search_domain => @search.search_domain, :mtype => @search.mtype, :msubtype => @search.msubtype, :controller_name => @search.controller, :ticket_id => @search.ticket_id), notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -132,7 +132,7 @@ class SearchesController < ApplicationController
   # PUT /searches/1
   def update
     if @search.update(search_params)
-        redirect_to searches_path(:user_id => current_user.id, :search_domain => @search.search_domain, :mtype => @search.mtype, :msubtype => @search.msubtype, :controller_name => @search.controller, :ticket_id => @search.ticket_id), notice: 'Search was successfully updated.'
+        redirect_to searches_path(:user_id => current_user.id, :search_domain => @search.search_domain, :mtype => @search.mtype, :msubtype => @search.msubtype, :controller_name => @search.controller, :ticket_id => @search.ticket_id), notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -151,7 +151,7 @@ class SearchesController < ApplicationController
     @save_search_controller = @search.controller
     
     @search.destroy
-    redirect_to searches_path(:user_id => current_user.id, :search_domain => @save_search_domain, :controller_name => @save_search_controller, :mtype => @save_search_mtype, :msubtype => @save_search_msubtype, :ticket_id => ticket_id), notice: 'Search was successfully destroyed.'
+    redirect_to searches_path(:user_id => current_user.id, :search_domain => @save_search_domain, :controller_name => @save_search_controller, :mtype => @save_search_mtype, :msubtype => @save_search_msubtype, :ticket_id => ticket_id), notice: (I18n.t :act_delete)
   end
 
   private

@@ -28,7 +28,7 @@ class SignageHitsController < ApplicationController
 
     respond_to do |format|
       if @signage_hit.save
-        format.html { redirect_to @signage_hit, notice: 'Signage hit was successfully created.' }
+        format.html { redirect_to @signage_hit, notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @signage_hit }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class SignageHitsController < ApplicationController
   def update
     respond_to do |format|
       if @signage_hit.update(signage_hit_params)
-        format.html { redirect_to @signage_hit, notice: 'Signage hit was successfully updated.' }
+        format.html { redirect_to @signage_hit, notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @signage_hit }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class SignageHitsController < ApplicationController
   def destroy
     @signage_hit.destroy
     respond_to do |format|
-      format.html { redirect_to signage_hits_url, notice: 'Signage hit was successfully destroyed.' }
+      format.html { redirect_to signage_hits_url, notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

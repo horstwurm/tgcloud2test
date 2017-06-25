@@ -31,7 +31,7 @@ class UserTicketsController < ApplicationController
         @user_ticket.avatar = @user_ticket.buildQRCode(content)
         @user_ticket.save
     end
-    redirect_to user_path(:id => @user_ticket.user_id, :topic => "Tickets"), notice: 'User ticket was successfully created.'    
+    redirect_to user_path(:id => @user_ticket.user_id, :topic => "Tickets"), notice: (I18n.t :act_create) 
   end
 
   # GET /user_tickets/1/edit
@@ -43,7 +43,7 @@ class UserTicketsController < ApplicationController
     @user_ticket = UserTicket.new(user_ticket_params)
 
     if @user_ticket.save
-      redirect_to @user_ticket, notice: 'User ticket was successfully created.'
+      redirect_to @user_ticket, notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -52,7 +52,7 @@ class UserTicketsController < ApplicationController
   # PUT /user_tickets/1
   def update
     if @user_ticket.update(user_ticket_params)
-      redirect_to @user_ticket, notice: 'User ticket was successfully updated.'
+      redirect_to @user_ticket, notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -62,7 +62,7 @@ class UserTicketsController < ApplicationController
   def destroy
     @ticket_id = @user_ticket.ticket_id
     @user_ticket.destroy
-    redirect_to ticketuserview_index_path :ticket_id => @ticket_id, notice: 'User ticket was successfully destroyed.'
+    redirect_to ticketuserview_index_path :ticket_id => @ticket_id, notice:(I18n.t :act_delete)
   end
 
   private

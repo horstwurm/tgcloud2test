@@ -26,7 +26,7 @@ class McategoriesController < ApplicationController
     @mcategory = Mcategory.new(mcategory_params)
 
     if @mcategory.save
-      redirect_to mcategories_path(:ctype => @mcategory.ctype), notice: 'Mcategory was successfully created.'
+      redirect_to mcategories_path(:ctype => @mcategory.ctype), notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -35,7 +35,7 @@ class McategoriesController < ApplicationController
   # PUT /mcategories/1
   def update
     if @mcategory.update(mcategory_params)
-      redirect_to mcategories_path(:ctype => @mcategory.ctype), notice: 'Mcategory was successfully updated.'
+      redirect_to mcategories_path(:ctype => @mcategory.ctype), notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -46,7 +46,7 @@ class McategoriesController < ApplicationController
     @ctype = mcategory.ctype
     @mcategory.destroy
 
-    redirect_to mcategories_path(:ctype => @ctype), notice: 'Mcategory was successfully destroyed.'
+    redirect_to mcategories_path(:ctype => @ctype), notice: (I18n.t :act_delete)
   end
 
   private

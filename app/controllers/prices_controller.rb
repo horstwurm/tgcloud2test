@@ -32,7 +32,7 @@ class PricesController < ApplicationController
 
     respond_to do |format|
       if @price.save
-        format.html { redirect_to mobject_path(:id => @price.mobject_id, :topic => "Preise"), notice: 'Price was successfully created.' }
+        format.html { redirect_to mobject_path(:id => @price.mobject_id, :topic => "Preise"), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @price }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class PricesController < ApplicationController
   def update
     respond_to do |format|
       if @price.update(price_params)
-        format.html { redirect_to mobject_path(:id => @price.mobject_id, :topic => "Preise"), notice: 'Price was successfully updated.' }
+        format.html { redirect_to mobject_path(:id => @price.mobject_id, :topic => "Preise"), notice: (I18n.t :act_update)}
         format.json { render :show, status: :ok, location: @price }
       else
         format.html { render :edit }
@@ -61,7 +61,7 @@ class PricesController < ApplicationController
     @price_mobject_id = @price.mobject_id
     @price.destroy
     respond_to do |format|
-      format.html { redirect_to redirect_to mobject_path(:id => @price_mobject_id, :topic => "Preise"), notice: 'Price was successfully destroyed.' }
+      format.html { redirect_to redirect_to mobject_path(:id => @price_mobject_id, :topic => "Preise"), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

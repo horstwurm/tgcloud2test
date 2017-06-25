@@ -112,8 +112,8 @@ class TimetracksController < ApplicationController
 
     respond_to do |format|
       if @timetrack.save
-        #format.html { redirect_to timetracks_path(:mobject_id => @timetrack.mobject_id, :scope => @timetrack.costortime), notice: 'Timetrack was successfully created.' }
-        format.html { redirect_to user_path(:id => @timetrack.user_id, :topic => :zeiterfassung, :scope => @timetrack.costortime), notice: 'Timetrack was successfully created.' }
+        #format.html { redirect_to timetracks_path(:mobject_id => @timetrack.mobject_id, :scope => @timetrack.costortime), notice: (I18n.t :act_create) }
+        format.html { redirect_to user_path(:id => @timetrack.user_id, :topic => :zeiterfassung, :scope => @timetrack.costortime), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @timetrack }
       else
         format.html { render :new }
@@ -128,7 +128,7 @@ class TimetracksController < ApplicationController
     respond_to do |format|
       if @timetrack.update(timetrack_params)
         #format.html { redirect_to timetracks_path(:mobject_id => @timetrack.mobject_id), notice: 'Timetrack was successfully updated.' }
-        format.html { redirect_to user_path(:id => @timetrack.user_id, :topic => :zeiterfassung, :scope => @timetrack.costortime), notice: 'Timetrack was successfully created.' }
+        format.html { redirect_to user_path(:id => @timetrack.user_id, :topic => :zeiterfassung, :scope => @timetrack.costortime), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @timetrack }
       else
         format.html { render :edit }
@@ -145,8 +145,8 @@ class TimetracksController < ApplicationController
     @timetrack_costorid = @timetrack.costortime
     @timetrack.destroy
     respond_to do |format|
-      #format.html { redirect_to timetracks_path(:mobject_id => @timetrack_mobject_id), notice: 'Timetrack was successfully destroyed.' }
-      format.html { redirect_to user_path(:id => @timetrack_user_id, :topic => :zeiterfassung, :scope => @timetrack_costortime), notice: 'Timetrack was successfully created.' }
+      #format.html { redirect_to timetracks_path(:mobject_id => @timetrack_mobject_id), notice: (I18n.t act_de) }
+      format.html { redirect_to user_path(:id => @timetrack_user_id, :topic => :zeiterfassung, :scope => @timetrack_costortime), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

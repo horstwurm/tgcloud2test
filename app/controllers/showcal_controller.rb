@@ -42,7 +42,7 @@ class ShowcalController < ApplicationController
      if params[showcal_index_path]
        @test = params[showcal_index_path][:domain]
      else
-       @test = "Veranstaltungen"
+       @test = "veranstaltungen"
      end
      
    end
@@ -76,12 +76,12 @@ class ShowcalController < ApplicationController
             end
         end
         
-    when "Veranstaltungen", "Crowdfunding", "Aktionen", "Ausschreibungen", "Stellenanzeigen"
+    when "Veranstaltungen", "crowdfunding", "aktionen", "ausschreibungen", "stellenanzeigen"
       if params[:filter_id]
         @mobjects = Mobject.search(nil, nil, params[:filter_id], nil, nil, nil)
       else
         if @domain == "Aktionen"
-          @mobjects = Mobject.where('mtype=? and msubtype=?', "Angebote", "Aktion")
+          @mobjects = Mobject.where('mtype=? and msubtype=?', "angebote", "aktion")
           #@mobjects = Mobject.search(session[:cw], session[:year], params[:filter_id], "Angebote", "Aktion", params[:search]).order(created_at: :desc).page(params[:page]).per_page(100)
         else
           @mobjects = Mobject.where('mtype=?', @domain)
@@ -109,7 +109,7 @@ class ShowcalController < ApplicationController
       end
     end
 
-    if @domain == "Geburtstage"
+    if @domain == "geburtstage"
        counter = 0 
        @locs = "["
        @wins = "["

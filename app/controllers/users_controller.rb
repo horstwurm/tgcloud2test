@@ -350,7 +350,7 @@ class UsersController < ApplicationController
         puts "ATTENTION ATTENTION here we go...."
         UserMailer.signup_confirmation(@user, "newKMU Sign In Confirmation").deliver_now
         
-        format.html { redirect_to users_url, notice: 'User was successfully created.' }
+        format.html { redirect_to users_url, notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -363,7 +363,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     if @user.update(user_params)
-        redirect_to @user, notice: 'User was successfully updated.'
+        redirect_to @user, notice: (I18n.t :act_update)
     end
   end
 
@@ -371,7 +371,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
-    redirect_to users_path, notice: 'User was successfully destroyed.'
+    redirect_to users_path, notice: (I18n.t :act_delete)
   end
 
   private

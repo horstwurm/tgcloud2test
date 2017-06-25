@@ -32,7 +32,7 @@ class CriteriasController < ApplicationController
 
     respond_to do |format|
       if @criteria.save
-        format.html { redirect_to @criteria, notice: 'Criterium was successfully created.' }
+        format.html { redirect_to @criteria, notice: (I18n.t act_create) }
         format.json { render :show, status: :created, location: @criteria }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class CriteriasController < ApplicationController
   def update
     respond_to do |format|
       if @criteria.update(criteria_params)
-        format.html { redirect_to @criteria, notice: 'Criterium was successfully updated.' }
+        format.html { redirect_to @criteria, notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @criteria }
       else
         format.html { render :edit }
@@ -60,7 +60,7 @@ class CriteriasController < ApplicationController
   def destroy
     @criteria.destroy
     respond_to do |format|
-      format.html { redirect_to criteria_url, notice: 'Criterium was successfully destroyed.' }
+      format.html { redirect_to criteria_url, (I18n.t ::act_delete) }
       format.json { head :no_content }
     end
   end

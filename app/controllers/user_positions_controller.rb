@@ -24,7 +24,7 @@ class UserPositionsController < ApplicationController
   def create
     @user_position = UserPosition.new(user_position_params)
     if @user_position.save
-      redirect_to user_path(:id => @user_position.user_id, :topic => "Info"), notice: 'User position was successfully created.'
+      redirect_to user_path(:id => @user_position.user_id, :topic => :info), notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -33,7 +33,7 @@ class UserPositionsController < ApplicationController
   # PUT /user_positions/1
   def update
     if @user_position.update(user_position_params)
-      redirect_to user_path(:id => @user_position.user_id, :topic => "Info"), notice: 'User position was successfully updated.'
+      redirect_to user_path(:id => @user_position.user_id, :topic => :info), notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -43,7 +43,7 @@ class UserPositionsController < ApplicationController
   def destroy
     @id = @user_position.user_id
     @user_position.destroy
-    redirect_to user_path(:id => @uid, :topic => "Info"), notice: 'User position was successfully destroyed.'
+    redirect_to user_path(:id => @uid, :topic => :info), notice: (I18n.t :act_delete)
   end
 
   private

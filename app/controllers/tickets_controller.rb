@@ -58,10 +58,10 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(ticket_params)
     if @ticket.save
       if @ticket.owner_type == "Msponsor"
-        redirect_to tickets_path :msponsor_id => @ticket.owner_id, notice: 'Ticket was successfully created.'
+        redirect_to tickets_path :msponsor_id => @ticket.owner_id, notice: (I18n.t :act_create)
       end
       if @ticket.owner_type == "Mobject"
-        redirect_to mobject_path(:id => @ticket.owner_id, :topic => "Eintrittskarten"), notice: 'Ticket was successfully created.'
+        redirect_to mobject_path(:id => @ticket.owner_id, :topic => "Eintrittskarten"), notice: (I18n.t :act_create)
       end
     else
       render :new
@@ -72,10 +72,10 @@ class TicketsController < ApplicationController
   def update
     if @ticket.update(ticket_params)
       if @ticket.owner_type == "Msponsor"
-        redirect_to tickets_path :msponsor_id => @ticket.owner_id, notice: 'Ticket was successfully updated.'
+        redirect_to tickets_path :msponsor_id => @ticket.owner_id, notice: (I18n.t :act_update)
       end
       if @ticket.owner_type == "Mobject"
-        redirect_to mobject_path(:id => @ticket.owner_id, :topic => "Eintrittskarten"), notice: 'Ticket was successfully updated.'
+        redirect_to mobject_path(:id => @ticket.owner_id, :topic => "Eintrittskarten"), notice: (I18n.t :act_update)
       end
     else
       render :edit
@@ -92,10 +92,10 @@ class TicketsController < ApplicationController
     end
     @ticket.destroy
     if @msponsor_id
-      redirect_to tickets_path :msponsor_id => @msponsor_id, notice: 'Ticket was successfully destroyed.'
+      redirect_to tickets_path :msponsor_id => @msponsor_id, notice: (I18n.t :act_delete)
     end
     if @mobject_id
-      redirect_to mobject_path(:id => @mobject_id, :topic => "Eintrittskarten"), notice: 'Ticket was successfully destroyed.'
+      redirect_to mobject_path(:id => @mobject_id, :topic => "Eintrittskarten"), notice: (I18n.t :act_delete)
     end
   end
 

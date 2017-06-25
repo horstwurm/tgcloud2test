@@ -84,7 +84,7 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(appointment_params)
     if @appointment.save
-      redirect_to user_path(:id => @appointment.user_id1, :topic => "Kalendereintraege"), notice: 'Appointment was successfully created.'
+      redirect_to user_path(:id => @appointment.user_id1, :topic => "Kalendereintraege"), notice: (I18n.t act_create)
     else
       render :new
     end
@@ -94,7 +94,7 @@ class AppointmentsController < ApplicationController
   def update
     @appointment.subject = @appointment.subject + params[:time_from].to_s
     if @appointment.update(appointment_params)
-      redirect_to user_path(:id => @appointment.user_id1, :topic => "Kalendereintraege"), notice: 'Appointment was successfully updated.'
+      redirect_to user_path(:id => @appointment.user_id1, :topic => "Kalendereintraege"), notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -104,7 +104,7 @@ class AppointmentsController < ApplicationController
   def destroy
     @usersave = @appointment.user_id1
     @appointment.destroy
-    redirect_to user_path(:id => @usersave, :topic => "Kalendereintraege"), notice: 'Appointment was successfully destroyed.'
+    redirect_to user_path(:id => @usersave, :topic => "Kalendereintraege"), notice: (I18n.t ::act_delete)
   end
 
   private

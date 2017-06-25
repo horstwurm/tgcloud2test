@@ -34,7 +34,7 @@ class IdeaCrowdratingsController < ApplicationController
 
     respond_to do |format|
       if @idea_crowdrating.save
-        format.html { redirect_to idea_crowdratings_path(:idea_id => @idea_crowdrating.idea_id), notice: 'Idea crowdrating was successfully created.' }
+        format.html { redirect_to idea_crowdratings_path(:idea_id => @idea_crowdrating.idea_id), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @idea_crowdrating }
       else
         format.html { render :new }
@@ -48,7 +48,7 @@ class IdeaCrowdratingsController < ApplicationController
   def update
     respond_to do |format|
       if @idea_crowdrating.update(idea_crowdrating_params)
-        format.html { redirect_to idea_crowdratings_path(:idea_id => @idea_crowdrating.idea_id), notice: 'Idea crowdrating was successfully updated.' }
+        format.html { redirect_to idea_crowdratings_path(:idea_id => @idea_crowdrating.idea_id), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @idea_crowdrating }
       else
         format.html { render :edit }
@@ -63,7 +63,7 @@ class IdeaCrowdratingsController < ApplicationController
     @idea_crowdrating_idea_id = @idea_crowdrating.idea_id
     @idea_crowdrating.destroy
     respond_to do |format|
-      format.html { redirect_to idea_crowdratings_path(:idea_id => @idea_crowdrating_idea_id), notice: 'Idea crowdrating was successfully destroyed.' }
+      format.html { redirect_to idea_crowdratings_path(:idea_id => @idea_crowdrating_idea_id), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

@@ -29,7 +29,7 @@ class IdeaRatingsController < ApplicationController
 
     respond_to do |format|
       if @idea_rating.save
-        format.html { redirect_to @idea_rating, notice: 'Idea rating was successfully created.' }
+        format.html { redirect_to @idea_rating, notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @idea_rating }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class IdeaRatingsController < ApplicationController
   def update
     respond_to do |format|
       if @idea_rating.update(idea_rating_params)
-        format.html { redirect_to idea_ratings_path(:idea_id => @idea_rating.idea_id), notice: 'Idea rating was successfully updated.' }
+        format.html { redirect_to idea_ratings_path(:idea_id => @idea_rating.idea_id), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @idea_rating }
         calc_idea_rating
       else
@@ -58,7 +58,7 @@ class IdeaRatingsController < ApplicationController
   def destroy
     @idea_rating.destroy
     respond_to do |format|
-      format.html { redirect_to idea_ratings_url, notice: 'Idea rating was successfully destroyed.' }
+      format.html { redirect_to idea_ratings_url, notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

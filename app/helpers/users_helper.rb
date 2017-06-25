@@ -1570,17 +1570,17 @@ def action_buttons2(object_type, item, topic)
             end
             if $activeapps.include?("PrivatpersonenTransaktionen") or current_user.superuser
               html_string = html_string + link_to(listaccount_index_path(:user_id => current_user.id, :user_id_ver => item.id, :company_id_ver => nil, :ref => (I18n.t :verguetungan)+item.name + " " + item.lastname, :object_name => "User", :object_id => item.id, :amount => nil)) do
-                content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
+                content_tag(:i, content_tag(:b, (I18n.t :TRXhinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
               end
             end
             if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen)") or current_user.superuser
               html_string = html_string + link_to(new_user_position_path(:user_id => current_user.id)) do
-                content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
+                content_tag(:i, content_tag(:b, (I18n.t :POShinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
               end
             end
             if $activeapps.include?("PrivatpersonenFavoriten") or current_user.superuser
               html_string = html_string + link_to(new_favourit_path(:object_name => "User", :object_id => item.id, :user_id => current_user.id)) do
-                content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
+                content_tag(:i, content_tag(:b, (I18n.t :FAVhinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
               end
             end
           end
@@ -1684,7 +1684,7 @@ def action_buttons2(object_type, item, topic)
                end
              end 
              if item.parent and item.parent > 0 
-                html_string = html_string + link_to(mobject_path(:id => item.parent, :mtype => "projekte", :msubtype => nil, :topic => "Substruktur"), title: (I18n.t :hierachiezurueck), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+                html_string = html_string + link_to(mobject_path(:id => item.parent, :mtype => "projekte", :msubtype => nil, :topic => :subs), title: (I18n.t :hierachiezurueck), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
                   content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-level-up")
                 end
              end 

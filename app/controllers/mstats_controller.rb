@@ -38,7 +38,7 @@ class MstatsController < ApplicationController
   def create
     @mstat = Mstat.new(mstat_params)
     if @mstat.save
-      redirect_to mobject_path(:id => @mstat.mobject_id, :topic => "CF Transaktionen"), notice: 'Mstat was successfully created.'
+      redirect_to mobject_path(:id => @mstat.mobject_id, :topic => "CF Transaktionen"), notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -47,7 +47,7 @@ class MstatsController < ApplicationController
   # PUT /mstats/1
   def update
     if @mstat.update(mstat_params)
-      redirect_to mobject_path(:id => @mstat.mobject_id, :topic => "CF Transaktionen"), notice: 'Mstat was successfully updated.'
+      redirect_to mobject_path(:id => @mstat.mobject_id, :topic => "CF Transaktionen"), notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -57,7 +57,7 @@ class MstatsController < ApplicationController
   def destroy
     @id = @mstat.mobject_id
     @mstat.destroy
-    redirect_to mobject_path(:id => @id, :topic => "CF Transaktionen"), notice: 'Mstat was successfully destroyed.'
+    redirect_to mobject_path(:id => @id, :topic => "CF Transaktionen"), notice: (I18n.t :act_delete)
   end
 
   private

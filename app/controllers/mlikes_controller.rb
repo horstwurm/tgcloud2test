@@ -19,7 +19,7 @@ class MlikesController < ApplicationController
     @mlike.user_id = params[:user_id]
     @mlike.likeit = params[:like]
     @mlike.save
-    redirect_to mobject_path(:id => @mlike.mobject_id, :topic => "Info"), notice: 'Mlike was successfully created.'
+    redirect_to mobject_path(:id => @mlike.mobject_id, :topic => "Info"), notice: (I18n.t :act_create)
 end
 
   # GET /mlikes/1/edit
@@ -33,7 +33,7 @@ end
 
     respond_to do |format|
       if @mlike.save
-        format.html { redirect_to mobject_path(:id => @mlike.mobject_id, :topic => "Info"), notice: 'Mlike was successfully created.' }
+        format.html { redirect_to mobject_path(:id => @mlike.mobject_id, :topic => "Info"), (I18n.t :act_update) }
         format.json { render :show, status: :created, location: @mlike }
       else
         format.html { render :new }
@@ -47,7 +47,7 @@ end
   def update
     respond_to do |format|
       if @mlike.update(mlike_params)
-        format.html { redirect_to mobject_path(:id => @mlike.mobject_id, :topic => "Info"), notice: 'Mlike was successfully updated.' }
+        format.html { redirect_to mobject_path(:id => @mlike.mobject_id, :topic => "Info"), notice: (I18n.t :act_delete) }
         format.json { render :show, status: :ok, location: @mlike }
       else
         format.html { render :edit }

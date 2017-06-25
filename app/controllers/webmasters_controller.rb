@@ -32,7 +32,7 @@ class WebmastersController < ApplicationController
     @webmaster.status = "CHECK"
     if @webmaster.save
       item = Object.const_get(@webmaster.object_name).find(@webmaster.object_id)
-      redirect_to item, :topic => "Info", notice: 'Webmaster was successfully updated.'
+      redirect_to item, :topic => "Info", notice: (I18n.t :act_create)
       # webmasters_path, notice: 'Webmaster was successfully created.'
     else
       render :new
@@ -62,7 +62,7 @@ class WebmastersController < ApplicationController
         end
     end 
     if @webmaster.update(webmaster_params)
-      redirect_to webmasters_path, notice: 'Webmaster was successfully updated.'
+      redirect_to webmasters_path, notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -71,7 +71,7 @@ class WebmastersController < ApplicationController
   # DELETE /webmasters/1
   def destroy
     @webmaster.destroy
-    redirect_to webmasters_path, notice: 'Webmaster was successfully destroyed.'
+    redirect_to webmasters_path, notice: (I18n.t :act_delete)
   end
 
   private

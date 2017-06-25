@@ -457,7 +457,7 @@ class MobjectsController < ApplicationController
     @mobject = Mobject.new(mobject_params)
 
     if @mobject.save
-      redirect_to @mobject, notice: (I18n.t :erfolgreichgespeichert)
+      redirect_to @mobject, notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -466,7 +466,7 @@ class MobjectsController < ApplicationController
   # PUT /mobjects/1
   def update
     if @mobject.update(mobject_params)
-      redirect_to @mobject, notice: (I18n.t :erfolgreichgeaendert)
+      redirect_to @mobject, notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -480,9 +480,9 @@ class MobjectsController < ApplicationController
     @msubtype = @mobject.msubtype
     @mobject.destroy
     if @ownertype == "User"
-      redirect_to user_path(:id => @ownerid), notice: (I18n.t :erfolgreichgeloescht)
+      redirect_to user_path(:id => @ownerid), notice: (I18n.t :act_delete)
     else
-      redirect_to company_path(:id => @ownerid), notice: (I18n.t :erfolgreichgeloescht)
+      redirect_to company_path(:id => @ownerid), notice: (I18n.t :act_delete)
     end
   end
 

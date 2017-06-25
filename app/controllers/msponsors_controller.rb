@@ -32,7 +32,7 @@ class MsponsorsController < ApplicationController
     @msponsor = Msponsor.new(msponsor_params)
 
     if @msponsor.save
-      redirect_to mobject_path(:id => @msponsor.mobject_id, :topic => "Sponsorenengagements"), notice: 'Sponsor was successfully created.'
+      redirect_to mobject_path(:id => @msponsor.mobject_id, :topic => "Sponsorenengagements"), notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -41,7 +41,7 @@ class MsponsorsController < ApplicationController
   # PUT /sponsors/1
   def update
     if @msponsor.update(msponsor_params)
-      redirect_to mobject_path(:id => @msponsor.mobject_id, :topic => "Sponsorenengagements"), notice: 'Sponsor was successfully created.'
+      redirect_to mobject_path(:id => @msponsor.mobject_id, :topic => "Sponsorenengagements"), notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -51,7 +51,7 @@ class MsponsorsController < ApplicationController
   def destroy
     @id = @msponsor.mobject_id
     @msponsor.destroy
-    redirect_to mobject_path(:id => @id, :topic => "Sponsorenengagements"), notice: 'Sponsor was successfully destroyed.'
+    redirect_to mobject_path(:id => @id, :topic => "Sponsorenengagements"), notice: (I18n.t :act_delete)
   end
 
   private

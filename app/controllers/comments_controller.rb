@@ -35,7 +35,7 @@ class CommentsController < ApplicationController
         else
           @topic = "Blog"
         end
-        format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => @topic), notice: 'Comment was successfully created.' }
+        format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => @topic), notice: (I18n.t act_create) }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
@@ -54,7 +54,7 @@ class CommentsController < ApplicationController
         else
           @topic = "Blog"
         end
-        format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => @topic), notice: 'Comment was successfully updated.' }
+        format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => @topic), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
@@ -74,7 +74,7 @@ class CommentsController < ApplicationController
     end
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => @topic), notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => @topic), notice: (I18n.t ::act_delete) }
       format.json { head :no_content }
     end
   end

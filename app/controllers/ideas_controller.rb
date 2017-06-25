@@ -32,7 +32,7 @@ class IdeasController < ApplicationController
 
     respond_to do |format|
       if @idea.save
-        format.html { redirect_to mobject_path(:id => @idea.mobject_id, :topic => "Ideen"), notice: 'Idea was successfully created.' }
+        format.html { redirect_to mobject_path(:id => @idea.mobject_id, :topic => "Ideen"), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @idea }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class IdeasController < ApplicationController
   def update
     respond_to do |format|
       if @idea.update(idea_params)
-        format.html { redirect_to mobject_path(:id => @idea.mobject_id, :topic => "Ideen"), notice: 'Idea was successfully updated.' }
+        format.html { redirect_to mobject_path(:id => @idea.mobject_id, :topic => "Ideen"), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @idea }
       else
         format.html { render :edit }
@@ -61,7 +61,7 @@ class IdeasController < ApplicationController
     @idea_mobject_id = @idea.mobject_id
     @idea.destroy
     respond_to do |format|
-      format.html { redirect_to mobject_path(:id => @idea_mobject_id, :topic => "Ideen"), notice: 'Idea was successfully destroyed.' }
+      format.html { redirect_to mobject_path(:id => @idea_mobject_id, :topic => "Ideen"), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

@@ -159,7 +159,7 @@ class SignageLocsController < ApplicationController
 
     respond_to do |format|
       if @signage_loc.save
-        format.html { redirect_to signage_loc_path(:id => @signage_loc.id, :topic => "Details"), notice: 'Signage loc was successfully created.' }
+        format.html { redirect_to signage_loc_path(:id => @signage_loc.id, :topic => "Details"), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @signage_loc }
       else
         format.html { render :new }
@@ -173,7 +173,7 @@ class SignageLocsController < ApplicationController
   def update
     respond_to do |format|
       if @signage_loc.update(signage_loc_params)
-        format.html { redirect_to signage_loc(:id => @signage_loc.id, :topic => "Details"), notice: 'Signage loc was successfully updated.' }
+        format.html { redirect_to signage_loc(:id => @signage_loc.id, :topic => "Details"), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @signage_loc }
       else
         format.html { render :edit }
@@ -188,7 +188,7 @@ class SignageLocsController < ApplicationController
     @owner_id = @signage_loc.id
     @signage_loc.destroy
     respond_to do |format|
-      format.html { redirect_to signage_loc_path(:id => @owner_id, :topic => "Details"), notice: 'Signage loc was successfully destroyed.' }
+      format.html { redirect_to signage_loc_path(:id => @owner_id, :topic => "Details"), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

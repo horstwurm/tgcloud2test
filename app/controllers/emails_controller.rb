@@ -29,7 +29,7 @@ class EmailsController < ApplicationController
   def create
     @email = Email.new(email_params)
     if @email.save
-      redirect_to user_path(:id => @email.m_from, :topic => "Email"), notice: 'Email was successfully created.'
+      redirect_to user_path(:id => @email.m_from, :topic => "Email"), notice: (I18n.t act_create)
     else
       render :new
     end
@@ -38,7 +38,7 @@ class EmailsController < ApplicationController
   # PUT /emails/1
   def update
     if @email.update(email_params)
-      redirect_to user_path(:id => @email.m_from, :topic => "Email"), notice: 'Email was successfully updated.'
+      redirect_to user_path(:id => @email.m_from, :topic => "Email"), notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -48,7 +48,7 @@ class EmailsController < ApplicationController
   def destroy
     @id = @email.m_from
     @email.destroy
-    redirect_to user_path(:id => @id, :topic => "Email"), notice: 'Email was successfully created.'
+    redirect_to user_path(:id => @id, :topic => "Email"), notice: (I18n.t ::act_delete)
   end
 
   private

@@ -34,7 +34,7 @@ end
 
     respond_to do |format|
       if @edition_arcticle.save
-        format.html { redirect_to edition_arcticles_path(:edition_id => @edition_arcticle.edition_id), notice: 'Edition arcticle was successfully created.' }
+        format.html { redirect_to edition_arcticles_path(:edition_id => @edition_arcticle.edition_id), notice: (I18n.t act_create) }
         format.json { render :show, status: :created, location: @edition_arcticle }
       else
         format.html { render :new }
@@ -48,7 +48,7 @@ end
   def update
     respond_to do |format|
       if @edition_arcticle.update(edition_arcticle_params)
-        format.html { redirect_to edition_arcticles_path(:edition_id => @edition_arcticle.edition_id), notice: 'Edition arcticle was successfully updated.' }
+        format.html { redirect_to edition_arcticles_path(:edition_id => @edition_arcticle.edition_id), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @edition_arcticle }
       else
         format.html { render :edit }
@@ -63,7 +63,7 @@ end
     @edition_id = @edition_arcticle.edition_id
     @edition_arcticle.destroy
     respond_to do |format|
-      format.html { redirect_to edition_arcticles_path(:edition_id => @edition_id), notice: 'Edition arcticle was successfully destroyed.' }
+      format.html { redirect_to edition_arcticles_path(:edition_id => @edition_id), notice: (I18n.t ::act_delete) }
       format.json { head :no_content }
     end
   end

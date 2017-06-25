@@ -90,7 +90,7 @@ class SignageCalsController < ApplicationController
 
     respond_to do |format|
       if @signage_cal.save
-        format.html { redirect_to signage_camp_path(:id => @signage_cal.signage_camp_id, :topic => "Kalender"), notice: 'Signage cal was successfully created.' }
+        format.html { redirect_to signage_camp_path(:id => @signage_cal.signage_camp_id, :topic => "Kalender"), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @signage_cal }
       else
         format.html { render :new }
@@ -104,7 +104,7 @@ class SignageCalsController < ApplicationController
   def update
     respond_to do |format|
       if @signage_cal.update(signage_cal_params)
-        format.html { redirect_to signage_camp_path(:id => @signage_cal.signage_camp_id, :topic => "Kalender"), notice: 'Signage cal was successfully updated.' }
+        format.html { redirect_to signage_camp_path(:id => @signage_cal.signage_camp_id, :topic => "Kalender"), notice: (I18n.t :act_update)}
         format.json { render :show, status: :ok, location: @signage_cal }
       else
         format.html { render :edit }
@@ -119,7 +119,7 @@ class SignageCalsController < ApplicationController
     @signage_camp_id = @signage_cal.signage_camp_id
     @signage_cal.destroy
     respond_to do |format|
-      format.html { redirect_to signage_camp_path(:id => @signage_camp_id, :topic => "Kalender"), notice: 'Signage cal was successfully destroyed.' }
+      format.html { redirect_to signage_camp_path(:id => @signage_camp_id, :topic => "Kalender"), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

@@ -39,7 +39,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to mobject_path(:id => @question.mobject, :topic => "Fragen"), notice: 'Question was successfully created.' }
+        format.html { redirect_to mobject_path(:id => @question.mobject, :topic => "Fragen"), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @question }
       else
         format.html { render :new }
@@ -53,7 +53,7 @@ class QuestionsController < ApplicationController
   def update
     respond_to do |format|
       if @question.update(question_params)
-        format.html { redirect_to mobject_path(:id => @question.mobject, :topic => "Fragen"), notice: 'Question was successfully updated.' }
+        format.html { redirect_to mobject_path(:id => @question.mobject, :topic => "Fragen"), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @question }
       else
         format.html { render :edit }
@@ -68,7 +68,7 @@ class QuestionsController < ApplicationController
     @question_mobject_id = @question.mobject_id
     @question.destroy
     respond_to do |format|
-      format.html { redirect_to mobject_path(:id => @question_mobject_id, :topic => "Fragen"), notice: 'Question was successfully destroyed.' }
+      format.html { redirect_to mobject_path(:id => @question_mobject_id, :topic => "Fragen"), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

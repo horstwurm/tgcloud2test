@@ -31,7 +31,7 @@ class SignagesController < ApplicationController
 
     respond_to do |format|
       if @signage.save
-        format.html { redirect_to signage_camp_path(:id => @signage.signage_camp_id, :topic => "Details"), notice: 'Signage was successfully created.' }
+        format.html { redirect_to signage_camp_path(:id => @signage.signage_camp_id, :topic => "Details"), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @signage }
       else
         format.html { render :new }
@@ -45,7 +45,7 @@ class SignagesController < ApplicationController
   def update
     respond_to do |format|
       if @signage.update(signage_params)
-        format.html { redirect_to signage_camp_path(:id => @signage.signage_camp_id, :topic => "Details"), notice: 'Signage was successfully updated.' }
+        format.html { redirect_to signage_camp_path(:id => @signage.signage_camp_id, :topic => "Details"), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @signage }
       else
         format.html { render :edit }
@@ -60,7 +60,7 @@ class SignagesController < ApplicationController
     @signage_camp_id = @signage.signage_camp_id
     @signage.destroy
     respond_to do |format|
-      format.html { redirect_to signage_camp_path(:id => @signage_camp_id, :topic => "Details"), notice: 'Signage was successfully destroyed.' }
+      format.html { redirect_to signage_camp_path(:id => @signage_camp_id, :topic => "Details"), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

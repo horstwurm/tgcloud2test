@@ -60,6 +60,8 @@ de:
   antworten: "Antworten"
   kosten: "Kosten"
   aufwand: "Aufwand"
+  plankosten: "Budget Kosten"
+  planaufwand: "Budget Personentage"
   objekte: "Informationen"
   status: "Status"
   adresse: "Adresse"
@@ -76,6 +78,8 @@ de:
   details: "Zusatzinformationen"
   branche: "Branche"
   verantwortlich: "verantwortlich"
+  substruktur: "Teilprojekte, Unteraufträge"
+  hierachiezurueck: "eine Hierachiestufe nach oben"
   #dokument: "Dokument"
   notsaved: " Fehler - Datenssatz konnte nicht gespeichert werden"
   # Form User
@@ -139,7 +143,11 @@ de:
   anmelden: "Anmelden"
   registrieren: "Registrieren"
   hinzufuegen: "Neu"
+  TRXhinzufuegen: "Transaktion"
+  POShinzufuegen: "Standort"
+  FAVhinzufuegen: "Favorit"
   speichern: "Speichern"
+  bearbeiten: "Bearbeiten"
   
   #footer
   nutzungsbedingungen: "Nutzungsbedingungen"
@@ -163,5 +171,5 @@ de:
   tgcloudsoft: "tgcloudsoft AG"
   
   act_create: "Information gespeichert!"
-  act_create: "Information geändert!"  
-  act_create: "Information gelöscht!"
+  act_update: "Information geändert!"  
+  act_delete: "Information gelöscht!"

@@ -111,7 +111,7 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(transaction_params)
     if @transaction.save
       if @transaction.owner_type == "User" 
-        redirect_to user_path(:id => @transaction.owner_id, :topic => "Transaktionen"), notice: 'Trx was successfully created.'
+        redirect_to user_path(:id => @transaction.owner_id, :topic => "Transaktionen"), notice: (I18n.t :act_create)
       else
         redirect_to company_path(:id => @transaction.owner_id, :topic => "Transaktionen"), notice: 'Trx was successfully created.'
       end
@@ -124,9 +124,9 @@ class TransactionsController < ApplicationController
   def update
     if @transaction.update(transaction_params)
       if @transaction.owner_type == "User" 
-        redirect_to user_path(:id => @transaction.owner_id, :topic => "Transaktionen"), notice: 'Trx was successfully updated.'
+        redirect_to user_path(:id => @transaction.owner_id, :topic => "Transaktionen"), notice: (I18n.t :act_update)
       else
-        redirect_to company_path(:id => @transaction.owner_id, :topic => "Transaktionen"), notice: 'Trx was successfully updated.'
+        redirect_to company_path(:id => @transaction.owner_id, :topic => "Transaktionen"), notice: (I18n.t :act_update)
       end
     end
   end
@@ -137,10 +137,10 @@ class TransactionsController < ApplicationController
     @owner_type = @transaction.owner_type
     @transaction.destroy
     if @owner_type == "User"
-      redirect_to user_path(:id => @owner_id, :topic => "Transaktionen"), notice: 'Customer was successfully created.'
+      redirect_to user_path(:id => @owner_id, :topic => "Transaktionen"), notice: (I18n.t :act_delete)
     end
     if @owner_type == "Company"
-      redirect_to company_path(:id => @owner_id, :topic => "Transaktionen"), notice: 'Customer was successfully created.'
+      redirect_to company_path(:id => @owner_id, :topic => "Transaktionen"), notice: (I18n.t :act_delete)
     end
   end
 
