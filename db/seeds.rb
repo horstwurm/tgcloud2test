@@ -8,138 +8,141 @@
 
 path=File.join(Rails.root, "/app/assets/images/")
 
-#OBJECT Branchen 1..28
-mcategories = Mcategory.create({ctype:"Branche", name:"Bau- und Erdarbeiten"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Dachdeckerarbeiten"})
-mcategories = Mcategory.create({ctype:"Branche", name:"EDV Telekommunikation"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Elektrikarbeiten"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Entsorgung"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Fenster, Türen, Glas"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Fliesen und Platten"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Garten und Landschaft"})
-mcategories = Mcategory.create({ctype:"Branche", name:"KFZ, Motorrad, Boote"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Maler & Lackierer"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Maurer, Beton, Estrich"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Metallbau, Verarbeitung"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Parkettböden, Teppichböden"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Planung & Beratung"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Putz & Stuck"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Raumausstatter"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Sonstige Dienstleistungen"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Sonstige Handwerkerleistungen"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Treppen- & Innenausbau"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Umzüge, Transporte"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Wege- & Pflasterarbeiten"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Werbung, Druck, Schilder"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Zimmer, Holz, Tischler"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Essen Catering Lebensmittel"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Bund Kanton Gemeinden"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Vereine"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Einzelhandel"})
-mcategories = Mcategory.create({ctype:"Branche", name:"Finanzdienstleistungen"})
+#OBJECT branchen 1..28
+mcategories = Mcategory.create({ctype:"branche", name:"Bau- und Erdarbeiten"})
+mcategories = Mcategory.create({ctype:"branche", name:"Dachdeckerarbeiten"})
+mcategories = Mcategory.create({ctype:"branche", name:"EDV Telekommunikation"})
+mcategories = Mcategory.create({ctype:"branche", name:"Elektrikarbeiten"})
+mcategories = Mcategory.create({ctype:"branche", name:"Entsorgung"})
+mcategories = Mcategory.create({ctype:"branche", name:"Fenster, Türen, Glas"})
+mcategories = Mcategory.create({ctype:"branche", name:"Fliesen und Platten"})
+mcategories = Mcategory.create({ctype:"branche", name:"Garten und Landschaft"})
+mcategories = Mcategory.create({ctype:"branche", name:"KFZ, Motorrad, Boote"})
+mcategories = Mcategory.create({ctype:"branche", name:"Maler & Lackierer"})
+mcategories = Mcategory.create({ctype:"branche", name:"Maurer, Beton, Estrich"})
+mcategories = Mcategory.create({ctype:"branche", name:"Metallbau, Verarbeitung"})
+mcategories = Mcategory.create({ctype:"branche", name:"Parkettböden, Teppichböden"})
+mcategories = Mcategory.create({ctype:"branche", name:"Planung & Beratung"})
+mcategories = Mcategory.create({ctype:"branche", name:"Putz & Stuck"})
+mcategories = Mcategory.create({ctype:"branche", name:"Raumausstatter"})
+mcategories = Mcategory.create({ctype:"branche", name:"Sonstige Dienstleistungen"})
+mcategories = Mcategory.create({ctype:"branche", name:"Sonstige Handwerkerleistungen"})
+mcategories = Mcategory.create({ctype:"branche", name:"Treppen- & Innenausbau"})
+mcategories = Mcategory.create({ctype:"branche", name:"Umzüge, Transporte"})
+mcategories = Mcategory.create({ctype:"branche", name:"Wege- & Pflasterarbeiten"})
+mcategories = Mcategory.create({ctype:"branche", name:"Werbung, Druck, Schilder"})
+mcategories = Mcategory.create({ctype:"branche", name:"Zimmer, Holz, Tischler"})
+mcategories = Mcategory.create({ctype:"branche", name:"Essen Catering Lebensmittel"})
+mcategories = Mcategory.create({ctype:"branche", name:"Bund Kanton Gemeinden"})
+mcategories = Mcategory.create({ctype:"branche", name:"Vereine"})
+mcategories = Mcategory.create({ctype:"branche", name:"Einzelhandel"})
+mcategories = Mcategory.create({ctype:"branche", name:"Finanzdienstleistungen"})
     
 #create Aktionen & Angebote 29 30
 mcategories = Mcategory.create({ctype:"Angebote", name:"Standard"})
 mcategories = Mcategory.create({ctype:"Angebote", name:"Aktion"})
 
-#OBJECT Vermietungen 31..41
-mcategories = Mcategory.create({ctype:"Vermietungen", name:"Personentransport"})
-mcategories = Mcategory.create({ctype:"Vermietungen", name:"Gütertransport"})
-mcategories = Mcategory.create({ctype:"Vermietungen", name:"Werkzeuge"})
-mcategories = Mcategory.create({ctype:"Vermietungen", name:"Gartengeräte"})
-mcategories = Mcategory.create({ctype:"Vermietungen", name:"Elektronik"})
-mcategories = Mcategory.create({ctype:"Vermietungen", name:"Sportgeräte"})
-mcategories = Mcategory.create({ctype:"Vermietungen", name:"Event-Attraktionen"})
-mcategories = Mcategory.create({ctype:"Vermietungen", name:"Computer"})
-mcategories = Mcategory.create({ctype:"Vermietungen", name:"Catering"})
-mcategories = Mcategory.create({ctype:"Vermietungen", name:"Tiere"})
+#OBJECT vermietungen 31..41
+mcategories = Mcategory.create({ctype:"vermietungen", name:"Personentransport"})
+mcategories = Mcategory.create({ctype:"vermietungen", name:"Gütertransport"})
+mcategories = Mcategory.create({ctype:"vermietungen", name:"Werkzeuge"})
+mcategories = Mcategory.create({ctype:"vermietungen", name:"Gartengeräte"})
+mcategories = Mcategory.create({ctype:"vermietungen", name:"Elektronik"})
+mcategories = Mcategory.create({ctype:"vermietungen", name:"Sportgeräte"})
+mcategories = Mcategory.create({ctype:"vermietungen", name:"Event-Attraktionen"})
+mcategories = Mcategory.create({ctype:"vermietungen", name:"Computer"})
+mcategories = Mcategory.create({ctype:"vermietungen", name:"Catering"})
+mcategories = Mcategory.create({ctype:"vermietungen", name:"Tiere"})
 
 #OBJECT Veranstaltung 42..49
-mcategories = Mcategory.create({ctype:"Veranstaltungen", name:"Ausstellung"})
-mcategories = Mcategory.create({ctype:"Veranstaltungen", name:"Sportanlass"})
-mcategories = Mcategory.create({ctype:"Veranstaltungen", name:"Konzert"})
-mcategories = Mcategory.create({ctype:"Veranstaltungen", name:"Vortrag"})
-mcategories = Mcategory.create({ctype:"Veranstaltungen", name:"Festwirtschaft"})
-mcategories = Mcategory.create({ctype:"Veranstaltungen", name:"Informationsveranstaltung"})
-mcategories = Mcategory.create({ctype:"Veranstaltungen", name:"Jubiläum"})
-mcategories = Mcategory.create({ctype:"Veranstaltungen", name:"Flohmarkt"})
+mcategories = Mcategory.create({ctype:"veranstaltungen", name:"Ausstellung"})
+mcategories = Mcategory.create({ctype:"veranstaltungen", name:"Sportanlass"})
+mcategories = Mcategory.create({ctype:"veranstaltungen", name:"Konzert"})
+mcategories = Mcategory.create({ctype:"veranstaltungen", name:"Vortrag"})
+mcategories = Mcategory.create({ctype:"veranstaltungen", name:"Festwirtschaft"})
+mcategories = Mcategory.create({ctype:"veranstaltungen", name:"Informationsveranstaltung"})
+mcategories = Mcategory.create({ctype:"veranstaltungen", name:"Jubiläum"})
+mcategories = Mcategory.create({ctype:"veranstaltungen", name:"Flohmarkt"})
 
-#OBJECT Ausflugsziele 50..56
-mcategories = Mcategory.create({ctype:"Ausflugsziele", name:"Ausstellung"})
-mcategories = Mcategory.create({ctype:"Ausflugsziele", name:"Landschaften"})
-mcategories = Mcategory.create({ctype:"Ausflugsziele", name:"Historische Gebäude"})
-mcategories = Mcategory.create({ctype:"Ausflugsziele", name:"Sportstätten"})
-mcategories = Mcategory.create({ctype:"Ausflugsziele", name:"Freizeitparks"})
-mcategories = Mcategory.create({ctype:"Ausflugsziele", name:"Bäder und Spa"})
-mcategories = Mcategory.create({ctype:"Ausflugsziele", name:"Seen und Gewässer"})
+#OBJECT ausflugsziele 50..56
+mcategories = Mcategory.create({ctype:"ausflugsziele", name:"Ausstellung"})
+mcategories = Mcategory.create({ctype:"ausflugsziele", name:"Landschaften"})
+mcategories = Mcategory.create({ctype:"ausflugsziele", name:"Historische Gebäude"})
+mcategories = Mcategory.create({ctype:"ausflugsziele", name:"Sportstätten"})
+mcategories = Mcategory.create({ctype:"ausflugsziele", name:"Freizeitparks"})
+mcategories = Mcategory.create({ctype:"ausflugsziele", name:"Bäder und Spa"})
+mcategories = Mcategory.create({ctype:"ausflugsziele", name:"Seen und Gewässer"})
     
-#OBJECT Kleinanzeigen 57..66
-mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Sportgeräte"})
-mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Antiquitäten"})
-mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Spielzeuge"})
-mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Musikinstrumente"})
-mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Unterhaltungselektronik"})
-mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Haushaltsgeräte"})
-mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Gartengeräte"})
-mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"KFZ und Motorrad"})
-mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Tiere"})
-mcategories = Mcategory.create({ctype:"Kleinanzeigen", name:"Dienstleistungen"})
+#OBJECT kleinanzeigen 57..66
+mcategories = Mcategory.create({ctype:"kleinanzeigen", name:"Sportgeräte"})
+mcategories = Mcategory.create({ctype:"kleinanzeigen", name:"Antiquitäten"})
+mcategories = Mcategory.create({ctype:"kleinanzeigen", name:"Spielzeuge"})
+mcategories = Mcategory.create({ctype:"kleinanzeigen", name:"Musikinstrumente"})
+mcategories = Mcategory.create({ctype:"kleinanzeigen", name:"Unterhaltungselektronik"})
+mcategories = Mcategory.create({ctype:"kleinanzeigen", name:"Haushaltsgeräte"})
+mcategories = Mcategory.create({ctype:"kleinanzeigen", name:"Gartengeräte"})
+mcategories = Mcategory.create({ctype:"kleinanzeigen", name:"KFZ und Motorrad"})
+mcategories = Mcategory.create({ctype:"kleinanzeigen", name:"Tiere"})
+mcategories = Mcategory.create({ctype:"kleinanzeigen", name:"Dienstleistungen"})
 
-mcategories = Mcategory.create({ctype:"Crowdfunding", name:"Crowdfunding"})
+mcategories = Mcategory.create({ctype:"crowdfunding", name:"crowdfunding"})
 
 #create ticket categories 68..70
-mcategories = Mcategory.create({ctype:"Ticket", name:"Eintritt"})
-mcategories = Mcategory.create({ctype:"Ticket", name:"Gutschein"})
-mcategories = Mcategory.create({ctype:"Ticket", name:"Rabatt"})
+mcategories = Mcategory.create({ctype:"ticket", name:"Eintritt"})
+mcategories = Mcategory.create({ctype:"ticket", name:"Gutschein"})
+mcategories = Mcategory.create({ctype:"ticket", name:"Rabatt"})
 
 #create ticket categories 71
-mcategories = Mcategory.create({ctype:"Event", name:"Ticket"})
+mcategories = Mcategory.create({ctype:"Event", name:"ticket"})
 
-#create Publikationen categories 72..76
-mcategories = Mcategory.create({ctype:"Publikationen", name:"Mitarbeiter Zeitung"})
-mcategories = Mcategory.create({ctype:"Publikationen", name:"Geschäftsbericht"})
-mcategories = Mcategory.create({ctype:"Publikationen", name:"Projektbericht"})
-mcategories = Mcategory.create({ctype:"Publikationen", name:"Information"})
-mcategories = Mcategory.create({ctype:"Publikationen", name:"Zeitschrift"})
-mcategories = Mcategory.create({ctype:"Publikationen", name:"Buch"})
+#create publikationen categories 72..76
+mcategories = Mcategory.create({ctype:"publikationen", name:"Mitarbeiter Zeitung"})
+mcategories = Mcategory.create({ctype:"publikationen", name:"Geschäftsbericht"})
+mcategories = Mcategory.create({ctype:"publikationen", name:"Projektbericht"})
+mcategories = Mcategory.create({ctype:"publikationen", name:"Information"})
+mcategories = Mcategory.create({ctype:"publikationen", name:"Zeitschrift"})
+mcategories = Mcategory.create({ctype:"publikationen", name:"Buch"})
 
-#create Artikel categories 77..84
-mcategories = Mcategory.create({ctype:"Artikel", name:"Organisation"})
-mcategories = Mcategory.create({ctype:"Artikel", name:"Hobby"})
-mcategories = Mcategory.create({ctype:"Artikel", name:"Persönliches"})
-mcategories = Mcategory.create({ctype:"Artikel", name:"Führung"})
-mcategories = Mcategory.create({ctype:"Artikel", name:"Soziales"})
-mcategories = Mcategory.create({ctype:"Artikel", name:"Sonstiges"})
-mcategories = Mcategory.create({ctype:"Artikel", name:"Ferien"})
-mcategories = Mcategory.create({ctype:"Artikel", name:"Geschäftsmodell"})
+#create artikel categories 77..84
+mcategories = Mcategory.create({ctype:"artikel", name:"Organisation"})
+mcategories = Mcategory.create({ctype:"artikel", name:"Hobby"})
+mcategories = Mcategory.create({ctype:"artikel", name:"Persönliches"})
+mcategories = Mcategory.create({ctype:"artikel", name:"Führung"})
+mcategories = Mcategory.create({ctype:"artikel", name:"Soziales"})
+mcategories = Mcategory.create({ctype:"artikel", name:"Sonstiges"})
+mcategories = Mcategory.create({ctype:"artikel", name:"Ferien"})
+mcategories = Mcategory.create({ctype:"artikel", name:"Geschäftsmodell"})
 
 #create Questionaire categories 85..88
-mcategories = Mcategory.create({ctype:"Umfragen", name:"Kundenzufriedenheitsumfrage"})
-mcategories = Mcategory.create({ctype:"Umfragen", name:"Interview"})
-mcategories = Mcategory.create({ctype:"Umfragen", name:"Abstimmung"})
-mcategories = Mcategory.create({ctype:"Umfragen", name:"Online Abstimmung"})
+mcategories = Mcategory.create({ctype:"umfragen", name:"Kundenzufriedenheitsumfrage"})
+mcategories = Mcategory.create({ctype:"umfragen", name:"Interview"})
+mcategories = Mcategory.create({ctype:"umfragen", name:"Abstimmung"})
+mcategories = Mcategory.create({ctype:"umfragen", name:"Online Abstimmung"})
 
 #create Question categories 89..92
-mcategories = Mcategory.create({ctype:"Fragetyp", name:"Text"})
-mcategories = Mcategory.create({ctype:"Fragetyp", name:"Numerisch"})
-mcategories = Mcategory.create({ctype:"Fragetyp", name:"Single"})
-mcategories = Mcategory.create({ctype:"Fragetyp", name:"Multiple"})
+mcategories = Mcategory.create({ctype:"fragetyp", name:"Text"})
+mcategories = Mcategory.create({ctype:"fragetyp", name:"Numerisch"})
+mcategories = Mcategory.create({ctype:"fragetyp", name:"Single"})
+mcategories = Mcategory.create({ctype:"fragetyp", name:"Multiple"})
 
 #create Question categories 96..103
-mcategories = Mcategory.create({ctype:"Projekte", name:"Business Projekte"})
-mcategories = Mcategory.create({ctype:"Projekte", name:"IT Projekte"})
-mcategories = Mcategory.create({ctype:"Projekte", name:"Strategie Projekte"})
-mcategories = Mcategory.create({ctype:"Projekte", name:"Programm"})
-mcategories = Mcategory.create({ctype:"Projekte", name:"Auftragsportfolio"})
-mcategories = Mcategory.create({ctype:"Projekte", name:"Projektportfolio"})
-mcategories = Mcategory.create({ctype:"Projekte", name:"Auftrag"})
-mcategories = Mcategory.create({ctype:"Projekte", name:"Administration"})
+mcategories = Mcategory.create({ctype:"projekte", name:"Business Projekte"})
+mcategories = Mcategory.create({ctype:"projekte", name:"IT Projekte"})
+mcategories = Mcategory.create({ctype:"projekte", name:"Strategie Projekte"})
+mcategories = Mcategory.create({ctype:"projekte", name:"Programm"})
+mcategories = Mcategory.create({ctype:"projekte", name:"Auftragsportfolio"})
+mcategories = Mcategory.create({ctype:"projekte", name:"Projektportfolio"})
+mcategories = Mcategory.create({ctype:"projekte", name:"Auftrag"})
+mcategories = Mcategory.create({ctype:"projekte", name:"Administration"})
 
 #create Question categories 104
-mcategories = Mcategory.create({ctype:"Gruppen", name:"Organisationseinheit"})
+mcategories = Mcategory.create({ctype:"gruppen", name:"Organisationseinheit"})
 
 #create Question categories 105
-mcategories = Mcategory.create({ctype:"Innovationswettbewerbe", name:"Innovationswettbewerb"})
+mcategories = Mcategory.create({ctype:"innovationswettbewerbe", name:"Innovationswettbewerb"})
+
+#create Question categories 106
+mcategories = Mcategory.create({ctype:"gruppen", name:"Gruppe (privat)"})
 
 #create some users...
 users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:"horst.wurm@bluewin.ch", password:"password", name:"Horst", lastname:"Wurm", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:true, webmaster:true, avatar:File.open(path+'horst.jpg', 'rb')})
@@ -212,7 +215,7 @@ for i in 0..60
     searches = Search.create({date_from: Date.today, date_to: Date.today, user_id: ura1, customer:false, status: "OK", keywords:"", age_from:0, age_to:0, social: false, controller: "user", search_domain: "Privatpersonen", mtype: "Privatpersonen", name: "Privatpersonen im Umkreis von "+dis.to_s + "km (mein Wohnort)", address1: user.address1, address2: user.address2, address3: user.address3, distance: dis})
 end
 
-#create some queries Branche
+#create some queries branche
 searches = Search.create({date_from: Date.today, date_to: Date.today, user_id: 1, customer:false, status: "OK", keywords:"", age_from:0, age_to:0, social: false, address1: user.address1, address2: user.address2, address3: user.address3, distance: dis, controller: "company", mtype: "Institutionen", search_domain: "Institutionen", name: "Suche nach Banken", mcategory_id:28})
 usanz = User.all.count-1
 random = Random.new(Time.new.to_i)
@@ -394,8 +397,8 @@ mobjects = Mobject.create({status:"OK", active:true, mtype:"Angebote", msubtype:
 @mob = Mobject.where('name=?', "Erben").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'erben.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Angebote", msubtype:"Standard", name:"Crowdfunding", date_from:Date.today, date_to:Date.today+5, owner_type:"Company", owner_id: comp.id, mcategory_id:29, address1: comp.address1, address2: comp.address2, address3: comp.address3})
-@mob = Mobject.where('name=?', "Crowdfunding").first
+mobjects = Mobject.create({status:"OK", active:true, mtype:"Angebote", msubtype:"Standard", name:"crowdfunding", date_from:Date.today, date_to:Date.today+5, owner_type:"Company", owner_id: comp.id, mcategory_id:29, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+@mob = Mobject.where('name=?', "crowdfunding").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'crowdfunding.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 #create Services for AWA
@@ -417,37 +420,37 @@ mobjects = Mobject.create({status:"OK", active:true, mtype:"Angebote", msubtype:
 @mob = Mobject.where('name=?', "AWA Service 4").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Kurzbezeichnung Detail... ", description:"dies ist die Beschreibung Detail... ", avatar:File.open(path+'awas4.jpg', 'rb')})
 
-#createVermietungen 
+#createvermietungen 
 usanz = User.count-1
 random = Random.new(Time.new.to_i)
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Vermietungen", msubtype:nil, name:"Wohnmobil", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:31, address1: @user.address1, address2: @user.address2, address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"vermietungen", msubtype:nil, name:"Wohnmobil", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:31, address1: @user.address1, address2: @user.address2, address3: @user.address3})
 @mob = Mobject.where('name=?', "Wohnmobil").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'womo.jpg', 'rb')})
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Vermietungen", msubtype:nil, name:"Gartenhake", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:34, address1: @user.address1, address2: @user.address2, address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"vermietungen", msubtype:nil, name:"Gartenhake", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:34, address1: @user.address1, address2: @user.address2, address3: @user.address3})
 @mob = Mobject.where('name=?', "Gartenhake").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'gartenpflug.jpg', 'rb')})
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Vermietungen", msubtype:nil, name:"Anhänger", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:34, address1: @user.address1, address2: @user.address2, address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"vermietungen", msubtype:nil, name:"Anhänger", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:34, address1: @user.address1, address2: @user.address2, address3: @user.address3})
 @mob = Mobject.where('name=?', "Anhänger").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'anhaenger600.jpg', 'rb')})
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Vermietungen", msubtype:nil, name:"Mountain-Bike HighTech", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:36, address1: @user.address1, address2: @user.address2, address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"vermietungen", msubtype:nil, name:"Mountain-Bike HighTech", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:36, address1: @user.address1, address2: @user.address2, address3: @user.address3})
 @mob = Mobject.where('name=?', "Mountain-Bike HighTech").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'bike2.jpg', 'rb')})
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Vermietungen", msubtype:nil, name:"Drohne für Höhenaufnahmen", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:35, address1: @user.address1, address2: @user.address2, address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"vermietungen", msubtype:nil, name:"Drohne für Höhenaufnahmen", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:35, address1: @user.address1, address2: @user.address2, address3: @user.address3})
 @mob = Mobject.where('name=?', "Drohne für Höhenaufnahmen").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'drohn1.jpg', 'rb')})
 
@@ -520,22 +523,22 @@ mobjects = Mobject.create({status:"OK", active:true, mtype:"Stellenanzeigen", ms
 @mob = Mobject.where('name=?', "Musiker").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lebenslauf", description:"", avatar:File.open(path+'cd2.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
-# Veranstaltungen
+# veranstaltungen
 co = rand(capanz)+1
 comp = Company.find(co)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Veranstaltungen", msubtype:nil, name:"Tag der offenen Tür", date_from:Date.today, date_to:Date.today+1, owner_type:"Company", owner_id: comp.id, mcategory_id:48, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"veranstaltungen", msubtype:nil, name:"Tag der offenen Tür", date_from:Date.today, date_to:Date.today+1, owner_type:"Company", owner_id: comp.id, mcategory_id:48, address1: comp.address1, address2: comp.address2, address3: comp.address3})
 @mob = Mobject.where('name=?', "Tag der offenen Tür").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'esel3.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 co = rand(capanz)+1
 comp = Company.find(co)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Veranstaltungen", msubtype:nil, name:"Versammlung", date_from:Date.today, date_to:Date.today+1, owner_type:"Company", owner_id: comp.id, mcategory_id:48, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"veranstaltungen", msubtype:nil, name:"Versammlung", date_from:Date.today, date_to:Date.today+1, owner_type:"Company", owner_id: comp.id, mcategory_id:48, address1: comp.address1, address2: comp.address2, address3: comp.address3})
 @mob = Mobject.where('name=?', "Versammlung").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'social.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Veranstaltungen", msubtype: "Suchen", name:"Bandabend", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: @user.address1, address2: @user.address2, address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"veranstaltungen", msubtype: "Suchen", name:"Bandabend", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: @user.address1, address2: @user.address2, address3: @user.address3})
 @mob = Mobject.where('name=?', "Bandabend").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'band1.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'band2.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
@@ -547,7 +550,7 @@ usanz = User.all.count-1
 co = rand(capanz)+1
 @mob = Mobject.where('name=?', "Bandabend").first
 msponsor = Msponsor.create({slevel: 1, active: true, status: "OK", company_id: co, mobject_id: @mob.id})
-# Tickets
+# tickets
 ticket = Ticket.create({active: true, owner_id: Msponsor.last.id, owner_type: "Msponsor", mcategory_id:68, name: "Eintritt", amount:0, contingent:30})
 # UserIickets
 for i in 1..20
@@ -585,31 +588,31 @@ for i in 1..30
     ut.save    
 end
 
-#Ausflugsziele
+#ausflugsziele
 usanz = User.all.count-1
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Ausflugsziele", msubtype: "Suchen", name:"Koster Fischingen", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: "Fischingen", address2: "Kloster Fischingen", address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"ausflugsziele", msubtype: "Suchen", name:"Koster Fischingen", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: "Fischingen", address2: "Kloster Fischingen", address3: @user.address3})
 @mob = Mobject.where('name=?', "Koster Fischingen").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'fischingen1.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'fischingen2.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'fischingen3.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Ausflugsziele", msubtype: "Suchen", name:"Stählibuck", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: "Thundorf", address2: "", address3: ""})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"ausflugsziele", msubtype: "Suchen", name:"Stählibuck", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: "Thundorf", address2: "", address3: ""})
 @mob = Mobject.where('name=?', "Stählibuck").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'staehli.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Ausflugsziele", msubtype: "Suchen", name:"Gütsch", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: "Luzern", address2: "", address3: ""})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"ausflugsziele", msubtype: "Suchen", name:"Gütsch", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: "Luzern", address2: "", address3: ""})
 @mob = Mobject.where('name=?', "Gütsch").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'guetsch.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
-# Kleinanzeigen
+# kleinanzeigen
 usanz = User.all.count-1
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Kleinanzeigen", msubtype: "Anbieten", name:"Commodore", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: @user.address1, address2: @user.address2, address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"kleinanzeigen", msubtype: "Anbieten", name:"Commodore", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: @user.address1, address2: @user.address2, address3: @user.address3})
 @mob = Mobject.where('name=?', "Commodore").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'computer1.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'computer2.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
@@ -617,7 +620,7 @@ mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", descr
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Kleinanzeigen", msubtype: "Anbieten", name:"Briefmarkensammlung", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: @user.address1, address2: @user.address2, address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"kleinanzeigen", msubtype: "Anbieten", name:"Briefmarkensammlung", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: @user.address1, address2: @user.address2, address3: @user.address3})
 @mob = Mobject.where('name=?', "Briefmarkensammlung").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'stamp1.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'stamp2.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
@@ -626,26 +629,26 @@ mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", descr
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Kleinanzeigen", msubtype: "Anbieten", name:"Tennislektionen", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: @user.address1, address2: @user.address2, address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"kleinanzeigen", msubtype: "Anbieten", name:"Tennislektionen", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:62, address1: @user.address1, address2: @user.address2, address3: @user.address3})
 @mob = Mobject.where('name=?', "Tennislektionen").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'tennis.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Kleinanzeigen", msubtype: "Suchen", name:"Mitfahrgelegenheit nach Berlin am 22.1.2017", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:60, address1: @user.address1, address2: @user.address2, address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"kleinanzeigen", msubtype: "Suchen", name:"Mitfahrgelegenheit nach Berlin am 22.1.2017", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:60, address1: @user.address1, address2: @user.address2, address3: @user.address3})
 @mob = Mobject.where('name=?', "Mitfahrgelegenheit nach Berlin am 22.1.2017").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'ausflug.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Kleinanzeigen", msubtype: "Suchen", name:"Harry Potter Edition", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:60, address1: @user.address1, address2: @user.address2, address3: @user.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"kleinanzeigen", msubtype: "Suchen", name:"Harry Potter Edition", date_from:Date.today+5, date_to:Date.today+5, owner_type:"User", owner_id: @user.id, mcategory_id:60, address1: @user.address1, address2: @user.address2, address3: @user.address3})
 @mob = Mobject.where('name=?', "Harry Potter Edition").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'englisch.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
-#Crowdfunding Spenden
+#crowdfunding Spenden
 co = rand(capanz)+1
 comp = Company.where('name=?',"Tierschutzbund Weinfelden").first
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Crowdfunding", msubtype:"Spenden", name:"Neue Hundezwinger", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: comp.id, mcategory_id:66, address1: comp.address1, address2: comp.address2, address3: comp.address3, amount:10000})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"crowdfunding", msubtype:"Spenden", name:"Neue Hundezwinger", date_from:Date.today, date_to:Date.today+30, owner_type:"Company", owner_id: comp.id, mcategory_id:66, address1: comp.address1, address2: comp.address2, address3: comp.address3, amount:10000})
 @mob = Mobject.where('name=?', "Neue Hundezwinger").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'hund1.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'hund2.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
@@ -656,10 +659,10 @@ for i in 1..30
     mstats = Mstat.create({anonymous:false, status:"OK", mobject_id:@mob.id, owner_type:"User", owner_id:@user.id, amount: 250+us, created_at:Date.today-us})
 end
 
-#Crowdfunding Donation
+#crowdfunding Donation
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({price: 100, status:"OK", active:true, mtype:"Crowdfunding", msubtype:"Belohnungen", reward:"Signierte CD und freier Eintritt am Konzert", name:"CD Produktion", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:66, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:25000})
+mobjects = Mobject.create({price: 100, status:"OK", active:true, mtype:"crowdfunding", msubtype:"Belohnungen", reward:"Signierte CD und freier Eintritt am Konzert", name:"CD Produktion", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:66, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:25000})
 @mob = Mobject.where('name=?', "CD Produktion").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'cd1.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'cd2.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
@@ -670,10 +673,10 @@ for i in 1..50
     mstats = Mstat.create({anonymous:false, status:"OK", mobject_id:@mob.id, owner_type:"User", owner_id:@user.id, amount: 100, created_at:Date.today-us})
 end
 
-#Crowdfunding Kredit
+#crowdfunding Kredit
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({due_date: Date.today + 365, interest_rate: 3.5, status:"OK", active:true, mtype:"Crowdfunding", msubtype:"Zinsen", reward:"", name:"Finanzierung Truck", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:66, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
+mobjects = Mobject.create({due_date: Date.today + 365, interest_rate: 3.5, status:"OK", active:true, mtype:"crowdfunding", msubtype:"Zinsen", reward:"", name:"Finanzierung Truck", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:66, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
 @mob = Mobject.where('name=?', "Finanzierung Truck").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'truck1.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'truck2.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
@@ -683,10 +686,10 @@ for i in 1..50
     mstats = Mstat.create({anonymous:false, status:"OK", mobject_id:@mob.id, owner_type:"User", owner_id:@user.id, amount: 1000, created_at:Date.today-us})
 end
 
-#Publikationen
+#publikationen
 co = rand(capanz)+1
 comp = Company.find(4)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Publikationen", msubtype:nil, name:"Münz", owner_type:"Company", owner_id: comp.id, mcategory_id:72, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"publikationen", msubtype:nil, name:"Münz", owner_type:"Company", owner_id: comp.id, mcategory_id:72, address1: comp.address1, address2: comp.address2, address3: comp.address3})
 @mob = Mobject.where('name=?', "Münz").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'muenz.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 editions = Edition.create({mobject_id: @mob.id, release_date: "2017-03-23", name:"Ausgabe Q1", description:"", avatar:File.open(path+'tkb01.png', 'rb')})
@@ -695,53 +698,53 @@ editions = Edition.create({mobject_id: @mob.id, release_date: "2017-06-23", name
 
 co = rand(capanz)+1
 comp = Company.find(4)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Publikationen", msubtype:nil, name:"Digitalisierungsboard", owner_type:"Company", owner_id: comp.id, mcategory_id:75, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"publikationen", msubtype:nil, name:"Digitalisierungsboard", owner_type:"Company", owner_id: comp.id, mcategory_id:75, address1: comp.address1, address2: comp.address2, address3: comp.address3})
 @mob = Mobject.where('name=?', "Digitalisierungsboard").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'muenz.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 editions = Edition.create({mobject_id: @mob.id, release_date: "2016-10-23", name:"Oktober 2016", description:"", avatar:File.open(path+'dig1.png', 'rb')})
 editions = Edition.create({mobject_id: @mob.id, release_date: "2016-11-21", name:"November 2016", description:"", avatar:File.open(path+'dig2.png', 'rb')})
 editions = Edition.create({mobject_id: @mob.id, release_date: "2017-02-23", name:"Februar 2017", description:"", avatar:File.open(path+'dig3.png', 'rb')})
 
-#Artikel
+#artikel
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Artikel", msubtype:nil, name:"Digitalisierung bei der TKB", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"artikel", msubtype:nil, name:"Digitalisierung bei der TKB", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
 @mob = Mobject.where('name=?', "Digitalisierung bei der TKB").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Problemstellung", description:"hier steht die Problemstellung", avatar:File.open(path+'tkb01.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lösungsansätze", description:"hier stehen die Lösungsansätze", avatar:File.open(path+'tkb02.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Artikel", msubtype:nil, name:"Spracherkennung", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"artikel", msubtype:nil, name:"Spracherkennung", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
 @mob = Mobject.where('name=?', "Spracherkennung").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Fokusthema Spracherkennung", description:"hier steht die Problemstellung", avatar:File.open(path+'spracherkennung.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lösungsansatz mit Spich Technologies", description:"hier stehen die Lösungsansätze", avatar:File.open(path+'spitch.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Artikel", msubtype:nil, name:"Örk Kredite mit Loanboox", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"artikel", msubtype:nil, name:"Örk Kredite mit Loanboox", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
 @mob = Mobject.where('name=?', "Örk Kredite mit Loanboox").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Fokusthema Loanboox", description:"hier steht die Problemstellung", avatar:File.open(path+'loanboox.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lösungsansatz mit Loanboox", description:"hier stehen die Lösungsansätze", avatar:File.open(path+'dig3.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Artikel", msubtype:nil, name:"Twint 2.0", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"artikel", msubtype:nil, name:"Twint 2.0", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
 @mob = Mobject.where('name=?', "Twint 2.0").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Twint 2.0 in a nutshell", description:"hier steht die Problemstellung", avatar:File.open(path+'twint.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lösungsansatz Twint", description:"hier stehen die Lösungsansätze", avatar:File.open(path+'twint.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
 us = rand(usanz)+1
 @user = User.find(us)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Artikel", msubtype:nil, name:"Strategische Option Marktplatzbank", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"artikel", msubtype:nil, name:"Strategische Option Marktplatzbank", date_from:Date.today, date_to:Date.today+30, owner_type:"User", owner_id: @user.id, mcategory_id:84, address1: @user.address1, address2: @user.address2, address3: @user.address3, amount:150000})
 @mob = Mobject.where('name=?', "Strategische Option Marktplatzbank").first
-mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Twint 2.0 in a nutshell", description:"hier steht die Problemstellung", avatar:File.open(path+'mp.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
+mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Twint 2.0 in a nutshell", description:"hier steht die Problemstellung", avatar:File.open(path+'mp1.jpg', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"Lösungsansatz Twint", description:"hier stehen die Lösungsansätze", avatar:File.open(path+'marketplace.png', 'rb'),document:File.open(path+'std.pdf', 'rb')})
 
-#Umfragen
+#umfragen
 co = rand(capanz)+1
 comp = Company.find(4)
-mobjects = Mobject.create({status:"OK", active:true, mtype:"Umfragen", msubtype:nil, name:"IT Kundenzufriedenheitsumfrage", owner_type:"Company", owner_id: comp.id, mcategory_id:88, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+mobjects = Mobject.create({status:"OK", active:true, mtype:"umfragen", msubtype:nil, name:"IT Kundenzufriedenheitsumfrage", owner_type:"Company", owner_id: comp.id, mcategory_id:88, address1: comp.address1, address2: comp.address2, address3: comp.address3})
 @mob = Mobject.where('name=?', "IT Kundenzufriedenheitsumfrage").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'kantine.jpg', 'rb'), document:File.open(path+'std.pdf', 'rb')})
 
@@ -801,23 +804,23 @@ answers = Answer.create({question_id:Question.last.id, name:"ausreichend (3)"})
 answers = Answer.create({question_id:Question.last.id, name:"mangelhaft (2)"})
 answers = Answer.create({question_id:Question.last.id, name:"ungenügend (1)"})
 
-#Projekte
+#projekte
 co = rand(capanz)+1
 comp = Company.find(4)
-mobjects = Mobject.create({sum_paufwand_plan:100, sum_pkosten_plan: 100000, date_from: Date.today, date_to: Date.today + 200, costinfo: "KST0815", parent:0, status:"OK", active:true, mtype:"Projekte", msubtype:nil, name:"Digitalisierung", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+mobjects = Mobject.create({sum_paufwand_plan:100, sum_pkosten_plan: 100000, date_from: Date.today, date_to: Date.today + 200, costinfo: "KST0815", parent:0, status:"OK", active:true, mtype:"projekte", msubtype:nil, name:"Digitalisierung", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
 @mobi = Mobject.where('name=?', "Digitalisierung").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mobi.id, name:"", description:"", avatar:File.open(path+'dig1.png', 'rb')})
 
 comp = Company.find(4)
-mobjects = Mobject.create({sum_paufwand_plan:100, sum_pkosten_plan: 100000, date_from: Date.today, date_to: Date.today + 200, costinfo: "KST0815", parent: @mobi.id, status:"OK", active:true, mtype:"Projekte", msubtype:nil, name:"Plattform", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+mobjects = Mobject.create({sum_paufwand_plan:100, sum_pkosten_plan: 100000, date_from: Date.today, date_to: Date.today + 200, costinfo: "KST0815", parent: @mobi.id, status:"OK", active:true, mtype:"projekte", msubtype:nil, name:"Plattform", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
 @mob = Mobject.where('name=?', "Plattform").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'dig1.png', 'rb')})
 comp = Company.find(4)
-mobjects = Mobject.create({sum_paufwand_plan:100, sum_pkosten_plan: 100000, date_from: Date.today, date_to: Date.today + 200, costinfo: "KST0815", parent: @mobi.id, status:"OK", active:true, mtype:"Projekte", msubtype:nil, name:"Kundenwebportal KWP", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+mobjects = Mobject.create({sum_paufwand_plan:100, sum_pkosten_plan: 100000, date_from: Date.today, date_to: Date.today + 200, costinfo: "KST0815", parent: @mobi.id, status:"OK", active:true, mtype:"projekte", msubtype:nil, name:"Kundenwebportal KWP", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
 @mob = Mobject.where('name=?', "Kundenwebportal KWP").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'dig2.png', 'rb')})
 comp = Company.find(4)
-mobjects = Mobject.create({sum_paufwand_plan:100, sum_pkosten_plan: 100000, date_from: Date.today, date_to: Date.today + 200, costinfo: "KST0815", parent: @mobi.id, status:"OK", active:true, mtype:"Projekte", msubtype:nil, name:"Redesign WebSite", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
+mobjects = Mobject.create({sum_paufwand_plan:100, sum_pkosten_plan: 100000, date_from: Date.today, date_to: Date.today + 200, costinfo: "KST0815", parent: @mobi.id, status:"OK", active:true, mtype:"projekte", msubtype:nil, name:"Redesign WebSite", owner_type:"Company", owner_id: comp.id, mcategory_id:98, address1: comp.address1, address2: comp.address2, address3: comp.address3})
 @mob = Mobject.where('name=?', "Redesign WebSite").first
 mdetails = Mdetail.create({mtype: "Details", mobject_id: @mob.id, name:"", description:"", avatar:File.open(path+'dig3.png', 'rb')})
 

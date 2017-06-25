@@ -533,7 +533,7 @@
       <div class="row">
         <div class="col-md-12">
           <li_header>
-          über <%= $app_name %> ...<br>
+            <%= $app_name %> ...<br>
           </li_header>
         </div>
       </div>
@@ -542,12 +542,12 @@
       <div class="row">
         <div class="col-md-12">
           <div class='container' align='center'>
-            <%= image_tag("mp.jpg", :size => "200x200") %><br>
+            <%= image_tag("thurcloud.png", :size => "200x200") %><br>
             <ntext>
             <b>Version 0.91</b><br><br>
-            <i class="glyphicon glyphicon-copyright-mark"></i> 2016, 2017 alle Rechte vorbehalten
+            <i class="glyphicon glyphicon-copyright-mark"></i> <%= (I18n.t :allrightsreserved) %>
             <br><br>
-            <i class="glyphicon glyphicon-info-sign"></i> Dies ist eine freie Testversion zu Demozwecken, sämtliche Daten, Personen, Firmen, Services, etc. sind frei erfunden, jegliche Haftung ist ausgeschlossen!
+            <!--<i class="glyphicon glyphicon-info-sign"></i> Dies ist eine freie Testversion zu Demozwecken, sämtliche Daten, Personen, Firmen, Services, etc. sind frei erfunden, jegliche Haftung ist ausgeschlossen!-->
             </ntext>
           </div>
         </div>
@@ -556,17 +556,17 @@
 
       <div class="row">
         <div class="col-md-12">
-          <%= header("Registrationen Privatkunden", false) %>
+          <%= header((I18n.t :personen), false) %>
           <% @anz_pk.to_s %>
           <div class="panel-body">
             <div id="curve_chart1"></div>
           </div>
-          <%= header("Registrationen Institutionen", false) %>
+          <%= header((I18n.t :institutionen), false) %>
           <% @anz_fk.to_s %>
           <div class="panel-body">
             <div id="curve_chart2"></div>
           </div>
-          <%= header("Registrationen Objekte", false) %>
+          <%= header((I18n.t :objekte), false) %>
           <% @anz_obj.to_s %>
           <div class="panel-body">
             <div id="curve_chart3"></div>
@@ -588,7 +588,7 @@
       <%= raw @anz_pk %>
     ]);
     var options = {
-      title: 'Registration Privatkunden',
+      title: '<%= (I18n.t :anmeldenundregistrieren) + " " + (I18n.t :personen) %>',
       curveType: 'function',
       colors: ['#ACC550'],
       legend: { position: 'bottom' }
@@ -607,7 +607,7 @@
       <%= raw @anz_fk %>
     ]);
     var options = {
-      title: 'Registration Firmenkunden/Gewerbe',
+      title: '<%= (I18n.t :anmeldenundregistrieren) + " " + (I18n.t :institutionen) %>',
       curveType: 'function',
       colors: ['#ACC550'],
       legend: { position: 'bottom' }
@@ -626,7 +626,7 @@
       <%= raw @anz_obj %>
     ]);
     var options = {
-      title: 'Registration Objekte',
+      title: '<%= (I18n.t :anmeldenundregistrieren) + " " + (I18n.t :objekte) %>',
       curveType: 'function',
       colors: ['#ACC550'],
       legend: { position: 'bottom' }

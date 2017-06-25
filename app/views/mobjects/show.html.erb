@@ -1,23 +1,18 @@
-
-<% if @edition_id %>
-  <div class="row">
-    <action>
-    <% if @edition_id %>
-      <% @edition = Edition.find(@edition_id) %>
-      <%= action_buttons2("Edition", @edition, "Info") %>
-    <% else %>
-      <%= action_buttons2("Objekte", @mobject, @topic) %>
-    <% end %>
-    </action> 
-  </div>
-<% end %>
+  <% if @edition_id %>
+    <div class="row">
+      <action>
+        <% @edition = Edition.find(@edition_id) %>
+        <%= action_buttons2("Edition", @edition, "Info") %>
+      </action> 
+    </div>
+  <% end %>
 
   <div class="row">
     <header>
-    <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow> " + @mobject.mtype + " " + @mobject.msubtype.to_s + " " + @mobject.name + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
+    <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow> " + (I18n.t @mobject.mtype) + " " + @mobject.msubtype.to_s + " " + @mobject.name + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
     <nav>
       <div class='col-xs-12'>
-          <%= navigate("Objekte", @mobject) %>
+          <%= navigate(:objekte, @mobject) %>
       </div>
     </nav>
     </header>
@@ -26,13 +21,15 @@
   
   <div class="row">
       <div class='col-xs-12'>
+        
+      <%= header3(:objekte, @mobject, @topic, false) %>
 
       <% case @topic %>
-        <% when "Info" %>
-          <%= header2("Objekte", @mobject, @topic, "Objektinformationen", false) %>
+        <% when :info %>
+
           <div class="panel-body">
             
-              <% if @mobject.mtype != "Artikel" %>
+              <% if @mobject.mtype != "artikel" %>
                <% case @mobject.status %>
                   <% when "CHECK" %>
                     <i class="glyphicon glyphicon-question-sign"></i>
@@ -41,44 +38,44 @@
                   <% when "NOK" %>
                     <i class="glyphicon glyphicon-ban-circle"></i>
                 <% end %>
-                <b> Status</b>
+                <b> <%= I18n.t :status %></b>
                 <br>
                 <%= carousel2(@mobject, :medium) %>
                 <br><br>
                 <% case @mobject.msubtype %>
-                  <% when "Spenden" %>
-                    <b>Spendenziel</b><br>
+                  <% when "spenden" %>
+                    <b><%= I18n.t :spendenziel %></b><br>
                     <%= sprintf("%05.2f CHF", @mobject.amount) %>
                     <br>
-                  <% when "Belohnungen" %>
-                    <b>Projektziel</b><br>
+                  <% when "belohnungen" %>
+                    <b><%= I18n.t :projektziel %></b><br>
                     <%= sprintf("%05.2f CHF", @mobject.amount) %>
                     <br><br>
-                    <b>Stückelung</b><br>
+                    <b><%= I18n.t :stueckelung %></b><br>
                     <%= sprintf("%05.2f CHF", @mobject.price) %>
                     <br><br>
-                    <b>Belohnung</b><br>
+                    <b><%= I18n.t :belohnung %></b><br>
                     <%= @mobject.reward %>
                     <br>
-                  <% when "Zinsen" %>
-                    <b>Kreditsumme</b><br>
+                  <% when "zinsen" %>
+                    <b><%= I18n.t :kreditsumme %></b><br>
                     <%= sprintf("%05.2f CHF", @mobject.amount) %>
                     <br><br>
-                    <b>Zinssatz</b><br>
+                    <b><%= I18n.t :zinssatz %></b><br>
                     <%= @mobject.interest_rate %>%
                     <br><br>
-                    Rückzahlung am <%= @mobject.due_date.strftime("%d.%m.%Y") %>
+                    <%= I18n.t :rueckzahlung %> <%= @mobject.due_date.strftime("%d.%m.%Y") %>
                     <br>
                 <% end %>
                 <br>
-                <% if @mobject.mtype == "Crowdfunding" %>
+                <% if @mobject.mtype == "crowdfunding" %>
                 
                   <% if @mobject.mtype == "Crowdfunding" and @mobject.sum_amount and @mobject.sum_amount >= @mobject.amount %>
                     <%= render("mobjects/form_crowdfunding_service") %>
                   <% end %>
                 
                   <% soll = @mobject.amount %>
-                  <% if @mobject.mtype == "Crowdfunding" %>
+                  <% if @mobject.mtype == "crowdfunding" %>
                     <% if @mobject.mstats != nil %>
                       <% ist  = @mobject.mstats.sum(:amount) %>
                     <% else %>
@@ -101,7 +98,7 @@
                   </div>
       
         				  <% if @mobject.price %>
-                    <preiss><b><%= sprintf("%05.2f CHF", @mobject.price) %></b></preiss>
+                    <preiss><b><%= sprintf("%05.2f"+(I18n.t :waehrung), @mobject.price) %></b></preiss>
         					<% else %>
                     <% if @mobject.social %>
                       <preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>
@@ -111,9 +108,9 @@
                 <% end %>
                 
                 <% case @mobject.mtype %>
-                   <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding", "Umfragen", "Projekte" %>
+                   <% when "angebote", "veranstaltungen", "ausschreibungen", "crowdfunding", "umfragen", "projekte" %>
 
-                    <% if @mobject.mtype == "Umfragen" %>
+                    <% if @mobject.mtype == "umfragen" %>
                     
                       <% useranswers = [] %>
                       <% @mobject.questions.each do |q| %>
@@ -148,7 +145,7 @@
                          <% @mobject.questions.each do |q| %>
                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                             <div>
-                              <%= header("Frage "+q.name, false) %>
+                              <%= header(( I18n.t :frage) +q.name, false) %>
                             </div>
                             <div id="<%="chart"+q.id.to_s %>"></div>
                           </div>
@@ -157,19 +154,19 @@
                       <br>
                     <% end %>
                     
-                     <% if @mobject.msubtype == "Standard" %>
+                     <% if @mobject.msubtype == "standard" %>
                      <% else %>
-                      <% if @mobject.msubtype == "Aktion" %>
-                        <b>Preis</b><br>
+                      <% if @mobject.msubtype == "aktion" %>
+                        <b><%= I18n.t :price %></b><br>
                         <% if @mobject.price_new %> 
-                          <%= sprintf("%05.2f CHF",@mobject.price_new) %> / 
+                          <%= sprintf("%05.2f"+(I18n.t :waehrung),@mobject.price_new) %> / 
                         <% end %>
                         <% if @mobject.price_reg  %>
-                          <%= sprintf("%05.2f CHF",@mobject.price_reg) %><br>
+                          <%= sprintf("%05.2f"+(I18n.t :waehrung),@mobject.price_reg) %><br>
                         <% end %>
                         <br>
                       <% end %>
-                      <b>Datum von-bis</b><br>
+                      <b><%= (I18n.t :datumvonbis) %></b><br>
                       <% if @mobject.date_from  %>
                         <%= @mobject.date_from.strftime("%d.%m.%Y") %>
                       <% end %>
@@ -180,8 +177,8 @@
                         <br><br>
                       <% end %>
                       <% if @mobject.date_to != nil %>
-                        <b>Laufzeit</b><br>
-                        <b><ntext>noch </ntext></b><restlaufzeits><%= (@mobject.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> Tage</ntext></b>
+                        <b><%= (I18n.t :laufzeit) %></b><br>
+                        <b><ntext><%= (I18n.t :noch) %> </ntext></b><restlaufzeits><%= (@mobject.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> <%= (I18n.t :tage) %></ntext></b>
                         <br>
                         <% soll = (@mobject.date_to.to_date - @mobject.date_from.to_date).to_i %>
                         <% ist = (DateTime.now.to_date - @mobject.date_from.to_date).to_i %>
@@ -194,37 +191,37 @@
                         <% end %>
                       <% end %>
                       <br>
-                      <% if @mobject.mtype == "Veranstaltungen" and @mobject.eventpart %>
+                      <% if @mobject.mtype == "veranstaltungen" and @mobject.eventpart %>
                           </b><i class="glyphicon glyphicon-info-sign"></i> Anmeldung obligatorisch</b>
                        <% end %>
                       <% end %>
     
-                   <% when "Vermietungen" %>
-                    <b>Mietzeiten</b><br>
+                   <% when "vermietungen" %>
+                    <b><%= (I18n.t :mietzeiten) %></b><br>
                     von:<%= @mobject.time_from %> bis: <%= @mobject.time_to %> Uhr
                     <br><br>
-                    <b>Standort</b><br>
+                    <b><%= (I18n.t :standort) %></b><br>
                     <%= @mobject.address1 if @mobject.address1 %><br>
                     <%= @mobject.address2 if @mobject.address2 %><br>
                     <%= @mobject.address3 if @mobject.address3 %><br>
                     <br>
                     
-                   <% when "Projekte" %>
-                    <%= header("Projekte, Teilprojekte, Aufträge, Tasks", false) %>
+                   <% when "projekte" %>
+                    <%= header(:projekte, false) %>
                     <div class="panel-body">
-                      <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "User") %>
+                      <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "user") %>
                     </div>
                     <br>
 
-                  <% when "Stellenanzeigen" %>
+                  <% when "stellenanzeigen" %>
                       <div class="row">
                         <div class="col-sm-6 col-md-4 col-lg-3">
                           <div class="thumbnail" align="center">
                             <anzeigetext>
-                            <% if @mobject.msubtype == "Anbieten" %>
-                  						Aufgaben
+                            <% if @mobject.msubtype == "anbieten" %>
+                  						<%= (I18n.t :aufgaben) %>
                   					<% else %>
-                  					  Referenzen
+                  					  <%= (I18n.t :referenzen) %>
                   					<% end %>
                             </anzeigetext>
                             <p>
@@ -238,7 +235,7 @@
                         <div class="col-sm-6 col-md-4 col-lg-3">
                           <div class="thumbnail" align="center">
                             <anzeigetext>
-                              Qualifikationen
+                              <%= (I18n.t :qualifikationen) %>
                             </anzeigetext>
                             <p>
                               <ntext>
@@ -251,7 +248,7 @@
                         <div class="col-sm-6 col-md-4 col-lg-3">
                           <div class="thumbnail" align="center">
                             <anzeigetext>
-                              Angebot
+                              <%= (I18n.t :jobangebot) %>
                             </anzeigetext>
                             <p>
                               <ntext>
@@ -263,7 +260,7 @@
                     </div>
                 <% end %>
                 
-                <% if @mobject.mtype == "Projekte" %>
+                <% if @mobject.mtype == "projekte" %>
                   <% ist = @mobject.sum_pkosten_ist %>
                   <% soll = @mobject.sum_pkosten_plan %>
                   <% if !ist %>
@@ -272,14 +269,16 @@
                   <% if !soll %>
                     <% soll = 0 %>
                   <% end %>
-                  <b>Kosten</b><br>
-                  <b><ntext>noch </ntext></b><restlaufzeits><%= soll - ist %></restlaufzeits> <b><ntext> CHF</ntext></b>
+                  <b><%= I18n.t :kosten %></b><br>
+                  <b><ntext><%= I18n.t :noch %> </ntext></b><restlaufzeits><%= soll - ist %></restlaufzeits> <b><ntext> <%= I18n.t :waehrung %></ntext></b>
                   <br>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist/soll*100) %>%">
-                      <span class="sr-only">40% Complete (success)</span>
+                  <% if soll > 0 %>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist/soll*100) %>%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
                     </div>
-                  </div>
+                  <% end %>
 
                   <% ist = @mobject.sum_paufwand_ist.to_i %>
                   <% soll = @mobject.sum_paufwand_plan %>
@@ -289,20 +288,22 @@
                   <% if !soll %>
                     <% soll = 0 %>
                   <% end %>
-                  <b>Aufwand</b><br>
-                  <b><ntext>noch </ntext></b><restlaufzeits><%= soll - ist %></restlaufzeits> <b><ntext> PT</ntext></b>
+                  <b><%= I18n.t :aufwand %></b><br>
+                  <b><ntext><%= I18n.t :noch %> </ntext></b><restlaufzeits><%= soll - ist %></restlaufzeits> <b><ntext> <%= I18n.t :personentage %></ntext></b>
                   <br>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist/soll*100) %>%">
-                      <span class="sr-only">40% Complete (success)</span>
+                  <% if soll > 0 %>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist/soll*100) %>%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
                     </div>
-                  </div>
+                  <% end %>
 
-                  <b>Qualität</b><br>
+                  <b><%= I18n.t :qualitaet %></b><br>
                   <div class="quality<%= @mobject.quality %>", style="font-size:4em">
                     <i class="glyphicon glyphicon-stop"></i>
                   </div>
-                  <b>Risiko</b><br>
+                  <b><%= I18n.t :risiko %></b><br>
                   <div class="risk<%= @mobject.risk %>", style="font-size:4em">
                     <span><i class="glyphicon glyphicon-stop"></i></span>
                   </div>
@@ -311,7 +312,7 @@
 
                 <% end %>
                 
-                <b>Bewertung</b><br>
+                <b><%= I18n.t :bewertung %></b><br>
                 <% avg_rating2(@mobject.id).times do %>
                   <i class="glyphicon glyphicon-star"></i>
                 <% end %>
@@ -323,7 +324,7 @@
                 <br><br>
     
                 <% if @mobject.homepage != nil %>
-                  <b>Homepage</b><br>
+                  <b><%= I18n.t :homepage %></b><br>
                   <%= link_to url_with_protocol(@mobject.homepage), :target => '_blank' do %>
                     <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@mobject.homepage) %>
                   <% end %>
@@ -331,12 +332,12 @@
                 <% end %>
                 
                 <% if @mobject.description %>
-                  <b>Beschreibung</b><br>
+                  <b><%= I18n.t :beschreibung %></b><br>
             			<%= @mobject.description %>
                   <br><br>
                 <% end %>
                 <% if @mobject.mcategory_id %>
-                  <b>Kategorie</b><br>
+                  <b><%= I18n.t :kategorie %></b><br>
             			<%= @mobject.mcategory.name %>
                   <br><br>
                 <% end %>
@@ -354,35 +355,35 @@
 
               <% end %>
 
-              <% if @mobject.mtype == "Projekte" %>
-                <%= header("Projekte, Teilprojekte, Aufträge, Tasks", false) %>
+              <% if @mobject.mtype == "projekte" %>
+                <%= header((I18n.t :projekte), false) %>
                 <div class="panel-body">
-                  <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "User") %>
+                  <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "user") %>
                 </div>
                 <br>
               <% end %>
             
-              <% if @mobject.mtype == "Gruppen" %>
-                <%= header("Mitglieder der Benutzergruppe", false) %>
+              <% if @mobject.mtype == "gruppen" %>
+                <%= header((I18n.t :gruppenmitglieder), false) %>
                 <div class="panel-body">
-                  <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "User") %>
+                  <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "user") %>
                 </div>
                 <br>
               <% end %>
 
-              <b>Verantwortlich:</b><br>
+              <b><%= I18n.t :verantwortlich %></b><br>
               <%= showImage2(:small, @mobject.owner, true) %><br>
-              <% if @mobject.owner_type == "User" %>
+              <% if @mobject.owner_type == "user" %>
                 <%= @mobject.owner.name + " " + @mobject.owner.lastname %>
               <% end %>
-              <% if @mobject.owner_type == "Company" %>
+              <% if @mobject.owner_type == "company" %>
                 <%= @mobject.owner.name %>
               <% end %>
         			<br><br>
               <%= @mobject.created_at.strftime("%d.%m.%Y") %>
               </div>
     
-              <%= header("Ort (Karte)", false) %>
+              <%= header((I18n.t :standort), false) %>
               <div class="panel-body">
                 <i class="glyphicon glyphicon-map-marker pull-left" onclick="return init_map(0);"></i>
                 <div id="map">
@@ -390,14 +391,12 @@
                 </div>
               </div>
 
-        <% when "Details" %>
-          <%= header2("Objekte", @mobject, @topic, "Detailinformationen", false) %>
+        <% when :details %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.mdetails.where('mtype=?', "Details"), "mdetails", nil) %>
+            <%= build_medialist2(@mobject.mdetails.where('mtype=?', "details"), "mdetails", nil) %>
           </div>
 
-        <% when "Umfrageteilnehmer" %>
-          <%= header2("Objekte", @mobject, @topic, "Umfrageteilnehmer", false) %>
+        <% when :umfrageteilnehmer %>
           <div class="panel-body">
             <% useranswers = [] %>
             <% @mobject.questions.each do |q| %>
@@ -417,74 +416,62 @@
             <%= build_medialist2(User.where("id IN (?)", useranswers), "users", nil) %>
           </div>
 
-         <% when "Ideen" %>
-          <%= header2("Objekte", @mobject, @topic, "Ideen", false) %>
+         <% when :ideen %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.ideas.order(rating: :desc), "ideas", "User") %>
+            <%= build_medialist2(@mobject.ideas.order(rating: :desc), "ideas", "user") %>
           </div>
 
-        <% when "Jury" %>
-          <%= header2("Objekte", @mobject, @topic, "Jury", false) %>
+        <% when :jury %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.madvisors, "madvisors", "User") %>
+            <%= build_medialist2(@mobject.madvisors, "madvisors", "user") %>
           </div>
 
-        <% when "Preise" %>
-          <%= header2("Objekte", @mobject, @topic, "Wettbewerbspreise", false) %>
+        <% when :preise %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.prices, "prices", nil) %>
           </div>
 
-        <% when "Bewertungskriterien" %>
-          <%= header2("Objekte", @mobject, @topic, "Bewertungskriterien", false) %>
+        <% when :bewertungskriterien %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.crits, "crits", nil) %>
           </div>
 
-         <% when "Ausschreibungsangebote" %>
-          <%= header2("Objekte", @mobject, @topic, "Ausschreibungsangebote", false) %>
+         <% when :ausschreibungsangebote %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.mdetails.where('mtype=?', "Ausschreibungsangebote"), "mdetails", nil) %>
+            <%= build_medialist2(@mobject.mdetails.where('mtype=?', "ausschreibungsangebote"), "mdetails", nil) %>
           </div>
 
-        <% when "Sponsorenengagements" %>
-          <%= header2("Objekte", @mobject, @topic, "Sponsorenengagements", false) %>
+        <% when :sponsorenengagements %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.msponsors, "msponsors", "Company") %>
+            <%= build_medialist2(@mobject.msponsors, "msponsors", "company") %>
           </div>
           
-        <% when "Eintrittskarten" %>
-          <%= header2("Objekte", @mobject, @topic, "Eintrittskarten", false) %>
+        <% when :eintrittskarten %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.tickets, "tickets", nil) %>
           </div>
 
-        <% when "Bewertungen" %>
-          <%= header2("Objekte", @mobject, @topic, "Bewertungen", false) %>
+        <% when :bewertungen %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.mratings, "mratings", "User") %>
+            <%= build_medialist2(@mobject.mratings, "mratings", "user") %>
           </div>
 
-        <% when "Ansprechpartner" %>
-          <%= header2("Objekte", @mobject, @topic, "Ansprechpartner", false) %>
+        <% when :ansprechpartner %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.madvisors, "madvisors", "User") %>
+            <%= build_medialist2(@mobject.madvisors, "madvisors", "user") %>
           </div>
 
-        <% when "Berechtigungen" %>
-          <%= header2("Objekte", @mobject, @topic, "Zugriffsberechtigungen", false) %>
+        <% when :projektberechtigungen %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "User") %>
+            <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "user") %>
           </div>
 
-        <% when "Gruppenmitglieder" %>
-          <%= header2("Objekte", @mobject, @topic, "Gruppenmitglieder", false) %>
+        <% when :gruppenmitglieder %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "User") %>
+            <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "user") %>
           </div>
 
-        <% when "Ressourcenplanung" %>
-          <%= header2("Objekte", @mobject, @topic, "Ressourcenplanung", false) %>
+        <% when :ressourcenplanung %>
           <div class="row">
               <div class='col-xs-12'>
                 <div class='panel-body'>
@@ -497,29 +484,29 @@
                   <% end %>
                   
                   <% case @c_scope %>
-                    <% when "Aufwand" %>
+                    <% when "aufwand" %>
                       <% btn_sa = "active" %>
                       <% btn_sc = "inactive" %>
-                    <% when "Kosten" %>
+                    <% when "kosten" %>
                       <% btn_sa = "inactive" %>
                       <% btn_sc = "active" %>
                   <% end %>
                   
-                  <%= link_to mobject_path(:id => @mobject.id, :topic => "Ressourcenplanung", :year => @c_year, :scope => @c_scope)  do %>
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => :ressourcenplanung, :year => @c_year, :scope => @c_scope)  do %>
                     <span><i class="btn btn-active glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
                   <% end %>
 
-                  <%= link_to mobject_path(:id => @mobject.id, :topic => "Ressourcenplanung", :year => @c_year, :scope => "Kosten")  do %>
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => :ressourcenplanung, :year => @c_year, :scope => "kosten")  do %>
                     <span><i class="btn btn-<%= btn_sc %> glyphicon glyphicon-euro"></i></span>
                   <% end %>
-                   <%= link_to mobject_path(:id => @mobject.id, :topic => "Ressourcenplanung", :year => @c_year, :scope => "Aufwand")  do %>
+                   <%= link_to mobject_path(:id => @mobject.id, :topic => :ressourcenplanung, :year => @c_year, :scope => "aufwand")  do %>
                     <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
                   <% end %>
                   
-                  <%= link_to mobject_path(:id => @mobject.id, :topic => "Ressourcenplanung", :dir => "<", :year => @c_year, :mode => @c_mode, :scope => @c_scope )  do %>
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => :ressourcenplanung, :dir => "<", :year => @c_year, :mode => @c_mode, :scope => @c_scope )  do %>
                     <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
                   <% end %>
-                  <%= link_to mobject_path(:id => @mobject.id, :topic => "Ressourcenplanung", :dir => ">", :year => @c_year, :mode => @c_mode , :scope => @c_scope) do %>
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => :ressourcenplanung, :dir => ">", :year => @c_year, :mode => @c_mode , :scope => @c_scope) do %>
                     <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
                   <% end %>
                  <br><br>
@@ -556,7 +543,7 @@
                     <% gm.user.madvisors.each do |a| %>
                       <% myobs << a.mobject_id %>
                     <% end %>
-                    <% @mymobjects = Mobject.where('mtype=? and id IN (?)',"Projekte", myobs) %>
+                    <% @mymobjects = Mobject.where('mtype=? and id IN (?)',"projekte", myobs) %>
 
                     <% @mymobjects.each do |w| %>
 
@@ -566,10 +553,10 @@
                         <% @plannings = Planning.where('mobject_id=? and user_id=? and costortime=? and jahr=?', w.id, gm.user.id, @c_scope, @c_year.to_s) %>
                         <% @plannings.each do |p| %>
                           <% h = Hash.new %>
-                          <% if @c_scope == "Kosten" %>
+                          <% if @c_scope == "kosten" %>
                             <% kapa = p.amount %>
                           <% end %>
-                          <% if @c_scope == "Aufwand" %>
+                          <% if @c_scope == "aufwand" %>
                             <% kapa = p.amount*20/100 %>
                           <% end %>
                           <% h = {:id => p.id, :monat => p.monat.to_i, :kapa => kapa} %>
@@ -585,7 +572,7 @@
 
                         <% for i in 0..@header.length-1 do %>
 
-                          <% if @c_scope == "Kosten" %>
+                          <% if @c_scope == "kosten" %>
                           
                             <% moto = 0 %>
                             <% for k in 0..plans.length-1 do %>
@@ -601,7 +588,7 @@
                                   <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
                                 <% end %>
                                 <% end %>
-                               <%= moto.to_s+" CHF" %><br>
+                               <%= moto.to_s+" " +(I18n.t :waehrung) %><br>
                             <% else %>
                                 <td>
                                 <% if false %>
@@ -613,17 +600,17 @@
                             </td>
                           <% end %>
                         
-                          <% if @c_scope == "Aufwand" %>
+                          <% if @c_scope == "aufwand" %>
                             <% kapa = false %>
                             <% for k in 0..plans.length-1 do %>
                               <% if plans[k][:monat].to_i == @data[i].to_i %>
                                 <td class="color_kapa_booked" align="right">
-                                <%= plans[k][:kapa].to_s + " PT" %><br>
+                                <%= plans[k][:kapa].to_s + " " + (I18n.t :personentage) %><br>
                                 <% if false %>
                 				        <%= link_to edit_planning_path(:id => plans[k][:id]) do %>
                                   <i class="btn btn-primary btn-xs glyphicon glyphicon-pencil"></i>
                                 <% end %>
-                				        <%= link_to Planning.find(plans[k][:id]), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                				        <%= link_to Planning.find(plans[k][:id]), method: :delete, data: { confirm: (I18n.t :sindsiesicher) } do %>
                                   <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
                                 <% end %>
                                 <% end %>
@@ -654,10 +641,10 @@
                         <% @timetracks = Timetrack.select("jahrmonat as gdate, sum(amount) as sum").where('user_id=? and costortime=? and mobject_id=? and datum >=? and datum <=?', gm.user.id, @c_scope, w.id, @date_start, @date_end).group("jahrmonat").order("gdate") %>
                         <% @timetracks.each do |t| %>
                           <% h = Hash.new %>
-                          <% if @c_scope == "Kosten" %>
+                          <% if @c_scope == "kosten" %>
                             <% ist = t.sum %>
                           <% end %>
-                          <% if @c_scope == "Aufwand" %>
+                          <% if @c_scope == "aufwand" %>
                             <% ist = t.sum / 8.5 %>
                           <% end %>
                           <% h = {:monat => t.gdate[5,2], :kapa => ist.to_f } %>
@@ -677,7 +664,7 @@
 
                         <% for i in 0..@header.length-1 do %>
 
-                          <% if @c_scope == "Kosten" %>
+                          <% if @c_scope == "kosten" %>
                           
                             <% moto = 0 %>
                             <% for k in 0..tts.length-1 do %>
@@ -693,7 +680,7 @@
                                   <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
                                 <% end %>
                                 <% end %>
-                               <%= moto.to_s+" CHF" %><br>
+                               <%= moto.to_s+ " " +( I18n.t :waehrung) %><br>
                             <% else %>
                                 <td>
                                 <% if false %>
@@ -705,17 +692,17 @@
                             </td>
                           <% end %>
                         
-                          <% if @c_scope == "Aufwand" %>
+                          <% if @c_scope == "aufwand" %>
                             <% kapa = false %>
                             <% for k in 0..tts.length-1 do %>
                               <% if tts[k][:monat].to_i == @data[i].to_i %>
                                 <td class="color_kapa_booked" align="right">
-                                <%= sprintf("%5.1f PT", tts[k][:kapa]) %><br>
+                                <%= sprintf("%5.1f "+(I18n.t :personentage), tts[k][:kapa]) %><br>
                                 <% if false %>
                 				        <%= link_to edit_planning_path(:id => plans[k][:id]) do %>
                                   <i class="btn btn-primary btn-xs glyphicon glyphicon-pencil"></i>
                                 <% end %>
-                				        <%= link_to Planning.find(plans[k][:id]), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                				        <%= link_to Planning.find(plans[k][:id]), method: :delete, data: { confirm: (I18n.t :sindsiesicher) } do %>
                                   <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
                                 <% end %>
                                 <% end %>
@@ -741,22 +728,22 @@
                     <% end %>
 
                   <!-- finally add totals and progress bar-->
-                  <% if @c_scope == "Aufwand" %>
+                  <% if @c_scope == "aufwand" %>
                     <tr>
-                      <td>Total PLAN</td>
+                      <td><%= I18n.t :totalplan %></td>
                       <td></td>
                       <% for i in 0..@header.length-1 do %>
                         <td align="right">
-                        <%= @total[i].to_s + " PT" %>
+                        <%= @total[i].to_s + " " + ( I18n.t :personentage) %>
                         </td>
                       <% end %>
                     </tr>
                     <tr>
-                      <td>Total IST</td>
+                      <td><%= I18n.t :totalist %></td>
                       <td></td>
                       <% for i in 0..@header.length-1 do %>
                         <td align="right">
-                        <%= sprintf("%5.1f PT", @totalt[i]) %>
+                        <%= sprintf("%5.1f "+(I18n.t :personentage), @totalt[i]) %>
                         </td>
                       <% end %>
                     </tr>
@@ -802,62 +789,18 @@
                 </table>
                 <% end %>
                 
-                <% if false %>
-                <% if @c_scope == "Kosten" %>
-                  <br><br>
-                  <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                      <div>
-                        <%= header("Kostenpositionen", false) %>
-                        
-                    		<table class="table table-striped">
-                          <thead>
-                            <tr>
-                              <th></th>
-                              <th>Datum</th>            
-                              <th colspan=2>Projekt/Auftrag</th>
-                              <th>Betrag</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          <% @plannings = Planning.where('user_id=? and costortime=?', gm.user.id, @c_scope).order(jahrmonat: :desc) %>
-                          <% @plannings.each do |a| %>
-                            <tr>
-                              <td>
-                                <%= link_to edit_planning_path(a) do %>
-                                  <i class="btn btn-primary btn btn-xs glyphicon glyphicon-wrench"></i>
-                                <% end %>
-                      	        <%= link_to a, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                                  <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
-                                <% end %>
-                              </td>
-                              <td><%= a.jahrmonat %></td>
-                              <td><%= showFirstImage2(:small, Mobject.find(a.mobject_id),Mobject.find(a.mobject_id).mdetails) %></td>
-                              <td><%= Mobject.find(a.mobject_id).name %></td>
-                              <td><%= a.amount %></td>
-                            </tr>
-                          <% end %>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                <% end %>
-                <% end %>
-
               </div>
             </div>
           </div>
 
-        <% when "Auftragscontrolling" %>
-          <%= header2("Objekte", @mobject, @topic, "Soll / Ist Vergleich", false) %>
+        <% when :auftragscontrolling %>
           <div class="panel-body">
 
               <% case @c_scope %>
-                <% when "Aufwand" %>
+                <% when "aufwand" %>
                   <% btn_sa = "active" %>
                   <% btn_sc = "inactive" %>
-                <% when "Kosten" %>
+                <% when "kosten" %>
                   <% btn_sa = "inactive" %>
                   <% btn_sc = "active" %>
               <% end %>
@@ -878,34 +821,34 @@
               <% @date_start %>
               <% @date_end %>
 
-              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "alles", :scope => @c_scope)  do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => "alles", :scope => @c_scope)  do %>
                 <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-fullscreen"> alles</i></span>
               <% end %>
-              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope)  do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope)  do %>
                 <span><i class="btn btn-<%= btn_y %> glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
               <% end %>
               <% if false %>
-              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "Monat", :scope => @c_scope)  do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => "Monat", :scope => @c_scope)  do %>
                 <span><i class="btn btn-<%= btn_m %> glyphicon glyphicon-calendar"> <%= @c_month %></i></span>
               <% end %>
               <% end %>
               <% if @c_mode != "alles" %>
-                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
+                <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
                   <i class="btn btn btn-primary glyphicon glyphicon-chevron-left"></i>
                 <% end %>
-                <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
+                <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
                   <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
                 <% end %>
               <% end %>
               
-              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => "Kosten") do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => "kosten") do %>
                 <span><i class="btn btn-<%= btn_sc %> glyphicon glyphicon-euro"></i></span>
               <% end %>
-              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => "Aufwand") do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => "aufwand") do %>
                 <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
               <% end %>
               
-              <%= link_to mobject_path(:id => @mobject.id, :topic => "Auftragscontrolling", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope, :export => true) do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope, :export => true) do %>
                 <span><i class="btn btn-inactive glyphicon glyphicon-book"></i></span>
               <% end %>
               
@@ -924,7 +867,7 @@
                 <% @pts = Planning.select("jahrmonat, sum(amount) as summe").where('mobject_id=? and costortime=? and jahr=?',@mobject.id, @c_scope, @c_year.to_s).group("jahrmonat").order(:jahrmonat) %>
               <% end %>
             <% end %>
-
+            
             <% @range = [] %>
             <% @start = "2000-01" %>
             <% @ende = "2000-01" %>
@@ -972,8 +915,10 @@
             <% @range %><br><br>
 
             <% @plans = [] %>
-            <% @pts.each do |t| %>
-              <% @plans << [t.jahrmonat, t.summe] %>
+            <% if @pts %>
+              <% @pts.each do |t| %>
+                <% @plans << [t.jahrmonat, t.summe] %>
+              <% end %>
             <% end %>
             <% @ists = [] %>
             <% @tts.each do |t| %>
@@ -1006,10 +951,10 @@
                   <% end %>
                 <% end %>
 
-                <% if @c_scope == "Aufwand" %>
+                <% if @c_scope == "aufwand" %>
                   <% h = [@range[i], (ist * 170 /100), (plan * 170) / 100] %>
                 <% end %>
-                <% if @c_scope == "Kosten" %>
+                <% if @c_scope == "kosten" %>
                   <% h = [@range[i], ist, soll] %>
                 <% end %>
                 <% @istsoll << h %>
@@ -1019,13 +964,13 @@
             
             <% @istsollkum = [] %>
             <% @istsollkum << ['kategorie', 'IST','PLAN'] %>
-            <% for i in 1..@istsoll.length-1 %>
-              <% if i==1 %>
-                <% @istsollkum << [@istsoll[i][0], @istsoll[i][1].to_i, @istsoll[i][2]]%>
-              <% else %>
-                <% @istsollkum << [@istsoll[i][0], @istsollkum[i-1][1].to_f + @istsoll[i][1].to_f, @istsollkum[i-1][2].to_f + @istsoll[i][2].to_f] %>
+              <% for i in 1..@istsoll.length-1 %>
+                <% if i==1 %>
+                  <% @istsollkum << [@istsoll[i][0], @istsoll[i][1].to_i, @istsoll[i][2]]%>
+                <% else %>
+                  <% @istsollkum << [@istsoll[i][0], @istsollkum[i-1][1].to_f + @istsoll[i][1].to_f, @istsollkum[i-1][2].to_f + @istsoll[i][2].to_f] %>
+                <% end %>
               <% end %>
-            <% end %>
             <% @istsollkum %>
 
             <div id="auftragschartallkum"></div>
@@ -1050,10 +995,10 @@
             <% @pts.each do |p| %>
               <% if p.summe > 0 %>
                 <% h = Hash.new %>
-                <% if @c_scope == "Aufwand" %>
+                <% if @c_scope == "aufwand" %>
                   <% h = {:user_id => p.user_id, :kapa => (p.summe * 170) / 100} %>
                 <% end %>
-                <% if @c_scope == "Kosten" %>
+                <% if @c_scope == "kosten" %>
                   <% h = {:user_id => p.user_id, :kapa => p.summe} %>
                 <% end %>
                 <% @plans << h %>
@@ -1084,7 +1029,7 @@
                   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div>
                       <% @user = User.find(u.user_id) %>
-                      <%= header("User " + @user.name + " " + @user.lastname, false) %>
+                      <%= header((I18n.t :personen) + " " + @user.name + " " + @user.lastname, false) %>
                       
                       <!--Sicht Monat/MA -->
                       <% if @c_mode == "alles" %>
@@ -1136,10 +1081,10 @@
                             <% end %>
                           <% end %>
           
-                          <% if @c_scope == "Aufwand" %>
+                          <% if @c_scope == "aufwand" %>
                             <% h = [@user.id, @range[i], (ist * 170 /100), (plan * 170) / 100] %>
                           <% end %>
-                          <% if @c_scope == "Kosten" %>
+                          <% if @c_scope == "kosten" %>
                             <% h = [@user.id, @range[i], ist, soll] %>
                           <% end %>
                           <% @istsollall << h %>
@@ -1167,14 +1112,13 @@
             
           </div>
 
-        <% when "Projektdashboard" %>
-          <%= header2("Objekte", @mobject, @topic, "Projektdashboard", false) %>
+        <% when :projektdashboard %>
           <div class="panel-body">
             
             <% @prolist  = [@mobject.id.to_i] %>
             <% wo_iterate(@mobject.id, true, @prolist) %>
             <% @prolist %>
-            <% @projects = Mobject.where("mtype=? and id in (?)", "Projekte", @prolist) %>
+            <% @projects = Mobject.where("mtype=? and id in (?)", "projekte", @prolist) %>
 
             <div class="row">
               <% @projects.each do |m| %>
@@ -1182,7 +1126,7 @@
                   <div class="panel panel-dashboard">
                     <div class="row">
                       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                        <%= content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon("Projekte")["icon"], style:"font-size:4em") %>
+                        <%= content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon2(:projekte)["icon"], style:"font-size:4em") %>
                       </div>
                       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <huge>
@@ -1221,47 +1165,41 @@
             
           </div>
 
-        <% when "Blog" %>
-          <%= header2("Objekte", @mobject, @topic, "Blog", false) %>
+        <% when :blog %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.comments.order(created_at: :desc), "comments", "User") %>
+            <%= build_medialist2(@mobject.comments.order(created_at: :desc), "comments", "user") %>
           </div>
 
-        <% when "Fragen" %>
+        <% when :fragen %>
           <%= @ques %>
-          <%= header2("Objekte", @mobject, @topic, "Fragen", false) %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.questions.order(:sequence), "questions", "User") %>
+            <%= build_medialist2(@mobject.questions.order(:sequence), "questions", "user") %>
           </div>
 
-        <% when "Ausgaben" %>
-          <%= header2("Objekte", @mobject, @topic, "Ausgaben/Editionen", false) %>
+        <% when :ausgaben %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.editions.order(created_at: :desc), "editions", "User") %>
+            <%= build_medialist2(@mobject.editions.order(created_at: :desc), "editions", "user") %>
           </div>
 
-        <% when "Substruktur" %>
-          <%= header2("Objekte", @mobject, @topic, "Teilprojekte, Teilaufträge ", false) %>
+        <% when :substruktur %>
           <div class="panel-body">
-            <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "User") %>
+            <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "user") %>
           </div>
 
-        <% when "Teilnehmer (Veranstaltungen)" %>
-          <%= header2("Objekte", @mobject, @topic, "Veranstaltungsteilnehmer", false) %>
+        <% when :teilnehmerveranstaltung %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.participants, "participants", "User") %>
+            <%= build_medialist2(@mobject.participants, "participants", "user") %>
           </div>
 
-        <% when "Kalender (Vermietungen)" %>
-          <%= header2("Objekte", @mobject, @topic, "Kalender für Vermietungen", false) %>
+        <% when :kalendervermietungen %>
           <div id='calendar'></div>
           <div class="panel-body">
           	<table class="table table-striped">
               <thead>
                 <tr>
                   <th></th>
-                  <th colspan=2>gemietet von</th>
-                  <th colspan=2>wann</th>
+                  <th colspan=2><%= I18n.t :gemietetvon %></th>
+                  <th colspan=2><%= I18n.t :wann %></th>
                 </tr>
               </thead>
               <body>
@@ -1271,11 +1209,11 @@
           				    <% if user_signed_in? %>
           				      <% if (ca.mobject.owner_type == "User" and ca.mobject.owner_id == current_user.id) or (ca.mobject.owner_type == "Company" and ca.mobject.owner.user_id == current_user.id) %>
           				        <% if !ca.confirmed %>
-                            <%= link_to mobject_path(:id => ca.mobject_id, :confirm_id => ca.id, :topic => "Kalender (Vermietungen)") do %>
+                            <%= link_to mobject_path(:id => ca.mobject_id, :confirm_id => ca.id, :topic => :kalendervermietungen) do %>
                               <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
                             <% end %>
                           <% else %>
-                            <%= link_to mobject_path(:id => ca.mobject_id, :noconfirm_id => ca.id, :topic => "Kalender (Vermietungen)") do %>
+                            <%= link_to mobject_path(:id => ca.mobject_id, :noconfirm_id => ca.id, :topic => :kalendervermietungen) do %>
                               <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
                             <% end %>
                           <% end %>
@@ -1304,8 +1242,8 @@
                       </td>
                     <td>
                       <smallcall>
-                      <%= ca.date_from.strftime("%d.%m.%Y")+"  "+ca.time_from.to_s+" Uhr"%><br>
-                      <%= ca.date_to.strftime("%d.%m.%Y")+"  "+ca.time_to.to_s+" Uhr"%>
+                      <%= ca.date_from.strftime("%d.%m.%Y")+"  "+ca.time_from.to_s+ (I18n.t :uhr) %><br>
+                      <%= ca.date_to.strftime("%d.%m.%Y")+"  "+ca.time_to.to_s+(I18n.t :uhr) %>
                       </smallcal>
                     </td>
                   </tr>
@@ -1314,24 +1252,20 @@
            	</table>
           </div>
           
-        <% when "CF Statistik" %>
-          <%= header2("Objekte", @mobject, @topic, "Statistik (Anzahl Transaktionen)", false) %>
+        <% when :cfstatistik %>
           <div class="panel-body">
             <div id="curve_chart1"></div>
           </div>
-          <%= header2("Objekte", @mobject, @topic, "Statistik (Beträge)", false) %>
           <div class="panel-body">
             <div id="curve_chart2"></div>
           </div>
           
-        <% when "CF Transaktionen" %>
-          <%= header2("Objekte", @mobject, @topic, "Transaktionen", false) %>
+        <% when :cftransaktionen %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.mstats.order(amount: :desc), "mstats", "Owner") %>
+            <%= build_medialist2(@mobject.mstats.order(amount: :desc), "mstats", "owner") %>
           </div>
 
-        <% when "Standort" %>
-          <%= header2("Objekte", @mobject, @topic, "Standort", false) %>
+        <% when :standort %>
           <div class="panel-body">
             <div id="map">
               <div id="map-canvas"></div>
@@ -1347,20 +1281,18 @@
 
 <script>
 $(document).ready(function(){
-
       google.charts.load('current', {'packages':['corechart']});
       
-      <% if @topic == "Auftragscontrolling" %>
-
+      <% if @topic == :auftragscontrolling %>
         google.charts.setOnLoadCallback(drawChartallkum);
         function drawChartallkum() {
           var data = google.visualization.arrayToDataTable(<%= raw @istsollkum %>);
           var options = {
-            <% if @c_scope == "Aufwand" %>
-              title: 'Rapportierte Stunden (kumuliert)',
+            <% if @c_scope == "aufwand" %>
+              title: "<%= I18n.t :rapportiertestundenkumuliert %>",
             <% end %>
-            <% if @c_scope == "Kosten" %>
-              title: 'Rapportierte Kosten (kumuliert)',
+            <% if @c_scope == "kosten" %>
+              title: "<%= I18n.t :rapportiertekostenkumuliert %>",
             <% end %>
             colors: ['#ACC550','#2E6B33'],
             // legend: { position: 'bottom' }
@@ -1372,16 +1304,15 @@ $(document).ready(function(){
           <% end %>
           chart.draw(data, options);
         };
-
         google.charts.setOnLoadCallback(drawChartall);
         function drawChartall() {
           var data = google.visualization.arrayToDataTable(<%= raw @istsoll %>);
           var options = {
-            <% if @c_scope == "Aufwand" %>
-              title: 'Rapportierte Stunden (Monat)',
+            <% if @c_scope == "aufwand" %>
+              title: "<%= I18n.t :rapportiertestundenmonat %>",
             <% end %>
-            <% if @c_scope == "Kosten" %>
-              title: 'Rapportierte Kosten (Monat)',
+            <% if @c_scope == "kosten" %>
+              title: "<%= I18n.t :rapportiertekostenmonat %>",
             <% end %>
             colors: ['#ACC550','#2E6B33'],
             // legend: { position: 'bottom' }
@@ -1393,16 +1324,15 @@ $(document).ready(function(){
           <% end %>
           chart.draw(data, options);
         };
-
         google.charts.setOnLoadCallback(drawChartuser);
         function drawChartuser() {
           var data = google.visualization.arrayToDataTable(<%= raw @istsollau %>);
           var options = {
-            <% if @c_scope == "Aufwand" %>
-              title: 'Rapportierte Stunden (User)',
+            <% if @c_scope == "aufwand" %>
+              title: "<%= I18n.t :rapportiertestundenuser %>",
             <% end %>
-            <% if @c_scope == "Kosten" %>
-              title: 'Rapportierte Kosten (User)',
+            <% if @c_scope == "kosten" %>
+              title: "<%= I18n.t :rapportiertekostenuser %>",
             <% end %>
             colors: ['#ACC550','#2E6B33'],
             // legend: { position: 'bottom' }
@@ -1410,18 +1340,17 @@ $(document).ready(function(){
           var chart = new google.visualization.ColumnChart(document.getElementById('chartalluser'));
           chart.draw(data, options);
         };
-
         <% if true %>
         <% for i in 0..@iso.length-1 do %>
             google.charts.setOnLoadCallback(drawChart<%= i.to_s %>);
             function drawChart<%= i.to_s %>() {
               var data = google.visualization.arrayToDataTable(<%= raw @iso[i] %>);
               var options = {
-                <% if @c_scope == "Aufwand" %>
-                  title: 'Rapportierte Stunden (User)',
+                <% if @c_scope == "aufwand" %>
+                  title: "<%= I18n.t :rapportiertestundenuser %>",
                 <% end %>
-                <% if @c_scope == "Kosten" %>
-                  title: 'Rapportierte Kosten (User)',
+                <% if @c_scope == "kosten" %>
+                  title: "<%= I18n.t :rapportiertekostenuser %>",
                 <% end %>
                 colors: ['#ACC550','#2E6B33'],
                 // legend: { position: 'bottom' }
@@ -1439,7 +1368,7 @@ $(document).ready(function(){
       
       <% end %>
         
-      <% if @mobject.mtype == "Umfragen" %>
+      <% if @topic == :umfragen %>
       
       
       window.datasetq = [['kategorie', 'anzahl'],['keine Antwort',0]];
@@ -1454,7 +1383,7 @@ $(document).ready(function(){
       function drawChartq() {
         var data = google.visualization.arrayToDataTable(datasetq);
         var options = {
-          title: 'Antworten',
+          title: "<%= I18n.t :antworten %>",
           colors: ['#ACC550'],
           legend: { position: 'bottom' }
         };
@@ -1462,17 +1391,16 @@ $(document).ready(function(){
         chart.draw(data, options);
       };
         
-
       <% @mobject.questions.each do |q| %>
       
-        <% if q.mcategory.name == "Multiple" or q.mcategory.name == "Single" %>
+        <% if q.mcategory.name == "multiple" or q.mcategory.name == "single" %>
           window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
           <% q.answers.each do |qa| %>
             dataset<%= q.id.to_s %>.push(['<%= qa.name %>', <%= qa.user_answers.where('checker=?',true).count %>]);
           <% end %>
         <% end %>
     
-        <% if q.mcategory.name == "Numerisch" %>
+        <% if q.mcategory.name == "numerisch" %>
           window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
           <% q.answers.each do |qa| %>
             dataset<%= q.id.to_s %>.push(['Minimum', <%= qa.user_answers.minimum(:num) %>]);
@@ -1481,7 +1409,7 @@ $(document).ready(function(){
           <% end %>
         <% end %>
     
-        <% if q.mcategory.name == "Text" %>
+        <% if q.mcategory.name == "text" %>
           window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
           <% q.answers.each do |qa| %>
             dataset<%= q.id.to_s %>.push(['kein Text angegeben', <%= qa.user_answers.where('description=?',"").count %>]);
@@ -1493,7 +1421,7 @@ $(document).ready(function(){
         function drawChart<%= q.id.to_s %>() {
           var data = google.visualization.arrayToDataTable(dataset<%= q.id.to_s %>);
           var options = {
-            title: 'Antworten',
+            title: "<%= I18n.t :antworten %>",
             colors: ['#ACC550'],
             legend: { position: 'bottom' }
           };
@@ -1504,10 +1432,9 @@ $(document).ready(function(){
     <% end %>
     <% end %>
     
-  <% if @mobject.mtype == "Projekte" and @topic == "Projektdashboard" %>
+  <% if @topic == :projektdashboard %>
     
    google.charts.load('current', {'packages':['corechart']});
-
   <% @projects.each do |p| %>
   
     window.costdataset_<%= p.id %> = [["Zeit", "Wert"],[Date(),0]];
@@ -1515,7 +1442,7 @@ $(document).ready(function(){
     function costfunc<%= p.id %>() {
       var data = google.visualization.arrayToDataTable(costdataset_<%= p.id %>);
       var options = {
-        title: 'Kosten',
+        title: "<%= I18n.t :kosten %>",
         colors: ['#ACC550'],
         curveType: 'function',
         width:150,
@@ -1525,13 +1452,12 @@ $(document).ready(function(){
       var chart = new google.visualization.LineChart(document.getElementById('costchart<%= p.id %>'));
       chart.draw(data, options);
     }
-
     window.effortdataset_<%= p.id %> = [["Zeit", "Wert"],[Date(),0]];
     google.charts.setOnLoadCallback(effortfunc<%= p.id %>);
     function effortfunc<%= p.id %>() {
       var data = google.visualization.arrayToDataTable(effortdataset_<%= p.id %>);
       var options = {
-        title: 'Aufwand',
+        title: "<%= I18n.t :aufwand %>",
         colors: ['#ACC550'],
         curveType: 'function',
         width:150,
@@ -1542,9 +1468,7 @@ $(document).ready(function(){
       chart.draw(data, options);
     }
   <% end %>
-
     window.setInterval( callme, 15000 );
-
     // window.setInterval( updateme, 100 );
     
     function updateme() {
@@ -1571,19 +1495,18 @@ $(document).ready(function(){
                 // alert(json[0].kategorie + " " + json[0].anzahl);
                 // alert(json[1].kategorie + " " + json[1].anzahl);
                 // alert(json[2].kategorie + " " + json[2].anzahl);
-
                 <% if true %>
                 <% @projects.each do |p| %>
                   for (var i=0;i<json.length;++i)
                   {
                     <% if true %>
                       if (json[i].id == <%= p.id %>) {
-                        if (json[i].kategorie == "Kosten") {
+                        if (json[i].kategorie == "kosten") {
                           $("#cost<%= p.id  %>").text(json[i].summe + " CHF");
                           costdataset_<%= p.id %>.push([Date(), json[i].summe]);
                           google.charts.setOnLoadCallback(costfunc<%= p.id %>);
                         }
-                        if (json[i].kategorie == "Aufwand") {
+                        if (json[i].kategorie == "aufwand") {
                           $("#effort<%= p.id  %>").text( parseInt( (json[i].summe)/8.5) + " PT");
                           effortdataset_<%= p.id %>.push([Date(), json[i].summe]);
                           google.charts.setOnLoadCallback(effortfunc<%= p.id %>);
@@ -1596,7 +1519,6 @@ $(document).ready(function(){
                   // $("#<%= p.id %>").text(json[0].anzahl);
                 <% end %>
                 <% end %>
-
             }
         });
     }
@@ -1605,12 +1527,10 @@ $(document).ready(function(){
     $("nav").hide();
     $("navhide").hide();
     $("navhide").hide();
-
     $("navshow").mouseover(function(){
         $("nav").show();
         $("navshow").hide();
         $("navhide").show();
-
     });
     
     $("navhide").mouseover(function(){
@@ -1618,7 +1538,6 @@ $(document).ready(function(){
         $("navshow").show();
         $("navhide").hide();
     });
-
     $('#calendar').fullCalendar({
         now: '<%= DateTime.now %>',
         allDaySlot: false,
@@ -1654,7 +1573,6 @@ $(document).ready(function(){
       autoPlay: true
       
     });
-
     function init_map(index) {
         var latitudes = [<%= @mobject.latitude %>];
         var longitudes = [<%= @mobject.longitude %>];
@@ -1678,7 +1596,7 @@ $(document).ready(function(){
         <%= raw @anz_s %>
       ]);
       var options = {
-        title: 'Crowdfunding Performance',
+        title: "<% I18n.t :cfanzahl %>",
         curveType: 'function',
         colors: ['#ACC550'],
         legend: { position: 'bottom' }
@@ -1694,7 +1612,7 @@ $(document).ready(function(){
         <%= raw @bet_s %>
       ]);
       var options = {
-        title: 'Crowdfunding Performance',
+        title: "<% I18n.t :cfbetrag %>",
         curveType: 'function',
         colors: ['#ACC550'],
         legend: { position: 'bottom' }
@@ -1703,11 +1621,9 @@ $(document).ready(function(){
       chart.draw(data, options);
     }
     
-
 });
 </script>
 
 <!--<script>-->
 <!--  document.addEventListener("turbolinks:load", function() {init_map(0); drawChart1(); drawChart2(); owlCarousel()})-->
 <!--</script>-->
-

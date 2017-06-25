@@ -29,7 +29,7 @@ class MobjectsController < ApplicationController
     if params[:mtype]
       session[:mtype] = params[:mtype]
       case params[:mtype]
-        when "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding", "Angebote"
+        when "kleinanzeigen", "stellenanzeigen", "crowdfunding", "angebote"
           if params[:msubtype]
             session[:msubtype] = params[:msubtype]
           end
@@ -38,7 +38,7 @@ class MobjectsController < ApplicationController
       end
     end
 
-    if session[:mtype] == "Projekte"
+    if session[:mtype] == "projekte"
       if params[:parent]
         session[:parent] = params[:parent]
       end
@@ -117,13 +117,13 @@ class MobjectsController < ApplicationController
       end
     end
     if !params[:topic]
-      if @mobject.mtype == "Publikationen"
-        @topic = "Ausgaben"
+      if @mobject.mtype == "publikationen"
+        @topic = :ausgaben
       else
-        @topic = "Info"
+        @topic = :info
       end
     else
-      @topic = params[:topic]
+      @topic = params[:topic].to_sym
     end
     if false
     if !session[:cw]
@@ -206,7 +206,7 @@ class MobjectsController < ApplicationController
       
    end
    
-   if @topic == "Auftragscontrolling"
+   if @topic == :auftragscontrolling
       if params[:export]
         @export = true
       end
@@ -228,7 +228,7 @@ class MobjectsController < ApplicationController
       if params[:scope]
         @c_scope = params[:scope]
       else
-        @c_scope = "Aufwand"
+        @c_scope = "aufwand"
       end
       if params[:dir] == ">"
         if @c_mode == "Monat"
@@ -268,7 +268,7 @@ class MobjectsController < ApplicationController
       
     end
 
-    if @topic == "Ressourcenplanung" or @topic == "Zeiterfassung"
+    if @topic == :ressourcenplanung or @topic == :zeiterfassung
 
         if params[:year]
           @c_year = params[:year]
@@ -294,7 +294,7 @@ class MobjectsController < ApplicationController
         if params[:scope]
           @c_scope = params[:scope]
         else
-          @c_scope = "Aufwand"
+          @c_scope = "aufwand"
         end
         
         if params[:dir] == ">"
@@ -351,7 +351,7 @@ class MobjectsController < ApplicationController
         end
       end
       
-      if @topic == "Fragen"
+      if @topic == :fragen
         if params[:dir]
           
           @ques=[]
@@ -446,25 +446,6 @@ class MobjectsController < ApplicationController
     @mobject.longitude = @mobject.owner.longitude
     @mobject.latitude = @mobject.owner.latitude
 
-    case params[:mtype]
-      when "Angebote"
-        case params[:msubtype]
-          when "Standard"
-          when "Aktion"
-        end
-      when "Veranstaltungen"
-      when "Ausscheibungen"
-      when "Ausflugsziele"
-      when "Crowdfunding"
-        case params[:msubtype]
-          when "Spenden"
-          when "Belohnungen"
-          when "Zinsen"
-        end
-      when "Kleinanzeigen"
-      when "Stellenanzeigen"
-      when "Vermietungen"
-    end
   end
 
   # GET /mobjects/1/edit
@@ -476,7 +457,7 @@ class MobjectsController < ApplicationController
     @mobject = Mobject.new(mobject_params)
 
     if @mobject.save
-      redirect_to @mobject, notice: 'Mobject was successfully created.'
+      redirect_to @mobject, notice: (I18n.t :erfolgreichgespeichert)
     else
       render :new
     end
@@ -485,7 +466,7 @@ class MobjectsController < ApplicationController
   # PUT /mobjects/1
   def update
     if @mobject.update(mobject_params)
-      redirect_to @mobject, notice: 'Mobject was successfully updated.'
+      redirect_to @mobject, notice: (I18n.t :erfolgreichgeaendert)
     else
       render :edit
     end
@@ -499,9 +480,9 @@ class MobjectsController < ApplicationController
     @msubtype = @mobject.msubtype
     @mobject.destroy
     if @ownertype == "User"
-      redirect_to user_path(:id => @ownerid), notice: 'Mobject was successfully destroyed.'
+      redirect_to user_path(:id => @ownerid), notice: (I18n.t :erfolgreichgeloescht)
     else
-      redirect_to company_path(:id => @ownerid), notice: 'Mobject was successfully destroyed.'
+      redirect_to company_path(:id => @ownerid), notice: (I18n.t :erfolgreichgeloescht)
     end
   end
 

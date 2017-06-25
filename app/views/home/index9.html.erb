@@ -1,7 +1,7 @@
 
   <div class="row">
     <header>
-    <%= header("Tabellenübersicht", true) %>
+    <%= header((I18n.t :tabellenmgt), true) %>
     </header>
   </div>
 
@@ -12,17 +12,17 @@
     		<table class="table table-striped">
           <thead>
             <tr>
-              <th>Kategorie</th>
+              <th><%= I18n.t :kategorie %></th>
             </tr>
           </thead>
         
           <tbody>
-            <% for i in 0..@array.length-1 %>
+            <% @categories.each do |c| %>
               <tr><td>
-              <%= link_to mcategories_path :ctype => @array[i] do %>
+              <%= link_to mcategories_path :ctype => c.ctype do %>
                 <i class="glyphicon glyphicon-folder-open"></i>
               <% end %>
-              <%= @array[i] %>
+              <%= c.ctype %>
               </td></tr>
             <% end %>
           </tbody>

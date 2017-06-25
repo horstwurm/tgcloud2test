@@ -3,7 +3,7 @@
 
         <% if @mobject.errors.any? %>
             <div id="error_explanation">
-              <h2><%= pluralize(@mobject.errors.count, "error") %> prohibited this object from being saved:</h2>
+              <h2><%= pluralize(@mobject.errors.count, "error") + " " + (I18n.t :notsaved) %> </h2>
               <ul>
                   <% @mobject.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
@@ -29,40 +29,40 @@
             <div class="col-md-6">
               <div class="panel-body">
                 <div class="form-group">
-                  <%= f.label "Bezeichnung" %>
+                  <%= f.label I18n.t :bezeichnung %>
                   <%= f.text_field :name, autofocus: true, class:"form-control"%>
                 </div>
                 <div class="form-group">
-                  <%= f.label "Beschreibung" %>
+                  <%= f.label I18n.t :beschreibung %>
                   <%= f.text_area :description, rows: 5, class:"form-control"%>
                 </div>
                 
-                <% if @mobject.mtype == "Projekte" %>
+                <% if @mobject.mtype == "projekte" %>
                   <div class="form-group">
-                    <%= f.label "Risiko" %>
+                    <%= f.label I18n.t :risiko %>
                     <%= f.select :risk, options_for_select(["hoch", "mittel", "tief"], @mobject.risk), {}, class:"form-control" %>
-                    <%= f.label "Qualität" %>
+                    <%= f.label I18n.t :qualitaet %>
                     <%= f.select :quality, options_for_select(["hoch", "mittel", "tief"], @mobject.quality), {}, class:"form-control" %>
                   </div>
                 <% end %>
 
-                <% if @mobject.mtype == "Stellenanzeigen" %>
+                <% if @mobject.mtype == "stellenanzeigen" %>
                   <div class="form-group">
                     <% if @mobject.msubtype == "Suchen" %>
-                      <%= f.label "Referenzen" %><br/>
+                      <%= f.label I18n.t :referenzen %><br/>
                     <% else %>
-                      <%= f.label "Aufgaben" %><br/>
+                      <%= f.labelI18n.t :aufgaben %><br/>
                     <% end %>
                     <%= f.text_area :tasks, rows: 5, class:"form-control"%>
-                    <%= f.label "Qualifikationen" %><br/>
+                    <%= f.label I18n.t :qualifikationen %><br/>
                     <%= f.text_area :skills, rows: 5, class:"form-control"%>
-                    <%= f.label "Angebot" %><br/>
+                    <%= f.label I18n.t :joboffer %><br/>
                     <%= f.text_area :offers, rows: 5, class:"form-control"%>
                   </div>
                 <% end %>
                 
                 <div class="form-group">
-                  <%= f.label "Kategorie" %>
+                  <%= f.label I18n.t :kategorie %>
                   <% case @mobject.mtype %>
                     <% when "Ausschreibungen", "Stellenanzeigen" %>
                       <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Branche").order(:name), :id, :name, {}, :readonly => true, class:"form-control" %>
@@ -71,12 +71,12 @@
                   <% end %>
                 </div>
                 <div class="form-group">
-                  <%= f.label "Homepage" %>
+                  <%= f.label I18n.t :homepage %>
                   <%= f.text_field :homepage, class:"form-control"%>
                 </div>
                 <% case @mobject.mtype %>
-                  <% when "Veranstaltungen", "Ausschreibungen", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding", "Umfragen", "Projekte", "Innovationswettbewerbe" %>
-                    <% if @mobject.msubtype != "Standard" %>
+                  <% when "veranstaltungen", "ausschreibungen", "kleinanzeigen", "stellenanzeigen", "crowdfunding", "umfragen", "projekte", "innovationswettbewerbe" %>
+                    <% if @mobject.msubtype != "standard" %>
                       <div class="form-group">
                         <%= f.label "Datum von-bis:" %>
                         <div class="input-group">
@@ -89,22 +89,24 @@
                         </div>
                       </div>
                     <% end %>
-                    <% if @mobject.mtype == "Veranstaltungen" %>
+                    <% if @mobject.mtype == "veranstaltungen" %>
                       <div class="form-group">
                         <input type="checkbox" name="my-checkbox3" checked>
-                        <%= f.label "Anmeldung obligatorisch" %>
+                        <%= f.label I18n.t :anmeldungobligatorisch %>
                       </div>
                     <% end %>
-                    <% if @mobject.mtype == "Crowdfunding" %>
+                    <% if @mobject.mtype == "crowdfunding" %>
                         <div class="form-group">
-                          <%= f.label "Betrag:" %>
+                          <%= f.label I18n.t :betrag %>
                           <div class="input-group">                          
                             <%= f.number_field :amount, :value => number_with_precision(@mobject.amount, :precision => 2), :style => "text-align: Right", class:"form-control" %>
-                            <div class="input-group-addon">CHF</div>
+                            <div class="input-group-addon"><%= I18n.t :waehrung %></div>
                           </div>
                         </div>
                     <% end %>
-                    <% if @mobject.mtype == "Projekte" %>
+                    <%= @mobject.sum_paufwand_plan %>
+                    <%= @mobject.sum_pkosten_plan %>
+                    <% if @mobject.mtype == "projekte" %>
                         <div class="form-group">
                           <% if !@mobject.sum_paufwand_ist %>
                             <% @mobject.sum_paufwand_ist = 0 %>
@@ -112,80 +114,80 @@
                           <% if !@mobject.sum_pkosten_ist %>
                             <% @mobject.sum_pkosten_ist = 0 %>
                           <% end %>
-                          <b><%= "PlanKosten (IstKosten: " + sprintf("%05.2f CHF", @mobject.sum_pkosten_ist) + ")" %></b>
+                          <b><%= I18n.t :plankosten %></b>
                           <div class="input-group">                          
                             <%= f.number_field :sum_pkosten_plan, :value => number_with_precision(@mobject.sum_pkosten_plan, :precision => 2), :style => "text-align: Right", class:"form-control" %>
-                            <div class="input-group-addon">CHF</div>
+                            <div class="input-group-addon"><%= (I18n.t :waehrung) %></div>
                           </div>
-                          <b><%= "PlanAufwand (IstAufwand: " + sprintf("%05.2f PT", @mobject.sum_paufwand_ist) + ")" %></b>
+                          <b><%= I18n.t :planaufwand %></b>
                           <div class="input-group">                          
-                            <%= f.number_field :sum_paufwand_plan, :value => number_with_precision(@mobject.sum_paufwand_plan, :precision => 2), :style => "text-align: Right", class:"form-control" %>
-                            <div class="input-group-addon">PT</div>
+                            <%= f.number_field :sum_paufwand_plan, :value => number_with_precision(@mobject.sum_paufwand_plan, :precision => 0), :style => "text-align: Right", class:"form-control" %>
+                            <div class="input-group-addon"><%= (I18n.t :personentage) %></div>
                           </div>
-                          <% if @mobject.mtype == "Projekte" %>
-                            <%= f.label "Kostenstelle:" %>
+                          <% if @mobject.mtype == "projekte" %>
+                            <%= f.label I18n.t :kostenstelle %>
                               <%= f.text_field :costinfo, class:"form-control"%>
                           <% end %>
                         </div>
                     <% end %>
-                    <% if @mobject.mtype == "Kleinanzeigen" and @mobject.msubtype == "Anbieten" %>
+                    <% if @mobject.mtype == "kleinanzeigen" and @mobject.msubtype == "anbieten" %>
                         <div class="form-group">
-                          <%= f.label "Preis:" %>
+                          <%= f.label I18n.t :price %>
                           <div class="input-group">                          
                               <%= f.number_field :price, :value => number_with_precision(@mobject.price, :precision => 2), :style => "text-align: Right", class:"form-control" %>
-                              <div class="input-group-addon">CHF</div>
+                              <div class="input-group-addon"><%= I18n.t :waehrung %></div>
                           </div>
                         </div>
                     <% end %>
                     <% case @mobject.msubtype %>
-                      <% when "Belohnungen" %>
+                      <% when "belohnungen" %>
                           <div class="form-group">
-                            <%= f.label "Stückelung" %><br/>
+                            <%= f.label I18n.t :stueckelung %><br/>
                             <div class="input-group">                          
                               <%= f.number_field :price, :value => number_with_precision(@mobject.price, :precision => 2), :style => "text-align: Right", class:"form-control" %>
                               <div class="input-group-addon">CHF</div>
                             </div>
                           </div>
                          <div class="form-group">
-                            <%= f.label "Belohnung" %><br/>
+                            <%= f.label I18n.t :belohnung %><br/>
                             <%= f.text_field :reward, class:"form-control"%>
                           </div>
-                      <% when "Zinsen" %>
+                      <% when "zinsen" %>
                           <div class="form-group">
-                            <%= f.label "Zinssatz in %" %><br/>
+                            <%= f.label I18n.t :zinssatz %><br/>
                             <div class="input-group">                          
                               <%= f.number_field :interest_rate, :value => number_with_precision(@mobject.interest_rate, :precision => 1), :style => "text-align: Right", class:"form-control" %>
                               <div class="input-group-addon">%</div>
                             </div>
                           </div>
                           <div class="form-group">
-                            <%= f.label "Rückzahlung am:" %>
+                            <%= f.label I18n.t :rueckzahlungam %>
                             <div class="input-group">
                               <%= f.text_field :due_date, :value => (@mobject.due_date), :style => "text-align: Right", class:"form-control" %>
                               <div class="input-group-addon"> Datum</div>
                             </div>
                           </div>
                     <% end %>
-                  <% when "Publikationen" %>
+                  <% when "publikationen" %>
                       <div class="form-group">
                         <input type="checkbox" name="my-checkbox4" checked>
-                        <%= f.label "Online Publikation" %>
+                        <%= f.label I18n.t :onlinepublikation %>
                       </div>
-                  <% when "Vermietungen" %>
+                  <% when "vermietungen" %>
                       <div class="form-group">
-                        <%= f.label "Zeit von-bis:" %>
+                        <%= f.label I18n.t :zeitvonbis %>
                         <div class="form-group">
                         <input id="ex1" type="text" class="span2" value="" data-slider-min="0" data-slider-max="24" data-slider-step="1" data-slider-value="[<%= @mobject.time_from %>,<%= @mobject.time_to %>]"/> <b> Uhrzeit: von-bis</b>
                         </div>
                       </div>
-                  <% when "Angebote" %>
+                  <% when "angebote" %>
                       <div class="form-group">
                         <input type="checkbox" name="my-checkbox2" checked>
-                        <%= f.label "Sozialengagement" %>
+                        <%= f.label I18n.t :sozialengagement %>
                       </div>
-                      <% if @mobject.msubtype == "Aktion" %>
+                      <% if @mobject.msubtype == "aktion" %>
                         <div class="form-group">
-                          <%= f.label "Datum von-bis:" %>
+                          <%= f.label I18n.t :datumvonbis %>
                           <div class="input-group">
                             <%= f.text_field :date_from, :value => (@mobject.date_from), :style => "text-align: Right", class:"form-control" %>
                             <div class="input-group-addon"> Datum von</div>
@@ -196,12 +198,12 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <%= f.label "Preis:" %>
+                          <%= f.label I18n.t :price %>
                           <%= f.text_field :price_reg, class:"form-control"%>
                         </div>
-                        <% if @mobject.msubtype == "Aktion" %>
+                        <% if @mobject.msubtype == "aktion" %>
                           <div class="form-group">
-                            <%= f.label "Aktionspreis:" %>
+                            <%= f.label I18n.t :aktionspreis %>
                             <div class="input-group">                          
                               <%= f.number_field :price_new, :value => number_with_precision(@mobject.price_new, :precision => 2), :style => "text-align: Right", class:"form-control" %>
                               <div class="input-group-addon">%</div>
@@ -209,9 +211,9 @@
                           </div>
                         <% end %>
                       <% end %>
-                      <% if @mobject.msubtype == "Standard" %>
+                      <% if @mobject.msubtype == "standard" %>
                         <div class="form-group">
-                          <%= f.label "Preis:" %>
+                          <%= f.label I18n.t :price %>
                           <div class="input-group">
                             <%= f.number_field :price_reg, :value => number_with_precision(@mobject.price_reg, :precision => 2), :style => "text-align: Right", class:"form-control" %>
                             <div class="input-group-addon">%</div>
@@ -220,18 +222,18 @@
                       <% end %>
                 <% end %>
                 <div class="form-group">
-                   <%= f.label "Adresse" %>
+                   <%= f.label I18n.t :adresse %>
                    <%= f.text_field :address1, class:"form-control" %>
                    <%= f.text_field :address2, class:"form-control" %>
                    <%= f.text_field :address3, class:"form-control" %>
                 </div>
                 <div class="form-group">
-                  <%= f.label "Stichworte:" %>
+                  <%= f.label I18n.t :stichworte %>
                   <%= f.text_field :keywords, class:"form-control"%>
                 </div>
                 <div class="form-group">
                   <input type="checkbox" name="my-checkbox1" checked>
-                  <%= f.label "Aktiv" %>
+                  <%= f.label I18n.t :active %>
                 </div>
                  <%= f.hidden_field :mtype, class:"form-control" %>
                  <%= f.hidden_field :msubtype %>

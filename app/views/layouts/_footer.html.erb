@@ -18,31 +18,32 @@
     <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <footer_header>
-                    Nutzungsbedingungen
+                    <%= I18n.t :nutzungsbedingungen %>
                 </footer_header>
                 <br>
                 <footer_text>
-                    <%= link_to("Info", home_index_path) %><br>
-                    <%= link_to("Über uns", url_with_protocol("ueber_uns.html"), :target => '_blank') %><br>
-                    <%= link_to("Rechtliches & Impressum", url_with_protocol("rechtliches_und_impressum.html"), :target => '_blank') %><br>
+                    <%= link_to((I18n.t :info), home_index_path) %><br>
+                    <%= link_to((I18n.t :ueberuns), url_with_protocol("ueber_uns.html"), :target => '_blank') %><br>
+                    <%= link_to((I18n.t :impressum), url_with_protocol("impressum.html"), :target => '_blank') %><br>
+                    <%= link_to((I18n.t :rechtliches), url_with_protocol("rechtliches.html"), :target => '_blank') %><br>
                     <br>
                 </footer_text>
             </div>
 
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <footer_header>
-                    Anmelden & Registrieren
+                    <%= I18n.t :registrieren %>
                 </footer_header>
                 <br>
                 <footer_text>
                     <% if !user_signed_in? %>
-                        <%= link_to "Anmelden", new_user_session_path %><br>
-                        <%= link_to "Registrieren", new_user_registration_path %><br>
+                        <%= link_to (I18n.t :anmelden), new_user_session_path %><br>
+                        <%= link_to (I18n.t :registrieren), new_user_registration_path %><br>
                     <% else %>
-                       <% link_to "Einstellungen", credentials_path(current_user.id) %>
-                       <%= link_to "Abmelden", destroy_user_session_path, method: :delete %><br>
-    		           <%= link_to "Passwort ändern", edit_user_registration_path %><br><br>
-    		           <%= link_to "Account löschen", registration_path(current_user), data: { confirm: "Are you sure?" }, method: :delete, class:"btn btn-danger btn-xs" %><br>
+                       <% link_to (I18n.t :anmelden), credentials_path(current_user.id) %>
+                       <%= link_to (I18n.t :abmelden), destroy_user_session_path, method: :delete %><br>
+    		           <%= link_to (I18n.t :passwordchange), edit_user_registration_path %><br><br>
+    		           <%= link_to (I18n.t :accountdel), registration_path(current_user), data: { confirm: (I18n.t :sindsiesicher) }, method: :delete, class:"btn btn-danger btn-xs" %><br>
                     <% end %>
                 </footer_text>
             </div>
@@ -50,22 +51,22 @@
             <% if user_signed_in? and (current_user.webmaster or current_user.superuser) %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <footer_header>
-                        Poweruser
+                        <%= (I18n.t :poweruser) %>
                     </footer_header>
                     <br>
                     <footer_text>
                         <% if user_signed_in? %>
     					   <% if current_user.webmaster %>
-    							<%= link_to "Webmaster", webmasters_path  %><br><br>
+    							<%= link_to (I18n.t :webmaster), webmasters_path  %><br><br>
     					   <% end %>
     					   <% if current_user.superuser %>
-        						<%= link_to "Superuser (Funktionen)", appparams_path %><br>
-        						<%= link_to "Superuser (Tabellen)", home_index9_path  %><br><br>
-        						<%= link_to "Superuser (Statistik)", home_index2_path %><br><br>
-        						<%= link_to "Dashboard", home_dashboard_path %><br><br>
-        						<%= link_to "Dashboard2", home_dashboard2_path %><br><br>
-        						<%= link_to "Dashboard Project", home_dashboard_project_path %><br><br>
-        						<%= link_to "Testpage", home_index12_path %><br><br>
+        						<%= link_to (I18n.t :funktionsmgt), appparams_path %><br>
+        						<%= link_to (I18n.t :tabellenmgt), home_index9_path %><br>
+        						<%= link_to (I18n.t :userstat), home_index2_path %><br>
+        						<!--<%= link_to "Dashboard", home_dashboard_path %><br><br>-->
+        						<!--<%= link_to "Dashboard2", home_dashboard2_path %><br><br>-->
+        						<!--<%= link_to "Dashboard Project", home_dashboard_project_path %><br><br>-->
+        						<!--<%= link_to "Testpage", home_index12_path %><br><br>-->
     					   <% end %>
                         <% end %>
                     </footer_text>
@@ -74,7 +75,7 @@
 
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <footer_header>
-                    Partner
+                    <%= (I18n.t :partner) %>
                 </footer_header>
                 <br>
                 <footer_text>
@@ -91,7 +92,7 @@
     <div class="row">
 
             <div class="col-sm-6 col-md-4 col-lg-3">
-                  <i class="glyphicon glyphicon-copyright-mark"></i> 2016, 2017 alle Rechte vorbehalten
+                <i class="glyphicon glyphicon-copyright-mark"></i> <%= (I18n.t :tgcloudsoft) %>
             </div>
     </div>
     </div>

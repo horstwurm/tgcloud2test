@@ -56,13 +56,13 @@ class UsersController < ApplicationController
   def show
     
    if params[:topic]
-     @topic = params[:topic]
+     @topic = params[:topic].to_sym
    else 
-     @topic = "Info"
+     @topic = :info
    end 
 
     case @topic
-      when "Info"
+      when :info
 
         @locs = []
         @wins = []
@@ -82,28 +82,29 @@ class UsersController < ApplicationController
         @stats = [["Aktivtät","Anzahl"]]
         @stats << ["Institutionen", @user.companies.count]
         @stats << ["Kalendereinträge", Appointment.where('user_id1=? or user_id2=?',@user.id,@user.id).count]
-        @stats << ["Angebote", @user.mobjects.where('mtype=?','Angebote').count]
+        @stats << ["Angebote", @user.mobjects.where('mtype=?','angebote').count]
         @stats << ["Ansprechpartner", @user.madvisors.count]
-        @stats << ["Kleinanzeigen", @user.mobjects.where('mtype=?','Kleinanzeigen').count ]
-        @stats << ["Stellenanzeigen", @user.mobjects.where('mtype=?','Stellenanzeigen').count ]
-        @stats << ["Veranstaltungen", @user.mobjects.where('mtype=?','Veranstaltungen').count ]
-        @stats << ["Ausschreibungen", @user.mobjects.where('mtype=?','Ausschreibungen').count ]
-        @stats << ["Ausflugsziele", @user.mobjects.where('mtype=?','Ausflugsziele').count ]
-        @stats << ["Artikel", @user.mobjects.where('mtype=?','Artikel').count ]
-        @stats << ["Publikationen", @user.mobjects.where('mtype=?','Publikationen').count ]
-        @stats << ["Umfragen", @user.mobjects.where('mtype=?','Umfragen').count ]
-        @stats << ["Projekte/Tasks", @user.mobjects.where('mtype=?','Projekte').count ]
-        @stats << ["Crowdfunding", @user.mobjects.where('mtype=?','Crowdfunding').count ]
+        @stats << ["Kleinanzeigen", @user.mobjects.where('mtype=?','kleinanzeigen').count ]
+        @stats << ["Stellenanzeigen", @user.mobjects.where('mtype=?','stellenanzeigen').count ]
+        @stats << ["Veranstaltungen", @user.mobjects.where('mtype=?','veranstaltungen').count ]
+        @stats << ["Ausschreibungen", @user.mobjects.where('mtype=?','ausschreibungen').count ]
+        @stats << ["Ausflugsziele", @user.mobjects.where('mtype=?','ausflugsziele').count ]
+        @stats << ["Artikel", @user.mobjects.where('mtype=?','artikel').count ]
+        @stats << ["Publikationen", @user.mobjects.where('mtype=?','publikationen').count ]
+        @stats << ["Umfragen", @user.mobjects.where('mtype=?','umfragen').count ]
+        @stats << ["Projekte/Tasks", @user.mobjects.where('mtype=?','projekte').count ]
+        @stats << ["Innovationswettbewerbe", @user.mobjects.where('mtype=?','innovationswettbewerbe').count ]
+        @stats << ["Crowdfunding", @user.mobjects.where('mtype=?','crowdfunding').count ]
         @stats << ["Crowdfunding Beiträge", @user.mstats.count ]
         @stats << ["Tickets", @user.user_tickets.count ]
         @stats << ["Bewertungen", @user.mratings.count ]
         @stats << ["Favoriten", @user.favourits.count ]
         @stats << ["Kundenverbindungen", @user.customers.count ]
-        @stats << ["ZV Transaktionen", @user.transactions.where('ttype=?', "Payment").count]
+        @stats << ["ZV Transaktionen", @user.transactions.where('ttype=?', "payment").count]
         @stats << ["Messages", Email.where('m_to=? or m_from=?', @user.id, @user.id).count ]
         @stats << ["Abfragen", @user.searches.count]
     
-      when "Ressourcenplanung", "Zeiterfassung"
+      when :ressourcenplanung, :zeiterfassung
 
         if params[:year]
           @c_year = params[:year]
@@ -129,7 +130,7 @@ class UsersController < ApplicationController
         if params[:scope]
           @c_scope = params[:scope]
         else
-          @c_scope = "Aufwand"
+          @c_scope = "aufwand"
         end
         
         if params[:dir] == ">"
@@ -189,9 +190,9 @@ class UsersController < ApplicationController
         @user.madvisors.each do |a|
           myobs << a.mobject_id 
         end
-        @mymobjects = Mobject.where('mtype=? and id IN (?)',"Projekte", myobs)
+        @mymobjects = Mobject.where('mtype=? and id IN (?)',"projekte", myobs)
 
-      when "Kalendereintraege"
+      when :kalendereintraege
         if params[:confirm_id]
           @appoint = Appointment.find(params[:confirm_id])
           if @appoint
@@ -267,11 +268,11 @@ class UsersController < ApplicationController
           end
         end
 
-      when "Favoriten"
+      when :favoriten
 
         @locs = []
         @wins = []
-        @favourits = Favourit.where('user_id=? and object_name=?', @user.id, "User") 
+        @favourits = Favourit.where('user_id=? and object_name=?', @user.id, "user") 
         @favourits.each do |f|
           u = UserPosition.where('user_id=?',f.object_id).last
           if u and u.longitude and u.latitude and u.geo_address
@@ -284,7 +285,7 @@ class UsersController < ApplicationController
             @wins << ["<h3> keine weiteren Positionen gespeichert </h3>" + @user.geo_address ]
         end
 
-      when "Zugriffsberechtigungen"
+      when :zugriffsberechtigungen
         if params[:credential_id]
           @c = Credential.find(params[:credential_id])
           if @c

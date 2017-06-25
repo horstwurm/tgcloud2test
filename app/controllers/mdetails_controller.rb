@@ -17,9 +17,9 @@ class MdetailsController < ApplicationController
     if params[:mtype]
       @mdetail.mtype = params[:mtype]
     else
-      @mdetail.mtype = "Details"
+      @mdetail.mtype = "details"
     end
-    @mdetail.textoptions = "Text"
+    @mdetail.textoptions = "text"
     @mdetail.sequence = 0
     
   end
@@ -33,7 +33,7 @@ class MdetailsController < ApplicationController
   def create
     @mdetail = Mdetail.new(mdetail_params)
     if @mdetail.save
-      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => @mdetail.mtype), notice: 'Details was successfully created.'
+      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => @mdetail.mtype), notice: (I18n.t :erfolgreichgespeichert) 
     else
       render :new
     end
@@ -42,7 +42,7 @@ class MdetailsController < ApplicationController
   # PUT /mdetails/1
   def update
     if @mdetail.update(mdetail_params)
-      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => @mdetail.mtype), notice: 'Details was successfully updated.'
+      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => @mdetail.mtype), notice: (I18n.t :erfolgreichgeaendert) 
     else
       render :edit
     end
@@ -53,7 +53,7 @@ class MdetailsController < ApplicationController
     @id = @mdetail.mobject_id
     @type = @mdetail.mtype
     @mdetail.destroy
-    redirect_to mobject_path(:id => @id, :topic => @type), notice: 'Details was successfully destroyed.'
+    redirect_to mobject_path(:id => @id, :topic => @type), notice: (I18n.t :erfolgreichgeloescht) 
   end
 
   private

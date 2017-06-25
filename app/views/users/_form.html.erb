@@ -3,7 +3,7 @@
 
         <% if @user.errors.any? %>
             <div id="error_explanation">
-              <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+              <h2><%= pluralize(@user.errors.count, "error") + " " + (I18n.t :notsaved )%></h2>
               <ul>
                   <% @user.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
@@ -19,7 +19,7 @@
                       <%= link_to @user do %>
                         <i class="btn btn-primary glyphicon glyphicon-list"></i>
                       <% end %>
-                      ACCOUNT
+                      <%= I18n.t :account %>
                       </li_header>
                     </div>
             </div>
@@ -29,73 +29,72 @@
             <div class="col-md-6">
                 <div class="panel-body">
                     <div class="form-group">
-                       <%= f.label "Photo" %>
+                       <%= f.label I18n.t :picture %>
                        <%= image_tag @user.avatar.url(:medium) %><br>
                        <%= f.file_field :avatar, class:"form-control" %>
                     </div>
                     <div class="form-group">
-                      <%= f.label "Email" %>
+                      <%= f.label I18n.t :email%>
                       <%= f.text_field :email, :readonly => true, class:"form-control"%>
                     </div>
-                    <!--<%= f.hidden_field :password %>-->
                     <div class="form-group">
-                      <%= f.label "Nachname" %>
+                      <%= f.label I18n.t :lastname %>
                       <%= f.text_field :lastname, autofocus: true, class:"form-control"%>
                     </div>
                     <div class="form-group">
-                      <%= f.label "Vorname" %>
+                      <%= f.label I18n.t :name %>
                       <%= f.text_field :name, class:"form-control"%>
                     </div>
                     <div class="form-group">
-                      <%= f.label "Geburtsdatum" %>
+                      <%= f.label I18n.t :geburtsdatum %>
                       <div class="input-group">
                         <%= f.text_field :dateofbirth, :value => (@user.dateofbirth), :style => "text-align: Right", class:"form-control" %>
-                        <div class="input-group-addon"> Datum</div>
+                        <div class="input-group-addon"> <%= I18n.t :datum %></div>
                       </div>
                     </div>
                     <div class="form-group">
                       <input type="checkbox" name="my-checkbox2" checked>
-                      <%= f.label "Anonym" %>
+                      <%= f.label I18n.t :anonym %>
                     </div>
                     <div class="form-group">
                       <input type="checkbox" name="my-checkbox1" checked>
-                      <%= f.label "Kalender" %>
+                      <%= f.label I18n.t :kalender %>
                     </div>
                       <slider>
-                        <b>00:00 Uhr </b> <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="24" data-slider-step="1" data-slider-value="[<%= @user.time_from %>,<%= @user.time_to %>]"/> <b>24:00 Uhr</b>
+                        <b><%= I18n.t :uhrzeitvonbis %></b> <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="24" data-slider-step="1" data-slider-value="[<%= @user.time_from %>,<%= @user.time_to %>]"/>
                       </slider>
                       <br><br>
                     <% if current_user.superuser %>
                         <div class="form-group">
                           <input type="checkbox" name="my-checkbox4" checked>
-                          <%= f.label "Webmaster" %>
+                          <%= f.label I18n.t :webmaster %>
                         </div>
                     <% end %>
                     <div class="form-group">
-                       <%= f.label "Adresse" %>
+                       <%= f.label I18n.t :adresse%>
                        <%= f.text_field :address1, class:"form-control" %>
                        <%= f.text_field :address2, class:"form-control" %>
                        <%= f.text_field :address3, class:"form-control" %>
                     </div>
                     <div class="form-group">
-                       <%= f.label "Telefon" %>
+                       <%= f.label I18n.t :telefon%>
                        <%= f.text_field :phone1, class:"form-control" %>
                        <%= f.text_field :phone2, class:"form-control" %>
                     </div>
                     <div class="form-group">
-                       <%= f.label "Kostenstelle" %>
+                       <%= f.label I18n.t :kostenstelle %>
                        <%= f.text_field :costinfo, class:"form-control" %>
-                       <%= f.label "Standardstundensatz" %>
+                       <%= f.label I18n.t :standardstundensatz %>
                         <div class="input-group">                          
                           <%= f.number_field :rate, :value => number_with_precision(@user.rate, :precision => 2), :style => "text-align: Right", class:"form-control" %>
-                          <div class="input-group-addon">CHF</div>
+                          <div class="input-group-addon"><%= I18n.t :waehrung %></div>
                         </div>
-                       <%= f.label "Organisation" %>
+                       <%= f.label I18n.t :organisation %>
                        <%= f.text_field :org, class:"form-control" %>
                     </div>
                     <div class="form-group">
                       <input type="checkbox" name="my-checkbox3" checked>
-                      <%= f.label "Aktiv" %>
+                      <%= f.label I18n.t :active %>
                     </div>
                      <%= f.hidden_field :status, class:"form-control" %>
                      <%= f.hidden_field :geo_address, class:"form-control" %>

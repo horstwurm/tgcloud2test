@@ -47,11 +47,11 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1
   def show
-    if params[:topic]
-      @topic = params[:topic]
-    else
-      @topic = "Info"
-    end
+     if params[:topic]
+       @topic = params[:topic].to_sym
+     else 
+       @topic = :info
+     end 
     
     if params[:camp_id]
       @campaign = SignageCamp.find(params[:camp_id])
@@ -76,8 +76,6 @@ class CompaniesController < ApplicationController
     #@array_s = @company.build_stats(@array_s, @company.user.searches, "Abfragen" )
     @array_s = @array_s[0, @array_s.length - 1]
 
-
-
   end
 
   # GET /companies/new
@@ -99,7 +97,7 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     if @company.save
-      redirect_to user_path(:id => @company.user_id, :topic => "Institutionen"), notice: 'Company was successfully created'
+      redirect_to user_path(:id => @company.user_id, :topic => :institutionen), notice: 'Company was successfully created'
       # redirect_to @company, notice: 'Company was successfully created.'
     else
       render :new
@@ -119,7 +117,7 @@ class CompaniesController < ApplicationController
   def destroy
     @us = @company.user_id
     @company.destroy
-    redirect_to user_path(:id => @us, :topic => "Institutionen"),  notice: 'Company was successfully destroyed.'
+    redirect_to user_path(:id => @us, :topic => :institutionen),  notice: 'Company was successfully destroyed.'
   end
 
   private

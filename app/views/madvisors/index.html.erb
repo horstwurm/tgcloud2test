@@ -4,20 +4,20 @@
       <div class="col-md-12">
         <div class="digg_pagination">
             <% case @mobject.mtype %>
-            <% when "Angebote" %>
-              <%= link_to(mobject_path(:id => @mobject.id, :topic => "Ansprechpartner")) do %>
+            <% when "angebote" %>
+              <%= link_to(mobject_path(:id => @mobject.id, :topic => :ansprechpartner)) do %>
                 <i class="btn btn-primary glyphicon glyphicon-list"></i>
               <% end %>
-            <% when "Projekte" %>
-              <%= link_to(mobject_path(:id => @mobject.id, :topic => "Berechtigungen")) do %>
+            <% when "projekte" %>
+              <%= link_to(mobject_path(:id => @mobject.id, :topic => :projektberechtigungen)) do %>
                 <i class="btn btn-primary glyphicon glyphicon-list"></i>
               <% end %>
-            <% when "Gruppen" %>
-              <%= link_to(mobject_path(:id => @mobject.id, :topic => "Gruppenmitglieder")) do %>
+            <% when "gruppen" %>
+              <%= link_to(mobject_path(:id => @mobject.id, :topic => :gruppenmitglieder)) do %>
                 <i class="btn btn-primary glyphicon glyphicon-list"></i>
               <% end %>
-            <% when "Innovationswettbewerbe" %>
-              <%= link_to(mobject_path(:id => @mobject.id, :topic => "Jury")) do %>
+            <% when "innovationswettbewerbe" %>
+              <%= link_to(mobject_path(:id => @mobject.id, :topic => :jury)) do %>
                 <i class="btn btn-primary glyphicon glyphicon-list"></i>
               <% end %>
             <% end %>
@@ -29,14 +29,14 @@
 
   <div class="row">
       <% case @mobject.mtype %>
-        <% when "Angebote" %>
-          <%= header("Ansprechpartner " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
-        <% when "Projekte" %>
-          <%= header("Zugriffsberechtigungen für " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
-        <% when "Gruppen" %>
-          <%= header("Gruppenmitglieder von " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
-        <% when "Innovationswettbewerbe" %>
-          <%= header("Jury von " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
+        <% when "angebote" %>
+          <%= header((I18n.t :ansprechpartner) + " " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
+        <% when "projekte" %>
+          <%= header((I18n.t :projektberechtigungen) + " " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
+        <% when "gruppen" %>
+          <%= header((I18n.t :gruppenmitglieder)  + " " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
+        <% when "innovationswettbewerbe" %>
+          <%= header((I18n.t :jury) + " " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
       <% end %>
   </div>
   
@@ -62,7 +62,7 @@
                   <% end %>
                 <% end %>
                 <% case @mobject.mtype %>
-                  <% when "Angebote" %>
+                  <% when "angebote" %>
                     <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id do %>
                       <i class="btn btn-primary glyphicon glyphicon-tags"></i>
                     <% end %>
@@ -74,7 +74,7 @@
                         <i class="btn btn-danger glyphicon glyphicon-remove-sign"></i>
                       <% end %>
                     <% end %>
-                  <% when "Projekte" %>
+                  <% when "projekte" %>
                     <% if !grade %>
                       <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
                         <i class="btn btn-primary glyphicon glyphicon-king"></i>
@@ -87,7 +87,7 @@
                         <i class="btn btn-danger glyphicon glyphicon-remove-sign"></i>
                       <% end %>
                     <% end %>
-                  <% when "Gruppen" %>
+                  <% when "gruppen" %>
                     <% if !grade %>
                       <% if false %>
                       <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
@@ -102,7 +102,7 @@
                         <i class="btn btn-danger glyphicon glyphicon-remove-sign"></i>
                       <% end %>
                     <% end %>
-                  <% when "Innovationswettbewerbe" %>
+                  <% when "innovationswettbewerbe" %>
                     <% if !grade %>
                       <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page], :mobject_id => @mobject.id  do %>
                         <i class="btn btn-primary glyphicon glyphicon-king"></i>

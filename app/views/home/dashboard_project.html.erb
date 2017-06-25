@@ -123,12 +123,12 @@ $(document).ready(function(){
                   {
                     <% if true %>
                       if (json[i].id == <%= p.id %>) {
-                        if (json[i].kategorie == "Kosten") {
+                        if (json[i].kategorie == "kosten") {
                           $("#cost<%= p.id  %>").text(json[i].summe + " CHF");
                           costdataset_<%= p.id %>.push([Date(), json[i].summe]);
                           google.charts.setOnLoadCallback(costfunc<%= p.id %>);
                         }
-                        if (json[i].kategorie == "Aufwand") {
+                        if (json[i].kategorie == "aufwand") {
                           $("#effort<%= p.id  %>").text( parseInt( (json[i].summe)/8.5) + " PT");
                           effortdataset_<%= p.id %>.push([Date(), json[i].summe]);
                           google.charts.setOnLoadCallback(effortfunc<%= p.id %>);

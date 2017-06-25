@@ -12,14 +12,11 @@ class User < ActiveRecord::Base
     has_many :mstats, as: :owner, dependent: :destroy 
     has_many :customers, as: :owner, dependent: :destroy 
     has_many :transactions, as: :owner, dependent: :destroy 
-    has_many :signages, as: :owner, dependent: :destroy 
     has_many :signage_locs, as: :owner, dependent: :destroy 
 
-    has_many :articles, dependent: :destroy 
     has_many :credentials, dependent: :destroy 
     has_many :webmasters, dependent: :destroy 
     has_many :companies, dependent: :destroy 
-    has_many :ratings, dependent: :destroy 
     has_many :mratings, dependent: :destroy 
     has_many :mcalendars, dependent: :destroy 
     #has_many :msponsors, dependent: :destroy 

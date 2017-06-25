@@ -22,14 +22,14 @@ class MadvisorsController < ApplicationController
         @madvisor.mobject_id = session[:mobject_id]
         @madvisor.role = @mobject.mtype
         case @mobject.mtype
-          when "Projekte"
+          when "projekte"
             @madvisor.grade = "berechtigt"
             @madvisor.rate = User.find(@madvisor.user_id).rate
-          when "Angebote"
+          when "angebote"
             @madvisor.grade = "Berater"
-          when "Gruppen"
+          when "gruppen"
             @madvisor.grade = "Mitglied"
-          when "Innovationswettbewerbe"
+          when "innovationswettbewerbe"
             @madvisor.grade = "Jury-Mitglied"
         end
       end
@@ -43,14 +43,14 @@ class MadvisorsController < ApplicationController
         @madvisor.mobject_id = session[:mobject_id]
         @madvisor.role = @mobject.mtype
         case @mobject.mtype
-          when "Projekte"
+          when "projekte"
             @madvisor.grade = "Projektleiter"
             @madvisor.rate = User.find(@madvisor.user_id).rate
-          when "Angebote"
+          when "angebote"
             @madvisor.grade = "Senior Berater"
-          when "Gruppen"
+          when "gruppen"
             @madvisor.grade = "Gruppenlead"
-          when "Innovationswettbewerbe"
+          when "innovationswettbewerbe"
             @madvisor.grade = "Vorsitz Jury"
         end
       end
@@ -96,7 +96,7 @@ class MadvisorsController < ApplicationController
   def create
     @madvisor = Madvisor.new(madvisor_params)
     if @madvisor.save
-      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => "Ansprechpartner"), notice: 'Ansprechpartner was successfully created.'
+      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => "Ansprechpartner"), notice: (In18.t erfolgreichgespeichert)
     else
       render :new
     end
@@ -104,20 +104,20 @@ class MadvisorsController < ApplicationController
 
   # PUT /madvisors/1
   def update
-    if @madvisor.mobject.mtype == "Projekte"
-      @topic = "Berechtigungen"
+    if @madvisor.mobject.mtype == "projekte"
+      @topic = :projektberechtigungen
     end
-    if @madvisor.mobject.mtype == "Angebote"
-      @topic = "Ansprechpartner"
+    if @madvisor.mobject.mtype == "angebote"
+      @topic = :ansprechpartner
     end
-     if @madvisor.mobject.mtype == "Gruppen"
-      @topic = "Gruppenmitglieder"
+     if @madvisor.mobject.mtype == "gruppen"
+      @topic = :gruppenmitglieder
     end
-    if @madvisor.mobject.mtype == "Innovationswettbewerbe"
-      @topic = "Jury"
+    if @madvisor.mobject.mtype == "innovationswettbewerbe"
+      @topic = :jury
     end
     if @madvisor.update(madvisor_params)
-      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => @topic), notice: 'Ansprechpartner was successfully updated.'
+      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => @topic), notice: (I18n.t erfolgreichgeaendert)
     else
       render :edit
     end
@@ -126,20 +126,20 @@ class MadvisorsController < ApplicationController
   # DELETE /madvisors/1
   def destroy
     @id = @madvisor.mobject_id
-    if @madvisor.mobject.mtype == "Projekte"
-      @topic = "Berechtigungen"
+    if @madvisor.mobject.mtype == "projekte"
+      @topic = :projektberechtigungen
     end
-    if @madvisor.mobject.mtype == "Angebote"
-      @topic = "Ansprechpartner"
+    if @madvisor.mobject.mtype == "angebote"
+      @topic = :ansprechpartner
     end
-     if @madvisor.mobject.mtype == "Gruppen"
-      @topic = "Gruppenmitglieder"
+     if @madvisor.mobject.mtype == "gruppen"
+      @topic = :gruppenmitglieder
     end
-    if @madvisor.mobject.mtype == "Innovationswettbewerbe"
-      @topic = "Jury"
+    if @madvisor.mobject.mtype == "innovationswettbewerbe"
+      @topic = :jury
     end
     @madvisor.destroy
-      redirect_to mobject_path(:id => @id, :topic => @topic), notice: 'Ansprechpartner was successfully destroyed.'
+      redirect_to mobject_path(:id => @id, :topic => @topic), notice: (I18n.t :erfolgreichgeloescht)
   end
 
   private

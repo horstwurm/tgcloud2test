@@ -1,16 +1,9 @@
-
-  <!--<div class="row">-->
-  <!--  <action>-->
-  <!--  <%= action_buttons2("Institutionen", @company, @topic) %>-->
-  <!--  </action>-->
-  <!--</div>-->
-
   <div class="row">
     <header>
     <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow> " + @company.name + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
     <nav>
       <div class='col-xs-12'>
-          <%= navigate("Institutionen", @company) %>
+          <%= navigate(:institutionen, @company) %>
       </div>
     </nav>
     </header>
@@ -19,14 +12,16 @@
   <div class="row">
       <div class='col-xs-12'>
 
+      <%= header3(:institutionen, @company, @topic, false) %>
+      
+      <% @topic %>
+      
       <% case @topic %>
-        <% when "Info" %>
+        <% when :info %>
         
-          <%= header2("Institutionen", @company, @topic, "Account Informationen", false) %>
-
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-              <%= header("Adresse", false) %>
+              <%= header((I18n.t :adresse), false) %>
               <div class="panel-body">
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                    <% case @company.status %>
@@ -37,14 +32,14 @@
                       <% when "NOK" %>
                         <i class="glyphicon glyphicon-ban-circle"></i>
                     <% end %>
-                    <b> Status</b>
+                    <b><%= (I18n.t :status) %></b>
                     <br>
                     <%= showImage2(:medium, @company, true) %>
                     <br>
-                    <b><i class="glyphicon glyphicon-folder-open"></i> Branche</b><br>
+                    <b><i class="glyphicon glyphicon-folder-open"></i><%= (I18n.t :branche) %></b><br>
                     <%= @company.mcategory.name %>
                     <br><br>
-                    <b><i class="glyphicon glyphicon-home"></i> Adresse</b><br>
+                    <b><i class="glyphicon glyphicon-home"></i><%= (I18n.t :adresse) %></b><br>
                     <% if @company.address1 and @company.address1 != "" %>
                       <%= @company.address1 %><br> 
                     <% end %>
@@ -55,7 +50,7 @@
                       <%= @company.address3 %><br> 
                     <% end %>
                     <br>
-                    <b>Verantwortlich</b><br>
+                    <b><%= (I18n.t :verantwortlich) %></b><br>
                     <%= showImage2(:small, @company.user, true) %>
                     <br>
                     <%= @company.user.name + " " + @company.user.lastname %>
@@ -71,7 +66,7 @@
               </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-              <%= header("Aktivitätsübersicht", false) %>
+              <%= header((I18n.t :aktivitaeten), false) %>
               <div class="panel-body">
                 <% if $activeapps.include?("InstitutionenAktivitaeten") or (user_signed_in? and current_user.superuser) %>
                     <i class="glyphicon glyphicon-map-marker pull-left" onclick="return drawChart();"></i>
@@ -81,139 +76,55 @@
             </div>
           </div>
 
-        <% when "Angebote, Services und Aktionen" %>
-          <%= header2("Institutionen", @company, @topic, "Angebote, Produkte & Aktionen", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Angebote"), "mobjects", nil) %>
-        <% when "Stellenanzeigen" %>
-          <%= header2("Institutionen", @company, @topic, "Stellenanzeigen", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Stellenanzeigen"), "mobjects", nil) %>
-        <% when "Kleinanzeigen" %>
-          <%= header2("Institutionen", @company, @topic, "Kleinanzeigen", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Kleinanzeigen"), "mobjects", nil) %>
-        <% when "Vermietungen" %>
-          <%= header2("Institutionen", @company, @topic, "Vermietungen", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Vermietungen"), "mobjectss", nil) %>
-        <% when "Veranstaltungen" %>
-          <%= header2("Institutionen", @company, @topic, "Veranstaltungen", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Veranstaltungen"), "mobjects", nil) %>
-        <% when "Sponsorenengagements" %>
-          <%= header2("Institutionen", @company, @topic, "Sponsorenengagements", false) %>
-          <%= build_medialist2(@company.msponsors, "msponsors", "Object") %>
-        <% when "Ausflugsziele" %>
-          <%= header2("Institutionen", @company, @topic, "Ausflugsziele", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Ausflugsziele"), "mobjects", nil) %>
-        <% when "Ausschreibungen" %>
-          <%= header2("Institutionen", @company, @topic, "Ausschreibungen", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Ausschreibungen"), "mobjects", nil) %>
-        <% when "Crowdfunding Initiativen" %>
-          <%= header2("Institutionen", @company, @topic, "Crowdfunding Initiativen", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Crowdfunding"), "mobjects", nil) %>
-        <% when "Crowdfunding (Beitraege)" %>
-          <%= header2("Institutionen", @company, @topic, "Crowdfunding Beiträge", false) %>
+        <% when :angebote %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"angebote"), "mobjects", nil) %>
+        <% when :stellenanzeigen %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"stellenanzeigen"), "mobjects", nil) %>
+        <% when :kleinanzeigen %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"kleinanzeigen"), "mobjects", nil) %>
+        <% when :vermietungen %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"vermietungen"), "mobjectss", nil) %>
+        <% when :veranstaltungen %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"veranstaltungen"), "mobjects", nil) %>
+        <% when :sponsorenengagements %>
+          <%= build_medialist2(@company.msponsors, "msponsors", "objekte") %>
+        <% when :ausflugsziele %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"ausflugsziele"), "mobjects", nil) %>
+        <% when :ausschreibungen %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"ausschreibungen"), "mobjects", nil) %>
+        <% when :crowdfunding %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"crowdfunding"), "mobjects", nil) %>
+        <% when :crowdfundingbeitraege %>
           <%= build_medialist2(@company.mstats, "mstats", nil) %>
-        <% when "Projekte" %>
-          <%= header2("Institutionen", @company, @topic, "Projekte & Aufträge", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=? and parent=?',"Projekte",0), "mobjects", nil) %>
-        <% when "Innovationswettbewerbe" %>
-          <%= header2("Institutionen", @company, @topic, "Innovations-Wettbewerbe", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Innovationswettbewerbe"), "mobjects", nil) %>
-        <% when "Umfragen" %>
-          <%= header2("Institutionen", @company, @topic, "Umfragen & Interviews", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Umfragen"), "mobjects", nil) %>
-        <% when "Publikationen" %>
-          <%= header2("Institutionen", @company, @topic, "Publikationen", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Publikationen"), "mobjects", nil) %>
-        <% when "Digital Signage (Kampagnen)" %>
-          <%= header2("Institutionen", @company, @topic, "(Online) Kampagnen", false) %>
+        <% when :projekte %>
+          <%= build_medialist2(@company.mobjects.where('mtype=? and parent=?',"projekte",0), "mobjects", nil) %>
+        <% when :innovationswettbewerbe %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"innovationswettbewerbe"), "mobjects", nil) %>
+        <% when :umfragen %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"umfragen"), "mobjects", nil) %>
+        <% when :publikationen %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"publikationen"), "mobjects", nil) %>
+        <% when :dskampagnen %>
           <%= build_medialist2(@company.signage_camps, "signage_camps", nil) %>
-        <% when "Digital Signage (Standorte)" %>
-          <%= header2("Institutionen", @company, @topic, "Werbestandorte", false) %>
+        <% when :dsstandorte %>
           <%= build_medialist2(@company.signage_locs, "signage_locs", nil) %>
-          <% if false %>
-            <%= build_medialist2(SignageLoc.where('privateonly=? and owner_id!=?', true, @company.id), "signage_locs", @company) %>
-          <% end %>
 
-        <% when "Favoriten" %>
-          <%= header2("Institutionen", @company, @topic, "Favoriten", false) %>
-          <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
-          <div class="panel-body">
-            <%= build_medialist2(@company.user.favourits, "favourits", nil) %>
-          </div>
-
-          <%= header("Favoriten", false) %>
-          <div class="panel-body">
-            <% @company.user.favourits.each do |f| %>
-              <% @item = Object.const_get(f.object_name).find(f.object_id) %>
-              <% if @item != nil %>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <div class="thumbnail" align="center">
-                    <% if f.object_name == "User" or f.object_name == "Company" %>
-                      <%= link_to @item do %>
-                        <% if @item.avatar != nil %>
-                          <%= image_tag @item.avatar(:medium), class:"img-rounded" %>
-                        <% else %>
-                          <%= image_tag("nopic.jpg", :size => "200x200" , class:"img-rounded") %>
-                        <% end %>
-                      <% end %>
-                      <anzeigetext>
-                      <% if f.object_name == "User" %>
-                        <%= @item.name + " " + @item.lastname %>
-                      <% else %>
-                        <%= @item.name %>
-                      <% end %>
-                      </anzeigetext>
-                      <br><br>
-                      <% if f.active %>
-                        <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
-                         <i class="glyphicon glyphicon-ok-sign"></i> aktiv
-                      <% else %>
-                        <% image_tag("icon_inactive.jpg",:size => "50x50", class:"img-rounded") %>
-                         <i class="glyphicon lg glyphicon-remove-sign"></i> inaktiv
-                      <% end %>
-                      <% if f.email %>
-                        <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
-                         <i class="glyphicon glyphicon-ok-sign"></i> eMail
-                      <% end %>
-                      <% if f.ticker %>
-                        <% image_tag("icon_active.jpg", :size => "50x50" , class:"img-rounded") %>
-                         <i class="glyphicon glyphicon-ok-sign"></i> Ticker
-                      <% end %>
-                      <br><br>
-                      <% if user_signed_in? %>
-                        <% if @company.user_id == current_user.id %>
-                	        <%= link_to f, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                            <i class="btn btn-danger glyphicon glyphicon-trash"></i>
-                          <% end %>
-                        <% end %>
-                      <% end %>
-                      <br><br>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-          
-    	 <% when "Kundenbeziehungen" %>
+    	 <% when :kundenbeziehungen %>
           <% hash = Hash.new %>
           <% hash = {:company_id => @company.id} %>
-          <%= header2("Institutionen", @company, @topic, "Kundenbeziehungen", false) %>
           <div class="panel-body">
             <%= build_medialist2(@company.customers, "partners", hash) %>
           </div>
-          <%= header2("Institutionen", @company, @topic, "Partner", false) %>
           <div class="panel-body">
             <%= build_medialist2(Company.where('partner=?',true), "nopartners", hash) %>
           </div>
 
-        <% when "Transaktionen" %>
-          <%= header2("Institutionen", @company, @topic, "Transaktionen", false) %>
+        <% when :transaktionen %>
           <div class="panel-body">
             <%= build_medialist2(@company.transactions, "transactions", hash) %>
           </div>
           
-        <% when "Links (Partner)" %>
-          <%= header2("Institutionen", @company, @topic, "Werbelinks", false) %>
+        <% when :partnerlinks %>
           <div class="panel-body">
             <% @company.partner_links.each do |pl| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
@@ -236,7 +147,7 @@
                           <%= link_to edit_partner_link_path(pl) do %>
                             <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                           <% end %>
-                          <%= link_to pl, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <%= link_to pl, method: :delete, data: { confirm: (I18n.t :sindsiesicher) } do %>
                             <i class="btn btn-danger glyphicon glyphicon-trash"></i>
                           <% end %>
                         <% end %>
@@ -248,8 +159,7 @@
             <% end %>
           </div>
           
-        <% when "eMail" %>
-          <%= header2("Institutionen", @company, @topic, "Mitteilungen", false) %>
+        <% when :emails %>
           <div class="panel-body">
             <% emails = Email.where('m_to=? or m_from=?', @company.user.id, @company.user.id).order(created_at: :desc) %>
             <% emails.each do |e| %>
@@ -268,15 +178,10 @@
       <% end %>
     </div>
     
-      <% if false %>
-      <div class='col-xs-2'>
-        <%= navigate("Institutionen", @company) %>
-      </div>
-      <% end %>
-
   </div>
 </div>
 
+<% if @topic == :info %>
 <script type="text/javascript">
     var latitudes = [<%= @company.latitude %>];
     var longitudes = [<%= @company.longitude %>];
@@ -312,7 +217,7 @@
     ]);
 
     var options = {
-      title: 'Aktivitätenübersicht',
+      title: "<%= I18n.t :aktivitaeten %>",
       pieHole: 0.4,
       height: 600
     };
@@ -326,6 +231,7 @@
 <script>
   document.addEventListener("turbolinks:load", function() {init_map(0); drawChart()})
 </script>
+<% end %>
 
 <script>
 $(document).ready(function(){

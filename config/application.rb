@@ -17,7 +17,7 @@ module Tkbnet
     # -- all .rb files in that directory are automatically loaded.
 
     config.time_zone = "Europe/Zurich"
-    config.i18n.default_locale = :en
+    config.i18n.default_locale = :de
     
   end
 end

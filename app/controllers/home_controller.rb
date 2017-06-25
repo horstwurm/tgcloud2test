@@ -199,15 +199,7 @@ def index8
 end
 
 def index9
-  @array = []
-  @array << "Branche"
-  @array << "Angebote"
-  @array << "Vermietungen"
-  @array << "Veranstaltungen"
-  @array << "Ausflugsziele"
-  @array << "Kleinanzeigen"
-  @array << "Crowdfunding"
-  @array << "Ticket"
+  @categories = Mcategory.select("ctype").distinct
 end
 
 def index10
@@ -321,17 +313,13 @@ def dashboard_projectdata
   @projects = Mobject.where("mtype=? and id in (?)", "Projekte", @prolist)
   msg = []
   @projects.each do |p|
-    #@kosten = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Kosten").group("id").order(:id).first
-    #@aufwand = Timetrack.select("id, sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Aufwand").group("id").order(:id).first
-    #@kosten = Timetrack.select("sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Kosten").group("mobject_id")
-    #@aufwand = Timetrack.select("sum(amount) as summe").where('mobject_id=? and costortime=?',p.id, "Aufwand").group("mobject_id")
-    @kosten = p.timetracks.where('costortime=?',"Kosten").sum(:amount)
-    @aufwand = p.timetracks.where('costortime=?',"Aufwand").sum(:amount)
+    @kosten = p.timetracks.where('costortime=?',"kosten").sum(:amount)
+    @aufwand = p.timetracks.where('costortime=?',"aufwand").sum(:amount)
     if @kosten
-      msg << {:id => p.id, :kategorie => "Kosten", :summe => @kosten}
+      msg << {:id => p.id, :kategorie => "kosten", :summe => @kosten}
     end
     if @aufwand
-      msg << {:id => p.id, :kategorie => "Aufwand", :summe => @aufwand}
+      msg << {:id => p.id, :kategorie => "aufwand", :summe => @aufwand}
     end 
   end
   respond_to do |format|

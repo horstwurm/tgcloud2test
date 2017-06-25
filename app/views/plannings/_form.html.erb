@@ -16,10 +16,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading header">
                       <li_header>
-                        <%= link_to user_path(:id => @planning.user_id, :topic => "Ressourcenplanung", :year => @planning.jahr, :mode => "Jahr") do %>
+                        <%= link_to user_path(:id => @planning.user_id, :topic => :ressourcenplanung, :year => @planning.jahr, :mode => "Jahr") do %>
                           <i class="btn btn-primary glyphicon glyphicon-list"></i>
                         <% end %>
-                        Planung <%= @planning.costortime + " " + @planning.user.name + " " + @planning.user.lastname + " " + @planning.mobject.name + " " + @planning.jahr + "/" + @planning.monat %>
+                        <%= (I18n.t :kapazitaetsplanung) + " " + (I18n.t @planning.costortime) + " " + @planning.user.name + " " + @planning.user.lastname + " " + @planning.mobject.name + " " + @planning.jahr + "/" + @planning.monat %>
                       </li_header>
                     </div>
                 </div>
@@ -29,20 +29,28 @@
             <div class="col-md-6">
                 <div class="panel-body">
 
-                    <% if @planning.costortime == "Aufwand" %>
+                    <% if @planning.costortime == "aufwand" %>
                         <div class="form-group">
-                          <%= f.label "Prozentsatz" %><br>
-                          <%= f.number_field :amount, class:"form-control" %>
+                          <%= f.label (I18n.t :prozentsatz) %>
+                            <div class="input-group">
+                              <!--<%= f.number_field :amount, :value => number_with_precision(@planning.amount, :precision => 0), :step => 5, :style => "text-align: Right", class:"form-control" %>-->
+                              <%= f.number_field :amount, :style => "text-align: Right", class:"form-control" %>
+                              <div class="input-group-addon"><%= I18n.t :prozentsym %></div>
+                            </div>
                         </div>
                     <% end %>
-                    <% if @planning.costortime == "Kosten" %>
+                    <% if @planning.costortime == "kosten" %>
                         <div class="form-group">
-                          <%= f.label "Betrag" %><br>
-                          <%= f.number_field :amount, class:"form-control" %>
+                          <%= f.label (I18n.t :betrag) %><br>
+                            <div class="input-group">
+                              <!--<%= f.number_field :amount, :value => number_with_precision(@planning.amount, :precision => 2), :step => 0.01, :style => "text-align: Right", class:"form-control" %>-->
+                              <%= f.number_field :amount, :style => "text-align: Right", class:"form-control" %>
+                              <div class="input-group-addon"><%= I18n.t :waehrung %></div>
+                            </div>
                         </div>
                     <% end %>
                     <div class="actions">
-                       <%= f.submit "Speichern", class:"btn btn-primary btn-lg"%>
+                       <%= f.submit (I18n.t :speichern), class:"btn btn-primary btn-lg"%>
                     </div>
                     <%= f.hidden_field :user_id, class:"form-control"  %>
                     <%= f.hidden_field :mobject_id, class:"form-control"  %>
