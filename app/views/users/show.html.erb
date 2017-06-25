@@ -857,7 +857,7 @@
         };
         var marker = new google.maps.Marker({
             position: myLocation,
-            title: <%= (I18n.t :location) %>
+            title: "<%= (I18n.t :standort) %>"
         });
         var map = new google.maps.Map(document.getElementById("map"),
             mapOptions);
@@ -970,7 +970,7 @@ $(document).ready(function(){
       function drawChart() {
         var data = google.visualization.arrayToDataTable(<%= raw @stats %>);
         var options = {
-          title: <%= (I18n.t :aktititaeten) %>,
+          title: "<%= (I18n.t :aktititaeten) %>",
           pieHole: 0.4,
           height: 600,
         };
