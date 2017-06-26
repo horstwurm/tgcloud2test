@@ -3,7 +3,7 @@
 
         <% if @webmaster.errors.any? %>
             <div id="error_explanation">
-              <h2><%= pluralize(@webmaster.errors.count, "error") %> prohibited this company from being saved:</h2>
+              <h2><%= pluralize(@webmaster.errors.count, "error") + (I18n.t :notsaved) %></h2>
               <ul>
                   <% @webmaster.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
@@ -16,10 +16,12 @@
             <div class="col-md-12">
               <div class="panel panel-heading header">
                 <h1>
-                <%= link_to webmasters_path do %>
-                  <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                <% if user_signed_in? and current_user.webmaster %>
+                  <%= link_to webmasters_path do %>
+                    <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                  <% end %>
                 <% end %>
-                Prüfung
+                <%= I18n.t :pruefung %>
                 </h1>
               </div>
             </div>
@@ -29,7 +31,7 @@
           <div class="col-md-6">
             <div class="panel-body">
               <div class="form-group">
-                <%= f.label "Kommentar Benutzer" %><br/>
+                <%= f.label (I18n.t :kommentar) %><br/>
                 <% if @webmaster_edit %>
                   <%= f.text_area :user_comment, rows: 5, :readonly => true, class:"form-control"%>
                 <% else %>
@@ -38,16 +40,16 @@
               </div>
               <% if @webmaster_edit %>
                 <div class="form-group">
-                  <%= f.label "Kommentar Webmaster" %><br/>
+                  <%= f.label (I18n.t :kommentarwebmaster) %><br/>
                   <%= f.text_area :web_user_comment, rows: 5, autofocus: true, class:"form-control"%>
                 </div>
               <% end %>
               <div class="actions">
                  <% if !@webmaster_edit %> 
-                   <%= f.submit "Speichern",  :status => "CHECK", class:"btn btn-primary btn-lg"%>
+                   <%= f.submit (I18n.t :speichern),  :status => "CHECK", class:"btn btn-primary btn-lg"%>
                  <% else %>
-                   <%= f.submit "Freigeben",  :status => "OK", class:"btn btn-primary btn-lg"%>
-                   <%= f.submit "Sperren",  :status => "NOK", class:"btn btn-danger btn-lg"%>
+                   <%= f.submit (I18n.t :freigeben),  :status => "OK", class:"btn btn-primary btn-lg"%>
+                   <%= f.submit (I18n.t :sperren),  :status => "NOK", class:"btn btn-danger btn-lg"%>
                  <% end %>
               </div>
               <%= f.hidden_field :object_id %>

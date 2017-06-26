@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <div class="panel-heading header">
         <h1>
-        Webmaster
+        <%= I18n.t :webmaster %>
         <span class="badge"><%= @webanz %></span>
         </h1>
       </div>
@@ -25,10 +25,10 @@
             </tr>
             
             <tr>
-              <th colspan="2">Status</th>
-              <th colspan="2">Objekt</th>
-              <th>Melder</th>
-              <th>Webmaster</th>
+              <th colspan="2"><%= I18n.t :status %></th>
+              <th colspan="2"><%= I18n.t :objekt %></th>
+              <th><%= I18n.t :gemeldetvon %></th>
+              <th><%= I18n.t :webmaster %></th>
             </tr>
           </thead>
         
@@ -47,14 +47,14 @@
                 </td>
                 <td>
         				  <%= link_to edit_webmaster_path(wm) do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                    <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
                   <% end %>
                 </td>
                   <% @item = Object.const_get(wm.object_name).find(wm.object_id) %>
                       <% if @item != nil %>
                         <td>
               				  <%= link_to @item do %>
-                          <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                          <i class="btn btn-primary glyphicon glyphicon-info-sign"></i>
                         <% end %>
                         </td>
                         <td>

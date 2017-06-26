@@ -1561,7 +1561,7 @@ def action_buttons2(object_type, item, topic)
                 html_string = html_string + link_to(edit_user_path(item), title: (I18n.t :bearbeiten), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-wrench")
               end
-              html_string = html_string + link_to(item, method: :delete, data: { confirm: (I18n.t :sindsiesicher)}, title: (I18n.t :accountloeschen), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' )  do
+              html_string = html_string + link_to(item, method: :delete, data: { confirm: (I18n.t :sindsiesicher)}, title: (I18n.t :loeschen), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' )  do
                   content_tag(:i, nil, class: "btn btn-danger pull-right glyphicon glyphicon-trash")
               end
             end
@@ -2350,7 +2350,7 @@ def build_kachel_access(topic, mode, user)
   appparams = Appparam.where('domain=?',topic)
   appparams.each do |a|
   
-    if mode == "System"
+    if mode == "system"
       if a.access
           thumbnail_state = 'thumbnail-active'
         else
@@ -2359,7 +2359,7 @@ def build_kachel_access(topic, mode, user)
       cpath = appparams_path(:id => a.id)
     end
 
-    if mode == "User"
+    if mode == "user"
       forget = false
       @credential = user.credentials.where('appparam_id=?',a.id).first
       if @credential
@@ -2750,6 +2750,9 @@ def init_apps
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => :auftragscontrolling, "access" => true, "icon" => "auftragscontrolling"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "Objekte", "right" => :ressourcenplanung, "access" => true, "icon" => "news"}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "Objekte", "right" => :projektdashboard, "access" => true, "icon" => "projektdashboard"}

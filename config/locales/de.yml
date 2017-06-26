@@ -148,6 +148,16 @@ de:
   FAVhinzufuegen: "Favorit"
   speichern: "Speichern"
   bearbeiten: "Bearbeiten"
+  loeschen: "Löschen"
+  freigeben: "Freigeben"
+  sperren: "Sperren"
+  missbrauchmelden: "Missbrauch melden"
+  pruefung: "Prüfung des Webmasters"
+  kommentar: "Kommentar"
+  kommentarwebmaster: "Kommentar des Webmasters"
+  gemeldetvon: "gemeldet von"
+  webmaster: "Webmaster"
+  objekt: "Informationsobjekt"
   
   #footer
   nutzungsbedingungen: "Nutzungsbedingungen"

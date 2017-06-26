@@ -105,7 +105,7 @@ de:
       updated: "Your account has been updated successfully."
     sessions:
       signed_in: "Sie haben sich erfolgreich angemeldet"
-      signed_out: "Signed out successfully."
+      signed_out: "Sie haben sich erfolgreich abgemeldet"
       already_signed_out: "Signed out successfully."
     unlocks:
       send_instructions: "You will receive an email with instructions for how to unlock your account in a few minutes."
