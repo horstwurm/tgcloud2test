@@ -1484,6 +1484,7 @@ $(document).ready(function(){
         $.ajax({
             // url: "http://tkbinfo-horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
             url: "http://tkbinfo.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
+
             //force to handle it as text
             dataType: "text",
             success: function(data) {
@@ -1495,29 +1496,24 @@ $(document).ready(function(){
                 // alert(json[0].kategorie + " " + json[0].anzahl);
                 // alert(json[1].kategorie + " " + json[1].anzahl);
                 // alert(json[2].kategorie + " " + json[2].anzahl);
-                <% if true %>
                 <% @projects.each do |p| %>
                   for (var i=0;i<json.length;++i)
                   {
                     <% if true %>
                       if (json[i].id == <%= p.id %>) {
                         if (json[i].kategorie == "kosten") {
-                          $("#cost<%= p.id  %>").text(json[i].summe + " CHF");
+                          $("#cost<%= p.id  %>").text(json[i].summe + (I18n.t :waehrung));
                           costdataset_<%= p.id %>.push([Date(), json[i].summe]);
                           google.charts.setOnLoadCallback(costfunc<%= p.id %>);
                         }
                         if (json[i].kategorie == "aufwand") {
-                          $("#effort<%= p.id  %>").text( parseInt( (json[i].summe)/8.5) + " PT");
+                          $("#effort<%= p.id  %>").text( parseInt( (json[i].summe)/8.5) + (I18n.t :personentage));
                           effortdataset_<%= p.id %>.push([Date(), json[i].summe]);
                           google.charts.setOnLoadCallback(effortfunc<%= p.id %>);
                         }
                       }
                     <% end %>
                   }
-                  // var d = new Date;
-                  // var m = d.getMilliseconds();
-                  // $("#<%= p.id %>").text(json[0].anzahl);
-                <% end %>
                 <% end %>
             }
         });

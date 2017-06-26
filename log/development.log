@@ -1,0 +1,867 @@
+Started GET "/" for 46.140.136.238 at 2017-06-26 11:10:26 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by HomeController#index3 as HTML
+  Rendering home/index3.html.erb within layouts/application
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (2.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mAppparam Load (0.8ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered home/index3.html.erb within layouts/application (843.4ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered layouts/_header.html.erb (3.9ms)
+  [1m[36mCompany Load (0.2ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (5.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.5ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (113.1ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (5.7ms)
+  [1m[36mCompany Load (2.0ms)[0m  [1m[34mSELECT "companies".* FROM "companies" WHERE (partner='t')[0m
+  Rendered layouts/_footer.html.erb (15.1ms)
+Completed 200 OK in 4516ms (Views: 4465.3ms | ActiveRecord: 37.7ms)
+
+
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:10:32 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (192.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (17.5ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (358.3ms)
+Started GET "/mobjects?msubtype=Root&mtype=projekte&parent=0" for 46.140.136.238 at 2017-06-26 11:11:26 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by MobjectsController#index as HTML
+  Parameters: {"msubtype"=>"Root", "mtype"=>"projekte", "parent"=>"0"}
+  [1m[35m (8.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "mobjects" WHERE (status='OK' and mtype='projekte' and active='t')[0m
+  [1m[36mMobject Load (1.1ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE (status='OK' and mtype='projekte' and active='t') ORDER BY "mobjects"."created_at" DESC LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 108]]
+  [1m[36mMdetail Load (0.3ms)[0m  [1m[34mSELECT  "mdetails".* FROM "mdetails" WHERE "mdetails"."mobject_id" = ? ORDER BY "mdetails"."id" ASC LIMIT ?[0m  [["mobject_id", 108], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mdetails".* FROM "mdetails" WHERE "mdetails"."mobject_id" = ? ORDER BY "mdetails"."id" ASC LIMIT ?[0m  [["mobject_id", 108], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 107]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 106]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 104]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 103]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 102]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 101]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 52]]
+  [1m[36mMdetail Load (0.3ms)[0m  [1m[34mSELECT  "mdetails".* FROM "mdetails" WHERE "mdetails"."mobject_id" = ? ORDER BY "mdetails"."id" ASC LIMIT ?[0m  [["mobject_id", 52], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mdetails".* FROM "mdetails" WHERE "mdetails"."mobject_id" = ? ORDER BY "mdetails"."id" ASC LIMIT ?[0m  [["mobject_id", 52], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 51]]
+  [1m[36mMdetail Load (0.2ms)[0m  [1m[34mSELECT  "mdetails".* FROM "mdetails" WHERE "mdetails"."mobject_id" = ? ORDER BY "mdetails"."id" ASC LIMIT ?[0m  [["mobject_id", 51], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mdetails".* FROM "mdetails" WHERE "mdetails"."mobject_id" = ? ORDER BY "mdetails"."id" ASC LIMIT ?[0m  [["mobject_id", 51], ["LIMIT", 1]]
+  Rendering mobjects/index.html.erb within layouts/application
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "mobjects" WHERE (status='OK' and mtype='projekte' and active='t')[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 108]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mdetails".* FROM "mdetails" WHERE "mdetails"."mobject_id" = ? ORDER BY "mdetails"."id" ASC LIMIT ?[0m  [["mobject_id", 108], ["LIMIT", 1]]
+  [1m[36mMcategory Load (0.4ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 100], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 107]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 100], ["LIMIT", 1]]
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 106]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 100], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 100], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 104]]
+  [1m[36mMcategory Load (0.4ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 98], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 103]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 98], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 102]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 98], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 101]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 98], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 52]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mdetails".* FROM "mdetails" WHERE "mdetails"."mobject_id" = ? ORDER BY "mdetails"."id" ASC LIMIT ?[0m  [["mobject_id", 52], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 98], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 51]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mdetails".* FROM "mdetails" WHERE "mdetails"."mobject_id" = ? ORDER BY "mdetails"."id" ASC LIMIT ?[0m  [["mobject_id", 51], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 98], ["LIMIT", 1]]
+  [1m[36mCACHE (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendered mobjects/index.html.erb within layouts/application (122.6ms)
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mAppparam Load (0.7ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered layouts/_header.html.erb (2.8ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.3ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (7.4ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (4.7ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT "companies".* FROM "companies" WHERE (partner='t')[0m
+  Rendered layouts/_footer.html.erb (9.5ms)
+Completed 200 OK in 891ms (Views: 675.5ms | ActiveRecord: 21.4ms)
+
+
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:11:27 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (144.2ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.9ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (218.4ms)
+Started GET "/mobjects/105" for 46.140.136.238 at 2017-06-26 11:11:54 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by MobjectsController#show as HTML
+  Parameters: {"id"=>"105"}
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 105], ["LIMIT", 1]]
+  [1m[36mMstat Load (0.3ms)[0m  [1m[34mSELECT date(created_at) as datum, count(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[36mMstat Load (0.2ms)[0m  [1m[34mSELECT date(created_at) as datum, sum(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mMcalendar Load (0.2ms)[0m  [1m[34mSELECT "mcalendars".* FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  Rendering mobjects/show.html.erb within layouts/application
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mMdetail Load (0.4ms)[0m  [1m[34mSELECT "mdetails".* FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT AVG("mratings"."rating") FROM "mratings" WHERE (mobject_id=105)[0m
+  [1m[36mMcategory Load (0.2ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 100], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=105) ORDER BY "mobjects"."created_at" DESC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 107]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 100], ["LIMIT", 1]]
+  [1m[36mCompany Load (0.3ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 106]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 100], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendered mobjects/show.html.erb within layouts/application (165.4ms)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mAppparam Load (0.7ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered layouts/_header.html.erb (2.1ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.4ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (8.3ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (4.6ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT "companies".* FROM "companies" WHERE (partner='t')[0m
+  Rendered layouts/_footer.html.erb (9.3ms)
+Completed 200 OK in 689ms (Views: 652.6ms | ActiveRecord: 9.5ms)
+
+
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:11:55 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (139.2ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.7ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (211.0ms)
+Started GET "/mobjects/105?topic=projektdashboard" for 46.140.136.238 at 2017-06-26 11:12:12 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by MobjectsController#show as HTML
+  Parameters: {"topic"=>"projektdashboard", "id"=>"105"}
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 105], ["LIMIT", 1]]
+  [1m[36mMstat Load (0.3ms)[0m  [1m[34mSELECT date(created_at) as datum, count(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[36mMstat Load (0.3ms)[0m  [1m[34mSELECT date(created_at) as datum, sum(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mMcalendar Load (0.3ms)[0m  [1m[34mSELECT "mcalendars".* FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  Rendering mobjects/show.html.erb within layouts/application
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mMobject Load (0.7ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=105)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=106)[0m
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=107)[0m
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='projekte' and id in (105,106,107))[0m
+  Rendered mobjects/show.html.erb within layouts/application (89.2ms)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mAppparam Load (0.6ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered layouts/_header.html.erb (3.5ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.3ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (11.4ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (6.1ms)
+  [1m[36mCompany Load (0.5ms)[0m  [1m[34mSELECT "companies".* FROM "companies" WHERE (partner='t')[0m
+  Rendered layouts/_footer.html.erb (12.4ms)
+Completed 200 OK in 750ms (Views: 735.1ms | ActiveRecord: 6.5ms)
+
+
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:12:13 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.8ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (208.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.0ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (291.6ms)
+Started GET "/mobjects/105?topic=projektdashboard" for 46.140.136.238 at 2017-06-26 11:13:28 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by MobjectsController#show as HTML
+  Parameters: {"topic"=>"projektdashboard", "id"=>"105"}
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 105], ["LIMIT", 1]]
+  [1m[36mMstat Load (0.3ms)[0m  [1m[34mSELECT date(created_at) as datum, count(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[36mMstat Load (0.2ms)[0m  [1m[34mSELECT date(created_at) as datum, sum(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mMcalendar Load (0.2ms)[0m  [1m[34mSELECT "mcalendars".* FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  Rendering mobjects/show.html.erb within layouts/application
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=105)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=106)[0m
+  [1m[36mMobject Load (0.2ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=107)[0m
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='projekte' and id in (105,106,107))[0m
+  Rendered mobjects/show.html.erb within layouts/application (60.9ms)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mAppparam Load (0.6ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered layouts/_header.html.erb (2.1ms)
+  [1m[36mCompany Load (0.2ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.2ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (60.1ms)
+  [1m[36mCompany Load (0.3ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.2ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (5.3ms)
+  [1m[36mCompany Load (0.3ms)[0m  [1m[34mSELECT "companies".* FROM "companies" WHERE (partner='t')[0m
+  Rendered layouts/_footer.html.erb (10.0ms)
+Completed 200 OK in 715ms (Views: 586.0ms | ActiveRecord: 12.0ms)
+
+
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:13:32 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (141.0ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.6ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (214.3ms)
+Started GET "/mobjects/105?topic=info" for 46.140.136.238 at 2017-06-26 11:14:25 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by MobjectsController#show as HTML
+  Parameters: {"topic"=>"info", "id"=>"105"}
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 105], ["LIMIT", 1]]
+  [1m[36mMstat Load (0.3ms)[0m  [1m[34mSELECT date(created_at) as datum, count(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[36mMstat Load (0.2ms)[0m  [1m[34mSELECT date(created_at) as datum, sum(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mMcalendar Load (0.2ms)[0m  [1m[34mSELECT "mcalendars".* FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  Rendering mobjects/show.html.erb within layouts/application
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mMdetail Load (0.4ms)[0m  [1m[34mSELECT "mdetails".* FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT AVG("mratings"."rating") FROM "mratings" WHERE (mobject_id=105)[0m
+  [1m[36mMcategory Load (0.2ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 100], ["LIMIT", 1]]
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=105) ORDER BY "mobjects"."created_at" DESC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 107]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 100], ["LIMIT", 1]]
+  [1m[36mCompany Load (0.3ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "mdetails" WHERE "mdetails"."mobject_id" = ?[0m  [["mobject_id", 106]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "mcategories".* FROM "mcategories" WHERE "mcategories"."id" = ? LIMIT ?[0m  [["id", 100], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendered mobjects/show.html.erb within layouts/application (215.5ms)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mAppparam Load (0.7ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered layouts/_header.html.erb (2.0ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.2ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (6.6ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (4.6ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT "companies".* FROM "companies" WHERE (partner='t')[0m
+  Rendered layouts/_footer.html.erb (9.8ms)
+Completed 200 OK in 684ms (Views: 669.5ms | ActiveRecord: 8.2ms)
+
+
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:14:26 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (185.2ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.0ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.9ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (254.4ms)
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:19:08 +0000
+Started GET "/mobjects/105?topic=projektdashboard" for 46.140.136.238 at 2017-06-26 11:19:08 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+Processing by MobjectsController#show as HTML
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  Parameters: {"topic"=>"projektdashboard", "id"=>"105"}
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+  [1m[36mMobject Load (2.0ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 105], ["LIMIT", 1]]
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+  [1m[36mMstat Load (0.5ms)[0m  [1m[34mSELECT date(created_at) as datum, count(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+  [1m[36mMstat Load (0.3ms)[0m  [1m[34mSELECT date(created_at) as datum, sum(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+  [1m[36mMcalendar Load (0.2ms)[0m  [1m[34mSELECT "mcalendars".* FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+  Rendering mobjects/show.html.erb within layouts/application
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+  [1m[36mMobject Load (0.5ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=105)[0m
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=106)[0m
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+  [1m[36mMobject Load (0.3ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (parent=107)[0m
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+  [1m[36mMobject Load (0.4ms)[0m  [1m[34mSELECT "mobjects".* FROM "mobjects" WHERE (mtype='projekte' and id in (105,106,107))[0m
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+  Rendered mobjects/show.html.erb within layouts/application (50.8ms)
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (145.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.6ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (292.3ms)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mAppparam Load (0.7ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered layouts/_header.html.erb (2.2ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.3ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (7.8ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (4.6ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT "companies".* FROM "companies" WHERE (partner='t')[0m
+  Rendered layouts/_footer.html.erb (9.6ms)
+Completed 200 OK in 905ms (Views: 803.5ms | ActiveRecord: 7.6ms)
+
+
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:19:09 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (174.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.9ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (241.3ms)
+Started GET "/mobjects/105?topic=auftragscontrolling" for 46.140.136.238 at 2017-06-26 11:21:14 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by MobjectsController#show as HTML
+  Parameters: {"topic"=>"auftragscontrolling", "id"=>"105"}
+  [1m[36mMobject Load (0.7ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 105], ["LIMIT", 1]]
+  [1m[36mMstat Load (0.4ms)[0m  [1m[34mSELECT date(created_at) as datum, count(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[36mMstat Load (0.3ms)[0m  [1m[34mSELECT date(created_at) as datum, sum(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mMcalendar Load (0.3ms)[0m  [1m[34mSELECT "mcalendars".* FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  Rendering mobjects/show.html.erb within layouts/application
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT  jahrmonat, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=105 and costortime='aufwand' and datum>='2017-01-01' and datum<='2017-12-31') GROUP BY "timetracks"."jahrmonat" ORDER BY "timetracks"."jahrmonat" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  jahrmonat, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=105 and costortime='aufwand' and datum>='2017-01-01' and datum<='2017-12-31') GROUP BY "timetracks"."jahrmonat" ORDER BY "timetracks"."jahrmonat" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPlanning Load (0.2ms)[0m  [1m[34mSELECT  jahrmonat, sum(amount) as summe FROM "plannings" WHERE (mobject_id=105 and costortime='aufwand' and jahr='2017') GROUP BY "plannings"."jahrmonat" ORDER BY "plannings"."jahrmonat" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPlanning Load (0.2ms)[0m  [1m[34mSELECT  jahrmonat, sum(amount) as summe FROM "plannings" WHERE (mobject_id=105 and costortime='aufwand' and jahr='2017') GROUP BY "plannings"."jahrmonat" ORDER BY "plannings"."jahrmonat" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPlanning Load (0.1ms)[0m  [1m[34mSELECT jahrmonat, sum(amount) as summe FROM "plannings" WHERE (mobject_id=105 and costortime='aufwand' and jahr='2017') GROUP BY "plannings"."jahrmonat" ORDER BY "plannings"."jahrmonat" ASC[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT jahrmonat, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=105 and costortime='aufwand' and datum>='2017-01-01' and datum<='2017-12-31') GROUP BY "timetracks"."jahrmonat" ORDER BY "timetracks"."jahrmonat" ASC[0m
+  [1m[36mPlanning Load (0.1ms)[0m  [1m[34mSELECT user_id, sum(amount) as summe FROM "plannings" WHERE (mobject_id=105 and costortime='aufwand' and jahr='2017') GROUP BY "plannings"."user_id"[0m
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT user_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=105 and costortime='aufwand' and datum>='2017-01-01' and datum<='2017-12-31') GROUP BY "timetracks"."user_id"[0m
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT DISTINCT "timetracks"."user_id" FROM "timetracks" WHERE (mobject_id=105 and costortime='aufwand')[0m
+  Rendered mobjects/show.html.erb within layouts/application (189.0ms)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mAppparam Load (0.9ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered layouts/_header.html.erb (2.2ms)
+  [1m[36mCompany Load (0.5ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.2ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (8.5ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (4.8ms)
+  [1m[36mCompany Load (0.5ms)[0m  [1m[34mSELECT "companies".* FROM "companies" WHERE (partner='t')[0m
+  Rendered layouts/_footer.html.erb (10.3ms)
+Completed 200 OK in 710ms (Views: 691.4ms | ActiveRecord: 7.0ms)
+
+
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:21:15 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (133.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.8ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (194.7ms)
+Started GET "/mobjects/105?mode=alles&month=6&scope=aufwand&topic=auftragscontrolling&year=2017" for 46.140.136.238 at 2017-06-26 11:21:30 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by MobjectsController#show as HTML
+  Parameters: {"mode"=>"alles", "month"=>"6", "scope"=>"aufwand", "topic"=>"auftragscontrolling", "year"=>"2017", "id"=>"105"}
+  [1m[36mMobject Load (0.6ms)[0m  [1m[34mSELECT  "mobjects".* FROM "mobjects" WHERE "mobjects"."id" = ? LIMIT ?[0m  [["id", 105], ["LIMIT", 1]]
+  [1m[36mMstat Load (0.3ms)[0m  [1m[34mSELECT date(created_at) as datum, count(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[36mMstat Load (0.2ms)[0m  [1m[34mSELECT date(created_at) as datum, sum(amount) as summe FROM "mstats" WHERE (mobject_id = 105) GROUP BY date(created_at)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mMcalendar Load (0.2ms)[0m  [1m[34mSELECT "mcalendars".* FROM "mcalendars" WHERE "mcalendars"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  Rendering mobjects/show.html.erb within layouts/application
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "timetracks" WHERE "timetracks"."mobject_id" = ?[0m  [["mobject_id", 105]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  jahrmonat, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=105 and costortime='aufwand') GROUP BY "timetracks"."jahrmonat" ORDER BY "timetracks"."jahrmonat" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTimetrack Load (0.2ms)[0m  [1m[34mSELECT  jahrmonat, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=105 and costortime='aufwand') GROUP BY "timetracks"."jahrmonat" ORDER BY "timetracks"."jahrmonat" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPlanning Load (0.2ms)[0m  [1m[34mSELECT  jahrmonat, sum(amount) as summe FROM "plannings" WHERE (mobject_id=105 and costortime='aufwand') GROUP BY "plannings"."jahrmonat" ORDER BY "plannings"."jahrmonat" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPlanning Load (0.2ms)[0m  [1m[34mSELECT  jahrmonat, sum(amount) as summe FROM "plannings" WHERE (mobject_id=105 and costortime='aufwand') GROUP BY "plannings"."jahrmonat" ORDER BY "plannings"."jahrmonat" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPlanning Load (0.2ms)[0m  [1m[34mSELECT jahrmonat, sum(amount) as summe FROM "plannings" WHERE (mobject_id=105 and costortime='aufwand') GROUP BY "plannings"."jahrmonat" ORDER BY "plannings"."jahrmonat" ASC[0m
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT jahrmonat, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=105 and costortime='aufwand') GROUP BY "timetracks"."jahrmonat" ORDER BY "timetracks"."jahrmonat" ASC[0m
+  [1m[36mPlanning Load (0.2ms)[0m  [1m[34mSELECT user_id, sum(amount) as summe FROM "plannings" WHERE (mobject_id=105 and costortime='aufwand') GROUP BY "plannings"."user_id"[0m
+  [1m[36mTimetrack Load (0.3ms)[0m  [1m[34mSELECT user_id, sum(amount) as summe FROM "timetracks" WHERE (mobject_id=105 and costortime='aufwand') GROUP BY "timetracks"."user_id"[0m
+  [1m[36mTimetrack Load (0.1ms)[0m  [1m[34mSELECT DISTINCT "timetracks"."user_id" FROM "timetracks" WHERE (mobject_id=105 and costortime='aufwand')[0m
+  Rendered mobjects/show.html.erb within layouts/application (78.9ms)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mAppparam Load (1.3ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered layouts/_header.html.erb (2.0ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.3ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (8.0ms)
+  [1m[36mCACHE (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (6.3ms)
+  [1m[36mCompany Load (0.5ms)[0m  [1m[34mSELECT "companies".* FROM "companies" WHERE (partner='t')[0m
+  Rendered layouts/_footer.html.erb (11.5ms)
+Completed 200 OK in 587ms (Views: 571.9ms | ActiveRecord: 6.6ms)
+
+
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:21:31 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (159.3ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.9ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (230.3ms)
+Started GET "/users/sign_in" for 46.140.136.238 at 2017-06-26 11:21:34 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (1.9ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (21.1ms)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mAppparam Load (0.7ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered layouts/_header.html.erb (2.2ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.2ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (7.3ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (4.0ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT "companies".* FROM "companies" WHERE (partner='t')[0m
+  Rendered layouts/_footer.html.erb (8.3ms)
+Completed 200 OK in 680ms (Views: 626.1ms | ActiveRecord: 3.9ms)
+
+
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:21:35 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.4ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (134.2ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.7ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.5ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (194.4ms)
+Started GET "/users/sign_in" for 46.140.136.238 at 2017-06-26 11:23:14 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (2.5ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (15.8ms)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "appparams"[0m
+  [1m[36mAppparam Load (0.7ms)[0m  [1m[34mSELECT "appparams".* FROM "appparams"[0m
+  Rendered layouts/_header.html.erb (2.2ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mPartnerLink Load (0.3ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (7.8ms)
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE (partner='t' and name='Thurgauer Kantonalbank') ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "partner_links".* FROM "partner_links" WHERE "partner_links"."company_id" = ? AND (active='t')[0m  [["company_id", 4]]
+  Rendered layouts/_advertise.html.erb (5.2ms)
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT "companies".* FROM "companies" WHERE (partner='t')[0m
+  Rendered layouts/_footer.html.erb (10.2ms)
+Completed 200 OK in 636ms (Views: 631.5ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/home/ubuntu/workspace/app/assets/stylesheets/application.css" for 46.140.136.238 at 2017-06-26 11:23:15 +0000
+Cannot render console from 46.140.136.238! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/home/ubuntu/workspace/app/assets/stylesheets/application.css"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.7ms)
+  Rendered collection of /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [434 times] (185.6ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.1ms)
+  Rendering /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /usr/local/rvm/gems/ruby-2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (302.6ms)

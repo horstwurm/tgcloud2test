@@ -310,7 +310,7 @@ def dashboard_projectdata
   @mobject = Mobject.find(params[:pid])
   @prolist = [@mobject.id]
   @mobject.wo_iterate(@mobject.id, true, @prolist)
-  @projects = Mobject.where("mtype=? and id in (?)", "Projekte", @prolist)
+  @projects = Mobject.where("mtype=? and id in (?)", "projekte", @prolist)
   msg = []
   @projects.each do |p|
     @kosten = p.timetracks.where('costortime=?',"kosten").sum(:amount)
