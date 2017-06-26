@@ -9,7 +9,7 @@
 
   <div class="row">
     <header>
-    <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow>" + @mobject.mtype + " " + @mobject.msubtype.to_s + " " + @mobject.name + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
+    <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow>" + (I18n.t @mobject.mtype) + " " + @mobject.msubtype.to_s + " " + @mobject.name + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
     <nav>
       <div class='col-xs-12'>
           <%= navigate(:objekte, @mobject) %>
@@ -827,11 +827,7 @@
               <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope)  do %>
                 <span><i class="btn btn-<%= btn_y %> glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
               <% end %>
-              <% if false %>
-              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => "Monat", :scope => @c_scope)  do %>
-                <span><i class="btn btn-<%= btn_m %> glyphicon glyphicon-calendar"> <%= @c_month %></i></span>
-              <% end %>
-              <% end %>
+              
               <% if @c_mode != "alles" %>
                 <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
                   <i class="btn btn btn-primary glyphicon glyphicon-chevron-left"></i>
@@ -869,10 +865,10 @@
             <% end %>
             
             <% @range = [] %>
-            <% @start = "2000-01" %>
-            <% @ende = "2000-01" %>
-            <% @startp = "2000-01" %>
-            <% @endep = "2000-01" %>
+            <% @start = Date.today.strftime("%Y-m") %>
+            <% @ende = @start %>
+            <% @startp = @start  %>
+            <% @endep = @start  %>
             
             <% if @tts %>
               <% @start = @tts.first.jahrmonat if @tts.first %>
@@ -882,7 +878,8 @@
               <% @startp = @pts.first.jahrmonat if @pts.first %>
               <% @endep = @pts.last.jahrmonat if @pts.last %>
             <% end %>
-              <% if @startp < @start %>
+            
+            <% if @startp < @start %>
               <% @start = @startp %>
             <% end %>
             <% if @endep > @ende %>
@@ -915,12 +912,11 @@
             <% @range %><br><br>
 
             <% @plans = [] %>
-            <% if @pts %>
-              <% @pts.each do |t| %>
-                <% @plans << [t.jahrmonat, t.summe] %>
-              <% end %>
+            <% @pts.each do |t| %>
+              <% @plans << [t.jahrmonat, t.summe] %>
             <% end %>
-            <% @ists = [] %>
+            
+           <% @ists = [] %>
             <% @tts.each do |t| %>
               <% @ists << [t.jahrmonat, t.summe] %>
             <% end %>
@@ -1482,8 +1478,9 @@ $(document).ready(function(){
         
     function callme() {
         $.ajax({
-            // url: "http://tkbinfo-horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
-            url: "http://tkbinfo.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
+            // url: "http://tkbinfo-horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>"
+            // url: "http://tkbinfo.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>"
+            url: "https://tkbinfo.horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>"
 
             //force to handle it as text
             dataType: "text",
