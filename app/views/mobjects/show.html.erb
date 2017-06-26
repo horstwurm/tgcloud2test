@@ -1276,10 +1276,13 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script>
+
 $(document).ready(function(){
+
       google.charts.load('current', {'packages':['corechart']});
-      
+
       <% if @topic == :auftragscontrolling %>
+
         google.charts.setOnLoadCallback(drawChartallkum);
         function drawChartallkum() {
           var data = google.visualization.arrayToDataTable(<%= raw @istsollkum %>);
@@ -1293,6 +1296,7 @@ $(document).ready(function(){
             colors: ['#ACC550','#2E6B33'],
             // legend: { position: 'bottom' }
           };
+
           <% if @c_mode == "Monat" %>
             var chart = new google.visualization.ColumnChart(document.getElementById("auftragschartallkum"));
           <% else %>
@@ -1300,6 +1304,7 @@ $(document).ready(function(){
           <% end %>
           chart.draw(data, options);
         };
+
         google.charts.setOnLoadCallback(drawChartall);
         function drawChartall() {
           var data = google.visualization.arrayToDataTable(<%= raw @istsoll %>);
@@ -1310,9 +1315,11 @@ $(document).ready(function(){
             <% if @c_scope == "kosten" %>
               title: "<%= I18n.t :rapportiertekostenmonat %>",
             <% end %>
+
             colors: ['#ACC550','#2E6B33'],
             // legend: { position: 'bottom' }
           };
+
           <% if @c_mode == "Monat" %>
             var chart = new google.visualization.ColumnChart(document.getElementById("auftragschartall"));
           <% else %>
@@ -1320,6 +1327,7 @@ $(document).ready(function(){
           <% end %>
           chart.draw(data, options);
         };
+
         google.charts.setOnLoadCallback(drawChartuser);
         function drawChartuser() {
           var data = google.visualization.arrayToDataTable(<%= raw @istsollau %>);
@@ -1336,8 +1344,8 @@ $(document).ready(function(){
           var chart = new google.visualization.ColumnChart(document.getElementById('chartalluser'));
           chart.draw(data, options);
         };
-        <% if true %>
-        <% for i in 0..@iso.length-1 do %>
+
+       <% for i in 0..@iso.length-1 do %>
             google.charts.setOnLoadCallback(drawChart<%= i.to_s %>);
             function drawChart<%= i.to_s %>() {
               var data = google.visualization.arrayToDataTable(<%= raw @iso[i] %>);
@@ -1360,163 +1368,145 @@ $(document).ready(function(){
             };
             <% i = i + 1 %>
         <% end %>
-        <% end %>
       
       <% end %>
-        
+
       <% if @topic == :umfragen %>
-      
-      
-      window.datasetq = [['kategorie', 'anzahl'],['keine Antwort',0]];
-      <% @mobject.questions.each do |q| %>
-        <% anzCount =0 %>
-        <% q.answers.each do |a| %>
-          <% anzCount = anzCount + a.user_answers.count %>
-        <% end %>
-        datasetq.push(['<%= q.name %>', <%= anzCount %>]);
-      <% end %>
-      google.charts.setOnLoadCallback(drawChartq);
-      function drawChartq() {
-        var data = google.visualization.arrayToDataTable(datasetq);
-        var options = {
-          title: "<%= I18n.t :antworten %>",
-          colors: ['#ACC550'],
-          legend: { position: 'bottom' }
-        };
-        var chart = new google.visualization.ColumnChart(document.getElementById('chartq'));
-        chart.draw(data, options);
-      };
-        
-      <% @mobject.questions.each do |q| %>
-      
-        <% if q.mcategory.name == "multiple" or q.mcategory.name == "single" %>
-          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
-          <% q.answers.each do |qa| %>
-            dataset<%= q.id.to_s %>.push(['<%= qa.name %>', <%= qa.user_answers.where('checker=?',true).count %>]);
+        window.datasetq = [['kategorie', 'anzahl'],['keine Antwort',0]];
+        <% @mobject.questions.each do |q| %>
+          <% anzCount =0 %>
+          <% q.answers.each do |a| %>
+            <% anzCount = anzCount + a.user_answers.count %>
           <% end %>
+          datasetq.push(['<%= q.name %>', <%= anzCount %>]);
         <% end %>
-    
-        <% if q.mcategory.name == "numerisch" %>
-          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
-          <% q.answers.each do |qa| %>
-            dataset<%= q.id.to_s %>.push(['Minimum', <%= qa.user_answers.minimum(:num) %>]);
-            dataset<%= q.id.to_s %>.push(['Maximum', <%= qa.user_answers.maximum(:num) %>]);
-            dataset<%= q.id.to_s %>.push(['Durchschnitt', <%= qa.user_answers.average(:num) %>]);
-          <% end %>
-        <% end %>
-    
-        <% if q.mcategory.name == "text" %>
-          window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
-          <% q.answers.each do |qa| %>
-            dataset<%= q.id.to_s %>.push(['kein Text angegeben', <%= qa.user_answers.where('description=?',"").count %>]);
-            dataset<%= q.id.to_s %>.push(['Text angegeben', <%= qa.user_answers.where('description<>?',"").count %>]);
-          <% end %>
-        <% end %>
-    
-        google.charts.setOnLoadCallback(drawChart<%= q.id.to_s %>);
-        function drawChart<%= q.id.to_s %>() {
-          var data = google.visualization.arrayToDataTable(dataset<%= q.id.to_s %>);
+        google.charts.setOnLoadCallback(drawChartq);
+
+        function drawChartq() {
+          var data = google.visualization.arrayToDataTable(datasetq);
           var options = {
             title: "<%= I18n.t :antworten %>",
             colors: ['#ACC550'],
             legend: { position: 'bottom' }
           };
-          var chart = new google.visualization.ColumnChart(document.getElementById('<%="chart"+q.id.to_s %>'));
+          var chart = new google.visualization.ColumnChart(document.getElementById('chartq'));
           chart.draw(data, options);
         };
-    
-    <% end %>
-    <% end %>
-    
-  <% if @topic == :projektdashboard %>
-    
-   google.charts.load('current', {'packages':['corechart']});
-  <% @projects.each do |p| %>
-  
-    window.costdataset_<%= p.id %> = [["Zeit", "Wert"],[Date(),0]];
-    google.charts.setOnLoadCallback(costfunc<%= p.id %>);
-    function costfunc<%= p.id %>() {
-      var data = google.visualization.arrayToDataTable(costdataset_<%= p.id %>);
-      var options = {
-        title: "<%= I18n.t :kosten %>",
-        colors: ['#ACC550'],
-        curveType: 'function',
-        width:150,
-        height:150,
-        legend: { position: 'bottom' }
-      };
-      var chart = new google.visualization.LineChart(document.getElementById('costchart<%= p.id %>'));
-      chart.draw(data, options);
-    }
-    window.effortdataset_<%= p.id %> = [["Zeit", "Wert"],[Date(),0]];
-    google.charts.setOnLoadCallback(effortfunc<%= p.id %>);
-    function effortfunc<%= p.id %>() {
-      var data = google.visualization.arrayToDataTable(effortdataset_<%= p.id %>);
-      var options = {
-        title: "<%= I18n.t :aufwand %>",
-        colors: ['#ACC550'],
-        curveType: 'function',
-        width:150,
-        height:150,
-        legend: { position: 'bottom' }
-      };
-      var chart = new google.visualization.LineChart(document.getElementById('effortchart<%= p.id %>'));
-      chart.draw(data, options);
-    }
-  <% end %>
-    window.setInterval( callme, 15000 );
-    // window.setInterval( updateme, 100 );
-    
-    function updateme() {
-      <% @projects.each do |c| %>
-        var i = Number($("#<%= c.mtype %>").text());
-        i = i + 25;
-        // var i= 205;
-        $("#<%= c.mtype %>").text(i.toString());
-      <% end %>
-    }
         
-    function callme() {
-        $.ajax({
-            // url: "http://tkbinfo-horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>"
-            url: "http://tkbinfo.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>"
-            // url: "https://tkbinfo.horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>"
+        <% @mobject.questions.each do |q| %>
+          <% if q.mcategory.name == "multiple" or q.mcategory.name == "single" %>
+            window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
+            <% q.answers.each do |qa| %>
+              dataset<%= q.id.to_s %>.push(['<%= qa.name %>', <%= qa.user_answers.where('checker=?',true).count %>]);
+            <% end %>
+          <% end %>
+          <% if q.mcategory.name == "numerisch" %>
+            window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
+            <% q.answers.each do |qa| %>
+              dataset<%= q.id.to_s %>.push(['Minimum', <%= qa.user_answers.minimum(:num) %>]);
+              dataset<%= q.id.to_s %>.push(['Maximum', <%= qa.user_answers.maximum(:num) %>]);
+              dataset<%= q.id.to_s %>.push(['Durchschnitt', <%= qa.user_answers.average(:num) %>]);
+            <% end %>
+          <% end %>
+          <% if q.mcategory.name == "text" %>
+            window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
+            <% q.answers.each do |qa| %>
+              dataset<%= q.id.to_s %>.push(['kein Text angegeben', <%= qa.user_answers.where('description=?',"").count %>]);
+              dataset<%= q.id.to_s %>.push(['Text angegeben', <%= qa.user_answers.where('description<>?',"").count %>]);
+            <% end %>
+          <% end %>
+          google.charts.setOnLoadCallback(drawChart<%= q.id.to_s %>);
 
-            //force to handle it as text
-            dataType: "text",
-            success: function(data) {
-                //data downloaded so we call parseJSON function 
-                //and pass downloaded data
-                var json = $.parseJSON(data);
-                
-                alert(json[0].id + json[0].kategorie + " " + json[0].summe);
-                // alert(json[0].kategorie + " " + json[0].anzahl);
-                // alert(json[1].kategorie + " " + json[1].anzahl);
-                // alert(json[2].kategorie + " " + json[2].anzahl);
-                <% @projects.each do |p| %>
-                  for (var i=0;i<json.length;++i)
-                  {
-                    <% if true %>
+          function drawChart<%= q.id.to_s %>() {
+            var data = google.visualization.arrayToDataTable(dataset<%= q.id.to_s %>);
+            var options = {
+              title: "<%= I18n.t :antworten %>",
+              colors: ['#ACC550'],
+              legend: { position: 'bottom' }
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById('<%="chart"+q.id.to_s %>'));
+            chart.draw(data, options);
+          };
+        <% end %>
+      <% end %>
+
+      <% if @topic == :projektdashboard %>
+        google.charts.load('current', {'packages':['corechart']});
+        <% @projects.each do |p| %>
+        
+          window.costdataset_<%= p.id %> = [["Zeit", "Wert"],[Date(),0]];
+          google.charts.setOnLoadCallback(costfunc<%= p.id %>);
+          function costfunc<%= p.id %>() {
+            var data = google.visualization.arrayToDataTable(costdataset_<%= p.id %>);
+            var options = {
+              title: "<%= I18n.t :kosten %>",
+              colors: ['#ACC550'],
+              curveType: 'function',
+              width:150,
+              height:150,
+              legend: { position: 'bottom' }
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('costchart<%= p.id %>'));
+            chart.draw(data, options);
+          }
+          
+          window.effortdataset_<%= p.id %> = [["Zeit", "Wert"],[Date(),0]];
+          google.charts.setOnLoadCallback(effortfunc<%= p.id %>);
+          function effortfunc<%= p.id %>() {
+            var data = google.visualization.arrayToDataTable(effortdataset_<%= p.id %>);
+            var options = {
+              title: "<%= I18n.t :aufwand %>",
+              colors: ['#ACC550'],
+              curveType: 'function',
+              width:150,
+              height:150,
+              legend: { position: 'bottom' }
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('effortchart<%= p.id %>'));
+            chart.draw(data, options);
+          }
+        <% end %>
+
+        window.setInterval( callme, 15000 );
+
+        function callme() {
+          $.ajax({
+  
+              // url: "http://tkbinfo-horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
+              url: "http://tkbinfo.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
+
+              //force to handle it as text
+              dataType: "text",
+              success: function(data) {
+  
+                  //data downloaded so we call parseJSON function 
+                  //and pass downloaded data
+                  var json = $.parseJSON(data);
+  
+                  //alert(json[0].id + json[0].kategorie + " " + json[0].summe);
+
+                  <% @projects.each do |p| %>
+                    for (var i=0;i<json.length;++i)
+                    {
                       if (json[i].id == <%= p.id %>) {
                         if (json[i].kategorie == "kosten") {
-                          $("#cost<%= p.id  %>").text(json[i].summe + (I18n.t :waehrung));
+                          $("#cost<%= p.id  %>").text(json[i].summe + " CHF");
                           costdataset_<%= p.id %>.push([Date(), json[i].summe]);
                           google.charts.setOnLoadCallback(costfunc<%= p.id %>);
                         }
                         if (json[i].kategorie == "aufwand") {
-                          $("#effort<%= p.id  %>").text( parseInt( (json[i].summe)/8.5) + (I18n.t :personentage));
+                          $("#effort<%= p.id  %>").text( parseInt( (json[i].summe)/8.5) + " PT");
                           effortdataset_<%= p.id %>.push([Date(), json[i].summe]);
                           google.charts.setOnLoadCallback(effortfunc<%= p.id %>);
                         }
                       }
-                    <% end %>
-                  }
-                <% end %>
-            }
-        });
-    }
-    <% end %>
-  
+                    }
+                  <% end %>
+                }
+            });
+        }
+      <% end %>
+
     $("nav").hide();
     $("navhide").hide();
     $("navhide").hide();
@@ -1525,98 +1515,187 @@ $(document).ready(function(){
         $("navshow").hide();
         $("navhide").show();
     });
-    
+
     $("navhide").mouseover(function(){
         $("nav").hide();
         $("navshow").show();
         $("navhide").hide();
     });
+
     $('#calendar').fullCalendar({
+
         now: '<%= DateTime.now %>',
+
         allDaySlot: false,
+
         timeFormat: 'H(:mm)',
+
         defaultView: 'basicWeek',
+
         defaultView: 'basicDay',
+
         defaultView: 'basicWeek',
+
         defaultView: 'listYear',
+
         defaultView: 'month',
+
         defaultView: 'agendaWeek',
+
         slotDuration: '1:00:00',
+
         contentHeight: 'auto',
+
         <% if @mobject.time_from and @mobject.time_to %>
+
           minTime: '<%= @mobject.time_from %>:00',
+
           maxTime: '<%= @mobject.time_to %>:00',
+
         <% end %>
+
         textColor: 'white',
+
         firstDay: 1,
+
         weekNumbers: true,
+
         events: [<%= raw @array %> ]
+
     });
+
     
+
     $("a").tooltip();
+
     
+
     $('.owl-show').owlCarousel({  
+
       
+
       itemsCustom : false,
+
       itemsDesktop : [1199,4],
+
       itemsDesktopSmall : [980,3],
+
       itemsTablet: [768,2],
+
       itemsTabletSmall: false,
+
       itemsMobile : [479,1],
+
       autoPlay: true
+
       
+
     });
+
     function init_map(index) {
+
         var latitudes = [<%= @mobject.latitude %>];
+
         var longitudes = [<%= @mobject.longitude %>];
+
         var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
+
         var mapOptions = {
+
             center: myLocation,
+
             zoom: 16
+
         };
+
         var marker = new google.maps.Marker({
+
             position: myLocation,
+
             title: "Property Location"
+
         });
+
         var map = new google.maps.Map(document.getElementById("map"),mapOptions);
+
         marker.setMap(map);
+
     }
+
     
+
     google.charts.setOnLoadCallback(drawChartA);
+
     function drawChartA() {
+
       var data = google.visualization.arrayToDataTable([
+
         ['Datum', 'Anzahl'],
+
         <%= raw @anz_s %>
+
       ]);
+
       var options = {
+
         title: "<% I18n.t :cfanzahl %>",
+
         curveType: 'function',
+
         colors: ['#ACC550'],
+
         legend: { position: 'bottom' }
+
       };
+
       var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+
       chart.draw(data, options);
+
     }
+
     
+
     google.charts.setOnLoadCallback(drawChartB);
+
     function drawChartB() {
+
       var data = google.visualization.arrayToDataTable([
+
         ['Datum', 'Betrag'],
+
         <%= raw @bet_s %>
+
       ]);
+
       var options = {
+
         title: "<% I18n.t :cfbetrag %>",
+
         curveType: 'function',
+
         colors: ['#ACC550'],
+
         legend: { position: 'bottom' }
+
       };
+
       var chart = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+
       chart.draw(data, options);
+
     }
+
     
+
 });
+
 </script>
 
+
+
 <!--<script>-->
+
 <!--  document.addEventListener("turbolinks:load", function() {init_map(0); drawChart1(); drawChart2(); owlCarousel()})-->
+
 <!--</script>-->
