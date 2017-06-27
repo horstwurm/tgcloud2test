@@ -158,6 +158,16 @@ de:
   gemeldetvon: "gemeldet von"
   webmaster: "Webmaster"
   objekt: "Informationsobjekt"
+
+  #export
+  parameter: "Reportparameter"
+  periode: "Betrachtungszeitraum"
+  ja: "Ja"
+  nein: "Nein"
+  ist: "Ist"
+  soll: "Plan"
+  delta: "Delta"
+  kategorie: "Kategorie"
   
   #footer
   nutzungsbedingungen: "Nutzungsbedingungen"

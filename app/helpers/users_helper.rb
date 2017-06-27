@@ -3154,7 +3154,7 @@ def exportWriter (mobject, istsoll, istsollkum, istsollau, iso)
 
   # header format
   f_header0 = workbook.add_format
-  f_header0.set_bold
+  f_header0.set_bold  
   # f_header0.set_color('blue')
   f_header0.set_size(20)
   # format.set_align('right')
@@ -3173,32 +3173,32 @@ def exportWriter (mobject, istsoll, istsollkum, istsollau, iso)
   
   row = 0
   col = 0
-  worksheet.write(row, col, "Auftragscontrolling " + DateTime.now.strftime("%d.%m.%y-%H:%M"), f_header0)
+  worksheet.write(row, col, (I18n.t :auftragscontrolling) + " " + DateTime.now.strftime("%d.%m.%y-%H:%M"), f_header0)
   row = row + 2
-  worksheet.write(row, col, "Parameter:", f_header1)
+  worksheet.write(row, col, (I18n.t :parameter), f_header1)
   row = row + 1
-  worksheet.write(row, col, "Periode:")
+  worksheet.write(row, col, (I18n.t :periode))
   worksheet.write(row, col+1, @c_mode, f_param)
   row = row + 1
-  worksheet.write(row, col, "Fokus:")
+  worksheet.write(row, col, (I18n.t :kategorie))
   worksheet.write(row, col+1, @c_scope, f_param)
   row = row + 1
-  worksheet.write(row, col, "Projekt/Auftrag:")
+  worksheet.write(row, col, (I18n.t :projekte))
   worksheet.write(row, col+1, mobject.name, f_param)
   row = row + 1
-  worksheet.write(row, col, "Substrukturen inkludieren:")
+  worksheet.write(row, col, (I18n.t :substruktur))
   if @include_sub
-    wosub = "Ja"
+    wosub = (I18n.t :ja)
   else
-    wosub = "Nein"
+    wosub = (I18n.t :nein)
   end
   worksheet.write(row, col+1, wosub, f_param)
   row=row+2
 
-  worksheet.write(row, 0, "Zeitraum", f_header1)
-  worksheet.write(row+1, 0, "IST")
-  worksheet.write(row+2, 0, "SOLL")
-  worksheet.write(row+3, 0, "Delta")
+  worksheet.write(row, 0, (I18n.t :datumvonbis), f_header1)
+  worksheet.write(row+1, 0, (I18n.t :ist))
+  worksheet.write(row+2, 0, (I18n.t :soll))
+  worksheet.write(row+3, 0, (I18n.t :delta))
   for i in 1..istsoll.length-1
     worksheet.write(row, i, istsoll[i][0],f_header1)
     worksheet.write(row+1, i, istsoll[i][1])
@@ -3211,10 +3211,10 @@ def exportWriter (mobject, istsoll, istsollkum, istsollau, iso)
   end
   
   row=row+6
-  worksheet.write(row, 0, "kumuliert", f_header1)
-  worksheet.write(row+1, 0, "IST")
-  worksheet.write(row+2, 0, "SOLL")
-  worksheet.write(row+3, 0, "Delta")
+  worksheet.write(row, 0, (I18n.t :kumuliert), f_header1)
+  worksheet.write(row+1, 0, (I18n.t :ist))
+  worksheet.write(row+2, 0, (I18n.t :soll))
+  worksheet.write(row+3, 0, (I18n.t :delta))
   for i in 1..istsollkum.length-1
     worksheet.write(row, i, istsollkum[i][0],f_header1)
     worksheet.write(row+1, i, istsollkum[i][1])
@@ -3238,9 +3238,9 @@ def exportWriter (mobject, istsoll, istsollkum, istsollau, iso)
     end
     
     worksheet.write(row, 0, @name, f_header1)
-    worksheet.write(row+1, 0, "IST")
-    worksheet.write(row+2, 0, "SOLL")
-    worksheet.write(row+3, 0, "Delta")
+    worksheet.write(row+1, 0, (I18n.t :ist))
+    worksheet.write(row+2, 0, (I18n.t :soll))
+    worksheet.write(row+3, 0, (I18n.t :delta))
 
     for i in 1..maiso.length-1
       worksheet.write(row, i, maiso[i][1],f_header1)

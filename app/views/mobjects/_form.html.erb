@@ -114,7 +114,8 @@
                           <% end %>
                           <b><%= I18n.t :plankosten %></b>
                           <div class="input-group">                          
-                            <%= f.number_field :sum_pkosten_plan, :value => number_with_precision(@mobject.sum_pkosten_plan, :precision => 2), :style => "text-align: Right", class:"form-control" %>
+                            <!--<%= f.number_field :sum_pkosten_plan, :value => number_with_precision(@mobject.sum_pkosten_plan, :precision => 2), :style => "text-align: Right", class:"form-control" %>-->
+                            <%= f.number_field :sum_pkosten_plan, :step => 0.1, :precicion => 2, :style => "text-align: Right", class:"form-control" %>
                             <div class="input-group-addon"><%= (I18n.t :waehrung) %></div>
                           </div>
                           <b><%= I18n.t :planaufwand %></b>
