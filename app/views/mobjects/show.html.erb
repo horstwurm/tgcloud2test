@@ -1000,6 +1000,7 @@
                 <% @plans << h %>
               <% end %>
             <% end %>
+
             <% @istsollau = [] %>
             <% @istsollau << ['kategorie', 'IST','PLAN'] %>
             <% @tts.each do |t| %>
@@ -1041,6 +1042,7 @@
                         <% end %>
                       <% end %>
                       
+                      <% @plans = [] %>
                       <% @pts.each do |t| %>
                         <% @plans << [t.jahrmonat, t.summe] %>
                       <% end %>
@@ -1048,7 +1050,7 @@
                       <% @tts.each do |t| %>
                         <% @ists << [t.jahrmonat, t.summe] %>
                       <% end %>
-          
+                      
                       <% @istsollall = [] %>
                       <% @istsollallgraph = [] %>
                       <% @istsollall << ['user', 'kategorie', 'IST','PLAN'] %>
@@ -1083,6 +1085,7 @@
                           <% if @c_scope == "kosten" %>
                             <% h = [@user.id, @range[i], ist, soll] %>
                           <% end %>
+                          
                           <% @istsollall << h %>
                           <% @istsollallgraph << h[1..3] %>
           
@@ -1096,8 +1099,8 @@
                     </div>
                   </div>
                 <% end %>
-                <% @isoall %>
             </div>
+            
             <% if @export %>
               <% @filename = exportWriter(@mobject, @istsoll, @istsollkum, @istsollau, @isoall) %>
               <% link_to @filename, @filename.remove("public") %>
