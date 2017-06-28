@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619093007) do
+ActiveRecord::Schema.define(version: 20170628203838) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -229,6 +229,8 @@ ActiveRecord::Schema.define(version: 20170619093007) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "role"
+    t.index ["mobject_id"], name: "index_madvisors_on_mobject_id"
+    t.index ["user_id"], name: "index_madvisors_on_user_id"
   end
 
   create_table "mcalendars", force: :cascade do |t|
@@ -273,6 +275,7 @@ ActiveRecord::Schema.define(version: 20170619093007) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.index ["mobject_id"], name: "index_mdetails_on_mobject_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -338,6 +341,9 @@ ActiveRecord::Schema.define(version: 20170619093007) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "parent"
+    t.index ["mcategory_id"], name: "index_mobjects_on_mcategory_id"
+    t.index ["msubtype"], name: "index_mobjects_on_msubtype"
+    t.index ["mtype"], name: "index_mobjects_on_mtype"
     t.index ["owner_id"], name: "index_mobjects_on_owner_id"
     t.index ["owner_type"], name: "index_mobjects_on_owner_type"
   end
@@ -408,6 +414,9 @@ ActiveRecord::Schema.define(version: 20170619093007) do
     t.string   "jahrmonat"
     t.string   "costortime"
     t.string   "description"
+    t.index ["jahrmonat"], name: "index_plannings_on_jahrmonat"
+    t.index ["mobject_id"], name: "index_plannings_on_mobject_id"
+    t.index ["user_id"], name: "index_plannings_on_user_id"
   end
 
   create_table "prices", force: :cascade do |t|
@@ -480,6 +489,7 @@ ActiveRecord::Schema.define(version: 20170619093007) do
     t.integer  "counter"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.index ["user_id"], name: "index_searches_on_user_id"
   end
 
   create_table "signage_cals", force: :cascade do |t|
@@ -571,6 +581,9 @@ ActiveRecord::Schema.define(version: 20170619093007) do
     t.datetime "updated_at", null: false
     t.string   "jahrmonat"
     t.string   "costortime"
+    t.index ["jahrmonat"], name: "index_timetracks_on_jahrmonat"
+    t.index ["mobject_id"], name: "index_timetracks_on_mobject_id"
+    t.index ["user_id"], name: "index_timetracks_on_user_id"
   end
 
   create_table "transactions", force: :cascade do |t|
