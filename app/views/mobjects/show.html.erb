@@ -948,7 +948,7 @@
                 <% end %>
 
                 <% if @c_scope == "aufwand" %>
-                  <% h = [@range[i], (ist * 170 /100), (plan * 170) / 100] %>
+                  <% h = [@range[i], ist, (plan * 170) / 100] %>
                 <% end %>
                 <% if @c_scope == "kosten" %>
                   <% h = [@range[i], ist, soll] %>
@@ -1080,7 +1080,7 @@
                           <% end %>
           
                           <% if @c_scope == "aufwand" %>
-                            <% h = [@user.id, @range[i], (ist * 170 /100), (plan * 170) / 100] %>
+                            <% h = [@user.id, @range[i], ist, (plan * 170) / 100] %>
                           <% end %>
                           <% if @c_scope == "kosten" %>
                             <% h = [@user.id, @range[i], ist, soll] %>
