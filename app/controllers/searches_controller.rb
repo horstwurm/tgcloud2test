@@ -74,7 +74,7 @@ class SearchesController < ApplicationController
   # GET /searches/new
   def new
     @search = Search.new
-    if params[:search_domain] == :personen or params[:search_domain] == "institutionen"
+    if params[:search_domain] == "personen" or params[:search_domain] == "institutionen"
       @search.name = "Meine Abfrage..."+params[:search_domain]
     else
       @search.name = "Meine Abfrage..."+params[:mtype].to_s + " " + params[:msubtype].to_s
@@ -95,6 +95,8 @@ class SearchesController < ApplicationController
     @search.amount_to_target = "50000"
     @search.amount_from = "5000"
     @search.amount_to = "10000"
+    @search.date_from = Date.today
+    @search.date_to = Date.today + 30
     if params[:ticket_id] != nil
       @ticket = Ticket.find(params[:ticket_id])
       @search.ticket_id = @ticket.id

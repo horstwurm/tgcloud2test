@@ -322,33 +322,25 @@ def build_medialist2(items, cname, par)
                   when "searches"
                       if par != nil and par != ""
                         html_string = html_string + link_to(showcal_index_path(:filter_id => item.id, :dom => par)) do
-                          content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.mtype)["icon"], style:"font-size:8em") 
-                          #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
+                          content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.mtype.to_sym)["icon"], style:"font-size:8em") 
                         end
                       else
                         html_string = html_string + "<soft_padding>"
                         case item.search_domain
                           when "personen"
                             html_string = html_string + link_to(users_path(:filter_id => item.id)) do
-                              #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
                               content_tag(:i, nil, class:"glyphicon glyphicon-question-sign", style:"font-size:8em") 
-                              #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
+                            end
+                          when "objekte"
+                            html_string = html_string + link_to(mobjects_path(:filter_id => item.id)) do
+                              content_tag(:i, nil, class:"glyphicon glyphicon-question-sign", style:"font-size:8em") 
                             end
                           when "tickets"
-                              #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
                               content_tag(:i, nil, class:"glyphicon glyphicon-question-sign", style:"font-size:8em") 
                               html_string = html_string + image_tag(image_def("personen", item.mtype, item.msubtype))
                           when "institutionen"
                             html_string = html_string + link_to(companies_path(:filter_id => item.id)) do
-                              #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
                               content_tag(:i, nil, class:"glyphicon glyphicon-question-sign", style:"font-size:8em") 
-                              #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
-                            end
-                          when "objekte"
-                            html_string = html_string + link_to(mobjects_path(:filter_id => item.id)) do
-                              #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.mtype), style:"font-size:8em") 
-                              content_tag(:i, nil, class:"glyphicon glyphicon-question-sign", style:"font-size:8em") 
-                              #image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
                             end
                         end
                         html_string = html_string + "</soft_padding>"
@@ -834,7 +826,7 @@ def build_medialist2(items, cname, par)
     
                     when "searches"
                       html_string = html_string + "<anzeigetext>" + item.name + "</anzeigetext><br>"
-                      if item.search_domain == "Object"
+                      if item.search_domain == "object"
                         html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
                         html_string = html_string + item.mtype + "<br>" 
                         html_string = html_string + item.msubtype.to_s + '<br>'
@@ -2102,22 +2094,31 @@ def build_hauptmenue
       creds = init_apps
     end
 
-    domain = "news"
-    if creds.include?("hauptmenue"+domain) and user_signed_in?
-        path = home_index10_path
-        html_string = html_string + simple_menue(domain, path)
-    end
-
-    return
     domain = "personen"
     if creds.include?("hauptmenue"+domain)
         path = users_path(:mtype => nil, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
-
+    
     domain = "institutionen"
     if creds.include?("hauptmenue"+domain)
         path = companies_path(:mtype => nil, :msubtype => nil)
+        html_string = html_string + simple_menue(domain, path)
+    end
+
+    domain = "projekte"
+    if creds.include?("hauptmenue"+domain)
+        path = mobjects_path(:mtype => domain, :msubtype => "root", :parent => 0)
+        html_string = html_string + simple_menue(domain, path)
+    end
+
+    ########################################################################################################################
+    # inactive code
+    ########################################################################################################################
+    if false
+    domain = "news"
+    if creds.include?("hauptmenue"+domain) and user_signed_in?
+        path = home_index10_path
         html_string = html_string + simple_menue(domain, path)
     end
 
@@ -2151,12 +2152,6 @@ def build_hauptmenue
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = "projekte"
-    if creds.include?("hauptmenue"+domain)
-        path = mobjects_path(:mtype => domain, :msubtype => "root", :parent => 0)
-        html_string = html_string + simple_menue(domain, path)
-    end
-
     domain = "innovationswettbewerbe"
     if creds.include?("hauptmenue"+domain)
         path = mobjects_path(:mtype => domain)
@@ -2185,14 +2180,14 @@ def build_hauptmenue
     if creds.include?("hauptmenue"+domain)
         hasharray = []
         domain2 = "standard"
-        if creds.include?("hauptmenue"+domain+domain2)
+        if creds.include?(domain+domain2)
           path = mobjects_path(:mtype => "angebote", :msubtype => "standard")
           hash = Hash.new
           hash = {"path" => path, "text" => (I18n.t :standard), :"icon" => :standard }
           hasharray << hash
         end
         domain2 = "aktion"
-        if creds.include?("hauptmenue"+domain+domain2)
+        if creds.include?(domain+domain2)
           path = mobjects_path(:mtype => "angebote", :msubtype => "aktion")
           hash = Hash.new
           hash = {"path" => path, "text" => (I18n.t :aktion), "icon" => :aktion }
@@ -2322,6 +2317,7 @@ def build_hauptmenue
       domain_text = I18n.t :kalender
       html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
+    end
     
     return html_string.html_safe
     
@@ -2334,14 +2330,11 @@ def simple_menue (domain, path)
       content_tag(:div, nil, class:"panel-body panel-nav") do
         temp = content_tag(:div, nil, class:"col-xs-3 col-sm-3 col-md-3 col-lg-3") do
           icon_size = "4"
-          content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon2(domain)["icon"], style:"font-size:" + icon_size + "em") 
+          content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon2(domain.to_sym)["icon"], style:"font-size:" + icon_size + "em") 
         end
         temp = temp + content_tag(:div, nil, class:"col-xs-7 col-sm-7 col-md-7 col-lg-7") do
           content_tag(:home_nav, (I18n.t domain))
         end
-        #temp = temp + content_tag(:div, nil, class:"col-xs-2 col-sm-2 col-md-2 col-lg-2") do
-        #  content_tag(:i, nil, class:"glyphicon glyphicon-chevron-right pull-right")
-        #end
       end
     end
   end
@@ -2349,13 +2342,13 @@ def simple_menue (domain, path)
 end
 
 def complex_menue (domain, domain_text, hasharray)
-  html_string = "<" + domain.to_s + ">"
+  html_string = "<" + domain.to_sym.to_s + ">"
   html_string = html_string + content_tag(:div, nil, class:"col-xs-12 col-sm-12 col-md-6 col-lg-4") do
     content_tag(:div, nil, class:"panel-body panel-nav") do
       
       temp = content_tag(:div, nil, class:"col-xs-3 col-sm-3 col-md-3 col-lg-3") do
         icon_size = "4"
-        content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon2(domain)["icon"], style:"font-size:" + icon_size + "em") 
+        content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon2(domain.to_sym)["icon"], style:"font-size:" + icon_size + "em") 
       end
       temp = temp + content_tag(:div, nil, class:"col-xs-9 col-sm-9 col-md-9 col-lg-9") do
         temp2 = content_tag(:home_nav, domain_text) + "<br><br>".html_safe
@@ -2363,19 +2356,19 @@ def complex_menue (domain, domain_text, hasharray)
       end
     end
   end
-  html_string = html_string + "</" + domain.to_s + ">"
+  html_string = html_string + "</" + domain.to_sym.to_s + ">"
   return html_string.html_safe
 end
 
 def build_sub_menu(domain, domain_text, hasharray)
-  html_string = "<" + domain.to_s + "_options" + ">"
+  html_string = "<" + domain.to_sym.to_s + "_options" + ">"
   for i in 0..hasharray.length-1
         html_string = html_string + "<a href="+hasharray[i]["path"] + ">"
         html_string = html_string + "<i class='glyphicon glyphicon-"+getIcon2(hasharray[i]["icon"])["icon"]+"' style='font-size:2em'> </i> "
         html_string = html_string + hasharray[i]["text"]
         html_string = html_string + "</a><br><br>"
   end
-  html_string = html_string + "</" + domain.to_s + "_options" + ">"
+  html_string = html_string + "</" + domain.to_sym.to_s + "_options" + ">"
   return html_string.html_safe
 end
 

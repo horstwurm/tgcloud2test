@@ -3,7 +3,7 @@
 
         <% if @search.errors.any? %>
             <div id="error_explanation">
-              <h2><%= pluralize(@search.errors.count, "error") %> prohibited this company from being saved:</h2>
+              <h2><%= pluralize(@search.errors.count, "error") + " " + (I18n.t :notsaved) %></h2>
               <ul>
                   <% @search.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
@@ -17,17 +17,12 @@
                 <div class="panel panel-default">
                     <div class="panel-heading header">
                       <li_header>
-                      <% if false %>
-                        <%= link_to searches_path :search_domain => @search.search_domain, :controller_name => @search.controller, :ticket_id => @search.ticket_id do %>
-                          <i class="btn btn-primary glyphicon glyphicon-list"></i>
-                        <% end %>
-                      <% end %>
                       <% if @search.controller != nil and @search.controller != "" %>
                         <%= link_to url_for(action: "index", controller: @search.controller) do %>
                           <i class="btn btn-primary glyphicon glyphicon-list"></i>
                         <% end %>
                       <% end %>
-                      meine ABFRAGEN <span class='badge'><%= @search.counter.to_s %></span>
+                      <%= I18n.t :meineabfragen %><span class='badge'><%= @search.counter.to_s %></span>
                       <br>
                       <% @search.build_sql %>
                       </li_header>
@@ -40,52 +35,63 @@
             <div class="col-md-6">
                 <div class="panel-body">
                   <div class="form-group">
-                    <%= f.label "Bezeichnung" %><br/>
+                    <%= f.label (I18n.t :bezeichnung) %><br/>
                     <%= f.text_field :name, autofocus: true, class:"form-control"%>
                   </div>
                   <div class="form-group">
-                    <%= f.label "Beschreibung" %><br/>
+                    <%= f.label (I18n.t :beschreibung) %><br/>
                     <%= f.text_area :description, class:"form-control"%>
                   </div>
                  
                  <% case @search.search_domain %>
-                   <% when "personen", "Tickets" %>
+                   <% when "personen", "tickets" %>
                       <div class="form-group">
                         <input type="checkbox" name="my-checkbox1" checked>
-                        <%= f.label "Sozialengagement" %>
+                        <%= f.label (I18n.t :sozialengagement) %>
                       </div>
                       <div class="form-group">
-                        <%= f.label "Alter" %><br/>
+                        <%= f.label (I18n.t :alter) %><br/>
                         <input id="ex1" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="[<%= @search.age_from %>,<%= @search.age_to %>]"/><b>von-bis</b>
                       </div>
                       <br>
-                      <% if @search.search_domain == "Tickets" %>
+                      <% if @search.search_domain == "tickets" %>
                         <div class="form-group">
-                          <%= f.label "Kunden" %>
+                          <%= f.label (I18n.t :kunden) %>
                           <input type="checkbox" name="my-checkbox2" checked>
                         </div>
                       <% end %>
   
                    <% when "institutionen" %>
                       <div class="form-group">
-                        <%= f.label "Branche" %><br/>
+                        <%= f.label (I18n.t :branche) %><br/>
                         <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Branche").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                       </div>
                       <div class="form-group">
                         <input type="checkbox" name="my-checkbox1" checked>
-                        <%= f.label "gemeinnützig" %>
+                        <%= f.label (I18n.t :sozialengagement) %>
                       </div>
 
                    <% when "objekte" %>
                       
                       <% case @search.mtype %>
-                        <% when "Angebote" %>
+                        <% when "projekte" %>
                           <div class="form-group">
-                            <input type="checkbox" name="my-checkbox1" checked>
-                            <%= f.label "Sozialengagement" %>
+                            <%= f.label (I18n.t :kategorie) %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"projekte").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                           </div>
                           <div class="form-group">
-                            <%= f.label "Bewertung mindestens" %><br/>
+                            <%= f.label (I18n.t :datumvonbis) %>
+                            <%= f.text_field :date_from, class:"form-control"%>
+                            <%= f.text_field :date_to, class:"form-control"%>
+                          </div>
+
+                        <% when "angebote" %>
+                          <div class="form-group">
+                            <input type="checkbox" name="my-checkbox1" checked>
+                            <%= f.label (I18n.t :sozialengagement) %>
+                          </div>
+                          <div class="form-group">
+                            <%= f.label (I18n.t :bewertung) %><br/>
                             <% for i in 1..5 %>
                                 <%= f.radio_button :rating, i.to_i %>
                                 <% i.times do %>
@@ -94,9 +100,9 @@
                                 <% end %><br>
                             <% end %>
                           </div>
-                          <% if @search.msubtype == "Aktion" %>
+                          <% if @search.msubtype == "aktion" %>
                             <div class="form-group">
-                              <%= f.label "Datum von-bis:" %>
+                              <%= f.label (I18n.t :datumvonbis) %>
                               <%= f.text_field :date_from, class:"form-control"%>
                               <%= f.text_field :date_to, class:"form-control"%>
                             </div>
@@ -104,62 +110,62 @@
 
                         <% when "vermietungen" %>
                           <div class="form-group">
-                            <%= f.label "Kategorie" %><br/>
-                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Vermietungen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                            <%= f.label (I18n.t :kategorie) %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"vermietungen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                           </div>
 
                         <% when "publikationen" %>
                           <div class="form-group">
                             <%= f.label "Kategorie" %><br/>
-                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Publikationen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"publikationen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                           </div>
 
                         <% when "artikel" %>
                           <div class="form-group">
                             <%= f.label "Kategorie" %><br/>
-                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Artikel").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"artikel").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                           </div>
 
                         <% when "ausschreibungen" %>
                           <div class="form-group">
                             <%= f.label "Kategorie" %><br/>
-                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Branche").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"branche").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                           </div>
                           <div class="form-group">
-                            <%= f.label "Datum von-bis:" %>
+                            <%= f.label (I18n.t :datumvonbis) %>
                             <%= f.text_field :date_from, class:"form-control"%>
                             <%= f.text_field :date_to, class:"form-control"%>
                           </div>
 
                         <% when "stellenanzeigen" %>
                           <div class="form-group">
-                            <%= f.label "Kategorie" %><br/>
-                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Branche").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                            <%= f.label (I18n.t :kategorie) %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"branche").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                           </div>
                           <div class="form-group">
-                                <%= f.label "Anzeigetyp" %><br>
-                                <%= f.radio_button :msubtype, "Suchen", :value => "Suchen" %> Suchen<br>
-                                <%= f.radio_button :msubtype, "Anbieten", :value => "Anbieten" %> Anbieten
+                                <%= f.label (I18n.t :subkategorie) %><br>
+                                <%= f.radio_button :msubtype, "suchen", :value => "suchen" %> Suchen<br>
+                                <%= f.radio_button :msubtype, "anbieten", :value => "anbieten" %> Anbieten
                           </div>
 
                         <% when "kleinanzeigen" %>
                           <div class="form-group">
-                            <%= f.label "Kategorie" %><br/>
-                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Kleinanzeigen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                            <%= f.label (I18n.t :kategorie) %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"kleinanzeigen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                           </div>
                           <div class="form-group">
-                                <%= f.label "Anzeigetyp" %><br>
-                                <%= f.radio_button :msubtype, "Suchen", :value => "Suchen" %> Suchen<br>
-                                <%= f.radio_button :msubtype, "Anbieten", :value => "Anbieten" %> Anbieten
+                                <%= f.label (I18n.t :subkategorie) %><br>
+                                <%= f.radio_button :msubtype, "suchen", :value => "suchen" %> Suchen<br>
+                                <%= f.radio_button :msubtype, "anbieten", :value => "anbieten" %> Anbieten
                           </div>
 
                         <% when "veranstaltungen" %>
                           <div class="form-group">
-                            <%= f.label "Kategorie" %><br/>
-                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Veranstaltungen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                            <%= f.label (I18n.t :kategorie) %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"veranstaltungen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                           </div>
                           <div class="form-group">
-                            <%= f.label "Bewertung mindestens" %><br/>
+                            <%= f.label (I18n.t :bewertung) %><br/>
                             <% for i in 1..5 %>
                                 <%= f.radio_button :rating, i.to_i %>
                                 <% i.times do %>
@@ -169,30 +175,24 @@
                             <% end %>
                           </div>
                           <div class="form-group">
-                            <%= f.label "Datum von-bis:" %>
+                            <%= f.label (I18n.t :datumvonbis) %>
                             <%= f.text_field :date_from, class:"form-control"%>
                             <%= f.text_field :date_to, class:"form-control"%>
                           </div>
 
                         <% when "umfragen" %>
                           <div class="form-group">
-                            <%= f.label "Kategorie" %><br/>
+                            <%= f.label (I18n.t :kategorie) %><br/>
                             <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"umfragen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
-                          </div>
-
-                        <% when "projekte" %>
-                          <div class="form-group">
-                            <%= f.label "Kategorie" %><br/>
-                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"projekte").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                           </div>
 
                         <% when "ausflugsziele" %>
                           <div class="form-group">
-                            <%= f.label "Kategorie" %><br/>
+                            <%= f.label (I18n.t :kategorie) %><br/>
                             <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"ausflugsziele").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
                           </div>
                           <div class="form-group">
-                            <%= f.label "Bewertung mindestens" %><br/>
+                            <%= f.label (I18n.t :bewertung) %><br/>
                             <% for i in 1..5 %>
                                 <%= f.radio_button :rating, i.to_i %>
                                 <% i.times do %>
@@ -217,7 +217,7 @@
                   <% end %>
 
                   <div class="form-group">
-                     <%= f.label "Standort" %><br/>
+                     <%= f.label (I18n.t :standorte) %><br/>
                       <div class="form-group">
                         <input id="ex2" data-slider-id='ex2Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="<%= @search.distance %>"/> <b>Umkreissuche km zu Adresse</b>
                       </div>
@@ -226,11 +226,11 @@
                      <%= f.text_field :address3, class:"form-control" %>
                   </div>
                   <div class="form-group">
-                    <%= f.label "Stichworte" %><br/>
+                    <%= f.label (I18n.t :stichworte) %><br/>
                     <%= f.text_field :keywords, class:"form-control"%>
                   </div>
                   <div class="actions">
-                     <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
+                     <%= f.submit (I18n.t :speichern),  class:"btn btn-primary btn-lg"%>
                   </div>
                   <%= f.hidden_field :user_id %>
                   <%= f.hidden_field :search_domain %>

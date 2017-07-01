@@ -125,7 +125,7 @@ mcategories = Mcategory.create({ctype:"fragetyp", name:"numerisch"})
 mcategories = Mcategory.create({ctype:"fragetyp", name:"single"})
 mcategories = Mcategory.create({ctype:"fragetyp", name:"multiple"})
 
-#create Question categories 96..103
+#create Question categories 93..105
 mcategories = Mcategory.create({ctype:"projekte", name:"Business Projekte"})
 mcategories = Mcategory.create({ctype:"projekte", name:"IT Projekte"})
 mcategories = Mcategory.create({ctype:"projekte", name:"Strategie Projekte"})
@@ -133,19 +133,24 @@ mcategories = Mcategory.create({ctype:"projekte", name:"Programm"})
 mcategories = Mcategory.create({ctype:"projekte", name:"Auftragsportfolio"})
 mcategories = Mcategory.create({ctype:"projekte", name:"Projektportfolio"})
 mcategories = Mcategory.create({ctype:"projekte", name:"Auftrag"})
+mcategories = Mcategory.create({ctype:"projekte", name:"Projekt"})
 mcategories = Mcategory.create({ctype:"projekte", name:"Administration"})
-
-#create Question categories 104
-mcategories = Mcategory.create({ctype:"gruppen", name:"Organisationseinheit"})
-
-#create Question categories 105
-mcategories = Mcategory.create({ctype:"innovationswettbewerbe", name:"Innovationswettbewerb"})
+mcategories = Mcategory.create({ctype:"projekte", name:"RUN"})
+mcategories = Mcategory.create({ctype:"projekte", name:"CHANGE"})
 
 #create Question categories 106
+mcategories = Mcategory.create({ctype:"gruppen", name:"Organisationseinheit"})
+
+#create Question categories 107
+mcategories = Mcategory.create({ctype:"innovationswettbewerbe", name:"Innovationswettbewerb"})
+
+#create Question categories 108
 mcategories = Mcategory.create({ctype:"gruppen", name:"Gruppe (privat)"})
 
 #create some users...
 users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:"horst.wurm@bluewin.ch", password:"password", name:"Horst", lastname:"Wurm", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:true, webmaster:true, avatar:File.open(path+'horst.jpg', 'rb')})
+
+if false
 users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"11.2.1970", anonymous:false, status:"OK", active:true, email:"t.oschewsky@bluewin.ch", password:"password", name:"Tanja", lastname:"Oschewsky", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:false, webmaster:false, avatar:File.open(path+'ma_3.jpg', 'rb')})
 users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"12.12.1954", anonymous:false, status:"OK", active:true, email:"hans.wurst@gmx.com", password:"password", name:"Hans", lastname:"Wurst", address1:"Bahnhofstrasse 11", address2:"Frauenfeld", address3:"", superuser:false, webmaster:false, avatar:File.open(path+'ma_2.jpg', 'rb')})
 users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"2.10.1960", anonymous:false, status:"OK", active:true, email:"anton.meier@outlook.com", password:"password", name:"Anton", lastname:"Meier", address1:"Im Roos", address2:"Weinfelden", address3:"", superuser:false, webmaster:false, avatar:File.open(path+'ma_4.jpg', 'rb')})
@@ -232,7 +237,11 @@ end
 companies = Company.create({status:"OK", active:true, user_id:1, name:"Fischzucht Hecht", mcategory_id:24 ,stichworte: "Fische, Zierfische, Angelbedarf", address1:"Bahnhof", address2:"Frauenfeld", address3:"Thurgau", avatar:File.open(path+'fischhaendler.jpg', 'rb')}) 
 companies = Company.create({status:"OK", active:true, user_id:2, name:"Alder Entsorgung", mcategory_id:5 ,stichworte: "Hocbau, Tiefbau Müll Abfall Recycling", address1:"Hauptstrasse 1", address2:"Affeltrangen", address3:"Thurgau", avatar:File.open(path+'alder.jpg', 'rb')}) 
 companies = Company.create({status:"OK", active:true, user_id:3, name:"Nessensohn Eisenwaren", mcategory_id:27 ,stichworte: "Eisenwaren Geräte Baumaschinen Werkzeuge", address1:"Haupstrasse 37", address2:"Tobel", address3:"Thurgau", avatar:File.open(path+'eisenmueller.jpg', 'rb')}) 
+end
+
 companies = Company.create({status:"OK", active:true, user_id:1, name:"Thurgauer Kantonalbank", partner:true, mcategory_id:28 ,stichworte: "Banken", address1:"Bahnhof", address2:"Weinfelden", address3:"Thurgau", avatar:File.open(path+'tkblogo.jpg', 'rb')}) 
+
+if false
 companies = Company.create({status:"OK", active:true, user_id:4, name:"Prematic", mcategory_id:24 ,stichworte: "Luftdruck Kompressoren Druckluft", address1:"Märwilerstrasse 43", address2:"Affeltrangen", address3:"Thurgau", avatar:File.open(path+'prematic.png', 'rb')}) 
 companies = Company.create({status:"OK", active:true, user_id:5, name:"Baufirma Meier", mcategory_id:1 ,stichworte: "Hocbau, Tiefbau", address1:"Rebhaldenstrasse 4", address2:"Zezikon", address3:"Thurgau", avatar:File.open(path+'meier.jpg', 'rb')}) 
 companies = Company.create({status:"OK", active:true, user_id:5, name:"Lackierwerkstatt Manser", mcategory_id:10 ,stichworte: "Karosserie KFZ Auto Werkstatt", address1:"Affeltrangen", address2:"Haupstrasse 1", address3:"Thurgau", avatar:File.open(path+'mazda-mx-5-cabriolet-2006-occasion.jpg', 'rb')}) 
@@ -840,4 +849,4 @@ for i in 1..200
     mratings = Mrating.create({status:"OK", mobject_id:@object.id, user_id: @user.id, comment: "ok", rating: rat})
 end
 
-
+end

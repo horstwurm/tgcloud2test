@@ -6,15 +6,15 @@
           <%= link_to tickets_path :msponsor_id => @ticket.owner_id do %>
             <i class="btn btn-primary glyphicon glyphicon-list"></i>
           <% end %>
-          <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :generate => true, :page => session[:page] do %>
+          <%= link_to searches_path :search_domain => "tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :generate => true, :page => session[:page] do %>
             <i class="btn btn-primary pull-right glyphicon glyphicon-user">
               <span class="glythicon glyphicon-filter"></span></i>
           <% end %>
-          <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :activate => true, :page => session[:page] do %>
+          <%= link_to searches_path :search_domain => "tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :activate => true, :page => session[:page] do %>
             <i class="btn btn-warning pull-right glyphicon glyphicon-user">
               <span class="glythicon glyphicon-hand-right"></span></i>
           <% end %>
-          <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :remove => true, :page => session[:page] do %>
+          <%= link_to searches_path :search_domain => "tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :remove => true, :page => session[:page] do %>
             <i class="btn btn-danger pull-right glyphicon glyphicon-user">
               <span class="glythicon glyphicon-trash"></span></i>
           <% end %>
@@ -26,15 +26,15 @@
         <% else %>
           <% ticket_id = nil %>
             <% case @search_domain %>
-              <% when :privatpersonen %>
+              <% when "personen" %>
                 <%= link_to users_path do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
-              <% when :institutionen %>
+              <% when "institutionen" %>
                 <%= link_to companies_path do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
-              <% when :objekte %>
+              <% when "objekte" %>
                 <%= link_to mobjects_path(:mtype => @mtype, :msubtype => @msubtype) do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>

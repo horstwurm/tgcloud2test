@@ -34,15 +34,15 @@
 		    <li>
 			<% case controller_name %>
 				<% when "users" %>
-	  		        <%= link_to searches_path :search_domain => :privatpersonen, :controller_name => controller_name do %>
+	  		        <%= link_to searches_path :search_domain => "personen", :controller_name => controller_name do %>
 	  		          <i class="glyphicon glyphicon-filter" style="font-size:2em"></i>
             		<% end %>
 				<% when "companies" %>
-	  		        <%= link_to searches_path :search_domain => :institutionen, :controller_name => controller_name do %>
+	  		        <%= link_to searches_path :search_domain => "institutionen", :controller_name => controller_name do %>
 	  		          <i class="glyphicon glyphicon-filter" style="font-size:2em"></i>
 	  		        <% end %>
 				<% when "mobjects", "showcal" %>
-	  		        <%= link_to searches_path :search_domain => "Object", :mtype => session[:mtype], :msubtype => session[:msubtype], :controller_name => controller_name do %>
+	  		        <%= link_to searches_path :search_domain => "objekte", :mtype => session[:mtype], :msubtype => session[:msubtype], :controller_name => controller_name do %>
 	  		          <i class="glyphicon glyphicon-filter" style="font-size:2em"></i>
 	  		        <% end %>
 			<% end %>

@@ -91,7 +91,7 @@
         </p>
   			<p>
         <% @search_anz = Search.where('ticket_id=?',t.id).count %>
-        <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => t.id do %>
+        <%= link_to searches_path :search_domain => "tickets", :controller_name => controller_name, :ticket_id => t.id do %>
           <i class="btn btn-primary glyphicon glyphicon-filter">
           <span class="badge"><%= @search_anz %></span></i>
         <% end %>
