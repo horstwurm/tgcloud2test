@@ -38,7 +38,7 @@ class PlanningsController < ApplicationController
 
     respond_to do |format|
       if @planning.save
-        format.html { redirect_to user_path(:id => @planning.user_id, :topic => :ressourcenplanung, :scope => @planning.costortime, :year => @planning.jahr, :month => @planning.monat), notice: (I18n.t :act_create)}
+        format.html { redirect_to user_path(:id => @planning.user_id, :topic => "personen_ressourcenplanung", :scope => @planning.costortime, :year => @planning.jahr, :month => @planning.monat), notice: (I18n.t :act_create)}
         format.json { render :show, status: :created, location: @planning }
       else
         format.html { render :new }
@@ -52,7 +52,7 @@ class PlanningsController < ApplicationController
   def update
     respond_to do |format|
       if @planning.update(planning_params)
-        format.html { redirect_to user_path(:id => @planning.user_id, :topic => :ressourcenplanung, :scope => @planning.costortime, :year => @planning.jahr, :month => @planning.monat), notice: (I18n.t :act_update) }
+        format.html { redirect_to user_path(:id => @planning.user_id, :topic => "personen_ressourcenplanung", :scope => @planning.costortime, :year => @planning.jahr, :month => @planning.monat), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @planning }
       else
         format.html { render :edit }
@@ -68,7 +68,7 @@ class PlanningsController < ApplicationController
     @planning_costortime = @planning.costortime
     @planning.destroy
     respond_to do |format|
-      format.html { redirect_to user_path(:id => @planning_user_id, :topic => :ressourcenplanung, :scope => @planning_costortime), notice: (I18n.t :act_delete) }
+      format.html { redirect_to user_path(:id => @planning_user_id, :topic => "personen_ressourcenplanung", :scope => @planning_costortime), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

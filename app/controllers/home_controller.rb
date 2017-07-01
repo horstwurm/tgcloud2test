@@ -380,7 +380,7 @@ def index17
   if params[:questionaire_id] 
     @questionaire = Mobject.find(params[:questionaire_id])
   else
-    @questionaire = Mobject.where('mtype=?',"Umfragen").first
+    @questionaire = Mobject.where('mtype=?',"umfragen").first
   end
 end
 

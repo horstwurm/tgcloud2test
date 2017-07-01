@@ -39,8 +39,8 @@ mcategories = Mcategory.create({ctype:"branche", name:"Einzelhandel"})
 mcategories = Mcategory.create({ctype:"branche", name:"Finanzdienstleistungen"})
     
 #create Aktionen & Angebote 29 30
-mcategories = Mcategory.create({ctype:"Angebote", name:"Standard"})
-mcategories = Mcategory.create({ctype:"Angebote", name:"Aktion"})
+mcategories = Mcategory.create({ctype:"angebote", name:"standard"})
+mcategories = Mcategory.create({ctype:"angebote", name:"aktion"})
 
 #OBJECT vermietungen 31..41
 mcategories = Mcategory.create({ctype:"vermietungen", name:"Personentransport"})
@@ -93,7 +93,7 @@ mcategories = Mcategory.create({ctype:"ticket", name:"Gutschein"})
 mcategories = Mcategory.create({ctype:"ticket", name:"Rabatt"})
 
 #create ticket categories 71
-mcategories = Mcategory.create({ctype:"Event", name:"ticket"})
+mcategories = Mcategory.create({ctype:"event", name:"ticket"})
 
 #create publikationen categories 72..76
 mcategories = Mcategory.create({ctype:"publikationen", name:"Mitarbeiter Zeitung"})
@@ -120,10 +120,10 @@ mcategories = Mcategory.create({ctype:"umfragen", name:"Abstimmung"})
 mcategories = Mcategory.create({ctype:"umfragen", name:"Online Abstimmung"})
 
 #create Question categories 89..92
-mcategories = Mcategory.create({ctype:"fragetyp", name:"Text"})
-mcategories = Mcategory.create({ctype:"fragetyp", name:"Numerisch"})
-mcategories = Mcategory.create({ctype:"fragetyp", name:"Single"})
-mcategories = Mcategory.create({ctype:"fragetyp", name:"Multiple"})
+mcategories = Mcategory.create({ctype:"fragetyp", name:"text"})
+mcategories = Mcategory.create({ctype:"fragetyp", name:"numerisch"})
+mcategories = Mcategory.create({ctype:"fragetyp", name:"single"})
+mcategories = Mcategory.create({ctype:"fragetyp", name:"multiple"})
 
 #create Question categories 96..103
 mcategories = Mcategory.create({ctype:"projekte", name:"Business Projekte"})
@@ -212,11 +212,11 @@ for i in 0..60
     ura1 = rand(usanz)+1
     user = User.find(ura1)
     dis = rand(20)+1.to_i
-    searches = Search.create({date_from: Date.today, date_to: Date.today, user_id: ura1, customer:false, status: "OK", keywords:"", age_from:0, age_to:0, social: false, controller: "user", search_domain: "Privatpersonen", mtype: "Privatpersonen", name: "Privatpersonen im Umkreis von "+dis.to_s + "km (mein Wohnort)", address1: user.address1, address2: user.address2, address3: user.address3, distance: dis})
+    searches = Search.create({date_from: Date.today, date_to: Date.today, user_id: ura1, customer:false, status: "OK", keywords:"", age_from:0, age_to:0, social: false, controller: "user", search_domain: :privatpersonen, mtype: :privatpersonen, name: "Privatpersonen im Umkreis von "+dis.to_s + "km (mein Wohnort)", address1: user.address1, address2: user.address2, address3: user.address3, distance: dis})
 end
 
 #create some queries branche
-searches = Search.create({date_from: Date.today, date_to: Date.today, user_id: 1, customer:false, status: "OK", keywords:"", age_from:0, age_to:0, social: false, address1: user.address1, address2: user.address2, address3: user.address3, distance: dis, controller: "company", mtype: "Institutionen", search_domain: "Institutionen", name: "Suche nach Banken", mcategory_id:28})
+searches = Search.create({date_from: Date.today, date_to: Date.today, user_id: 1, customer:false, status: "OK", keywords:"", age_from:0, age_to:0, social: false, address1: user.address1, address2: user.address2, address3: user.address3, distance: dis, controller: "company", mtype: :institutionen, search_domain: :institutionen, name: "Suche nach Banken", mcategory_id:28})
 usanz = User.all.count-1
 random = Random.new(Time.new.to_i)
 for i in 0..60
@@ -225,7 +225,7 @@ for i in 0..60
     catname = Mcategory.find(cat).name
     user = User.find(ura1)
     dis = rand(20)+1.to_i
-    searches = Search.create({date_from: Date.today, date_to: Date.today, user_id: ura1, customer:false, status: "OK", keywords:"", age_from:0, age_to:0, social: false, address1: user.address1, address2: user.address2, address3: user.address3, distance: dis, controller: "company", search_domain: "Institutionen", name: "Suche nach "+ catname, mcategory_id: cat})
+    searches = Search.create({date_from: Date.today, date_to: Date.today, user_id: ura1, customer:false, status: "OK", keywords:"", age_from:0, age_to:0, social: false, address1: user.address1, address2: user.address2, address3: user.address3, distance: dis, controller: "company", search_domain: :institutionen, name: "Suche nach "+ catname, mcategory_id: cat})
 end
 
 #create some companies...

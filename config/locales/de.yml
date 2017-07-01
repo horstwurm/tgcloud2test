@@ -21,7 +21,7 @@
 
 de:
   news: "News"
-  personen: "Privatpersonen"
+  personen: "Personen"
   institutionen: "Institutionen"
   umfragen: "Umfragen"
   projekte: "Projekte/Aufträge"
@@ -125,6 +125,23 @@ de:
   betrag: "Betrag"
   auftragscontrolling: "Controlling Projekte/Aufträge"
   projektdashboard: "Projekt Cockpit"
+  zugriffsberechtigungen: "Zugriffsberechtigungen"
+  hauptmenue: "Hauptmenü"
+  dskampagnen: "Kampagnen"
+  dsstandorte: "Werbeflächen"
+  jury: "Jury"
+  preise: "Wettbewerbspreise"
+  ideen: "Ideen"
+  bewertungskriterien: "Bewertungskriterien"
+  bewertungen: "Bewertungen"
+  preis: "Preis"
+  gewichtung: "Gewichtung"
+  fragen: "Fragen"
+  frage: "Frage"
+  umfrageteilnehmer: "Teilnehmer Umfrage"
+  antwort: "Antwort"
+  partnerlinks: "WerbeLinks"
+  stundensatz: "Stundensatz"
   
   # devise
   email: "eMail"

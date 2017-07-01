@@ -21,8 +21,8 @@
 
 en:
   news: "News"
-  personen: "Privatpersonen"
-  institutionen: "Institutionen"
+  personen: :privatpersonen
+  institutionen: :institutionen
   umfragen: "Umfragen"
   projekte: "Projekte/Aufträge"
   innovationswettbewerbe: "Innovationswettbewerbe"

@@ -33,7 +33,7 @@ class MdetailsController < ApplicationController
   def create
     @mdetail = Mdetail.new(mdetail_params)
     if @mdetail.save
-      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => @mdetail.mtype), notice: (I18n.t :act_create) 
+      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => "objekte_details"), notice: (I18n.t :act_create) 
     else
       render :new
     end
@@ -42,7 +42,7 @@ class MdetailsController < ApplicationController
   # PUT /mdetails/1
   def update
     if @mdetail.update(mdetail_params)
-      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => @mdetail.mtype), notice: (I18n.t :act_update) 
+      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => "objekte_details"), notice: (I18n.t :act_update) 
     else
       render :edit
     end
@@ -53,7 +53,7 @@ class MdetailsController < ApplicationController
     @id = @mdetail.mobject_id
     @type = @mdetail.mtype
     @mdetail.destroy
-    redirect_to mobject_path(:id => @id, :topic => @type), notice: (I18n.t t :act_delete) 
+    redirect_to mobject_path(:id => @id, :topic => "objekte_details"), notice: (I18n.t t :act_delete) 
   end
 
   private

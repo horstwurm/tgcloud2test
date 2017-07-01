@@ -1,6 +1,6 @@
 <div class="row">
     <action>
-    <%= action_buttons2("Standorte", @signage_loc, @topic) %>
+    <%= action_buttons2(:dsstandorte, @signage_loc, @topic) %>
     </action> 
 </div>
 
@@ -9,7 +9,7 @@
     <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow> " + @signage_loc.name + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
     <nav>
       <div class='col-xs-12'>
-          <%= navigate("Standorte", @signage_loc) %>
+          <%= navigate("dsstandorte", @signage_loc) %>
       </div>
     </nav>
     </header>
@@ -40,8 +40,8 @@
             <cite><%= @signage_loc.created_at.strftime("%d.%m.%Y") %></cite><br>
           </div>
           
-        <% when "Kampagnen" %>
-          <%= header("Standorte", false) %>
+        <% when :dskampagnen %>
+          <%= header(:dsstandorte, false) %>
           <!--<div class="panel-body">-->
           <!--  <%= build_medialist2(@signage_loc.signage_cals, "signage_cals", nil) %>-->
           <!--</div>-->
@@ -170,7 +170,7 @@ $(document).ready(function(){
 });
 </script>
 
-<% if @topic == "Kampagnen" %>
+<% if @topic == :dskampagnen %>
 <script type="text/javascript">
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart1);

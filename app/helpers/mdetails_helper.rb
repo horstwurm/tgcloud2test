@@ -1,2 +1,0 @@
-module MdetailsHelper
-end

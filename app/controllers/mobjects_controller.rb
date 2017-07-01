@@ -118,12 +118,12 @@ class MobjectsController < ApplicationController
     end
     if !params[:topic]
       if @mobject.mtype == "publikationen"
-        @topic = :ausgaben
+        @topic = "ausgaben"
       else
-        @topic = :info
+        @topic = "objekte_info"
       end
     else
-      @topic = params[:topic].to_sym
+      @topic = params[:topic]
     end
     if false
     if !session[:cw]
@@ -206,7 +206,7 @@ class MobjectsController < ApplicationController
       
    end
    
-   if @topic == :auftragscontrolling
+   if @topic == "objekte_auftragscontrolling"
       if params[:export]
         @export = true
       end
@@ -268,7 +268,7 @@ class MobjectsController < ApplicationController
       
     end
 
-    if @topic == :ressourcenplanung or @topic == :zeiterfassung
+    if @topic == "objekte_ressourcenplanung"
 
         if params[:year]
           @c_year = params[:year]
@@ -351,7 +351,7 @@ class MobjectsController < ApplicationController
         end
       end
       
-      if @topic == :fragen
+      if @topic == "objekte_fragen"
         if params[:dir]
           
           @ques=[]

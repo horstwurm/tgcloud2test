@@ -69,7 +69,7 @@ class SignageLocsController < ApplicationController
       end
     end
     
-  if @topic == "Kampagnen"
+  if @topic == :dskampagnen
     @anz_s = ""
     #@hits = @signage_camp.signage_hits
     #@hits = SignageHit.select("signage_loc_id as loc, date(created_at) as datum, count(id) as summe").where('signage_camp_id=?',@signage_camp.id).group("date(created_at, signage_loc_id)")

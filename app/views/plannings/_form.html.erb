@@ -16,7 +16,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading header">
                       <li_header>
-                        <%= link_to user_path(:id => @planning.user_id, :topic => :ressourcenplanung, :year => @planning.jahr, :mode => "Jahr") do %>
+                        <%= link_to user_path(:id => @planning.user_id, :topic => "personen_ressourcenplanung", :year => @planning.jahr, :mode => "Jahr") do %>
                           <i class="btn btn-primary glyphicon glyphicon-list"></i>
                         <% end %>
                         <%= (I18n.t :kapazitaetsplanung) + " " + (I18n.t @planning.costortime) + " " + @planning.user.name + " " + @planning.user.lastname + " " + @planning.mobject.name + " " + @planning.jahr + "/" + @planning.monat %>

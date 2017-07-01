@@ -27,10 +27,10 @@ class MratingsController < ApplicationController
   def create
     @mrating = Mrating.new(mrating_params)
     if @mrating.save
-      if @mrating.mobject.mtype == "Artikel"
-        @topic = "Info"
+      if @mrating.mobject.mtype == "artikel"
+        @topic = "objekte_info"
       else
-        @topic = "Bewertungen"
+        @topic = "objekte_bewertungen"
       end
       redirect_to mobject_path(:id => @mrating.mobject_id, :topic => @topic), notice: (I18n.t :act_create)
     else
@@ -42,9 +42,9 @@ class MratingsController < ApplicationController
   def update
     if @mrating.update(mrating_params)
       if @mrating.mobject.mtype == "Artikel"
-        @topic = "Info"
+        @topic = "objekte_info"
       else
-        @topic = "Bewertungen"
+        @topic = "objekte_bewertungen"
       end
       redirect_to mobject_path(:id => @mrating.mobject_id, :topic => @topic), notice: (I18n.t :act_update)
     else
@@ -56,9 +56,9 @@ class MratingsController < ApplicationController
   def destroy
     @id = @mrating.mobject_id
     if @mrating.mobject.mtype == "Artikel"
-      @topic = "Info"
+      @topic = "objekte_info"
     else
-      @topic = "Bewertungen"
+      @topic = "objekte_bewertungen"
     end
     @mrating.destroy
       redirect_to mobject_path(:id => @id, :topic => @topic), notice: (I18n.t :act_delete)

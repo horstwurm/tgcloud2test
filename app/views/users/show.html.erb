@@ -1,23 +1,21 @@
-  <div class="row">
-    <header>
-    <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow> " + @user.name + " " + @user.lastname + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
-    <nav>
-      <div class='col-xs-12'>
-          <%= navigate(:personen, @user) %>
-      </div>
-    </nav>
-    </header>
-  </div>
+<div class="row">
+  <header>
+  <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow> " + @user.name + " " + @user.lastname + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
+  <nav>
+    <div class='col-xs-12'>
+        <%= navigate("personen", @user) %>
+    </div>
+  </nav>
+  </header>
+</div>
 
-  <div class="row">
+<div class="row">
+  <div class='col-xs-12'>
 
-      <div class='col-xs-12'>
-
-      <% @topic %>
+      <%= header3("personen", @user, @topic, false) %>
       
-      <%= header3(:personen, @user, @topic, false) %>
       <% case @topic %>
-        <% when :info %>
+        <% when "personen_info" %>
 
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -83,7 +81,7 @@
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-              <% if $activeapps.include?("Privatpersonenaktivitaeten") or (user_signed_in? and current_user.superuser) %>
+              <% if $activeapps.include?("personen_aktivitaeten") or (user_signed_in? and current_user.superuser) %>
                 <%= header((I18n.t :aktivitaeten), false) %>
                 <% @stats %>
                 <div class="panel-body">
@@ -95,10 +93,14 @@
             
           </div>
 
+        <!--########################################################################################################################-->
+        <!--# inactive code-->
+        <!--########################################################################################################################-->
+          <% if false %>
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <% if $activeapps.include?("Privatpersonenmappositionen") or (user_signed_in? and current_user.superuser) %>
-                <%= header((I18n.t :favoriten), false) %>
+              <% if $activeapps.include?("personen_mappositionen") or (user_signed_in? and current_user.superuser) %>
+                <%= header((I18n.t :positionen), false) %>
                 <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
                 <div class="panel-body">
                   <div id="map2">
@@ -108,49 +110,18 @@
               <% end %>
             </div>
           </div>
+          <% end %>
           
-        <% when :institutionen %>
-          <%= build_medialist2(@user.companies, "companies", nil) %>
-        <% when :angebote %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"angebote"), "mobjects", nil) %>
-        <% when :ansprechpartner %>
-          <%= build_medialist2(@user.madvisors, "madvisors", "object") %>
-        <% when :kleinanzeigen %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"kleinanzeigen"), "mobjects", nil) %>
-        <% when :stellenanzeigen %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"stellenanzeigen"), "mobjects", nil) %>
-        <% when :vermietungen %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"vermietungen"), "mobjectss", nil) %>
-        <% when :veranstaltungen %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"veranstaltungen"), "mobjects", nil) %>
-        <% when :ausflugsziele %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"ausflugsziele"), "mobjects", nil) %>
-        <% when :ausschreibungen %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"ausschreibungen"), "mobjects", nil) %>
-        <% when :crowdfunding %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"crowdfunding"), "mobjects", nil) %>
-        <% when :crowdfundingbeitraege %>
-          <%= build_medialist2(@user.mstats, "mstats", "CF") %>
-        <% when :projekte %>
-          <%= build_medialist2(@user.mobjects.where('mtype=? and parent=?',"projekte",0), "mobjects", nil) %>
-        <% when :innovationswettbewerbe %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"innovationswettbewerbe"), "mobjects", nil) %>
-        <% when :ideen %>
-          <%= build_medialist2(@user.ideas, "ideas", "Idee") %>
-        <% when :umfragen %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"umfragen"), "mobjects", nil) %>
-        <% when :publikationen %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"publikationen"), "mobjects", nil) %>
-        <% when :gruppen %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"gruppen"), "mobjects", nil) %>
-        <% when :artikel %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"artikel"), "mobjects", nil) %>
-        <% when :bewertungen %>
-          <%= build_medialist2(@user.mratings, "mratings", "objekte") %>
-        <% when :anmeldungen %>
-          <%= build_medialist2(@user.participants, "participants", "objekte") %>
+        <% when "personen_institutionen" %>
+            <%= build_medialist2(@user.companies, "companies", nil) %>
 
-        <% when :zeiterfassung %>
+        <% when "personen_projekte" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=? and parent=?',"projekte",0), "mobjects", nil) %>
+
+        <% when "personen_gruppen" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"gruppen"), "mobjects", nil) %>
+  
+        <% when "personen_zeiterfassung" %>
           <div class="row">
               <div class='col-xs-12'>
                 <div class='panel-body'>
@@ -180,28 +151,28 @@
                   <% @date_start %>
                   <% @date_end %>
                   
-                  <%= link_to user_path(:id => @user.id, :topic => :zeiterfassung, :year => @c_year, :month => @c_month, :mode => "alles", :scope => @c_scope) do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung", :year => @c_year, :month => @c_month, :mode => "alles", :scope => @c_scope) do %>
                     <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-fullscreen"> alles</i></span>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => :zeiterfassung,  :year => @c_year, :month => @c_month, :mode => "Monat", :scope => @c_scope) do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Monat", :scope => @c_scope) do %>
                     <span><i class="btn btn-<%= btn_m %> glyphicon glyphicon-calendar"> <%= @c_month %></i></span>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => :zeiterfassung,  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope)  do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope)  do %>
                     <span><i class="btn btn-<%= btn_y %> glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
                   <% end %>
-
-                  <%= link_to user_path(:id => @user.id, :topic => :zeiterfassung,  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => "kosten")  do %>
+  
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => "kosten")  do %>
                     <span><i class="btn btn-<%= btn_sc %> glyphicon glyphicon-euro"></i></span>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => :zeiterfassung,  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => "aufwand")  do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => "aufwand")  do %>
                     <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
                   <% end %>
           
                   <% if @c_mode != "alles" %>
-                    <%= link_to user_path(:id => @user.id, :topic => :zeiterfassung, :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope)  do %>
+                    <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope)  do %>
                       <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
                     <% end %>
-                    <%= link_to user_path(:id => @user.id, :topic => :zeiterfassung, :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
+                    <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
                       <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
                     <% end %>
                  <% end %>
@@ -220,7 +191,7 @@
                     <div id="auftragschartall"></div>
                   </div>
                 </div>
-
+  
                 <% @mob = [] %>
                 <div class="row">
                   <% @timetracks.each do |t| %>
@@ -254,7 +225,7 @@
                     <% end %>
                   </div>
                 </div>
-
+  
                 <% if @c_mode == "Monat" %>
                   <br><br>
                   <div class="row">
@@ -300,16 +271,16 @@
                     </div>
                   </div>
                 <% end %>
-
+  
                 </div>
               </div>
           </div>
-
-        <% when :ressourcenplanung %>
+  
+        <% when "personen_ressourcenplanung" %>
           <div class="row">
               <div class='col-xs-12'>
                 <div class='panel-body'>
-
+  
                   <% @header = [] %>
                   <% @data = [] %>
                   <% @header = %w[Jan Feb Mar Apr May Jun Jul Aug Sep Okt Nov Dez] %>
@@ -326,25 +297,25 @@
                       <% btn_sc = "active" %>
                   <% end %>
                   
-                  <%= link_to user_path(:id => @user.id, :topic => :ressourcenplanung, :year => @c_year, :scope => @c_scope)  do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_ressourcenplanung", :year => @c_year, :scope => @c_scope)  do %>
                     <span><i class="btn btn-active glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
                   <% end %>
-
-                  <%= link_to user_path(:id => @user.id, :topic => :ressourcenplanung, :year => @c_year, :scope => "kosten")  do %>
+  
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_ressourcenplanung", :year => @c_year, :scope => "kosten")  do %>
                     <span><i class="btn btn-<%= btn_sc %> glyphicon glyphicon-euro"></i></span>
                   <% end %>
-                   <%= link_to user_path(:id => @user.id, :topic => :ressourcenplanung, :year => @c_year, :scope => "aufwand")  do %>
+                   <%= link_to user_path(:id => @user.id, :topic => "personen_ressourcenplanung", :year => @c_year, :scope => "aufwand")  do %>
                     <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
                   <% end %>
                   
-                  <%= link_to user_path(:id => @user.id, :topic => :ressourcenplanung, :dir => "<", :year => @c_year, :mode => @c_mode, :scope => @c_scope )  do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_ressourcenplanung", :dir => "<", :year => @c_year, :mode => @c_mode, :scope => @c_scope )  do %>
                     <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => :ressourcenplanung, :dir => ">", :year => @c_year, :mode => @c_mode , :scope => @c_scope) do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_ressourcenplanung", :dir => ">", :year => @c_year, :mode => @c_mode , :scope => @c_scope) do %>
                     <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
                   <% end %>
                  <br><br>
-
+  
                   <table class="table">
                     <tr>
                       <td></td>
@@ -368,83 +339,83 @@
                       <% end %>
                     </tr>
                     <% if @mymobjects %>
-                    <% @mymobjects.each do |w| %>
-
-                      <tr>            
-
-                        <% plans = [] %>
-                        <% @plannings = Planning.where('mobject_id=? and user_id=? and costortime=? and jahr=?', w.id, current_user.id, @c_scope, @c_year.to_s) %>
-                        <% @plannings.each do |p| %>
-                          <% h = Hash.new %>
-                          <% h = {:id => p.id, :monat => p.monat.to_i, :kapa => p.amount} %>
-                          <% plans << h %>
-                        <% end %>
-
-                        <td>
-                          <%= showFirstImage2(:small, w,w.mdetails) %>
-                        </td>
-                        <td>
-                          <%= w.name %>
-                        </td>
-
-                        <% for i in 0..@header.length-1 do %>
-
-                          <% if @c_scope == "kosten" %>
-                          
-                            <% moto = 0 %>
-                            <% for k in 0..plans.length-1 do %>
-                              <% if plans[k][:monat].to_i == @data[i].to_i %>
-                                <% moto = moto + plans[k][:kapa] %>
-                              <% end %>
-                            <% end %>
+                      <% @mymobjects.each do |w| %>
+    
+                        <tr>            
+    
+                          <% plans = [] %>
+                          <% @plannings = Planning.where('mobject_id=? and user_id=? and costortime=? and jahr=?', w.id, current_user.id, @c_scope, @c_year.to_s) %>
+                          <% @plannings.each do |p| %>
+                            <% h = Hash.new %>
+                            <% h = {:id => p.id, :monat => p.monat.to_i, :kapa => p.amount} %>
+                            <% plans << h %>
+                          <% end %>
+    
+                          <td>
+                            <%= showFirstImage2(:small, w,w.mdetails) %>
+                          </td>
+                          <td>
+                            <%= w.name %>
+                          </td>
+    
+                          <% for i in 0..@header.length-1 do %>
+    
+                            <% if @c_scope == "kosten" %>
                             
-                            <% if moto > 0%>
-                              <td class="color_kapa_booked" align="right">
-                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
-                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                              <% moto = 0 %>
+                              <% for k in 0..plans.length-1 do %>
+                                <% if plans[k][:monat].to_i == @data[i].to_i %>
+                                  <% moto = moto + plans[k][:kapa] %>
                                 <% end %>
-                               <%= moto.to_s+" CHF" %><br>
-                            <% else %>
-                                <td>
-                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
-                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
-                                <% end %>
-                            <% end %>
-                            </td>
-                          <% end %>
-                        
-                          <% if @c_scope == "aufwand" %>
-                            <% kapa = false %>
-                            <% for k in 0..plans.length-1 do %>
-                              <% if plans[k][:monat].to_i == @data[i].to_i %>
-                                <td class="color_kapa_booked">
-                                <%= plans[k][:kapa].to_s+" %" %><br>
-                				        <%= link_to edit_planning_path(:id => plans[k][:id]) do %>
-                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-pencil"></i>
-                                <% end %>
-                				        <%= link_to Planning.find(plans[k][:id]), method: :delete, data: { confirm: (I18n.t :sindsiesicher) } do %>
-                                  <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
-                                <% end %>
-                                <% @total[i] = @total[i] + plans[k][:kapa] %>
-                                <% kapa = true %>
                               <% end %>
-                            <% end  %>
-                            <% if !kapa %>
-                                <td>
-                				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
-                                  <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
-                                <% end %>
+                              
+                              <% if moto > 0%>
+                                <td class="color_kapa_booked" align="right">
+                  				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                    <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                  <% end %>
+                                 <%= moto.to_s+" CHF" %><br>
+                              <% else %>
+                                  <td>
+                  				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                    <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                  <% end %>
+                              <% end %>
+                              </td>
                             <% end %>
-                            </td>
+                          
+                            <% if @c_scope == "aufwand" %>
+                              <% kapa = false %>
+                              <% for k in 0..plans.length-1 do %>
+                                <% if plans[k][:monat].to_i == @data[i].to_i %>
+                                  <td class="color_kapa_booked">
+                                  <%= plans[k][:kapa].to_s+" %" %><br>
+                  				        <%= link_to edit_planning_path(:id => plans[k][:id]) do %>
+                                    <i class="btn btn-primary btn-xs glyphicon glyphicon-pencil"></i>
+                                  <% end %>
+                  				        <%= link_to Planning.find(plans[k][:id]), method: :delete, data: { confirm: (I18n.t :sindsiesicher) } do %>
+                                    <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                                  <% end %>
+                                  <% @total[i] = @total[i] + plans[k][:kapa] %>
+                                  <% kapa = true %>
+                                <% end %>
+                              <% end  %>
+                              <% if !kapa %>
+                                  <td>
+                  				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                                    <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
+                                  <% end %>
+                              <% end %>
+                              </td>
+                            <% end %>
+    
                           <% end %>
-
-                        <% end %>
-
-                      </tr>
-
+    
+                        </tr>
+    
+                      <% end %>
                     <% end %>
-                    <% end %>
-
+  
                   <!-- finally add totals and progress bar-->
                   <% if @c_scope == "aufwand" %>
                     <tr>
@@ -529,13 +500,48 @@
                     </div>
                   </div>
                 <% end %>
-
-
+  
               </div>
             </div>
           </div>
-          
-        <% when :kalendereintraege %>
+
+        <!--########################################################################################################################-->
+        <!--# inactive code-->
+        <!--########################################################################################################################-->
+        <% when "personen_angebote" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"angebote"), "mobjects", nil) %>
+        <% when "personen_ansprechpartner" %>
+          <%= build_medialist2(@user.madvisors, "madvisors", "object") %>
+        <% when "personen_kleinanzeigen" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"kleinanzeigen"), "mobjects", nil) %>
+        <% when "personen_stellenanzeigen" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"stellenanzeigen"), "mobjects", nil) %>
+        <% when "personen_vermietungen" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"vermietungen"), "mobjectss", nil) %>
+        <% when "personen_veranstaltungen" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"veranstaltungen"), "mobjects", nil) %>
+        <% when "personen_ausflugsziele" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"ausflugsziele"), "mobjects", nil) %>
+        <% when "personen_ausschreibungen" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"ausschreibungen"), "mobjects", nil) %>
+        <% when "personen_crowdfunding" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"crowdfunding"), "mobjects", nil) %>
+        <% when "personen_ideen" %>
+          <%= build_medialist2(@user.ideas, "ideas", "Idee") %>
+        <% when "personen_innovationswettbewerbe" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"innovationswettbewerbe"), "mobjects", nil) %>
+        <% when "personen_umfragen" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"umfragen"), "mobjects", nil) %>
+        <% when "personen_publikationen" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"publikationen"), "mobjects", nil) %>
+        <% when "personen_artikel" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"artikel"), "mobjects", nil) %>
+        <% when "personen_bewertungen" %>
+          <%= build_medialist2(@user.mratings, "mratings", "objekte") %>
+        <% when "personen_anmeldungen" %>
+          <%= build_medialist2(@user.participants, "participants", "objekte") %>
+  
+        <% when "personen_kalendereintraege" %>
           <div id='calendar'></div>
           <div class="panel-body">
           	<table class="table table-striped">
@@ -656,8 +662,8 @@
               </body>
            	</table>
           </div>
-
-    	 <% when :tickets %>
+  
+    	 <% when "personen_tickets" %>
           <div class="panel-body">
             <% @user.user_tickets.where('status<>?', "Filter Kampagne").each do |ut| %>
             
@@ -698,9 +704,9 @@
                     <%= showImage2(:small, ut.ticket.owner.company, true) %>
                     <%= ut.ticket.owner.company.name %>
                   <% end %>
-
+  
                   </ntext>
-
+  
                   </p>
             			<p>
             			<% if user_signed_in? and current_user.id == ut.user_id %>
@@ -731,12 +737,12 @@
             <% end %>
           </div>
             
-    	 <% when :favoriten %>
+    	 <% when "personen_favoriten" %>
           <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
           <div class="panel-body">
             <%= build_medialist2(@user.favourits, "favourits", nil) %>
           </div>
-          <% if $activeapps.include?("Privatpersonenmappositionenfavoriten") or (user_signed_in? and current_user.superuser) %>
+          <% if $activeapps.include?("personen_mappositionenfavoriten") or (user_signed_in? and current_user.superuser) %>
             <%= header((I18n.t :favoriten), false) %>
             <div class="panel-body">
               <div id="map2">
@@ -745,7 +751,7 @@
             </div>
           <% end %>
           
-    	 <% when :kundenbeziehungen %>
+    	 <% when "personen_kundenbeziehungen" %>
           <% hash = Hash.new %>
           <% hash = {:user_id => @user.id} %>
           <div class="panel-body">
@@ -755,13 +761,13 @@
           <div class="panel-body">
             <%= build_medialist2(Company.where('partner=?',true), "nopartners", hash) %>
           </div>
-
-    	 <% when :transaktionen %>
+  
+    	 <% when "personen_transaktionen" %>
           <div class="panel-body">
             <%= build_medialist2(@user.transactions, "transactions", hash) %>
           </div>
-
-    	 <% when :emails %>
+  
+    	 <% when "personen_emails" %>
           <div class="panel-body">
             <table class="table-striped" width="100%">
             <% emails = Email.where('m_to=? or m_from=?', @user.id, @user.id).order(created_at: :desc) %>
@@ -806,47 +812,49 @@
             <% end %>
             </table>
           </div>
-
-    	 <% when :zugriffsberechtigungen %>
+  
+    	 <% when "personen_zugriffsberechtigungen" %>
           <div class="row">
               <%= header((I18n.t :hauptmenue), true) %>
           </div>
-          <%= build_kachel_access("Hauptmenue", "user", @user) %>
+          <%= build_kachel_access("hauptmenue", "user", @user) %>
           <div class="row">
               <%= header((I18n.t :personen), true) %>
           </div>
-          <%= build_kachel_access("Privatpersonen", "user", @user) %>
+          <%= build_kachel_access("personen", "user", @user) %>
           <div class="row">
               <%= header((I18n.t :institutionen), true) %>
           </div>
-          <%= build_kachel_access("Institutionen", "user", @user) %>
+          <%= build_kachel_access("institutionen", "user", @user) %>
           <div class="row">
               <%= header((I18n.t :objekte), true) %>
           </div>
-          <%= build_kachel_access("Objekte", "user", @user) %>
+          <%= build_kachel_access("objekte", "user", @user) %>
           <div class="row">
               <%= header((I18n.t :dskampagnen), true) %>
           </div>
-          <%= build_kachel_access("Kampagnen", "user", @user) %>
+          <%= build_kachel_access("dskampagnen", "user", @user) %>
           <div class="row">
               <%= header((I18n.t :dsstandorte), true) %>
           </div>
-          <%= build_kachel_access("Standorte", "user", @user) %>
+  
+    	 <% when "personen_transaktionen" %>
+          <%= build_kachel_access("dsstandorte", "user", @user) %>
           <div class="panel-body">
             <%= build_medialist2(@user.transactions, "transactions", hash) %>
           </div>
+      <!--end inactive ########################################################################################################################-->
+  
+      <% end %>
 
-        <% end %>
-
-      </div>
-
+    </div>
   </div>
 </div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<% if @topic == :info %>
-<script type="text/javascript">
+<% if @topic == "personen_info" %>
+  <script type="text/javascript">
     var latitudes = [<%= @user.latitude %>];
     var longitudes = [<%= @user.longitude %>];
     function init_map(index) {
@@ -863,12 +871,8 @@
             mapOptions);
         marker.setMap(map);
     }
-    <!--init_map(0);-->
-</script>
-<% end %>
 
-<% if @topic == :info %>
-<script type="text/javascript">
+    <% if false %>
     function initialize() {
         var map;
         var bounds = new google.maps.LatLngBounds();
@@ -914,74 +918,26 @@
             google.maps.event.removeListener(boundsListener);
         });
     };
-</script>
+    <% end %>
+
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable(<%= raw @stats %>);
+      var options = {
+        title: "<%= (I18n.t :aktititaeten) %>",
+        pieHole: 0.4,
+        height: 600,
+      };
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+      chart.draw(data, options);
+    };
+      
+  </script>
 <% end %>
 
-<script>
-$(document).ready(function(){
-  
-    $("a").tooltip();
-  
-    $("nav").hide();
-    $("navhide").hide();
-    $("navhide").hide();
-
-    $("navshow").mouseover(function(){
-        $("nav").show();
-        $("navshow").hide();
-        $("navhide").show();
-
-    });
-    
-    $("navhide").mouseover(function(){
-        $("nav").hide();
-        $("navshow").show();
-        $("navhide").hide();
-    });
-
-    <% if @topic == :kalendereintraege %>
-      $('#calendar').fullCalendar({
-          now: '<%= DateTime.now %>',
-          allDaySlot: false,
-          timeFormat: 'H(:mm)',
-          defaultView: 'basicWeek',
-          defaultView: 'basicDay',
-          defaultView: 'basicWeek',
-          defaultView: 'listYear',
-          defaultView: 'month',
-          defaultView: 'agendaWeek',
-          slotDuration: '1:00:00',
-          contentHeight: 'auto',
-          <% if @user.time_from and @user.time_to %>
-            minTime: '<%= @user.time_from %>:00',
-            maxTime: '<%= @user.time_to %>:00',
-          <% end %>
-          textColor: 'white',
-          firstDay: 1,
-          weekNumbers: true,
-          events: [<%= raw @array %> ]
-      });
-    <% end %>
-    
-    <% if @topic == :info %>
-
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable(<%= raw @stats %>);
-        var options = {
-          title: "<%= (I18n.t :aktititaeten) %>",
-          pieHole: 0.4,
-          height: 600,
-        };
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        chart.draw(data, options);
-      };
-
-
-    <% end %>
-    
-    <% if @topic == :zeiterfassung %>
+<% if @topic == "personen_zeiterfassung" %>
+  <script>
       google.charts.load('current', {'packages':['corechart']});
 
       <% if @c_mode == "alles" %>
@@ -1044,42 +1000,75 @@ $(document).ready(function(){
         <% end %>
     
       <% end %>
-    <% end %>
+
+  </script>
+<% end %>
+
+<!--########################################################################################################################-->
+<!--# inactive code-->
+<!--########################################################################################################################-->
+<% if false %>
+<% if @topic == "personen_kalendereintraege" %>
+  <script>
+    $('#calendar').fullCalendar({
+        now: '<%= DateTime.now %>',
+        allDaySlot: false,
+        timeFormat: 'H(:mm)',
+        defaultView: 'basicWeek',
+        defaultView: 'basicDay',
+        defaultView: 'basicWeek',
+        defaultView: 'listYear',
+        defaultView: 'month',
+        defaultView: 'agendaWeek',
+        slotDuration: '1:00:00',
+        contentHeight: 'auto',
+        <% if @user.time_from and @user.time_to %>
+          minTime: '<%= @user.time_from %>:00',
+          maxTime: '<%= @user.time_to %>:00',
+        <% end %>
+        textColor: 'white',
+        firstDay: 1,
+        weekNumbers: true,
+        events: [<%= raw @array %> ]
+      });
+  </script>
+<% end %>
+<% end %>
+
+<script>
+$(document).ready(function(){
+  
+    $("a").tooltip();
+  
+    $("nav").hide();
+    $("navhide").hide();
+    $("navhide").hide();
+
+    $("navshow").mouseover(function(){
+        $("nav").show();
+        $("navshow").hide();
+        $("navhide").show();
+
+    });
+    
+    $("navhide").mouseover(function(){
+        $("nav").hide();
+        $("navshow").show();
+        $("navhide").hide();
+    });
 
 });
 </script>
 
+<script>
 <% case @topic %>
-  <% when :info %>
-    <script>
-      document.addEventListener("turbolinks:load", function() {init_map(0); initialize(); drawChart();})
-    </script>
+  <% when "personen_info" %>
+      document.addEventListener("turbolinks:load", function() {init_map(0); drawChart();})
 
-  <% when :kalendereintraege %>
-    <script>
-      document.addEventListener("turbolinks:load", function() {
-        $('#calendar').fullCalendar({
-            now: '<%= DateTime.now %>',
-            allDaySlot: false,
-            timeFormat: 'H(:mm)',
-            defaultView: 'basicWeek',
-            defaultView: 'basicDay',
-            defaultView: 'basicWeek',
-            defaultView: 'listYear',
-            defaultView: 'month',
-            defaultView: 'agendaWeek',
-            slotDuration: '1:00:00',
-            contentHeight: 'auto',
-            <% if @user.time_from and @user.time_to %>
-              minTime: '<%= @user.time_from %>:00',
-              maxTime: '<%= @user.time_to %>:00',
-            <% end %>
-            textColor: 'white',
-            firstDay: 1,
-            weekNumbers: true,
-            events: [<%= raw @array %> ]
-        });
-      })
-    </script>
+  <% when "personen_kalendereintraege" %>
+      document.addEventListener("turbolinks:load", function() {})
 
+  <% when "personen_zeiterfassung" %>
+      document.addEventListener("turbolinks:load", function() {drawChartall();})
 <% end %>
+</script>

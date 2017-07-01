@@ -15,34 +15,15 @@ class CompaniesController < ApplicationController
     @companies = Company.search(params[:filter_id], params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
     @companz = @companies.count
    counter = 0 
-   @locs = "["
-   @wins = "["
+   @locs = []
+   @wins = []
    @companies.each do |c|
-
       if c.longitude and c.latitude and c.geo_address
-        @locs = @locs + "["
-        @locs = @locs + "'" + c.name + "', "
-        @locs = @locs + c.latitude.to_s + ", "
-        @locs = @locs + c.longitude.to_s
-        if counter+1 == @companz
-          @locs = @locs + "]"
-        else
-          @locs = @locs + "],"
-        end
-  
-        @wins = @wins + "["
-        @wins = @wins + "'<img src=" + c.avatar(:small) + "<br><h3>" + c.name + "</h3><p>" + c.geo_address + "</p>'"
-        if counter+1 == @campanz
-          @wins = @wins + "]"
-        else
-          @wins = @wins + "],"
-        end
+        @locs << [c.name, c.latitude, c.longitude.to_s]
+        @wins << ["<img src=" + c.avatar(:small) + "<br><h3>" + c.name + "</h3><p>" + c.geo_address + "</p>"]
       end
-      counter = counter + 1
     end
-    @locs = @locs + "]"
-    @wins = @wins + "]"
-    
+
   end
 
   # GET /companies/1
@@ -50,32 +31,38 @@ class CompaniesController < ApplicationController
      if params[:topic]
        @topic = params[:topic].to_sym
      else 
-       @topic = :info
+       @topic = "institutionen_info"
      end 
     
     if params[:camp_id]
       @campaign = SignageCamp.find(params[:camp_id])
     end
 
-    @array_s = ""
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Angebote'), "Angebote" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Kleinanzeigen'), "Kleinanzeigen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Vermietungen'), "Vermietungen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Veranstaltungen'), "Veranstaltungen" )
-    @array_s = @company.build_stats(@array_s, @company.msponsors, "Sponsorenengagements" ) 
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Ausschreibungen'), "Ausschreibungen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Ausflugsziele'), "Ausflugsziele" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Stellenanzeigen'), "Stellenanzeigen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Publikationen'), "Publikationen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Umfragen'), "Umfragen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','Crowdfunding'), "Crowdfunding" )
-    @array_s = @company.build_stats(@array_s, @company.mstats, "Crowdfunding Beitraege" )            if false
-    @array_s = @company.build_stats(@array_s, @company.customers, "Kundenstatus" )
-    @array_s = @company.build_stats(@array_s, @company.transactions.where('ttype=?', "Payment"), "Transaktionen" )
-    @array_s = @company.build_stats(@array_s, Email.where('m_to=? or m_from=?', @company.user.id, @company.user.id), "Nachrichten" )
-    #@array_s = @company.build_stats(@array_s, @company.user.searches, "Abfragen" )
-    @array_s = @array_s[0, @array_s.length - 1]
+    @stats = [["Aktivtäten","Anzahl"]]
+    @stats << ["Projekte/Tasks", @company.mobjects.where('mtype=?','projekte').count ]
+    @stats << ["Partnerlinks", @company.partner_links.count ]
 
+    if false
+    @array_s = ""
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','angebote'), "angebote" )
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','kleinanzeigen'), "Kleinanzeigen" )
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','vermietungen'), "Vermietungen" )
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','veranstaltungen'), "Veranstaltungen" )
+    @array_s = @company.build_stats(@array_s, @company.msponsors, "sponsorenengagements" ) 
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','ausschreibungen'), "ausschreibungen" )
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','ausflugsziele'), "ausflugsziele" )
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','stellenanzeigen'), "stellenanzeigen" )
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','publikationen'), "publikationen" )
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','umfragen'), "umfragen" )
+    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','crowdfunding'), "crowdfunding" )
+    @array_s = @company.build_stats(@array_s, @company.mstats, "crowdfunding Beitraege" )            if false
+    @array_s = @company.build_stats(@array_s, @company.customers, "kundenstatus" )
+    @array_s = @company.build_stats(@array_s, @company.transactions.where('ttype=?', "payment"), "transaktionen" )
+    @array_s = @company.build_stats(@array_s, Email.where('m_to=? or m_from=?', @company.user.id, @company.user.id), "nachrichten" )
+    #@array_s = @company.build_stats(@array_s, @company.user.searches, "abfragen" )
+    @array_s = @array_s[0, @array_s.length - 1]
+    end
+    
   end
 
   # GET /companies/new
@@ -97,7 +84,7 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     if @company.save
-      redirect_to user_path(:id => @company.user_id, :topic => :institutionen), notice: (I18n.t :act_create)
+      redirect_to user_path(:id => @company.user_id, :topic => "institutionen_info"), notice: (I18n.t :act_create)
       # redirect_to @company, notice: 'Company was successfully created.'
     else
       render :new
@@ -117,7 +104,7 @@ class CompaniesController < ApplicationController
   def destroy
     @us = @company.user_id
     @company.destroy
-    redirect_to user_path(:id => @us, :topic => :institutionen),  notice: (I18n.t :act_delete)
+    redirect_to user_path(:id => @us, :topic => "personen_institutionen"),  notice: (I18n.t :act_delete)
   end
 
   private

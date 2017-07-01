@@ -68,10 +68,10 @@ end
 def carousel2(mobject, size)
     html = ""
     if mobject.mdetails == nil
-      html = html + image_tag(image_def("Objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
+      html = html + image_tag(image_def("objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
     else
       if mobject.mdetails.count == 0
-        html = html + image_tag(image_def("Objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
+        html = html + image_tag(image_def("objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
       else
         html = html +  '<div class="owl-show">'
         mobject.mdetails.each do |p|
@@ -80,7 +80,7 @@ def carousel2(mobject, size)
 
             html = html + "<div class='col-xs=12'>"
               if p.avatar_file_name == nil
-                html = html + "<div>" + image_tag(image_def("Objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" ) + "</div>"
+                html = html + "<div>" + image_tag(image_def("objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" ) + "</div>"
               else
                 html = html + "<div>"+ (image_tag p.avatar(size), class:"img-rounded") + "</div>"
               end
@@ -202,7 +202,7 @@ def build_medialist2(items, cname, par)
                 when "companies", "mobjects", "mdetails", "signage_camps"
                   html_string = html_string + item.name
                 when "searches"
-                  html_string = html_string + (I18n.t :abfrage)
+                  html_string = html_string + item.name
                 when "customers"
                   @comp = Company.find(item.partner_id)
                   html_string = html_string + @comp.name
@@ -328,7 +328,7 @@ def build_medialist2(items, cname, par)
                       else
                         html_string = html_string + "<soft_padding>"
                         case item.search_domain
-                          when "privatpersonen"
+                          when "personen"
                             html_string = html_string + link_to(users_path(:filter_id => item.id)) do
                               #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
                               content_tag(:i, nil, class:"glyphicon glyphicon-question-sign", style:"font-size:8em") 
@@ -337,7 +337,7 @@ def build_medialist2(items, cname, par)
                           when "tickets"
                               #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
                               content_tag(:i, nil, class:"glyphicon glyphicon-question-sign", style:"font-size:8em") 
-                              html_string = html_string + image_tag(image_def("Privatpersonen", item.mtype, item.msubtype))
+                              html_string = html_string + image_tag(image_def("personen", item.mtype, item.msubtype))
                           when "institutionen"
                             html_string = html_string + link_to(companies_path(:filter_id => item.id)) do
                               #content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.search_domain), style:"font-size:8em") 
@@ -453,11 +453,12 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + item.description
                     when "comments"
                       html_string = html_string + "<blog>'" + item.description + "'</blog>"
+
                     when "questions"
                       html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
                       html_string = html_string + item.mcategory.name + '<br><br>'
                       
-                      if item.mcategory.name == "single" or item.mcategory.name == "multiple" 
+                      if item.mcategory.name.upcase == "single".downcase or item.mcategory.name.downcase == "multiple".downcase 
 
           	            html_string = html_string + link_to(new_answer_path(:question_id => item.id)) do 
                           content_tag(:i, nil, class:"btn btn-primary btn-xs glyphicon glyphicon-plus")
@@ -467,7 +468,7 @@ def build_medialist2(items, cname, par)
   
                           html_string = html_string + "<div class='row'>"
                           html_string = html_string + '<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">'
-                          case item.mcategory.name
+                          case item.mcategory.name.downcase
                             when "text"
                               html_string = html_string + a.name
                             when "numerisch"
@@ -1289,11 +1290,11 @@ def showFirstImage2(size, item, details)
           image_tag pic.avatar(size), class:"img-rounded img-responsive"
         else
           image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
-          #image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
+          #image_tag(image_def(:objekte, item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
         end
       else
         image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
-        #image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
+        #image_tag(image_def(:objekte, item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
       end
     end
     return html_string.html_safe
@@ -1309,9 +1310,9 @@ def showImage2(size, item, linkit)
           html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
           # case item.class.name
           #   when "User"
-          #     image_tag(image_def("Privatpersonen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
+          #     image_tag(image_def(:personen, nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
           #   when "Company"
-          #     image_tag(image_def("Institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
+          #     image_tag(image_def("institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
           #   else
           #     image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
           # end
@@ -1324,9 +1325,9 @@ def showImage2(size, item, linkit)
         html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
         # case item.class.name
         #   when "User"
-        #     html_string = image_tag(image_def("Privatpersonen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
+        #     html_string = image_tag(image_def(:personen, nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
         #   when "Company"
-        #     html_string = image_tag(image_def("Institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
+        #     html_string = image_tag(image_def("institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
         #   else
         #     html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
         # end
@@ -1344,14 +1345,22 @@ def header(header, format)
     return html_string.html_safe
 end
 
-def header3(object_type, object, topic, format)
+def header3(objekt, item, topic, format)
+
+    pos = topic.to_s.index("_")
+    if pos > 0
+      iconsymbol = (topic[pos+1..topic.length-1]).to_sym
+    else
+      iconsymbol = topic
+    end
+    
   if format
-    html_string = "<div class='col-xs-12'><div class='panel-heading header'><li_header>" + (I18n.t topic) + "</li_header></div></div>"
+    html_string = "<div class='col-xs-12'><div class='panel-heading header'><li_header>" + (I18n.t iconsymbol) + "</li_header></div></div>"
   else
-    html_string = "<div class='panel-heading header'><li_header>" + (I18n.t topic) + "</li_header></div>"
+    html_string = "<div class='panel-heading header'><li_header>" + (I18n.t iconsymbol) + "</li_header></div>"
   end
   
-  html_string = html_string + action_buttons2(object_type, object, topic)
+  html_string = html_string + action_buttons2(objekt, item, topic)
 
   return html_string.html_safe
 end
@@ -1360,176 +1369,191 @@ def navigate(object,item)
     
     html_string = ""
     case object
-      when :personen
-        html_string = html_string + build_nav("Privatpersonen",item,:info,item)
-        html_string = html_string + build_nav("Privatpersonen",item,:kalendereintraege, Appointment.where('user_id1=? or user_id2=?',item,item).count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:angebote,item.mobjects.where('mtype=?',"angebote").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:ansprechpartner,item.madvisors.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:institutionen,item.companies.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:stellenanzeigen,item.mobjects.where('mtype=?',"stellenanzeigen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:kleinanzeigen,item.mobjects.where('mtype=?',"kleinanzeigen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:vermietungen,item.mobjects.where('mtype=?',"vermietungen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:veranstaltungen,item.mobjects.where('mtype=?',"veranstaltungen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:anmeldungen,item.participants.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:tickets,item.user_tickets.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:ausflugsziele,item.mobjects.where('mtype=?',"ausflugsziele").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:ausschreibungen,item.mobjects.where('mtype=?',"ausschreibungen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:innovationswettbewerbe,item.mobjects.where('mtype=?',"innovationswettbewerbe").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:ideen,item.ideas.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:crowdfunding, item.mobjects.where('mtype=? ',"crowdfunding").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:crowdfundingbeitraege, item.mstats.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:bewertungen, item.mratings.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:favoriten,item.favourits.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:publikationen, item.mobjects.where('mtype=?',"publikationen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:artikel, item.mobjects.where('mtype=?',"artikel").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:umfragen, item.mobjects.where('mtype=?',"umfragen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:projekte, item.mobjects.where('mtype=? and parent=?',"projekte",0).count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:zeiterfassung, item.timetracks.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:ressourcenplanung, item.plannings.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:gruppen, item.mobjects.where('mtype=?',"gruppen").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:kundenbeziehungen, item.customers.count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:transaktionen, item.transactions.where('ttype=?', "payment").count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:emails, Email.where('m_to=? or m_from=?', item.id, item.id).count > 0)
-        html_string = html_string + build_nav("Privatpersonen",item,:zugriffsberechtigungen, item.credentials.count > 0)
+      when "personen"
+        html_string = html_string + build_nav("personen",item,"personen_info",item)
+        html_string = html_string + build_nav("personen",item,"personen_projekte", item.mobjects.where('mtype=? and parent=?',"projekte",0).count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_zeiterfassung", item.timetracks.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_ressourcenplanung", item.plannings.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_gruppen", item.mobjects.where('mtype=?',"gruppen").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_institutionen",item.companies.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_zugriffsberechtigungen", item.credentials.count > 0)
 
-      when :institutionen
-        html_string = html_string + build_nav("Institutionen",item,:info,item)
-        html_string = html_string + build_nav("Institutionen",item,:angebote,item.mobjects.where('mtype=? ',"angebote").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:stellenanzeigen,item.mobjects.where('mtype=?',"stellenanzeigen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:kleinanzeigen,item.mobjects.where('mtype=?',"kleinanzeigen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:vermietungen,item.mobjects.where('mtype=?',"vermietungen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:veranstaltungen,item.mobjects.where('mtype=?',"veranstaltungen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:sponsorenengagements,item.msponsors.count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:ausflugsziele,item.mobjects.where('mtype=?',"ausflugsziele").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:ausschreibungen,item.mobjects.where('mtype=?',"ausschreibungen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:innovationswettbewerbe,item.mobjects.where('mtype=?',"innovationswettbewerbe").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:crowdfunding, item.mobjects.where('mtype=?',"crowdfunding").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:crowdfundingbeitraege, item.mstats.count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:dskampagnen, item.signage_camps.count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:dsstandorte, item.signage_locs.count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:publikationen, item.mobjects.where('mtype=?',"publikationen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:umfragen, item.mobjects.where('mtype=?',"umfragen").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:projekte, item.mobjects.where('mtype=? and parent=?',"projekte",0).count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:kundenbeziehungen, item.customers.count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:transaktionen,item.transactions.where('ttype=?', "payment").count > 0)
-        html_string = html_string + build_nav("Institutionen",item,:emails, Email.where('m_to=? or m_from=?', item.user.id, item.user.id).count > 0)
-        if item.partner
-          html_string = html_string + build_nav("Institutionen",item,:partnerlinks, item.partner_links.count > 0)
+        ########################################################################################################################
+        # inactive code
+        ########################################################################################################################
+        if false
+        html_string = html_string + build_nav("personen",item,"personen_kalendereintraege", Appointment.where('user_id1=? or user_id2=?',item,item).count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_angebote",item.mobjects.where('mtype=?',"angebote").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_ansprechpartner",item.madvisors.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_stellenanzeigen",item.mobjects.where('mtype=?',"stellenanzeigen").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_kleinanzeigen",item.mobjects.where('mtype=?',"kleinanzeigen").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_vermietungen",item.mobjects.where('mtype=?',"vermietungen").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_veranstaltungen",item.mobjects.where('mtype=?',"veranstaltungen").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_anmeldungen",item.participants.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_tickets",item.user_tickets.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_ausflugsziele",item.mobjects.where('mtype=?',"ausflugsziele").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_ausschreibungen",item.mobjects.where('mtype=?',"ausschreibungen").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_innovationswettbewerbe",item.mobjects.where('mtype=?',"innovationswettbewerbe").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_ideen",item.ideas.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_crowdfunding", item.mobjects.where('mtype=? ',"crowdfunding").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_crowdfundingbeitraege", item.mstats.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_bewertungen", item.mratings.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_favoriten",item.favourits.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_publikationen", item.mobjects.where('mtype=?',"publikationen").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_artikel", item.mobjects.where('mtype=?',"artikel").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_umfragen", item.mobjects.where('mtype=?',"umfragen").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_kundenbeziehungen", item.customers.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_transaktionen", item.transactions.where('ttype=?', "payment").count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_emails", Email.where('m_to=? or m_from=?', item.id, item.id).count > 0)
         end
 
-      when :objekte
-        html_string = html_string + build_nav("Objekte",item,:info,item)
+      when "institutionen"
+        html_string = html_string + build_nav("institutionen",item,"institutionen_info",item)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_projekte", item.mobjects.where('mtype=? and parent=?',"projekte",0).count > 0)
+        if item.partner
+          html_string = html_string + build_nav("institutionen",item,"institutionen_partnerlinks", item.partner_links.count > 0)
+        end
+
+        ########################################################################################################################
+        # inactive code
+        ########################################################################################################################
+        if false
+        html_string = html_string + build_nav("institutionen",item,"institutionen_angebote",item.mobjects.where('mtype=? ',"angebote").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_stellenanzeigen",item.mobjects.where('mtype=?',"stellenanzeigen").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_kleinanzeigen",item.mobjects.where('mtype=?',"kleinanzeigen").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_vermietungen",item.mobjects.where('mtype=?',"vermietungen").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_veranstaltungen",item.mobjects.where('mtype=?',"veranstaltungen").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_sponsorenengagements",item.msponsors.count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_ausflugsziele",item.mobjects.where('mtype=?',"ausflugsziele").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_ausschreibungen",item.mobjects.where('mtype=?',"ausschreibungen").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_innovationswettbewerbe",item.mobjects.where('mtype=?',"innovationswettbewerbe").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_crowdfunding", item.mobjects.where('mtype=?',"crowdfunding").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_crowdfundingbeitraege", item.mstats.count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_dskampagnen", item.signage_camps.count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_dsstandorte", item.signage_locs.count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_publikationen", item.mobjects.where('mtype=?',"publikationen").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_umfragen", item.mobjects.where('mtype=?',"umfragen").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_kundenbeziehungen", item.customers.count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_transaktionen",item.transactions.where('ttype=?', "payment").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_emails", Email.where('m_to=? or m_from=?', item.user.id, item.user.id).count > 0)
+        end
+
+      when "objekte"
+        html_string = html_string + build_nav("objekte",item,"objekte_info",item)
         if user_signed_in?
           if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
-          html_string = html_string + build_nav("Objekte",item,:details,item.mdetails.where('mtype=?',"details").count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_details",item.mdetails.where('mtype=?',"details").count > 0)
           end
         end 
+        if item.mtype == "projekte"
+          if user_signed_in?
+            if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
+              html_string = html_string + build_nav("objekte",item,"objekte_substruktur", Mobject.where('parent=?',item.id).count > 0)
+              html_string = html_string + build_nav("objekte",item,"objekte_projektberechtigungen", item.madvisors.where('role=?',item.mtype).count > 0)
+            end
+          end
+          html_string = html_string + build_nav("objekte",item,"objekte_auftragscontrolling", item.timetracks.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_projektdashboard", item.timetracks.count > 0)
+        end
+        if item.mtype == "gruppen"
+          html_string = html_string + build_nav("objekte",item,"objekte_gruppenmitglieder", item.madvisors.where('role=?',item.mtype).count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_ressourcenplanung", item.madvisors.where('role=?',item.mtype).count > 0)
+        end
         
+        ########################################################################################################################
+        # inactive code
+        ########################################################################################################################
+        if false
         if item.mtype == "angebote" or item.mtype == "stellenanzeigen"
-          html_string = html_string + build_nav("Objekte",item,:ansprechpartner,item.madvisors.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_ansprechpartner",item.madvisors.count > 0)
         end
         if item.mtype == "veranstaltungen"
-          html_string = html_string + build_nav("Objekte",item,:eintrittskarten,item.tickets.count > 0)
-          html_string = html_string + build_nav("Objekte",item,:sponsorenengagements,item.msponsors.count > 0)
-          html_string = html_string + build_nav("Objekte",item,:teilnehmer,item.participants.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_eintrittskarten",item.tickets.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_sponsorenengagements",item.msponsors.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_teilnehmer",item.participants.count > 0)
         end
         if item.mtype == "vermietungen"
-          html_string = html_string + build_nav("Objekte",item,:kalender_vermietungen,item.mcalendars.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_kalendervermietungen",item.mcalendars.count > 0)
         end
         if item.mtype == "ausschreibungen"
-          html_string = html_string + build_nav("Objekte",item,:ausschreibungsangebote,item.mdetails.where('mtype=?',"ausschreibungsangebote").count > 0)
-        end
-        if item.mtype == "artikel"
-          #html_string = html_string + build_nav("Objekte",item,:blog,item.comments.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_ausschreibungsangebote",item.mdetails.where('mtype=?',"ausschreibungsangebote").count > 0)
         end
         if item.mtype == "innovationswettbewerbe"
-          html_string = html_string + build_nav("Objekte",item,:preise, item.prices.count > 0)
-          html_string = html_string + build_nav("Objekte",item,:bewertungskriterien, item.crits.count > 0)
-          html_string = html_string + build_nav("Objekte",item,:jury, item.madvisors.count > 0)
-          html_string = html_string + build_nav("Objekte",item,:ideen,item.ideas.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_preise", item.prices.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_bewertungskriterien", item.crits.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_jury", item.madvisors.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_ideen",item.ideas.count > 0)
         end
         if item.mtype == "umfragen"
           if user_signed_in?
             if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
-              html_string = html_string + build_nav("Objekte",item,:fragen,item.questions.count > 0)
-              html_string = html_string + build_nav("Objekte",item,:umfrageteilnehmer,User.count > 0)
+              html_string = html_string + build_nav("objekte",item,"objekte_fragen",item.questions.count > 0)
+              html_string = html_string + build_nav("objekte",item,"objekte_umfrageteilnehmer",User.count > 0)
             end
           end
         end
         if item.mtype == "publikationen"
-          html_string = html_string + build_nav("Objekte",item,:ausgaben,item.editions.count > 0)
-        end
-        if item.mtype == "gruppen"
-          html_string = html_string + build_nav("Objekte",item,:gruppenmitglieder, item.madvisors.where('role=?',item.mtype).count > 0)
-          # html_string = html_string + build_nav("Objekte",item,:zeiterfassung, item.madvisors.where('role=?',item.mtype).count > 0)
-          html_string = html_string + build_nav("Objekte",item,:ressourcenplanung, item.madvisors.where('role=?',item.mtype).count > 0)
-        end
-        if item.mtype == "projekte"
-          if user_signed_in?
-            if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
-              html_string = html_string + build_nav("Objekte",item,:substruktur, Mobject.where('parent=?',item.id).count > 0)
-              html_string = html_string + build_nav("Objekte",item,:projektberechtigungen, item.madvisors.where('role=?',item.mtype).count > 0)
-            end
-          end
-          html_string = html_string + build_nav("Objekte",item,:auftragscontrolling, item.timetracks.count > 0)
-          html_string = html_string + build_nav("Objekte",item,:projektdashboard, item.timetracks.count > 0)
+          html_string = html_string + build_nav("objekte",item,"objekte_ausgaben",item.editions.count > 0)
         end
         if item.mtype == "crowdfunding"
-          html_string = html_string + build_nav("Objekte",item, :cfstatistik,item.mstats.count > 0)
-          html_string = html_string + build_nav("Objekte",item, :cftransaktionen,item.mstats.count > 0)
+          html_string = html_string + build_nav("objekte",item, "objekte_cfstatistik",item.mstats.count > 0)
+          html_string = html_string + build_nav("objekte",item, "objekte_cftransaktionen",item.mstats.count > 0)
         end
-        if item.mtype != "artikel" and item.mtype != "projekte" and item.mtype != "gruppen"
-          html_string = html_string + build_nav("Objekte",item, :bewertungen ,item.mratings.count > 0)
+        if item.mtype == "" 
+          html_string = html_string + build_nav("objekte",item, :"objekte_bewertungen" ,item.mratings.count > 0)
+        end
         end
 
-      when :dskampagnen
-        html_string = html_string + build_nav("Kampagnen",item, :info,item)
-        html_string = html_string + build_nav("Kampagnen",item,:details,item.signages.count > 0)
-        html_string = html_string + build_nav("Kampagnen",item,:dsstandorte,item.signage_cals.count > 0)
-        html_string = html_string + build_nav("Kampagnen",item,:dskalender,item.signage_cals.count > 0)
+      when "dskampagnen"
+        html_string = html_string + build_nav("dskampagnen",item, "dskampagnen_info",item)
+        html_string = html_string + build_nav("dskampagnen",item, "dskampagnen_details",item.signages.count > 0)
+        html_string = html_string + build_nav("dskampagnen",item, "dskampagnen_dsstandorte",item.signage_cals.count > 0)
+        html_string = html_string + build_nav("dskampagnen",item, "dskampagnen_dskalender",item.signage_cals.count > 0)
 
-      when :dsstandorte
-        html_string = html_string + build_nav("Standorte",item, :info,item)
-        html_string = html_string + build_nav("Standorte",item,:dskampagnen,item.signage_cals.count > 0)
-        html_string = html_string + build_nav("Standorte",item,:dskalender,item.signage_cals.count > 0)
+      when "dsstandorte"
+        html_string = html_string + build_nav("dsstandorte",item, "dsstandorte_info",item)
+        html_string = html_string + build_nav("dsstandorte",item, "dsstandorte_dskampagnen",item.signage_cals.count > 0)
+        html_string = html_string + build_nav("dsstandorte",item, "dsstandorte_dskalender",item.signage_cals.count > 0)
     end
     
     return html_string.html_safe
     
 end
 
-def build_nav(object, item, topic, condition)
+def build_nav(domain, item, domain2, condition)
   
   html_string=""
-  if (!user_signed_in? and $activeapps.include?(object+topic.to_s)) or (user_signed_in? and getUserCreds.include?(object+topic.to_s)) or (user_signed_in? and current_user.superuser)
 
+  if (!user_signed_in? and $activeapps.include?(domain2)) or (user_signed_in? and getUserCreds.include?(domain2)) or (user_signed_in? and current_user.superuser)
     if condition
       btn = "active"
     else
       btn = "inactive"
     end
+
+    pos = domain2.index("_")
+    iconsymbol = (domain2[pos+1..domain2.length-1]).to_sym
     
-    case object
-      when "Privatpersonen"
-        html_string = link_to(user_path(:id => item.id, :topic => topic), title: getIcon2(topic)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(topic)["icon"])
-          #content_tag(:span, content_tag(:i, topic), class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon(topic))
+    case domain
+      when "personen"
+        html_string = link_to(user_path(:id => item.id, :topic => domain2), title: getIcon2(iconsymbol)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(iconsymbol)["icon"])
         end
-      when "Institutionen"
-        html_string = link_to(company_path(:id => item.id, :topic => topic), title: getIcon2(topic)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(topic)["icon"])
+      when "institutionen"
+        html_string = link_to(company_path(:id => item.id, :topic => domain2), title: getIcon2(iconsymbol)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(iconsymbol)["icon"])
         end
-      when "Objekte"
-        html_string = link_to(mobject_path(:id => item.id, :topic => topic), title: getIcon2(topic)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(topic)["icon"])
+      when "objekte"
+        html_string = link_to(mobject_path(:id => item.id, :topic => domain2), title: getIcon2(iconsymbol)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(iconsymbol)["icon"])
         end
-      when "Kampagnen"
-        html_string = link_to(signage_camp_path(:id => item.id, :topic => topic), title: getIcon2(topic)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(topic)["icon"])
+      when "dskampagnen"
+        html_string = link_to(signage_camp_path(:id => item.id, :topic => domain2), title: getIcon2(iconsymbol)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(iconsymbol)["icon"])
         end
-      when "Standorte"
-        html_string = link_to(signage_loc_path(:id => item.id, :topic => topic), title: getIcon2(topic)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(topic)["icon"])
+      when "dsstandorte"
+        html_string = link_to(signage_loc_path(:id => item.id, :topic => domain2), title: getIcon2(iconsymbol)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(iconsymbol)["icon"])
         end
     end
   end
@@ -1540,9 +1564,8 @@ end
 def action_buttons2(object_type, item, topic)
 
   html_string = ""
-
   case object_type 
-    when :kategorie
+    when "kategorie"
       html_string = html_string + link_to(home_index9_path) do
         content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
       end
@@ -1550,9 +1573,9 @@ def action_buttons2(object_type, item, topic)
         content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
       end
 
-    when :personen
+    when "personen"
       case topic
-        when :info
+        when "personen_info"
           html_string = html_string + link_to(users_path(:page => session[:page]), title: (I18n.t :personen), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
             content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
           end
@@ -1568,62 +1591,62 @@ def action_buttons2(object_type, item, topic)
             html_string = html_string + link_to(new_webmaster_path(:object_name => "User", :object_id => item.id, :user_id => current_user.id) , title: (I18n.t :missbrauchmelden), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
               content_tag(:i, nil, class: "btn btn-warning pull-right glyphicon glyphicon-eye-open")
             end
-            if $activeapps.include?("PrivatpersonenTransaktionen") or current_user.superuser
+            if $activeapps.include?("personen_transaktionen") or current_user.superuser
               html_string = html_string + link_to(listaccount_index_path(:user_id => current_user.id, :user_id_ver => item.id, :company_id_ver => nil, :ref => (I18n.t :verguetungan)+item.name + " " + item.lastname, :object_name => "User", :object_id => item.id, :amount => nil)) do
                 content_tag(:i, content_tag(:b, (I18n.t :TRXhinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
               end
             end
-            if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen)") or current_user.superuser
+            if $activeapps.include?("personen_mappositionen") or current_user.superuser
               html_string = html_string + link_to(new_user_position_path(:user_id => current_user.id)) do
                 content_tag(:i, content_tag(:b, (I18n.t :POShinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
               end
             end
-            if $activeapps.include?("PrivatpersonenFavoriten") or current_user.superuser
+            if $activeapps.include?("personen_mappositionenfavoriten") or current_user.superuser
               html_string = html_string + link_to(new_favourit_path(:object_name => "User", :object_id => item.id, :user_id => current_user.id)) do
                 content_tag(:i, content_tag(:b, (I18n.t :FAVhinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
               end
             end
           end
           
-        when :kalendereintraege
+        when "personen_kalendereintraege"
           html_string = html_string + link_to(new_appointment_path(:user_id1 => item.id, :user_id2 => current_user.id))  do
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
           
-        when :kleinanzeigen, :stellenanzeigen, :angebote, :crowdfunding
-          html_string = html_string + link_to(home_index8_path(:user_id => current_user.id, :mtype => topic)) do
+        when "personen_kleinanzeigen", "personen_stellenanzeigen", "personen_angebote", "personen_crowdfunding"
+          html_string = html_string + link_to(home_index8_path(:user_id => current_user.id, :mtype => subtopic(topic))) do
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
           
-        when :institutionen
+        when "personen_institutionen"
           html_string = html_string + link_to(new_company_path(:user_id => current_user.id)) do
             content_tag(:i, content_tag(:b,(I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
 
-        when :vermietungen, :veranstaltungen, :ausflugsziele, :ausschreibungen, :publikationen, :artikel, :umfragen, :projekte, :gruppen, :innovationswettbewerbe
-          html_string = html_string + link_to(new_mobject_path(:user_id => current_user.id, :mtype => topic, :msubtype => nil)) do
+        when "personen_vermietungen", "personen_veranstaltungen", "personen_ausflugsziele", "personen_ausschreibungen", "personen_publikationen", "personen_artikel", "personen_umfragen", "personen_projekte", "personen_gruppen", "personen_innovationswettbewerbe"
+          html_string = html_string + link_to(new_mobject_path(:user_id => current_user.id, :mtype => subtopic(topic), :msubtype => nil)) do
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
 
-        when :emails
+        when "personen_emails"
           html_string = html_string + link_to(new_email_path(:m_from_id => current_user.id, :m_to_id => item.id)) do
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
 
-        when :tickets
+        when "personen_tickets"
           html_string = html_string + link_to(ticketuserview_index2_path(:user_id => item.id)) do
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
       end
 
-    when :institutionen
+    when "institutionen"
       case topic
-        when :info
+        when "institutionen_info"
           html_string = html_string + link_to(companies_path(:page => session[:page]), title: (I18n.t :institutionen), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
             content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
           end
           if user_signed_in?
-            if $activeapps.include?("InstitutionenFavoriten")
+            if $activeapps.include?("institutionenfavoriten")
               html_string = html_string + link_to(new_favourit_path(:object_name => "Company", :object_id => item.id, :user_id => current_user.id)) do
                 content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
               end
@@ -1639,52 +1662,52 @@ def action_buttons2(object_type, item, topic)
             html_string = html_string + link_to(new_webmaster_path(:object_name => "Company", :object_id => item.id, :user_id => current_user.id), title: (I18n.t :missbrauchmelden), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
               content_tag(:i, nil, class: "btn btn-warning pull-right glyphicon glyphicon-eye-open")
             end
-            if $activeapps.include?("InstitutionenTransaktionen")
+            if $activeapps.include?("institutionentransaktionen")
               html_string = html_string + link_to(listaccount_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => item.id, :ref => (I18n.t :verguetungan)+item.name, :object_name => "Company", :object_id => item.id, :amount => nil) do
                 content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-primary glyphicon glyphicon-plus")
               end
             end
           end
 
-        when :angebote, :crowdfunding, :kleinanzeigen, :stellenanzeigen
-          html_string = html_string + link_to(home_index8_path :company_id => item.id, :mtype => topic) do
+        when "institutionen_angebote", "institutionen_crowdfunding", "institutionen_kleinanzeigen", "institutionen_stellenanzeigen"
+          html_string = html_string + link_to(home_index8_path :company_id => item.id, :mtype => subtopic(topic)) do
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
 
-        when :vermietungen, :veranstaltungen, :ausflugsziele, :ausschreibungen, :publikationen, :umfragen, :projekte, :innovationswettbewerbe
-          html_string = html_string + link_to(new_mobject_path :company_id => item.id, :mtype => topic, :msubtype => nil) do
+        when "institutionen_vermietungen", "institutionen_veranstaltungen", "institutionen_ausflugsziele", "institutionen_ausschreibungen", "institutionen_publikationen", "institutionen_umfragen", "institutionen_projekte", "institutionen_innovationswettbewerbe"
+          html_string = html_string + link_to(new_mobject_path :company_id => item.id, :mtype => subtopic(topic), :msubtype => nil) do
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
           
-        when :partnerlinks
+        when "institutionen_partnerlinks"
           html_string = html_string + link_to(new_partner_link_path :company_id => item.id) do
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
           
-        when :dskampagnen
+        when "institutionen_dskampagnen"
           html_string = html_string + link_to(new_signage_camp_path :company_id => item.id) do
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
 
-        when :dsstandorte
+        when "institutionen_dsstandorte"
           html_string = html_string + link_to(new_signage_loc_path :company_id => item.id) do
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
       end
         
-    when :objekte
+    when "objekte"
        case topic
-          when :info
+          when "objekte_info"
              html_string = html_string + link_to(mobjects_path(:mtype => item.mtype, :msubtype => item.msubtype, :page => session[:page], :parent => session[:parent]), title: (I18n.t :objekte)+item.mtype, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
               content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
              end
              if session[:edition_id]
-               html_string = html_string + link_to(edition_path(:id => session[:edition_id], :topic => "Info"), title: (I18n.t :zurueckzurausgabe), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+               html_string = html_string + link_to(edition_path(:id => session[:edition_id], :topic => "objekte_info"), title: (I18n.t :zurueckzurausgabe), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-book")
                end
              end 
              if item.parent and item.parent > 0 
-                html_string = html_string + link_to(mobject_path(:id => item.parent, :mtype => "projekte", :msubtype => nil, :topic => :subs), title: (I18n.t :hierachiezurueck), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+                html_string = html_string + link_to(mobject_path(:id => item.parent, :mtype => "projekte", :msubtype => nil, :topic => "objekte_info"), title: (I18n.t :hierachiezurueck), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
                   content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-level-up")
                 end
              end 
@@ -1702,7 +1725,7 @@ def action_buttons2(object_type, item, topic)
                end
              end
 
-          when :details
+          when "objekte_details"
               if user_signed_in?
                if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                   html_string = html_string + link_to(new_mdetail_path(:mobject_id => item.id, :mtype => "details")) do
@@ -1710,42 +1733,8 @@ def action_buttons2(object_type, item, topic)
                   end
                end
               end
-              
-          when :ideen
-              if user_signed_in?
-                html_string = html_string + link_to(new_idea_path(:mobject_id => item.id, :user_id => current_user.id)) do
-                  content_tag(:i, content_tag(:f,(I18n.t :hinzufuegen)), class:"btn btn-special glyphicon glyphicon-plus")
-                end
-              end
 
-          when :preise
-              if user_signed_in?
-               if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
-                  html_string = html_string + link_to(new_price_path(:mobject_id => item.id)) do
-                    content_tag(:i, content_tag(:f,(I18n.t :hinzufuegen)), class:"btn btn-special glyphicon glyphicon-plus")
-                  end
-               end
-              end
-
-          when :bewertungskriterien
-              if user_signed_in?
-               if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
-                  html_string = html_string + link_to(new_crit_path(:mobject_id => item.id)) do
-                    content_tag(:i, content_tag(:f," Neu"), class:"btn btn-special glyphicon glyphicon-plus")
-                  end
-                end
-              end
-
-          when :projektberechtigungen, :gruppenmitglieder, :jury
-             if user_signed_in?
-               if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
-                  html_string = html_string + link_to(madvisors_path :user_id => item.owner_id, :mobject_id => item.id, :role => item.mtype) do
-                    content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
-                  end
-               end
-              end
-
-          when :substruktur
+          when "objekte_substruktur"
              if user_signed_in?
                if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                   if item.owner_type == "User"
@@ -1761,7 +1750,45 @@ def action_buttons2(object_type, item, topic)
                end
               end
 
-          when :ausschreibungsangebote
+        ########################################################################################################################
+        # inactive code
+        ########################################################################################################################
+
+          when "objekte_ideen"
+              if user_signed_in?
+                html_string = html_string + link_to(new_idea_path(:mobject_id => item.id, :user_id => current_user.id)) do
+                  content_tag(:i, content_tag(:f,(I18n.t :hinzufuegen)), class:"btn btn-special glyphicon glyphicon-plus")
+                end
+              end
+
+          when "objekte_preise"
+              if user_signed_in?
+               if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
+                  html_string = html_string + link_to(new_price_path(:mobject_id => item.id)) do
+                    content_tag(:i, content_tag(:f,(I18n.t :hinzufuegen)), class:"btn btn-special glyphicon glyphicon-plus")
+                  end
+               end
+              end
+
+          when "objekte_bewertungskriterien"
+              if user_signed_in?
+               if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
+                  html_string = html_string + link_to(new_crit_path(:mobject_id => item.id)) do
+                    content_tag(:i, content_tag(:f," Neu"), class:"btn btn-special glyphicon glyphicon-plus")
+                  end
+                end
+              end
+
+          when "objekte_projektberechtigungen", "objekte_gruppenmitglieder", "objekte_jury"
+             if user_signed_in?
+               if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
+                  html_string = html_string + link_to(madvisors_path :user_id => item.owner_id, :mobject_id => item.id, :role => item.mtype) do
+                    content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
+                  end
+               end
+              end
+
+          when "objekte_ausschreibungsangebote"
               if user_signed_in?
                if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                   html_string = html_string + link_to(new_mdetail_path(:mobject_id => item.id, :mtype => "ausschreibungsangebote")) do
@@ -1770,7 +1797,7 @@ def action_buttons2(object_type, item, topic)
                end
               end
 
-          when :eintrittskarten
+          when "objekte_eintrittskarten"
               if user_signed_in?
                if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                   html_string = html_string + link_to(new_ticket_path(:mobject_id => item.id)) do
@@ -1779,7 +1806,7 @@ def action_buttons2(object_type, item, topic)
                end
               end
 
-          when :fragen
+          when "objekte_fragen"
               if user_signed_in?
                if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                   html_string = html_string + link_to(new_question_path(:mobject_id => item.id)) do
@@ -1788,7 +1815,7 @@ def action_buttons2(object_type, item, topic)
                end
               end
               
-          when :ausgaben
+          when "objekte_ausgaben"
               if user_signed_in?
                if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                   html_string = html_string + link_to(new_edition_path(:mobject_id => item.id)) do
@@ -1797,28 +1824,28 @@ def action_buttons2(object_type, item, topic)
                end
               end
 
-          when :sponsorenengagements
+          when "objekte_sponsorenengagements"
             if user_signed_in?
               html_string = html_string + link_to(new_msponsor_path(:mobject_id => item.id)) do
                 content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class:"btn btn-special glyphicon glyphicon-plus")
               end
             end
             
-          when :blog
+          when "objekte_blog"
             if user_signed_in?
     	        html_string = html_string + link_to(new_comment_path :mobject_id => item.id, :user_id => current_user.id) do
                 content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class:"btn btn-special glyphicon glyphicon-plus")
               end
             end
             
-          when :bewertungen
+          when "objekte_bewertungen"
             if user_signed_in?
     	        html_string = html_string + link_to(new_mrating_path :mobject_id => item.id, :user_id => current_user.id) do
                 content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class:"btn btn-special glyphicon glyphicon-plus")
               end
             end
             
-          when :ansprechpartner
+          when "objekte_ansprechpartner"
             if user_signed_in?
               if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                 html_string = html_string + link_to(madvisors_path :mobject_id => item.id) do
@@ -1827,37 +1854,37 @@ def action_buttons2(object_type, item, topic)
               end
             end
             
-          when :kalender_vermietungen
+          when "objekte_kalendervermietungen"
             if user_signed_in?
               html_string = html_string + link_to(new_mcalendar_path(:user_id => current_user.id, :mobject_id => item.id)) do
                 content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class:"btn btn-special glyphicon glyphicon-plus")
               end
             end
             
-          when :cfstatistik
-          when :cftransaktionen
+          when "objekte_cfstatistik"
+          when "objekte_cftransaktionen"
             #if item.sum_amount < item.amount
-              html_string = html_string + link_to(new_mstat_path(:mobject_id => item.id, :dontype => "User")) do
+              html_string = html_string + link_to(new_mstat_path(:mobject_id => item.id, :dontype => "user")) do
                 content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class:"btn btn-special glyphicon glyphicon-user")
               end
-              html_string = html_string + link_to(new_mstat_path(:mobject_id => item.id, :dontype => "Company")) do
+              html_string = html_string + link_to(new_mstat_path(:mobject_id => item.id, :dontype => "company")) do
                 content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class:"btn btn-special glyphicon glyphicon-copyright-mark")
               end
             #end
 
-          when :dsstandorte
+          when "objekte_dsstandorte"
       end
 
-    when :dskampagnen
-         html_string = html_string + link_to(company_path(:id => item.owner_id, :topic => :dskampagnen), title: (I18n.t :dskampagnen), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+    when "dskampagnen"
+         html_string = html_string + link_to(company_path(:id => item.owner_id, :topic => "dskampagnen"), title: (I18n.t :dskampagnen), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
          html_string = html_string + link_to(home_index11_path(:camp_id => item.id), title: (I18n.t :kampagnenshow), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-film")
          end
          case topic
-            when :info
-            when :details
+            when "dskampagnen_info"
+            when "dskampagnen_details"
               if user_signed_in?
                 if current_user.id == item.owner.user_id 
                   html_string = html_string + link_to(new_signage_path(:camp_id => item.id)) do
@@ -1865,7 +1892,7 @@ def action_buttons2(object_type, item, topic)
                   end
                 end
               end
-            when :kampagnen
+            when "dskampagnen_kampagnen"
               if user_signed_in?
                 if current_user.id == item.owner.user_id 
                   html_string = html_string + link_to(new_signage_cal_path(:camp_id => item.id)) do
@@ -1875,16 +1902,16 @@ def action_buttons2(object_type, item, topic)
               end
          end
 
-      when :dsstandorte
-         html_string = html_string + link_to(company_path(:id => item.owner_id, :topic => :dsstandorte), title: (I18n.t :dsstandorte), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+      when "dsstandorte"
+         html_string = html_string + link_to(company_path(:id => item.owner_id, :topic => "dsstandorte"), title: (I18n.t :dsstandorte), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
          html_string = html_string + link_to(home_index11_path(:loc_id => item.id), title: (I18n.t :dsshow), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-film")
          end
          case topic
-            when :info
-            when :kalender
+            when "dsstandorte_info"
+            when "dsstandorte_kalender"
               if user_signed_in?
                 if current_user.id == item.owner.user_id 
                   html_string = html_string + link_to(new_signage_cal_path(:loc_id => item.id)) do
@@ -1894,23 +1921,23 @@ def action_buttons2(object_type, item, topic)
               end
          end
 
-      when :editionen
-         html_string = html_string + link_to(mobject_path(:id => item.mobject_id, :topic => :editionen), title: (I18n.t :editionen), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+      when "editionen"
+         html_string = html_string + link_to(mobject_path(:id => item.mobject_id, :topic => "editionen"), title: (I18n.t :editionen), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
 
-      when :edition
-         html_string = html_string + link_to(edition_path(:id => item.id, :topic => :edition), title: (I18n.t :edition), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+      when "edition"
+         html_string = html_string + link_to(edition_path(:id => item.id, :topic => "edition"), title: (I18n.t :edition), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
 
-      when :ideenbewertung
-         html_string = html_string + link_to(mobject_path(:id => item.mobject.id, :topic => :ideenbewertung), title: (I18n.t :ideenbewertung), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+      when "ideenbewertung"
+         html_string = html_string + link_to(mobject_path(:id => item.mobject.id, :topic => "objekte_ideen"), title: (I18n.t :ideenbewertung), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
 
-      when :crowdideenbewertung
-         html_string = html_string + link_to(mobject_path(:id => item.mobject.id, :topic => :crowdideenbewertung), title: (I18n.t :crowdideenbewertung), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+      when "crowdideenbewertung"
+         html_string = html_string + link_to(mobject_path(:id => item.mobject.id, :topic => "objekte_crowdideenbewertung"), title: (I18n.t :crowdideenbewertung), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
          if user_signed_in?
@@ -1919,8 +1946,8 @@ def action_buttons2(object_type, item, topic)
           end
         end
 
-      when :artikeledition
-         html_string = html_string + link_to(mobject_path(:id => item.mobject_id, :topic => :artikeledition), title: (I18n.t :zurueckzurausgabe), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+      when "artikeledition"
+         html_string = html_string + link_to(mobject_path(:id => item.mobject_id, :topic => "artikeledition"), title: (I18n.t :zurueckzurausgabe), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
          if user_signed_in?
@@ -1936,15 +1963,36 @@ def action_buttons2(object_type, item, topic)
   return html_string.html_safe
 end
 
-def getIcon2(symbol)
+def getIcon2(topic)
+  
   icon = "question_mark"
-  case symbol
+  if I18n.t topic
+    icontext = (I18n.t topic)
+  else
+    icontext = "unbekannt"
+  end
+
+  case topic
+    when :projekte
+      icon = "tasks"
+    when :institutionen
+      icon = "copyright-mark"
+    when :zeiterfassung
+      icon = "time"
+    when :ressourcenplanung
+      icon = "screenshot"
+    when :gruppen
+      icon = "th"
+    when :zugriffsberechtigungen, :projektberechtigungen
+      icon = "lock"
+
+    ########################################################################################################################
+    # inactive code
+    ########################################################################################################################
     when :news
       icon = "alert"
     when :personen, :geburtstage, :ansprechpartner, :anmeldungen, :gruppenmitglieder, :umfrageteilnehmer, :veranstaltungsteilnehmer, :kalendergeburtstage
       icon = "user"
-    when :institutionen
-      icon = "copyright-mark"
     when :vermietungen
       icon = "retweet"
     when :ausschreibungen, :kalenderausschreibungen
@@ -1955,8 +2003,6 @@ def getIcon2(symbol)
       icon = "text-background"
     when :umfragen, :fragen, :meineabfragen
       icon = "question-sign"
-    when :projekte
-      icon = "tasks"
     when :innovationswettbewerbe
       icon = "cog"
     when :veranstaltungen, :kalenderveranstaltungen
@@ -1997,12 +2043,6 @@ def getIcon2(symbol)
       icon = "star"
     when :favoriten, :sponsorenengagements
       icon = "heart"
-    when :zeiterfassung
-      icon = "time"
-    when :ressourcenplanung
-      icon = "screenshot"
-    when :gruppen
-      icon = "th"
     when :kundenbeziehungen
       icon = "check"
     when :emails
@@ -2047,8 +2087,7 @@ def getIcon2(symbol)
       icon = "lock"
   end
   ret = Hash.new
-  ret = {"icon" => icon, "icontext" => (I18n.t symbol)}
-  
+  ret = {"icon" => icon, "icontext" => icontext}
   return ret
 end
 
@@ -2063,184 +2102,181 @@ def build_hauptmenue
       creds = init_apps
     end
 
-    domain = :news
-    if creds.include?("Hauptmenue"+domain.to_s) and user_signed_in?
+    domain = "news"
+    if creds.include?("hauptmenue"+domain) and user_signed_in?
         path = home_index10_path
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = :personen
-    if creds.include?("Hauptmenue"+domain.to_s)
+    return
+    domain = "personen"
+    if creds.include?("hauptmenue"+domain)
         path = users_path(:mtype => nil, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = :institutionen
-    if creds.include?("Hauptmenue"+domain.to_s)
+    domain = "institutionen"
+    if creds.include?("hauptmenue"+domain)
         path = companies_path(:mtype => nil, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = :vermietungen
-    if creds.include?("Hauptmenue"+domain.to_s)
+    domain = "vermietungen"
+    if creds.include?("hauptmenue"+domain)
         path = mobjects_path(:mtype => "vermietungen", :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = :ausschreibungen
-    if creds.include?("Hauptmenue"+domain.to_s)
-        path = mobjects_path(:mtype => "ausschreibungen", :msubtype => nil)
+    domain = "ausschreibungen"
+    if creds.include?("hauptmenue"+domain)
+        path = mobjects_path(:mtype => domain, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = :publikationen
-    if creds.include?("Hauptmenue"+domain.to_s)
-        path = mobjects_path(:mtype => "publikationen", :msubtype => nil)
+    domain = "publikationen"
+    if creds.include?("hauptmenue"+domain)
+        path = mobjects_path(:mtype => domain, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = :artikel
-    if creds.include?("Hauptmenue"+domain.to_s)
+    domain = "artikel"
+    if creds.include?("hauptmenue"+domain)
         path = mobjects_path(:mtype => "artikel", :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = :umfragen
-    if creds.include?("Hauptmenue"+domain.to_s)
-        path = mobjects_path(:mtype => "umfragen", :msubtype => nil)
+    domain = "umfragen"
+    if creds.include?("hauptmenue"+domain)
+        path = mobjects_path(:mtype => domain, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = :projekte
-    if creds.include?("Hauptmenue"+domain.to_s)
-        path = mobjects_path(:mtype => "projekte", :msubtype => "Root", :parent => 0)
+    domain = "projekte"
+    if creds.include?("hauptmenue"+domain)
+        path = mobjects_path(:mtype => domain, :msubtype => "root", :parent => 0)
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = :innovationswettbewerbe
-    if creds.include?("Hauptmenue"+domain.to_s)
-        path = mobjects_path(:mtype => "innovationswettbewerbe")
+    domain = "innovationswettbewerbe"
+    if creds.include?("hauptmenue"+domain)
+        path = mobjects_path(:mtype => domain)
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = :veranstaltungen
-    if creds.include?("Hauptmenue"+domain.to_s)
-        path = mobjects_path(:mtype => "veranstaltungen", :msubtype => nil)
+    domain = "veranstaltungen"
+    if creds.include?("hauptmenue"+domain)
+        path = mobjects_path(:mtype => domain, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
-    domain = :ausflugsziele
-    if creds.include?("Hauptmenue"+domain.to_s)
-        path = mobjects_path(:mtype => "ausflugsziele", :msubtype => nil)
+    domain = "ausflugsziele"
+    if creds.include?("hauptmenue"+domain)
+        path = mobjects_path(:mtype => domain, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
-    if creds.include?("Hauptmenue"++domain.to_s)
+    domain = "dsstandorte"
+    if creds.include?("hauptmenue"+domain)
         path = signage_locs_path
         html_string = html_string + simple_menue(domain, path)
     end
     
-    domain = :angebote
-    if creds.include?("Hauptmenue"+domain.to_s)
+    domain = "angebote"
+    if creds.include?("hauptmenue"+domain)
         hasharray = []
-        domain = :angebotestandard
-        if creds.include?("Hauptmenue"+domain.to_s)
+        domain2 = "standard"
+        if creds.include?("hauptmenue"+domain+domain2)
           path = mobjects_path(:mtype => "angebote", :msubtype => "standard")
           hash = Hash.new
-          hash = {"path" => path, "text" => (I18n.t :standard), "icon" => :standard }
+          hash = {"path" => path, "text" => (I18n.t :standard), :"icon" => :standard }
           hasharray << hash
         end
-        domain = :angeboteaktion
-        if creds.include?("Hauptmenue"+domain.to_s)
+        domain2 = "aktion"
+        if creds.include?("hauptmenue"+domain+domain2)
           path = mobjects_path(:mtype => "angebote", :msubtype => "aktion")
           hash = Hash.new
           hash = {"path" => path, "text" => (I18n.t :aktion), "icon" => :aktion }
           hasharray << hash
         end
-        domain = :angebote
         domain_text = I18n.t :angebote
-        #html_string = html_string + hasharray.to_s
         html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
 
-    domain = :stellenanzeigen
-    if creds.include?("Hauptmenue"+domain.to_s)
+    domain = "stellenanzeigen"
+    if creds.include?("hauptmenue"+domain)
         hasharray = []
-        domain = :stellenanzeigensuchen
-        if creds.include?("Hauptmenue"+domain.to_s)
+        domain2 = "suchen"
+        if creds.include?("hauptmenue"+domain+domain2)
           path = mobjects_path(:mtype => "stellenanzeigen", :msubtype => "suchen")
           hash = Hash.new
           hash = {"path" => path, "text" => (I18n.t :suchen), "icon" => :suchen }
           hasharray << hash
         end
-        domain = :stellenanzeigenanbieten
-        if creds.include?("Hauptmenue"+domain.to_s)
+        domain2 = "anbieten"
+        if creds.include?("hauptmenue"+domain+domain2)
           path = mobjects_path(:mtype => "stellenanzeigen", :msubtype => "anbieten")
           hash = Hash.new
           hash = {"path" => path, "text" => (I18n.t :anbieten), "icon" => :anbieten }
           hasharray << hash
         end
-        domain = :stellenanzeigen
         domain_text = I18n.t :stellenanzeigen
         html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
 
-    domain = :kleinanzeigen
-    if creds.include?("Hauptmenue"+domain.to_s)
+    domain = "kleinanzeigen"
+    if creds.include?("hauptmenue"+domain)
         hasharray = []
-        domain = :stellenanzeigensuchen
-      if creds.include?("Hauptmenue"+domain.to_s)
+        domain2 = "suchen"
+      if creds.include?("hauptmenue"+domain+domain2)
         path = mobjects_path(:mtype => "kleinanzeigen", :msubtype => "suchen")
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :suchen), "icon" => :suchen }
         hasharray << hash
       end
-      domain = :stellenanzeigenanbieten
-      if creds.include?("Hauptmenue"+domain.to_s)
+      domain2 = "anbieten"
+      if creds.include?("hauptmenue"+domain+domain2)
         path = mobjects_path(:mtype => "kleinanzeigen", :msubtype => "anbieten")
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :anbieten), "icon" => :anbieten }
         hasharray << hash
       end
-        domain = :kleinanzeigen
-        domain_text = I18n.t :kleinanzeigen
+      domain_text = I18n.t :kleinanzeigen
       html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
 
-    domain = :crowdfunding
-    if creds.include?("Hauptmenue"+domain.to_s)
+    domain = "crowdfunding"
+    if creds.include?("hauptmenue"+domain)
         hasharray = []
-        domain = :crowdfundingspenden
-      if creds.include?("Hauptmenue"+domain.to_s)
+        domain2 = "spenden"
+      if creds.include?("hauptmenue"+domain+domain2)
         path = mobjects_path(:mtype => "crowdfunding", :msubtype => "spenden")
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :spenden), "icon" => :spenden }
         hasharray << hash
       end
-        domain = :crowdfundingbelohnungen
-      if creds.include?("Hauptmenue"+domain.to_s)
+        domain2 = "belohnungen"
+      if creds.include?("hauptmenue"+domain+domain2)
         path = mobjects_path(:mtype => "crowdfunding", :msubtype => "belohnungen")
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :belohnungen), "icon" => :belohnungen }
         hasharray << hash
       end
-        domain = :crowdfundingzinsen
-      if creds.include?("Hauptmenue"+domain.to_s)
+        domain2 = "zinsen"
+      if creds.include?("hauptmenue"+domain+domain2)
         path = mobjects_path(:mtype => "crowdfunding", :msubtype => "zinsen")
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :zinsen), "icon" => :zinsen }
         hasharray << hash
       end
-      domain = :crowdfunding
       domain_text = I18n.t :crowdfunding
       html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
 
-    domain = :kalender
-    if creds.include?("Hauptmenue"+domain.to_s)
+    domain = "kalender"
+    if creds.include?("hauptmenue"+domain)
       hasharray = []
-      domain = :kalendergeburtstage
-      if creds.include?("Hauptmenue"+domain.to_s)
+      domain2 = "geburtstage"
+      if creds.include?("hauptmenue"+domain+domain2)
         if user_signed_in?
           path = showcal_index_path + "?dom=geburtstage"
           hash = Hash.new
@@ -2248,42 +2284,41 @@ def build_hauptmenue
           hasharray << hash
         end
       end
-      domain = :kalenderaktionen
-      if creds.include?("Hauptmenue"+domain.to_s)
+      domain2 = "aktionen"
+      if creds.include?("hauptmenue"+domain+domain2)
         path = showcal_index_path + "?dom=aktionen"
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :aktionen), "icon" => :aktionen }
         hasharray << hash
       end
-      domain = :kalenderausschreibungen
-      if creds.include?("Hauptmenue"+domain.to_s)
+      domain2 = "ausschreibungen"
+      if creds.include?("hauptmenue"+domain+domain2)
         path = showcal_index_path + "?dom=ausschreibungen"
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :ausschreibungen), "icon" => :ausschreibungen }
         hasharray << hash
       end
-      domain = :kalenderveranstaltungen
-      if creds.include?("Hauptmenue"+domain.to_s)
+      domain2 = "veranstaltungen"
+      if creds.include?("hauptmenue"+domain+domain2)
         path = showcal_index_path + "?dom=veranstaltungen"
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :veranstaltungen), "icon" => :veranstaltungen }
         hasharray << hash
       end
-      domain = :kalenderstellenanzeigen
-      if creds.include?("Hauptmenue"+domain.to_s)
+      domain2 = "stellenanzeigen"
+      if creds.include?("hauptmenue"+domain+domain2)
         path = showcal_index_path + "?dom=stellenanzeigen"
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :stellenanzeigen), "icon" => :stellenanzeigen }
         hasharray << hash
       end
-      domain = :kalendercrowdfunding
-      if creds.include?("Hauptmenue"+domain.to_s)
+      domain = "crowdfunding"
+      if creds.include?("hauptmenue"+domain+domain2)
         path = showcal_index_path + "?dom=crowdfunding"
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :crowdfunding), "icon" => :crowdfunding }
         hasharray << hash
       end
-      domain = :kalender
       domain_text = I18n.t :kalender
       html_string = html_string + complex_menue(domain, domain_text, hasharray)
     end
@@ -2388,7 +2423,7 @@ def build_kachel_access(topic, mode, user)
             else
               thumbnail_state = 'thumbnail-inactive'
           end
-          cpath = user_path(:id => @credential.user_id, :credential_id => @credential.id, :topic => "zugriffsberechtigungen")
+          cpath = user_path(:id => @credential.user_id, :credential_id => @credential.id, :topic => :zugriffsberechtigungen)
         end
       end
     end
@@ -2412,17 +2447,15 @@ def build_kachel_access(topic, mode, user)
   return html_string.html_safe
 end
 
-def image_def (domain, mtype, msubtype)
-    case domain
+def image_def (objekt, mtype, msubtype)
+    case objekt
       when $app_name
         pic = "connect.jpg"
-      when "privatpersonen"
+      when "personen"
         pic = "user.jpg"
       when "institutionen"
         pic = "company.jpg"
       when "objekte"
-        pic = "angebot.jpg"
-      else
         pic = "no_pic.jpg"
     end
 end
@@ -2456,377 +2489,378 @@ def init_apps
     @array = []
 
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :news, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "news", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :personen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "personen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :institutionen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "institutionen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :angebote, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "angebote", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :angebote, "right" => :angebotestandard, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "angebote", "right" => "standard", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :angebote, "right" => :angeboteaktion, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "angebote", "right" => "aktion", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :vermietungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "vermietungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :ausschreibungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "ausschreibungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :stellenanzeigen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "stellenanzeigen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :stellenanzeigen, "right" => :stellenanzeigenanbieten, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "stellenanzeigen", "right" => "anbieten", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :stellenanzeigen, "right" => :stellenanzeigensuchen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "stellenanzeigen", "right" => "suchen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :veranstaltungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "veranstaltungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :ausflugsziele, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "ausflugsziele", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :kleinanzeigen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "kleinanzeigen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :publikationen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "publikationen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :artikel, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "artikel", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :innovationswettbewerbe, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "innovationswettbewerbe", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :umfragen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "umfragen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :projekte, "access" => true, "icon" => "projekte"}
+    hash = {"domain" => "hauptmenue", "right" => "projekte", "access" => true, "icon" => "projekte"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :kleinanzeigen, "right" => :kleinanzeigenanbieten, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "kleinanzeigen", "right" => "anbieten", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => "Kleinanzeigen", "right" => :kleinanzeigensuchen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "kleinanzeigen", "right" => "suchen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :crowdfunding, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "crowdfunding", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :crowdfunding, "right" => :crowdfundingspenden, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "crowdfunding", "right" => "spenden", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :crowdfunding, "right" => :crowdfundingbelohnungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "crowdfunding", "right" => "belohnungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :crowdfunding, "right" => :crowdfundingzinsen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "crowdfunding", "right" => "zinsen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :dsstandorte, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "dsstandorte", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "right" => :kalender, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "kalender", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :kalender, "right" => :kalendergeburtstage, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "geburtstage", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :kalender, "right" => :kalenderpublikationen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "publikationen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :kalender, "right" => :kalenderaktionen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "aktionen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :kalender, "right" => :kalendercrowdfunding, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "crowdfunding", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :kalender, "right" => :kalenderstellenanzeigen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "stellenanzeigen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :kalender, "right" => :kalenderveranstaltungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "veranstaltungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Hauptmenue", "parent_domain" => :kalender, "right" => :kalenderausschreibungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "ausschreibungen", "access" => false, "icon" => "news"}
     @array << hash
 
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :info, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "info", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :kalendereintraege, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "kalendereintraege", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :angebote, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "angebote", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :ansprechpartner, "access" => true, "icon" => "personen"}
+    hash = {"domain" => "personen", "right" => "ansprechpartner", "access" => true, "icon" => "personen"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :institutionen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "institutionen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :stellenanzeigen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "stellenanzeigen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :kleinanzeigen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "kleinanzeigen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :vermietungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "vermietungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :veranstaltungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "veranstaltungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :anmeldungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "anmeldungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :tickets, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "tickets", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :ausflugsziele, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "ausflugsziele", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :ausschreibungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "ausschreibungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :innovationswettbewerbe, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "innovationswettbewerbe", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :ideen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "ideen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :crowdfunding, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "crowdfunding", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :crowdfundingbeitraege, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "crowdfundingbeitraege", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :bewertungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "bewertungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :favoriten, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "favoriten", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :gruppen, "access" => true, "icon" => "th"}
+    hash = {"domain" => "personen", "right" => "gruppen", "access" => true, "icon" => "th"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :publikationen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "publikationen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :artikel, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "artikel", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :umfragen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "umfragen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :projekte, "access" => true, "icon" => "projekte"}
+    hash = {"domain" => "personen", "right" => "projekte", "access" => true, "icon" => "projekte"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :zeiterfassung, "access" => true, "icon" => "zeiterfassung"}
+    hash = {"domain" => "personen", "right" => "zeiterfassung", "access" => true, "icon" => "zeiterfassung"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :ressourcenplanung, "access" => true, "icon" => "ressourcenplanung"}
+    hash = {"domain" => "personen", "right" => "ressourcenplanung", "access" => true, "icon" => "ressourcenplanung"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :kundenbeziehungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "kundenbeziehungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :kontobeziehungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "kontobeziehungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :transaktionen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "transaktionen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :emails, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "emails", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :mappositionen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "mappositionen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :mappositionenfavoriten, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "mappositionenfavoriten", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Privatpersonen", "right" => :aktivitaeten, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :info, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :angebote, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :stellenanzeigen, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :kleinanzeigen, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :vermietungen, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :veranstaltungen, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :sponsorenengagements, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :ausflugsziele, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :ausschreibungen, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :innovationswettbewerbe, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :crowdfunding, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :crowdfundingbeitraege, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :publikationen, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :umfragen, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :projekte, "access" => true, "icon" => "projekte"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :kundenbeziehungen, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :kontobeziehungen, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :transaktionen, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :emails, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :favoriten, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :partnerlinks, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :aktivitaeten, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :dskampagnen, "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "Institutionen", "right" => :dsstandorte, "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "aktivitaeten", "access" => false, "icon" => "news"}
     @array << hash
 
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :info, "access" => true, "icon" => "info"}
+    hash = {"domain" => "institutionen", "right" => "info", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :details, "access" => true, "icon" => "details"}
+    hash = {"domain" => "institutionen", "right" => "angebote", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :eintrittskarten, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "stellenanzeigen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :sponsorenengagements, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "kleinanzeigen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :ansprechpartner, "access" => true, "icon" => "personen"}
+    hash = {"domain" => "institutionen", "right" => "vermietungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :projektberechtigungen, "access" => true, "icon" => "berechtigungen"}
+    hash = {"domain" => "institutionen", "right" => "veranstaltungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :auftragscontrolling, "access" => true, "icon" => "auftragscontrolling"}
+    hash = {"domain" => "institutionen", "right" => "sponsorenengagements", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :ressourcenplanung, "access" => true, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "ausflugsziele", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :projektdashboard, "access" => true, "icon" => "projektdashboard"}
+    hash = {"domain" => "institutionen", "right" => "ausschreibungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :kalender, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "innovationswettbewerbe", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :veranstaltungsteilnehmer, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "crowdfunding", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :ausschreibungsangebote, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "crowdfundingbeitraege", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :bewertungen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "publikationen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :blog, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "umfragen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :fragen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "projekte", "access" => true, "icon" => "projekte"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :umfrageteilnehmer, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "kundenbeziehungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :jury, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "kontobeziehungen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :preise, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "transaktionen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :ideen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "emails", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :bewertungskriterien, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "favoriten", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :gruppenmitglieder, "access" => true, "icon" => "personen"}
+    hash = {"domain" => "institutionen", "right" => "partnerlinks", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :substruktur, "access" => true, "icon" => "task"}
+    hash = {"domain" => "institutionen", "right" => "aktivitaeten", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :ausgaben, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "dskampagnen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :cfstatistik, "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "dsstandorte", "access" => false, "icon" => "news"}
+    @array << hash
+
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "info", "access" => true, "icon" => "info"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Objekte", "right" => :cftransaktionen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "objekte", "right" => "details", "access" => true, "icon" => "details"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "eintrittskarten", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "sponsorenengagements", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "ansprechpartner", "access" => true, "icon" => "personen"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "projektberechtigungen", "access" => true, "icon" => "berechtigungen"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "auftragscontrolling", "access" => true, "icon" => "auftragscontrolling"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "ressourcenplanung", "access" => true, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "projektdashboard", "access" => true, "icon" => "projektdashboard"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "kalender", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "veranstaltungsteilnehmer", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "ausschreibungsangebote", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "bewertungen", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "blog", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "fragen", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "umfrageteilnehmer", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "jury", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "preise", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "ideen", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "bewertungskriterien", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "gruppenmitglieder", "access" => true, "icon" => "personen"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "substruktur", "access" => true, "icon" => "task"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "ausgaben", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "cfstatistik", "access" => false, "icon" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "cftransaktionen", "access" => false, "icon" => "news"}
     @array << hash
     
     hash = Hash.new
-    hash = {"domain" => "Kampagnen", "right" => :info, "access" => false, "icon" => "news"}
+    hash = {"domain" => "dskampagnen", "right" => "info", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Kampagnen", "right" => :details, "access" => false, "icon" => "news"}
+    hash = {"domain" => "dskampagnen", "right" => "details", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Kampagnen", "right" => :kalender, "access" => false, "icon" => "news"}
+    hash = {"domain" => "dskampagnen", "right" => "kalender", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Kampagnen", "right" => :standorte, "access" => false, "icon" => "news"}
+    hash = {"domain" => "dskampagnen", "right" => "standorte", "access" => false, "icon" => "news"}
     @array << hash
 
     hash = Hash.new
-    hash = {"domain" => "Standorte", "right" => :info, "access" => false, "icon" => "news"}
+    hash = {"domain" => "dsstandorte", "right" => "info", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Standorte", "right" => :dskampagnen, "access" => false, "icon" => "news"}
+    hash = {"domain" => "dsstandorte", "right" => "dskampagnen", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "Standorte", "right" => :kalender, "access" => false, "icon" => "news"}
+    hash = {"domain" => "dsstandorte", "right" => "kalender", "access" => false, "icon" => "news"}
     @array << hash
 
     for i in 0..@array.length-1
@@ -2835,7 +2869,7 @@ def init_apps
       if @array[i]["parent_domain"]
         c.parent_domain = @array[i]["parent_domain"]
       else
-        c.parent_domain = "Root"
+        c.parent_domain = "root"
       end
       c.right = @array[i]["right"]
       #c.icon = @array[i]["icon"]
@@ -3022,7 +3056,7 @@ def build_article(article)
                     html_string = html_string + "<h4 class='panel panel-blog'>"
                       html_string = html_string + "<a role='button' data-toggle='collapse' data-parent='#accordionB"+article.id.to_s+"' href='#collapseTwoB"+article.id.to_s+"' aria-expanded='true' aria-controls='collapseOne'>"
                         html_string = html_string + "<artikel_subheader><i class='glyphicon glyphicon-chevron-down'> </i>"+ d.name + "</artikel_header> "
-                        #html_string = html_string + link_to(mobject_path :mobject_id => article.id, :topic => "Bewertungen") do
+                        #html_string = html_string + link_to(mobject_path :mobject_id => article.id, :topic => :bewertungen) do
                         if user_signed_in?
                           html_string = html_string + link_to(new_mrating_path(:mobject_id => article.id, :user_id => current_user.id)) do
                             content_tag(:i, content_tag(:i," bewerten"), class:"btn btn-primary glyphicon glyphicon-star")
@@ -3270,6 +3304,71 @@ def wo_iterate(wo, include_sub, wolist)
       wo_iterate(s.id, include_sub, wolist)
     end
   end
+end
+
+def ticker
+  if user_signed_in?
+      ticker = " "
+      
+      # follow Tickets
+      usertickets = UserTicket.where('user_id=? and (status=? or status=?)', current_user.id, "übergeben", "persönlich").last(3)
+      usertickets.each do |ut|
+        	 #ticker = ticker + "Ticket von " + ut.ticket.msponsor.company.name + " (" + ut.ticket.name + " " + ut.ticket.msponsor.mobject.name + ") erhalten... " 
+             if ut.ticket.owner_type == "Msponsor"
+                 sponsor = ut.ticket.owner
+            	 ticker = ticker + "Ticket von " + sponsor.company.name + " (" + ut.ticket.name + " " + sponsor.mobject.name + ") erhalten... " 
+             end 
+      end
+
+      # follow User
+      favourits = Favourit.where('user_id=? and object_name=?', current_user.id, 'User')
+      favourits.each do |f|
+         u=User.find(f.object_id)
+         u.mobjects.order(created_at: :desc).last(3).each do |ue|
+        	 ticker = ticker + " " + ue.mtype + " " + ue.name + " von " + u.name + " " + u.lastname + "..."
+         end
+      end
+      
+      # follow Company
+      favourits = Favourit.where('user_id=? and object_name=?', current_user.id, 'Company')
+      favourits.each do |f|
+         c=Company.find(f.object_id)
+         c.mobjects.order(created_at: :desc).last(3).each do |ce|
+        	 ticker = ticker + " " + ce.mtype + " " + ce.name + " von " + c.name + "..." 
+         end
+      end
+      
+      # follow Termin
+      appointments = Appointment.where('app_date=? AND (user_id1=? OR user_id2=?)', Date.today, current_user.id, current_user.id)
+      appointments.each do |a|
+       
+         if a.user_id1 == current_user.id
+            @user = User.find(a.user_id2)
+         else
+            @user = User.find(a.user_id1)
+         end
+         if @user
+           ticker = ticker + "Termin mit " + @user.name + " " + @user.lastname + " um " + a.time_from.to_s + " Uhr..."
+         end
+       
+      end
+      return ticker
+  end
+end
+
+def online_status(user)
+    content_tag :span, user.name,
+        class: "user-#{user.id} online_status #{'online' if user.online?}"
+end
+
+def subtopic(topic)
+  pos = topic.to_s.index("_")
+  if pos > 0
+    topic = (topic[pos+1..topic.length-1])
+  else
+    topic = topic
+  end
+  return topic
 end
 
 end    

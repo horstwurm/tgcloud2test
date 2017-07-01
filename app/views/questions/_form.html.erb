@@ -2,7 +2,7 @@
 
         <% if @question.errors.any? %>
             <div id="error_explanation">
-              <h2><%= pluralize(@question.errors.count, "error") %> prohibited this object from being saved:</h2>
+              <h2><%= pluralize(@question.errors.count, "error") + " " + (I18n.t :notsaved) %></h2>
               <ul>
                   <% @question.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
@@ -15,7 +15,7 @@
             <div class="col-md-6">
               <div class="panel panel-heading header">
               <li_header>
-                <%= link_to mobject_path(:id => @question.mobject_id, :topic => "Fragen") do %>
+                <%= link_to mobject_path(:id => @question.mobject_id, :topic => :fragen) do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
                 <%= @question.mobject.mtype.upcase %>
@@ -28,16 +28,16 @@
             <div class="col-md-6">
               <div class="panel-body">
                 <div class="form-group">
-                  <%= f.label "Frage" %><br/>
+                  <%= f.label (I18n.t :frage) %><br/>
                   <%= f.text_field :name, autofocus: true, class:"form-control"%>
                 </div>
                 <div class="form-group">
-                  <%= f.label "Beschreibung" %><br/>
+                  <%= f.label (I18n.t :beschreibung) %><br/>
                   <%= f.text_area :description, rows: 5, class:"form-control"%>
                 </div>
                 
                 <div class="form-group">
-                      <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Fragetyp").order(:name), :id, :name, {}, :readonly => true, class:"form-control" %>
+                      <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"fragetyp").order(:name), :id, :name, {}, :readonly => true, class:"form-control" %>
                 </div>
                 <div class="form-group">
                   <%= f.label "Reihenfolge" %><br/>

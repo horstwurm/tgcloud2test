@@ -3,21 +3,21 @@
     <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow> " + @company.name + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
     <nav>
       <div class='col-xs-12'>
-          <%= navigate(:institutionen, @company) %>
+          <%= navigate("institutionen", @company) %>
       </div>
     </nav>
     </header>
   </div>
   
+  <% @topic = @topic.to_s %>
+  
   <div class="row">
       <div class='col-xs-12'>
 
-      <%= header3(:institutionen, @company, @topic, false) %>
+      <%= header3("institutionen", @company, @topic, false) %>
       
-      <% @topic %>
-      
-      <% case @topic %>
-        <% when :info %>
+       <% case @topic %>
+        <% when "institutionen_info" %>
         
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -68,7 +68,7 @@
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
               <%= header((I18n.t :aktivitaeten), false) %>
               <div class="panel-body">
-                <% if $activeapps.include?("InstitutionenAktivitaeten") or (user_signed_in? and current_user.superuser) %>
+                <% if $activeapps.include?("institutionenaktivitaeten") or (user_signed_in? and current_user.superuser) %>
                     <i class="glyphicon glyphicon-map-marker pull-left" onclick="return drawChart();"></i>
                     <div id="piechart"></div>
                 <% end %>
@@ -76,55 +76,10 @@
             </div>
           </div>
 
-        <% when :angebote %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"angebote"), "mobjects", nil) %>
-        <% when :stellenanzeigen %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"stellenanzeigen"), "mobjects", nil) %>
-        <% when :kleinanzeigen %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"kleinanzeigen"), "mobjects", nil) %>
-        <% when :vermietungen %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"vermietungen"), "mobjectss", nil) %>
-        <% when :veranstaltungen %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"veranstaltungen"), "mobjects", nil) %>
-        <% when :sponsorenengagements %>
-          <%= build_medialist2(@company.msponsors, "msponsors", "objekte") %>
-        <% when :ausflugsziele %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"ausflugsziele"), "mobjects", nil) %>
-        <% when :ausschreibungen %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"ausschreibungen"), "mobjects", nil) %>
-        <% when :crowdfunding %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"crowdfunding"), "mobjects", nil) %>
-        <% when :crowdfundingbeitraege %>
-          <%= build_medialist2(@company.mstats, "mstats", nil) %>
-        <% when :projekte %>
+        <% when "institutionen_projekte" %>
           <%= build_medialist2(@company.mobjects.where('mtype=? and parent=?',"projekte",0), "mobjects", nil) %>
-        <% when :innovationswettbewerbe %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"innovationswettbewerbe"), "mobjects", nil) %>
-        <% when :umfragen %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"umfragen"), "mobjects", nil) %>
-        <% when :publikationen %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"publikationen"), "mobjects", nil) %>
-        <% when :dskampagnen %>
-          <%= build_medialist2(@company.signage_camps, "signage_camps", nil) %>
-        <% when :dsstandorte %>
-          <%= build_medialist2(@company.signage_locs, "signage_locs", nil) %>
 
-    	 <% when :kundenbeziehungen %>
-          <% hash = Hash.new %>
-          <% hash = {:company_id => @company.id} %>
-          <div class="panel-body">
-            <%= build_medialist2(@company.customers, "partners", hash) %>
-          </div>
-          <div class="panel-body">
-            <%= build_medialist2(Company.where('partner=?',true), "nopartners", hash) %>
-          </div>
-
-        <% when :transaktionen %>
-          <div class="panel-body">
-            <%= build_medialist2(@company.transactions, "transactions", hash) %>
-          </div>
-          
-        <% when :partnerlinks %>
+        <% when "institutionen_partnerlinks" %>
           <div class="panel-body">
             <% @company.partner_links.each do |pl| %>
                 <div class="col-sm-6 col-md-4 col-lg-3">
@@ -159,7 +114,54 @@
             <% end %>
           </div>
           
-        <% when :emails %>
+        <!--########################################################################################################################-->
+        <!--# inactive code-->
+        <!--########################################################################################################################-->
+        <% when "institutionen_angebote" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"angebote"), "mobjects", nil) %>
+        <% when "institutionen_stellenanzeigen" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"stellenanzeigen"), "mobjects", nil) %>
+        <% when "institutionen_kleinanzeigen" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"kleinanzeigen"), "mobjects", nil) %>
+        <% when "institutionen_vermietungen" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"vermietungen"), "mobjectss", nil) %>
+        <% when "institutionen_veranstaltungen" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"veranstaltungen"), "mobjects", nil) %>
+        <% when "institutionen_sponsorenengagements" %>
+          <%= build_medialist2(@company.msponsors, "msponsors", "objekte") %>
+        <% when "institutionen_ausflugsziele" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"ausflugsziele"), "mobjects", nil) %>
+        <% when "institutionen_ausschreibungen" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"ausschreibungen"), "mobjects", nil) %>
+        <% when "institutionen_crowdfunding" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"crowdfunding"), "mobjects", nil) %>
+        <% when "institutionen_crowdfundingbeitraege" %>
+          <%= build_medialist2(@company.mstats, "mstats", nil) %>
+        <% when "institutionen_innovationswettbewerbe" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"innovationswettbewerbe"), "mobjects", nil) %>
+        <% when "institutionen_umfragen" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"umfragen"), "mobjects", nil) %>
+        <% when "institutionen_publikationen" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"publikationen"), "mobjects", nil) %>
+        <% when "institutionen_dskampagnen" %>
+          <%= build_medialist2(@company.signage_camps, "signage_camps", nil) %>
+        <% when "institutionen_dsstandorte" %>
+          <%= build_medialist2(@company.signage_locs, "signage_locs", nil) %>
+    	 <% when "institutionen_kundenbeziehungen" %>
+          <% hash = Hash.new %>
+          <% hash = {:company_id => @company.id} %>
+          <div class="panel-body">
+            <%= build_medialist2(@company.customers, "partners", hash) %>
+          </div>
+          <div class="panel-body">
+            <%= build_medialist2(Company.where('partner=?',true), "nopartners", hash) %>
+          </div>
+        <% when "institutionen_transaktionen" %>
+          <div class="panel-body">
+            <%= build_medialist2(@company.transactions, "transactions", hash) %>
+          </div>
+          
+        <% when "institutionen_emails" %>
           <div class="panel-body">
             <% emails = Email.where('m_to=? or m_from=?', @company.user.id, @company.user.id).order(created_at: :desc) %>
             <% emails.each do |e| %>
@@ -181,8 +183,11 @@
   </div>
 </div>
 
-<% if @topic == :info %>
-<script type="text/javascript">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<% if @topic == "institutionen_info" %>
+  <script type="text/javascript">
+
     var latitudes = [<%= @company.latitude %>];
     var longitudes = [<%= @company.longitude %>];
     function init_map(index) {
@@ -195,42 +200,24 @@
             position: myLocation,
             title: "Property Location"
         });
-        var map = new google.maps.Map(document.getElementById("map"),
-            mapOptions);
+        var map = new google.maps.Map(document.getElementById("map"),mapOptions);
         marker.setMap(map);
     }
-    <!--init_map(0);-->
-</script>
 
-<script type="text/javascript" 
-  src="https://www.gstatic.com/charts/loader.js">
-</script>
-
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
-  function drawChart() {
-
-    var data = google.visualization.arrayToDataTable([
-      ['Aktivität', 'Anzahl'],
-      <%= raw @array_s %>
-    ]);
-
-    var options = {
-      title: "<%= I18n.t :aktivitaeten %>",
-      pieHole: 0.4,
-      height: 600
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable(<%= raw @stats %>);
+      var options = {
+        title: "<%= (I18n.t :aktititaeten) %>",
+        pieHole: 0.4,
+        height: 600,
+      };
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+      chart.draw(data, options);
     };
-
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-    chart.draw(data, options);
-  }
-</script>
-
-<script>
-  document.addEventListener("turbolinks:load", function() {init_map(0); drawChart()})
-</script>
+  
+  </script>
 <% end %>
 
 <script>
@@ -255,4 +242,12 @@ $(document).ready(function(){
     $("a").tooltip();
     
 });
+</script>
+
+<script>
+<% case @topic %>
+  <% when "institutionen_info" %>
+      document.addEventListener("turbolinks:load", function() {init_map(0); drawChart();})
+
+<% end %>
 </script>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170628203838) do
+ActiveRecord::Schema.define(version: 20170629091038) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.boolean  "is_account_ver"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.index ["customer_id"], name: "index_accounts_on_customer_id"
   end
 
   create_table "answers", force: :cascade do |t|
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.float    "num"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
   create_table "appointment_documents", force: :cascade do |t|
@@ -40,6 +42,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.datetime "document_updated_at"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.index ["appointment_id"], name: "index_appointment_documents_on_appointment_id"
   end
 
   create_table "appointments", force: :cascade do |t|
@@ -57,6 +60,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.boolean  "reminder"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.index ["user_id1"], name: "index_appointments_on_user_id1"
+    t.index ["user_id2"], name: "index_appointments_on_user_id2"
   end
 
   create_table "appparams", force: :cascade do |t|
@@ -74,6 +79,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["mobject_id"], name: "index_comments_on_mobject_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -101,6 +108,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.index ["mcategory_id"], name: "index_companies_on_mcategory_id"
+    t.index ["user_id"], name: "index_companies_on_user_id"
   end
 
   create_table "credentials", force: :cascade do |t|
@@ -109,6 +118,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.boolean  "access"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["appparam_id"], name: "index_credentials_on_appparam_id"
+    t.index ["user_id"], name: "index_credentials_on_user_id"
   end
 
   create_table "crits", force: :cascade do |t|
@@ -118,6 +129,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.integer  "rating"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["mobject_id"], name: "index_crits_on_mobject_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -142,6 +154,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.integer  "sequence"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["edition_id"], name: "index_edition_arcticles_on_edition_id"
+    t.index ["mobject_id"], name: "index_edition_arcticles_on_mobject_id"
   end
 
   create_table "editions", force: :cascade do |t|
@@ -157,6 +171,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.date     "release_date"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.index ["mobject_id"], name: "index_editions_on_mobject_id"
   end
 
   create_table "emails", force: :cascade do |t|
@@ -168,6 +183,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.string   "back_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["m_from"], name: "index_emails_on_m_from"
+    t.index ["m_to"], name: "index_emails_on_m_to"
   end
 
   create_table "favourits", force: :cascade do |t|
@@ -181,6 +198,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.boolean  "active"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_favourits_on_user_id"
   end
 
   create_table "idea_crowdratings", force: :cascade do |t|
@@ -190,6 +208,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.text     "rating_text"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["idea_id"], name: "index_idea_crowdratings_on_idea_id"
+    t.index ["user_id"], name: "index_idea_crowdratings_on_user_id"
   end
 
   create_table "idea_ratings", force: :cascade do |t|
@@ -200,6 +220,9 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.text     "rating_text"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["crit_id"], name: "index_idea_ratings_on_crit_id"
+    t.index ["idea_id"], name: "index_idea_ratings_on_idea_id"
+    t.index ["user_id"], name: "index_idea_ratings_on_user_id"
   end
 
   create_table "ideas", force: :cascade do |t|
@@ -219,6 +242,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.index ["mobject_id"], name: "index_ideas_on_mobject_id"
+    t.index ["user_id"], name: "index_ideas_on_user_id"
   end
 
   create_table "madvisors", force: :cascade do |t|
@@ -247,6 +272,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.boolean  "confirmed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["mobject_id"], name: "index_mcalendars_on_mobject_id"
+    t.index ["user_id"], name: "index_mcalendars_on_user_id"
   end
 
   create_table "mcategories", force: :cascade do |t|
@@ -283,6 +310,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "mlikes", force: :cascade do |t|
@@ -291,6 +319,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.boolean  "likeit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["mobject_id"], name: "index_mlikes_on_mobject_id"
+    t.index ["user_id"], name: "index_mlikes_on_user_id"
   end
 
   create_table "mobjects", force: :cascade do |t|
@@ -356,6 +386,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["mobject_id"], name: "index_mratings_on_mobject_id"
+    t.index ["user_id"], name: "index_mratings_on_user_id"
   end
 
   create_table "msponsors", force: :cascade do |t|
@@ -366,6 +398,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.string   "slevel"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_msponsors_on_company_id"
+    t.index ["mobject_id"], name: "index_msponsors_on_mobject_id"
   end
 
   create_table "mstats", force: :cascade do |t|
@@ -387,6 +421,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["mobject_id"], name: "index_participants_on_mobject_id"
+    t.index ["user_id"], name: "index_participants_on_user_id"
   end
 
   create_table "partner_links", force: :cascade do |t|
@@ -401,6 +437,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.string   "link"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.index ["company_id"], name: "index_partner_links_on_company_id"
   end
 
   create_table "plannings", force: :cascade do |t|
@@ -430,6 +467,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.index ["mobject_id"], name: "index_prices_on_mobject_id"
   end
 
   create_table "qrcodes", force: :cascade do |t|
@@ -441,6 +479,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.index ["mobject_id"], name: "index_qrcodes_on_mobject_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -451,6 +490,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.integer  "mcategory_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["mobject_id"], name: "index_questions_on_mobject_id"
   end
 
   create_table "searches", force: :cascade do |t|
@@ -502,6 +542,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.boolean  "confirmed"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["signage_camp_id"], name: "index_signage_cals_on_signage_camp_id"
+    t.index ["signage_loc_id"], name: "index_signage_cals_on_signage_loc_id"
   end
 
   create_table "signage_camps", force: :cascade do |t|
@@ -511,6 +553,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["owner_id"], name: "index_signage_camps_on_owner_id"
   end
 
   create_table "signage_hits", force: :cascade do |t|
@@ -519,6 +562,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.datetime "datetime_from"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["signage_camp_id"], name: "index_signage_hits_on_signage_camp_id"
+    t.index ["signage_loc_id"], name: "index_signage_hits_on_signage_loc_id"
   end
 
   create_table "signage_locs", force: :cascade do |t|
@@ -543,6 +588,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.index ["owner_id"], name: "index_signage_locs_on_owner_id"
   end
 
   create_table "signages", force: :cascade do |t|
@@ -556,6 +602,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.index ["signage_camp_id"], name: "index_signages_on_signage_camp_id"
   end
 
   create_table "tickets", force: :cascade do |t|
@@ -569,6 +616,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.integer  "contingent"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["owner_id"], name: "index_tickets_on_owner_id"
   end
 
   create_table "timetracks", force: :cascade do |t|
@@ -617,6 +665,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.string   "status"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["answer_id"], name: "index_user_answers_on_answer_id"
+    t.index ["user_id"], name: "index_user_answers_on_user_id"
   end
 
   create_table "user_positions", force: :cascade do |t|
@@ -626,6 +676,7 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.string   "geo_address"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_user_positions_on_user_id"
   end
 
   create_table "user_tickets", force: :cascade do |t|
@@ -638,6 +689,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.index ["ticket_id"], name: "index_user_tickets_on_ticket_id"
+    t.index ["user_id"], name: "index_user_tickets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -704,6 +757,8 @@ ActiveRecord::Schema.define(version: 20170628203838) do
     t.string   "status"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["user_id"], name: "index_webmasters_on_user_id"
+    t.index ["web_user_id"], name: "index_webmasters_on_web_user_id"
   end
 
 end

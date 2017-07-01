@@ -3,7 +3,7 @@
       <%= header("Ideenbewertung für " + @idea.header, true) %>
   </div>
   
-  <%= action_buttons2("Ideenbewertung", @idea, nil) %>
+  <%= action_buttons2(:ideenbewertung, @idea, nil) %>
 
   <%= build_medialist2(@idea.mobject.crits, "crits", @idea.id) %>
 

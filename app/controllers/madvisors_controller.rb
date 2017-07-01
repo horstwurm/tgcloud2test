@@ -96,7 +96,19 @@ class MadvisorsController < ApplicationController
   def create
     @madvisor = Madvisor.new(madvisor_params)
     if @madvisor.save
-      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => "Ansprechpartner"), notice: (In18.t :act_create)
+      if @madvisor.mobject.mtype == "projekte"
+        @topic = "objekte_projektberechtigungen"
+      end
+      if @madvisor.mobject.mtype == "angebote"
+        @topic = "objekte_ansprechpartner"
+      end
+       if @madvisor.mobject.mtype == "gruppen"
+        @topic = "objekte_gruppenmitglieder"
+      end
+      if @madvisor.mobject.mtype == "innovationswettbewerbe"
+        @topic = "objekte_jury"
+      end
+      redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => @topic), notice: (In18.t :act_create)
     else
       render :new
     end
@@ -105,16 +117,16 @@ class MadvisorsController < ApplicationController
   # PUT /madvisors/1
   def update
     if @madvisor.mobject.mtype == "projekte"
-      @topic = :projektberechtigungen
+      @topic = "objekte_projektberechtigungen"
     end
     if @madvisor.mobject.mtype == "angebote"
-      @topic = :ansprechpartner
+      @topic = "objekte_ansprechpartner"
     end
      if @madvisor.mobject.mtype == "gruppen"
-      @topic = :gruppenmitglieder
+      @topic = "objekte_gruppenmitglieder"
     end
     if @madvisor.mobject.mtype == "innovationswettbewerbe"
-      @topic = :jury
+      @topic = "objekte_jury"
     end
     if @madvisor.update(madvisor_params)
       redirect_to mobject_path(:id => @madvisor.mobject_id, :topic => @topic), notice: (I18n.t :act_update)
@@ -127,16 +139,16 @@ class MadvisorsController < ApplicationController
   def destroy
     @id = @madvisor.mobject_id
     if @madvisor.mobject.mtype == "projekte"
-      @topic = :projektberechtigungen
+      @topic = "objekte_projektberechtigungen"
     end
     if @madvisor.mobject.mtype == "angebote"
-      @topic = :ansprechpartner
+      @topic = "objekte_ansprechpartner"
     end
      if @madvisor.mobject.mtype == "gruppen"
-      @topic = :gruppenmitglieder
+      @topic = "objekte_gruppenmitglieder"
     end
     if @madvisor.mobject.mtype == "innovationswettbewerbe"
-      @topic = :jury
+      @topic = "objekte_jury"
     end
     @madvisor.destroy
       redirect_to mobject_path(:id => @id, :topic => @topic), notice: (I18n.t :act_delete)

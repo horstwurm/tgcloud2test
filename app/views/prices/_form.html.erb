@@ -4,16 +4,16 @@
             <div class="panel panel-default">
                 <div class="panel-heading header">
                 <li_header>
-                <%= link_to mobject_path(:id => @price.mobject_id, :topic => "Preise") do %>
+                <%= link_to mobject_path(:id => @price.mobject_id, :topic => :preise) do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
-                  PREIS <%= @price.mobject.name %>
+                  <%= (I18n.t :preis) + " " + @price.mobject.name %>
                 </li_header>
                 </div>
                 <div class="panel-body">
                   <% if @price.errors.any? %>
                     <div id="error_explanation">
-                      <h2><%= pluralize(@price.errors.count, "error") %> prohibited this workorder from being saved:</h2>
+                      <h2><%= pluralize(@price.errors.count, "error") + (I18n.t :notsaved) %> </h2>
                       <ul>
                         <% @price.errors.full_messages.each do |message| %>
                           <li><%= message %></li>
@@ -22,11 +22,11 @@
                     </div>
                   <% end %>
                   <div class="form-group">
-                    <preis><%= @price.sequence %>.</preis><%= f.label "Preis" %><br/>
+                    <preis><%= @price.sequence %>.</preis><%= f.label (I18n.t :preis) %><br/>
                     <%= f.text_field :name, autofocus: true, class:"form-control"%>
                   </div>
                   <div class="form-group">
-                    <%= f.label "Beschreibung" %><br/>
+                    <%= f.label (I18n.t :beschreibung) %><br/>
                     <%= f.text_area :description, rows: 5, class:"form-control"%>
                   </div>
                   <div class="form-group">

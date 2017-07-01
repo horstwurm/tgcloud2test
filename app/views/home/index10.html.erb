@@ -309,7 +309,7 @@
               <div class="row">
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                   <header><%= r.created_at.strftime("%d.%m.%Y") %></header>
-                  <%= link_to mobject_path(:id => r.mobject_id, :topic => "Bewertungen") do %>
+                  <%= link_to mobject_path(:id => r.mobject_id, :topic => :bewertungen) do %>
                     <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
                   <% end %>
                 </div>
@@ -374,17 +374,17 @@
     <div class="row">
       <% @searches.each do |s| %>
       <% case s.search_domain %>
-        <% when "Privatpersonen" %>
+        <% when "personen" %>
           <% @suche = User.where(s.build_sql) %>
-        <% when "Institutionen" %>
+        <% when "institutionen" %>
           <% @suche = Company.where(s.build_sql) %>
-        <% when "Objekte" %>
+        <% when "objekte" %>
           <% @suche = Mobject.where(s.build_sql) %>
       <% end %>
       <% @suche.where('created_at>=?',@n.day.ago).order(created_at: :desc).each do |su| %>
 
-        <% if (@suche.table_name == "users" and getUserCreds.include?("Hauptmenue"+"Privatpersonen")) or %>
-        <%    (@suche.table_name == "companies" and getUserCreds.include?("Hauptmenue"+"Institutionen")) or %>
+        <% if (@suche.table_name == "users" and getUserCreds.include?("hauptmenuepersonen")) or %>
+        <%    (@suche.table_name == "companies" and getUserCreds.include?("hauptmenueinstitutionen")) or %>
         <%    (@suche.table_name == "mobjects") %>
       
           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">

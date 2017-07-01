@@ -12,24 +12,26 @@
     <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow>" + (I18n.t @mobject.mtype) + " " + @mobject.msubtype.to_s + " " + @mobject.name + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
     <nav>
       <div class='col-xs-12'>
-          <%= navigate(:objekte, @mobject) %>
+          <%= navigate("objekte", @mobject) %>
       </div>
     </nav>
     </header>
   </div>
   
+  <% @topic = @topic.to_s %>
   
   <div class="row">
       <div class='col-xs-12'>
         
-      <%= header3(:objekte, @mobject, @topic, false) %>
+      <%= header3("objekte", @mobject, @topic, false) %>
 
       <% case @topic %>
-        <% when :info %>
+        <% when "objekte_info" %>
 
           <div class="panel-body">
             
               <% if @mobject.mtype != "artikel" %>
+              
                <% case @mobject.status %>
                   <% when "CHECK" %>
                     <i class="glyphicon glyphicon-question-sign"></i>
@@ -108,7 +110,7 @@
                 <% end %>
                 
                 <% case @mobject.mtype %>
-                   <% when "angebote", "veranstaltungen", "ausschreibungen", "crowdfunding", "umfragen", "projekte" %>
+                   <% when "angebote", "veranstaltungen", "ausschreibungen", "crowdfunding", "umfragen", "projekte", "innovationswettbewerbe" %>
 
                     <% if @mobject.mtype == "umfragen" %>
                     
@@ -135,12 +137,14 @@
 
                       <div class="row">
                         
+                        <% if false %>
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                           <div>
                             <%= header("Antworten pro Frage", false) %>
                           </div>
                           <div id="chartq"></div>
                         </div>
+                        <% end %>
  
                          <% @mobject.questions.each do |q| %>
                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -213,7 +217,7 @@
                     </div>
                     <br>
 
-                  <% when "stellenanzeigen" %>
+                 <% when "stellenanzeigen" %>
                       <div class="row">
                         <div class="col-sm-6 col-md-4 col-lg-3">
                           <div class="thumbnail" align="center">
@@ -312,11 +316,13 @@
 
                 <% end %>
                 
-                <b><%= I18n.t :bewertung %></b><br>
-                <% avg_rating2(@mobject.id).times do %>
-                  <i class="glyphicon glyphicon-star"></i>
+                <% if @mobject.mtype == "" %>
+                  <b><%= I18n.t :bewertung %></b><br>
+                  <% avg_rating2(@mobject.id).times do %>
+                    <i class="glyphicon glyphicon-star"></i>
+                  <% end %>
+                  <br><br>
                 <% end %>
-                <br><br>
                 
                 <% if @mobject.social %>
                     <i class="glyphicon glyphicon-heart"></i> soziales Engagement
@@ -371,6 +377,14 @@
                 <br>
               <% end %>
 
+               <% if @mobject.mtype == "innovationswettbewerbe" %>
+                <%= header3("objekte", @mobject, :ideen, false) %>
+                <div class="panel-body">
+                  <%= build_medialist2(@mobject.ideas.order(rating: :desc), "ideas", "user") %>
+                </div>
+                <br>
+               <% end %>
+
               <b><%= I18n.t :verantwortlich %></b><br>
               <%= showImage2(:small, @mobject.owner, true) %><br>
               <% if @mobject.owner_type == "user" %>
@@ -391,12 +405,12 @@
                 </div>
               </div>
 
-        <% when :details %>
+        <% when "objekte_details" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mdetails.where('mtype=?', "details"), "mdetails", nil) %>
           </div>
 
-        <% when :umfrageteilnehmer %>
+        <% when "objekte_umfrageteilnehmer" %>
           <div class="panel-body">
             <% useranswers = [] %>
             <% @mobject.questions.each do |q| %>
@@ -416,62 +430,62 @@
             <%= build_medialist2(User.where("id IN (?)", useranswers), "users", nil) %>
           </div>
 
-         <% when :ideen %>
+         <% when "objekte_ideen" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.ideas.order(rating: :desc), "ideas", "user") %>
           </div>
 
-        <% when :jury %>
+        <% when "objekte_jury" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.madvisors, "madvisors", "user") %>
           </div>
 
-        <% when :preise %>
+        <% when "objekte_preise" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.prices, "prices", nil) %>
           </div>
 
-        <% when :bewertungskriterien %>
+        <% when "objekte_bewertungskriterien" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.crits, "crits", nil) %>
           </div>
 
-         <% when :ausschreibungsangebote %>
+         <% when "objekte_ausschreibungsangebote" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mdetails.where('mtype=?', "ausschreibungsangebote"), "mdetails", nil) %>
           </div>
 
-        <% when :sponsorenengagements %>
+        <% when "objekte_sponsorenengagements" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.msponsors, "msponsors", "company") %>
           </div>
           
-        <% when :eintrittskarten %>
+        <% when "objekte_eintrittskarten" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.tickets, "tickets", nil) %>
           </div>
 
-        <% when :bewertungen %>
+        <% when "objekte_bewertungen" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mratings, "mratings", "user") %>
           </div>
 
-        <% when :ansprechpartner %>
+        <% when "objekte_ansprechpartner" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.madvisors, "madvisors", "user") %>
           </div>
 
-        <% when :projektberechtigungen %>
+        <% when "objekte_projektberechtigungen" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "user") %>
           </div>
 
-        <% when :gruppenmitglieder %>
+        <% when "objekte_gruppenmitglieder" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "user") %>
           </div>
 
-        <% when :ressourcenplanung %>
+        <% when "objekte_ressourcenplanung" %>
           <div class="row">
               <div class='col-xs-12'>
                 <div class='panel-body'>
@@ -492,21 +506,21 @@
                       <% btn_sc = "active" %>
                   <% end %>
                   
-                  <%= link_to mobject_path(:id => @mobject.id, :topic => :ressourcenplanung, :year => @c_year, :scope => @c_scope)  do %>
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_ressourcenplanung", :year => @c_year, :scope => @c_scope)  do %>
                     <span><i class="btn btn-active glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
                   <% end %>
 
-                  <%= link_to mobject_path(:id => @mobject.id, :topic => :ressourcenplanung, :year => @c_year, :scope => "kosten")  do %>
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_ressourcenplanung", :year => @c_year, :scope => "kosten")  do %>
                     <span><i class="btn btn-<%= btn_sc %> glyphicon glyphicon-euro"></i></span>
                   <% end %>
-                   <%= link_to mobject_path(:id => @mobject.id, :topic => :ressourcenplanung, :year => @c_year, :scope => "aufwand")  do %>
+                   <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_ressourcenplanung", :year => @c_year, :scope => "aufwand")  do %>
                     <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
                   <% end %>
                   
-                  <%= link_to mobject_path(:id => @mobject.id, :topic => :ressourcenplanung, :dir => "<", :year => @c_year, :mode => @c_mode, :scope => @c_scope )  do %>
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_ressourcenplanung", :dir => "<", :year => @c_year, :mode => @c_mode, :scope => @c_scope )  do %>
                     <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
                   <% end %>
-                  <%= link_to mobject_path(:id => @mobject.id, :topic => :ressourcenplanung, :dir => ">", :year => @c_year, :mode => @c_mode , :scope => @c_scope) do %>
+                  <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_ressourcenplanung", :dir => ">", :year => @c_year, :mode => @c_mode , :scope => @c_scope) do %>
                     <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
                   <% end %>
                  <br><br>
@@ -793,7 +807,7 @@
             </div>
           </div>
 
-        <% when :auftragscontrolling %>
+        <% when "objekte_auftragscontrolling" %>
           <div class="panel-body">
 
               <% case @c_scope %>
@@ -821,30 +835,30 @@
               <% @date_start %>
               <% @date_end %>
 
-              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => "alles", :scope => @c_scope)  do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "alles", :scope => @c_scope)  do %>
                 <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-fullscreen"> alles</i></span>
               <% end %>
-              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope)  do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_auftragscontrolling", :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope)  do %>
                 <span><i class="btn btn-<%= btn_y %> glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
               <% end %>
               
               <% if @c_mode != "alles" %>
-                <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
+                <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_auftragscontrolling", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
                   <i class="btn btn btn-primary glyphicon glyphicon-chevron-left"></i>
                 <% end %>
-                <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
+                <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_auftragscontrolling", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
                   <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
                 <% end %>
               <% end %>
               
-              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => "kosten") do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_auftragscontrolling", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => "kosten") do %>
                 <span><i class="btn btn-<%= btn_sc %> glyphicon glyphicon-euro"></i></span>
               <% end %>
-              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => "aufwand") do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_auftragscontrolling", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => "aufwand") do %>
                 <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
               <% end %>
               
-              <%= link_to mobject_path(:id => @mobject.id, :topic => :auftragscontrolling, :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope, :export => true) do %>
+              <%= link_to mobject_path(:id => @mobject.id, :topic => "objekte_auftragscontrolling", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope, :export => true) do %>
                 <span><i class="btn btn-inactive glyphicon glyphicon-book"></i></span>
               <% end %>
               
@@ -1111,7 +1125,7 @@
             
           </div>
 
-        <% when :projektdashboard %>
+        <% when "objekte_projektdashboard" %>
           <div class="panel-body">
             
             <% @prolist  = [@mobject.id.to_i] %>
@@ -1164,33 +1178,33 @@
             
           </div>
 
-        <% when :blog %>
+        <% when "objekte_blog" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.comments.order(created_at: :desc), "comments", "user") %>
           </div>
 
-        <% when :fragen %>
+        <% when "objekte_fragen" %>
           <%= @ques %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.questions.order(:sequence), "questions", "user") %>
           </div>
 
-        <% when :ausgaben %>
+        <% when "objekte_ausgaben" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.editions.order(created_at: :desc), "editions", "user") %>
           </div>
 
-        <% when :substruktur %>
+        <% when "objekte_substruktur" %>
           <div class="panel-body">
             <%= build_medialist2(Mobject.where('parent=?',@mobject.id).order(created_at: :desc), "mobjects", "user") %>
           </div>
 
-        <% when :teilnehmerveranstaltung %>
+        <% when "objekte_teilnehmerveranstaltung" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.participants, "participants", "user") %>
           </div>
 
-        <% when :kalendervermietungen %>
+        <% when "objekte_kalendervermietungen" %>
           <div id='calendar'></div>
           <div class="panel-body">
           	<table class="table table-striped">
@@ -1251,7 +1265,7 @@
            	</table>
           </div>
           
-        <% when :cfstatistik %>
+        <% when "objekte_cfstatistik" %>
           <div class="panel-body">
             <div id="curve_chart1"></div>
           </div>
@@ -1259,12 +1273,12 @@
             <div id="curve_chart2"></div>
           </div>
           
-        <% when :cftransaktionen %>
+        <% when "objekte_cftransaktionen" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mstats.order(amount: :desc), "mstats", "owner") %>
           </div>
 
-        <% when :standort %>
+        <% when "objekte_standort" %>
           <div class="panel-body">
             <div id="map">
               <div id="map-canvas"></div>
@@ -1284,7 +1298,7 @@ $(document).ready(function(){
 
       google.charts.load('current', {'packages':['corechart']});
 
-      <% if @topic == :auftragscontrolling %>
+      <% if @topic == "objekte_auftragscontrolling" %>
 
         google.charts.setOnLoadCallback(drawChartallkum);
         function drawChartallkum() {
@@ -1374,7 +1388,9 @@ $(document).ready(function(){
       
       <% end %>
 
-      <% if @topic == :umfragen %>
+      <% if @mobject.mtype == "umfragen" and @topic == "objekte_info" %>
+      
+        <% if false %>
         window.datasetq = [['kategorie', 'anzahl'],['keine Antwort',0]];
         <% @mobject.questions.each do |q| %>
           <% anzCount =0 %>
@@ -1395,15 +1411,16 @@ $(document).ready(function(){
           var chart = new google.visualization.ColumnChart(document.getElementById('chartq'));
           chart.draw(data, options);
         };
+        <% end %>
         
         <% @mobject.questions.each do |q| %>
-          <% if q.mcategory.name == "multiple" or q.mcategory.name == "single" %>
+          <% if q.mcategory.name.downcase == "multiple" or q.mcategory.name.downcase == "single" %>
             window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
             <% q.answers.each do |qa| %>
               dataset<%= q.id.to_s %>.push(['<%= qa.name %>', <%= qa.user_answers.where('checker=?',true).count %>]);
             <% end %>
           <% end %>
-          <% if q.mcategory.name == "numerisch" %>
+          <% if q.mcategory.name.downcase == "numerisch" %>
             window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
             <% q.answers.each do |qa| %>
               dataset<%= q.id.to_s %>.push(['Minimum', <%= qa.user_answers.minimum(:num) %>]);
@@ -1411,7 +1428,7 @@ $(document).ready(function(){
               dataset<%= q.id.to_s %>.push(['Durchschnitt', <%= qa.user_answers.average(:num) %>]);
             <% end %>
           <% end %>
-          <% if q.mcategory.name == "text" %>
+          <% if q.mcategory.name.downcase == "text" %>
             window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
             <% q.answers.each do |qa| %>
               dataset<%= q.id.to_s %>.push(['kein Text angegeben', <%= qa.user_answers.where('description=?',"").count %>]);
@@ -1433,7 +1450,7 @@ $(document).ready(function(){
         <% end %>
       <% end %>
 
-      <% if @topic == :projektdashboard %>
+      <% if @topic == "objekte_projektdashboard" %>
         google.charts.load('current', {'packages':['corechart']});
         <% @projects.each do |p| %>
         
@@ -1476,7 +1493,7 @@ $(document).ready(function(){
           $.ajax({
   
               // url: "http://tkbinfo-horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
-              url: "http://tkbinfo.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
+              url: "http://tgcloud.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
 
               //force to handle it as text
               dataType: "text",
@@ -1525,180 +1542,104 @@ $(document).ready(function(){
         $("navhide").hide();
     });
 
-    $('#calendar').fullCalendar({
-
-        now: '<%= DateTime.now %>',
-
-        allDaySlot: false,
-
-        timeFormat: 'H(:mm)',
-
-        defaultView: 'basicWeek',
-
-        defaultView: 'basicDay',
-
-        defaultView: 'basicWeek',
-
-        defaultView: 'listYear',
-
-        defaultView: 'month',
-
-        defaultView: 'agendaWeek',
-
-        slotDuration: '1:00:00',
-
-        contentHeight: 'auto',
-
-        <% if @mobject.time_from and @mobject.time_to %>
-
-          minTime: '<%= @mobject.time_from %>:00',
-
-          maxTime: '<%= @mobject.time_to %>:00',
-
-        <% end %>
-
-        textColor: 'white',
-
-        firstDay: 1,
-
-        weekNumbers: true,
-
-        events: [<%= raw @array %> ]
-
-    });
-
-    
+    <% if @topic == "kalenderveranstaltungen" %>
+      $('#calendar').fullCalendar({
+          now: '<%= DateTime.now %>',
+          allDaySlot: false,
+          timeFormat: 'H(:mm)',
+          defaultView: 'basicWeek',
+          defaultView: 'basicDay',
+          defaultView: 'basicWeek',
+          defaultView: 'listYear',
+          defaultView: 'month',
+          defaultView: 'agendaWeek',
+          slotDuration: '1:00:00',
+          contentHeight: 'auto',
+          <% if @mobject.time_from and @mobject.time_to %>
+            minTime: '<%= @mobject.time_from %>:00',
+            maxTime: '<%= @mobject.time_to %>:00',
+          <% end %>
+          textColor: 'white',
+          firstDay: 1,
+          weekNumbers: true,
+          events: [<%= raw @array %> ]
+      });
+    <% end %>
 
     $("a").tooltip();
-
-    
-
     $('.owl-show').owlCarousel({  
-
-      
-
       itemsCustom : false,
-
       itemsDesktop : [1199,4],
-
       itemsDesktopSmall : [980,3],
-
       itemsTablet: [768,2],
-
       itemsTabletSmall: false,
-
       itemsMobile : [479,1],
-
       autoPlay: true
-
-      
-
     });
 
     function init_map(index) {
 
         var latitudes = [<%= @mobject.latitude %>];
-
         var longitudes = [<%= @mobject.longitude %>];
-
         var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
-
         var mapOptions = {
-
             center: myLocation,
-
             zoom: 16
-
         };
-
         var marker = new google.maps.Marker({
-
             position: myLocation,
-
             title: "Property Location"
-
         });
-
         var map = new google.maps.Map(document.getElementById("map"),mapOptions);
-
         marker.setMap(map);
-
     }
 
-    
-
-    google.charts.setOnLoadCallback(drawChartA);
-
-    function drawChartA() {
-
-      var data = google.visualization.arrayToDataTable([
-
-        ['Datum', 'Anzahl'],
-
-        <%= raw @anz_s %>
-
-      ]);
-
-      var options = {
-
-        title: "<% I18n.t :cfanzahl %>",
-
-        curveType: 'function',
-
-        colors: ['#ACC550'],
-
-        legend: { position: 'bottom' }
-
-      };
-
-      var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
-
-      chart.draw(data, options);
-
-    }
-
-    
-
-    google.charts.setOnLoadCallback(drawChartB);
-
-    function drawChartB() {
-
-      var data = google.visualization.arrayToDataTable([
-
-        ['Datum', 'Betrag'],
-
-        <%= raw @bet_s %>
-
-      ]);
-
-      var options = {
-
-        title: "<% I18n.t :cfbetrag %>",
-
-        curveType: 'function',
-
-        colors: ['#ACC550'],
-
-        legend: { position: 'bottom' }
-
-      };
-
-      var chart = new google.visualization.LineChart(document.getElementById('curve_chart2'));
-
-      chart.draw(data, options);
-
-    }
-
-    
+    <% if @topic == "objekte_crowdfunding" %>
+      google.charts.setOnLoadCallback(drawChartA);
+      function drawChartA() {
+        var data = google.visualization.arrayToDataTable([
+          ['Datum', 'Anzahl'],
+          <%= raw @anz_s %>
+        ]);
+        var options = {
+          title: "<% I18n.t :cfanzahl %>",
+          curveType: 'function',
+          colors: ['#ACC550'],
+          legend: { position: 'bottom' }
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+        chart.draw(data, options);
+      }
+  
+      google.charts.setOnLoadCallback(drawChartB);
+      function drawChartB() {
+        var data = google.visualization.arrayToDataTable([
+          ['Datum', 'Betrag'],
+          <%= raw @bet_s %>
+        ]);
+        var options = {
+          title: "<% I18n.t :cfbetrag %>",
+          curveType: 'function',
+          colors: ['#ACC550'],
+          legend: { position: 'bottom' }
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+        chart.draw(data, options);
+      }
+      
+    <% end %>
 
 });
 
 </script>
 
+<script>
+<% case @topic %>
+  <% when "objekte_info" %>
+      document.addEventListener("turbolinks:load", function() {init_map(0);})
 
+  <% when "objekte_auftragscontrolling" %>
+      document.addEventListener("turbolinks:load", function() {drawChartallkum(); drawChartall(); drawChartuser();})
 
-<!--<script>-->
-
-<!--  document.addEventListener("turbolinks:load", function() {init_map(0); drawChart1(); drawChart2(); owlCarousel()})-->
-
-<!--</script>-->
+<% end %>
+</script>

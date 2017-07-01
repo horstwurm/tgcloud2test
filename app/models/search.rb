@@ -43,7 +43,7 @@ class Search < ActiveRecord::Base
         sql_string[0] ="active=?"
         sql_string << true
         case self.search_domain
-        when "Privatpersonen", "Tickets"
+        when "personen", "tickets"
             sql_string[0] = sql_string[0] + " and anonymous=?"
             sql_string << false
             if self.age_from != nil and self.age_from > 0
@@ -74,7 +74,7 @@ class Search < ActiveRecord::Base
                 end
                 sql_string << uli
             end
-            if self.search_domain == "Tickets"
+            if self.search_domain == "tickets"
                 if self.customer
                     sql_string[0] = sql_string[0] + " and id IN (?)"
                     cid = Ticket.find(self.ticket_id).msponsor.company.id
@@ -90,7 +90,7 @@ class Search < ActiveRecord::Base
             self.counter = User.where(sql_string).count
             self.sql_string = sql_string
 
-        when "Institutionen"
+        when "institutionen"
             if self.mcategory_id != "" and self.mcategory_id != nil and self.mcategory_id.to_s.length != 0
                 sql_string[0] = sql_string[0] + " and mcategory_id=?"
                 sql_string << self.mcategory_id
@@ -112,14 +112,14 @@ class Search < ActiveRecord::Base
             self.counter = Company.where(sql_string).count
             self.sql_string = sql_string
 
-        when "Objekte"
+        when "objekte"
             case self.mtype
-                when "Angebote"
+                when "angebote"
                     if self.social == true
                         sql_string[0] = sql_string[0] + " and social=?"
                         sql_string << true
                     end
-                    if msubtype == "Aktion"
+                    if msubtype == "aktion"
                         if self.date_from != nil and self.date_to != nil
                             sql_string[0] = sql_string[0] + " and ((date_from >=?"
                             sql_string << self.date_from
@@ -132,41 +132,19 @@ class Search < ActiveRecord::Base
                         end
                     end
 
-                when "Vermietungen"
+                when "vermietungen"
                     if self.mcategory_id != "" and self.mcategory_id != nil and self.mcategory_id.to_s.length != 0
                         sql_string[0] = sql_string[0] + " and mcategory_id=?"
                         sql_string << self.mcategory_id
                     end
 
-                when "Publikationen", "Artikel"
+                when "publikationen", "artikel"
                     if self.mcategory_id != "" and self.mcategory_id != nil and self.mcategory_id.to_s.length != 0
                         sql_string[0] = sql_string[0] + " and mcategory_id=?"
                         sql_string << self.mcategory_id
                     end
 
-                when "Ausschreibungen"
-                    if self.mcategory_id != "" and self.mcategory_id != nil and self.mcategory_id.to_s.length != 0
-                        sql_string[0] = sql_string[0] + " and mcategory_id=?"
-                        sql_string << self.mcategory_id
-                    end
-                    if self.date_from != nil and self.date_to != nil
-                        sql_string[0] = sql_string[0] + " and ((date_from >=?"
-                        sql_string << self.date_from
-                        sql_string[0] = sql_string[0] + " and date_to <=?)"
-                        sql_string << self.date_to
-                        sql_string[0] = sql_string[0] + " or (date_from >=?"
-                        sql_string << self.date_from
-                        sql_string[0] = sql_string[0] + " and date_to <=?))"
-                        sql_string << self.date_to
-                    end
-
-                when "Stellenanzeigen", "Umfragen", "Projekte"
-                    if self.mcategory_id != "" and self.mcategory_id != nil and self.mcategory_id.to_s.length != 0
-                        sql_string[0] = sql_string[0] + " and mcategory_id=?"
-                        sql_string << self.mcategory_id
-                    end
-
-                when "Veranstaltungen"
+                when "ausschreibungen"
                     if self.mcategory_id != "" and self.mcategory_id != nil and self.mcategory_id.to_s.length != 0
                         sql_string[0] = sql_string[0] + " and mcategory_id=?"
                         sql_string << self.mcategory_id
@@ -182,13 +160,35 @@ class Search < ActiveRecord::Base
                         sql_string << self.date_to
                     end
 
-                when "Ausflugsziele"
+                when "stellenanzeigen", "umfragen", "projekte"
                     if self.mcategory_id != "" and self.mcategory_id != nil and self.mcategory_id.to_s.length != 0
                         sql_string[0] = sql_string[0] + " and mcategory_id=?"
                         sql_string << self.mcategory_id
                     end
 
-                when "Kleinanzeigen"
+                when "veranstaltungen"
+                    if self.mcategory_id != "" and self.mcategory_id != nil and self.mcategory_id.to_s.length != 0
+                        sql_string[0] = sql_string[0] + " and mcategory_id=?"
+                        sql_string << self.mcategory_id
+                    end
+                    if self.date_from != nil and self.date_to != nil
+                        sql_string[0] = sql_string[0] + " and ((date_from >=?"
+                        sql_string << self.date_from
+                        sql_string[0] = sql_string[0] + " and date_to <=?)"
+                        sql_string << self.date_to
+                        sql_string[0] = sql_string[0] + " or (date_from >=?"
+                        sql_string << self.date_from
+                        sql_string[0] = sql_string[0] + " and date_to <=?))"
+                        sql_string << self.date_to
+                    end
+
+                when "ausflugsziele"
+                    if self.mcategory_id != "" and self.mcategory_id != nil and self.mcategory_id.to_s.length != 0
+                        sql_string[0] = sql_string[0] + " and mcategory_id=?"
+                        sql_string << self.mcategory_id
+                    end
+
+                when "kleinanzeigen"
                     if self.social == true
                         sql_string[0] = sql_string[0] + " and social=?"
                         sql_string << true
@@ -198,7 +198,7 @@ class Search < ActiveRecord::Base
                         sql_string << self.mcategory_id
                     end
 
-                when "Crowdfunding"
+                when "crowdfunding"
                     if self.amount_from_target != nil and self.amount_from_target > 0 
                         sql_string[0] = sql_string[0] + " and amount >=?"
                         sql_string << self.amount_from_target
@@ -248,7 +248,7 @@ def find_keywords(sql_string, domain, keywords)
 if keywords != nil and keywords != ""
     sql_string[0] = sql_string[0] + " and ("
     case domain
-        when "Privatpersonen", "Tickets"
+        when "personen", "tickets"
             sql_string[0] = sql_string[0] + like_token("lastname",keywords)
             keywords.split.each do |t| 
                 sql_string << "%"+t+"%"
@@ -258,7 +258,7 @@ if keywords != nil and keywords != ""
             keywords.split.each do |t| 
                 sql_string << "%"+t+"%"
             end
-        when "Angebote", "Aktionen", "Mobilien", "Kleinanzeigen", "Sehenswuerdigkeiten", "Spendeninitiativen", "Rewardinitiativen", "Kreditinitiativen"
+        when "angebote", "aktionen", "mobilien", "kleinanzeigen", "sehenswuerdigkeiten", "spendeninitiativen", "rewardinitiativen", "kreditinitiativen"
             sql_string[0] = sql_string[0] + like_token("name",keywords)
             keywords.split.each do |t| 
                 sql_string << "%"+t+"%"
@@ -273,7 +273,7 @@ if keywords != nil and keywords != ""
             keywords.split.each do |t| 
                 sql_string << "%"+t+"%"
             end
-        when "Institutionen", "Stellenanzeigen"
+        when "institutionen", "stellenanzeigen"
             sql_string[0] = sql_string[0] + like_token("name",keywords)
             keywords.split.each do |t| 
                 sql_string << "%"+t+"%"

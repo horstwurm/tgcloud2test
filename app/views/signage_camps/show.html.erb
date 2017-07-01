@@ -1,6 +1,6 @@
 <div class="row">
     <action>
-    <%= action_buttons2("Kampagnen", @signage_camp, @topic) %>
+    <%= action_buttons2(:dskampagnen, @signage_camp, @topic) %>
     </action> 
 </div>
 
@@ -9,7 +9,7 @@
     <%= header("<navshow><i class='glyphicon glyphicon-menu-down'></i></navshow> " + @signage_camp.name + "<navhide><i class='glyphicon glyphicon-menu-up pull-right'></i></navhide>", true) %>
     <nav>
       <div class='col-xs-12'>
-          <%= navigate("Kampagnen", @signage_camp) %>
+          <%= navigate("dskampagnen", @signage_camp) %>
       </div>
     </nav>
     </header>
@@ -47,8 +47,8 @@
             <%= build_medialist2(@signage_camp.signages, "signages", nil) %>
           </div>
 
-        <% when "Standorte" %>
-          <%= header("Standorte", false) %>
+        <% when :dsstandorte %>
+          <%= header(:dsstandorte, false) %>
           <!--<div class="panel-body">-->
           <!--  <%= build_medialist2(@signage_camp.signage_cals, "signage_cals", nil) %>-->
           <!--</div>-->

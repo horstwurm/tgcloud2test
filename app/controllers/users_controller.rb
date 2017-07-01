@@ -24,7 +24,7 @@ class UsersController < ApplicationController
       end
       @ut.save
     end
-    redirect_to user_path(:id => @ut.user_id, :topic => "Tickets"), notice: 'Ticketstatus successfully updated '  
+    redirect_to user_path(:id => @ut.user_id, :topic => :personen_tickets), notice: 'Ticketstatus successfully updated '  
   end
   
   def index
@@ -56,13 +56,13 @@ class UsersController < ApplicationController
   def show
     
    if params[:topic]
-     @topic = params[:topic].to_sym
+     @topic = params[:topic]
    else 
-     @topic = :info
+     @topic = "personen_info"
    end 
 
     case @topic
-      when :info
+      when "personen_info"
 
         @locs = []
         @wins = []
@@ -79,8 +79,14 @@ class UsersController < ApplicationController
             @wins << ["<h3> keine weiteren Positionen gespeichert </h3>" + @user.geo_address ]
           end
 
-        @stats = [["Aktivtät","Anzahl"]]
+        @stats = [["Aktivtäten","Anzahl"]]
         @stats << ["Institutionen", @user.companies.count]
+        @stats << ["Projekte/Aufgaben", @user.mobjects.where('mtype=?','projekte').count ]
+        @stats << ["Gruppen", @user.mobjects.where('mtype=?','gruppen').count ]
+        @stats << ["Zeiterfassungen", @user.timetracks.count ]
+        @stats << ["Ressourcenplanungen", @user.plannings.count ]
+
+        if false
         @stats << ["Kalendereinträge", Appointment.where('user_id1=? or user_id2=?',@user.id,@user.id).count]
         @stats << ["Angebote", @user.mobjects.where('mtype=?','angebote').count]
         @stats << ["Ansprechpartner", @user.madvisors.count]
@@ -92,7 +98,6 @@ class UsersController < ApplicationController
         @stats << ["Artikel", @user.mobjects.where('mtype=?','artikel').count ]
         @stats << ["Publikationen", @user.mobjects.where('mtype=?','publikationen').count ]
         @stats << ["Umfragen", @user.mobjects.where('mtype=?','umfragen').count ]
-        @stats << ["Projekte/Tasks", @user.mobjects.where('mtype=?','projekte').count ]
         @stats << ["Innovationswettbewerbe", @user.mobjects.where('mtype=?','innovationswettbewerbe').count ]
         @stats << ["Crowdfunding", @user.mobjects.where('mtype=?','crowdfunding').count ]
         @stats << ["Crowdfunding Beiträge", @user.mstats.count ]
@@ -103,8 +108,9 @@ class UsersController < ApplicationController
         @stats << ["ZV Transaktionen", @user.transactions.where('ttype=?', "payment").count]
         @stats << ["Messages", Email.where('m_to=? or m_from=?', @user.id, @user.id).count ]
         @stats << ["Abfragen", @user.searches.count]
+        end
     
-      when :ressourcenplanung, :zeiterfassung
+      when "personen_ressourcenplanung", "personen_zeiterfassung"
 
         if params[:year]
           @c_year = params[:year]
@@ -175,7 +181,6 @@ class UsersController < ApplicationController
             @c_year = @c_year.to_i - 1
           end
         end
-        
         case @c_mode
           when "Monat"
             @date_start = Date.new(@c_year.to_i,@c_month.to_i,1)
@@ -192,7 +197,24 @@ class UsersController < ApplicationController
         end
         @mymobjects = Mobject.where('mtype=? and id IN (?)',"projekte", myobs)
 
-      when :kalendereintraege
+      when "personen_zugriffsberechtigungen"
+        if params[:credential_id]
+          @c = Credential.find(params[:credential_id])
+          if @c
+            #@c.edit
+            if @c.access
+              @c.access=false
+            else
+              @c.access=true
+            end
+            @c.save
+          end
+        end
+
+      ########################################################################################################################
+      # inactive code
+      #######################################################################################################################
+      when "personen_kalendereintraege"
         if params[:confirm_id]
           @appoint = Appointment.find(params[:confirm_id])
           if @appoint
@@ -207,7 +229,6 @@ class UsersController < ApplicationController
             @appoint.save
           end
         end
-  
         counter = 0 
         @array = ""
         @cals = Appointment.where('user_id1=? and active=?', @user.id, true)
@@ -268,8 +289,7 @@ class UsersController < ApplicationController
           end
         end
 
-      when :favoriten
-
+      when "personen_favoriten"
         @locs = []
         @wins = []
         @favourits = Favourit.where('user_id=? and object_name=?', @user.id, "user") 
@@ -283,20 +303,6 @@ class UsersController < ApplicationController
         if @locs.length == 0
             @locs << ["Adresse", @user.latitude, @user.longitude]
             @wins << ["<h3> keine weiteren Positionen gespeichert </h3>" + @user.geo_address ]
-        end
-
-      when :zugriffsberechtigungen
-        if params[:credential_id]
-          @c = Credential.find(params[:credential_id])
-          if @c
-            #@c.edit
-            if @c.access
-              @c.access=false
-            else
-              @c.access=true
-            end
-            @c.save
-          end
         end
 
     end

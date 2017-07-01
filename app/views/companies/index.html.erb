@@ -11,11 +11,11 @@
     <% if user_signed_in? %>
       <div class='col-xs-12'>
            <div class="panel-body">
-              <%= link_to new_search_path(:user_id => current_user.id, :search_domain => "Institutionen", :controller_name => @controller_name) do %>
+              <%= link_to new_search_path(:user_id => current_user.id, :search_domain => "institutionen", :controller_name => @controller_name) do %>
                   <i class="btn btn-primary glyphicon glyphicon-plus"></i>
               <% end %>
            </div>
-          <% @searches = Search.where('search_domain=? and user_id=?', "Institutionen", current_user.id) %>
+          <% @searches = Search.where('search_domain=? and user_id=?', "institutionen", current_user.id) %>
           <%= build_medialist2(@searches, "searches", nil) %>
       </div>
     <% end %>

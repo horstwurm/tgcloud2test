@@ -98,7 +98,7 @@
                     <i class="btn btn-primary glyphicon glyphicon-plus"></i>
                 <% end %>
              </div>
-             <% @searches = Search.where('search_domain=? and user_id=? and mtype=?', "Objekte", current_user.id, @domain) %>
+             <% @searches = Search.where('search_domain=? and user_id=? and mtype=?', :objekte, current_user.id, @domain) %>
              <%= build_medialist2(@searches, "searches", @domain) %>
         </div>
       <% end %>

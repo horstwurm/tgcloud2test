@@ -5,19 +5,19 @@
         <div class="digg_pagination">
             <% case @mobject.mtype %>
             <% when "angebote" %>
-              <%= link_to(mobject_path(:id => @mobject.id, :topic => :ansprechpartner)) do %>
+              <%= link_to(mobject_path(:id => @mobject.id, :topic => "objekte_ansprechpartner")) do %>
                 <i class="btn btn-primary glyphicon glyphicon-list"></i>
               <% end %>
             <% when "projekte" %>
-              <%= link_to(mobject_path(:id => @mobject.id, :topic => :projektberechtigungen)) do %>
+              <%= link_to(mobject_path(:id => @mobject.id, :topic => "objekte_projektberechtigungen")) do %>
                 <i class="btn btn-primary glyphicon glyphicon-list"></i>
               <% end %>
             <% when "gruppen" %>
-              <%= link_to(mobject_path(:id => @mobject.id, :topic => :gruppenmitglieder)) do %>
+              <%= link_to(mobject_path(:id => @mobject.id, :topic => "objekte_gruppenmitglieder")) do %>
                 <i class="btn btn-primary glyphicon glyphicon-list"></i>
               <% end %>
             <% when "innovationswettbewerbe" %>
-              <%= link_to(mobject_path(:id => @mobject.id, :topic => :jury)) do %>
+              <%= link_to(mobject_path(:id => @mobject.id, :topic => "objekte_jury")) do %>
                 <i class="btn btn-primary glyphicon glyphicon-list"></i>
               <% end %>
             <% end %>
@@ -45,8 +45,8 @@
   		<table class="table table-striped">
         <thead>
           <tr>
-            <th colspan=2>Status</th>
-            <th colspan=3>Person</th>
+            <th colspan=2><%= (I18n.t :status) %></th>
+            <th colspan=3><%= (I18n.t :personen) %></th>
           </tr>
         </thead>
         <tbody>
