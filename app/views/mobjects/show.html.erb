@@ -1494,6 +1494,7 @@ $(document).ready(function(){
   
               // url: "http://tkbinfo-horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
               url: "http://tgpcloud.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
+              // url: "http://tgpcloud.herokuapp.com/home/dashboard_projectdata.json?pid=1",
 
               //force to handle it as text
               dataType: "text",
@@ -1503,7 +1504,7 @@ $(document).ready(function(){
                   //and pass downloaded data
                   var json = $.parseJSON(data);
   
-                  //alert(json[0].id + json[0].kategorie + " " + json[0].summe);
+                  alert(json[0].id + json[0].kategorie + " " + json[0].summe);
 
                   <% @projects.each do |p| %>
                     for (var i=0;i<json.length;++i)
@@ -1641,5 +1642,7 @@ $(document).ready(function(){
   <% when "objekte_auftragscontrolling" %>
       document.addEventListener("turbolinks:load", function() {drawChartallkum(); drawChartall(); drawChartuser();})
 
+  <% when "objekte_projektdashboard" %>
+      document.addEventListener("turbolinks:load", function() {callme();})
 <% end %>
 </script>
