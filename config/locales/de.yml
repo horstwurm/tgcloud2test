@@ -143,6 +143,7 @@ de:
   partnerlinks: "WerbeLinks"
   stundensatz: "Stundensatz"
   meineabfragen: "meine Abfragen"
+  aktivitaeten: "Aktivitäten"
   
   # devise
   email: "eMail"
@@ -156,6 +157,7 @@ de:
   passwordentry: "Passwort eingeben"
   passwordnew: "Passwort neu"
   passwordrepeat: "Passwort wiederholen"
+  notsaved: "Information konnte nicht gespeichert werden"
   
   #buttons
   anmelden: "Anmelden"

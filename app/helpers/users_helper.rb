@@ -2092,19 +2092,19 @@ def build_hauptmenue
     end
 
     domain = "personen"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = users_path(:mtype => nil, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
     
     domain = "institutionen"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = companies_path(:mtype => nil, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
     domain = "projekte"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = mobjects_path(:mtype => domain, :msubtype => "root", :parent => 0)
         html_string = html_string + simple_menue(domain, path)
     end
@@ -2114,67 +2114,67 @@ def build_hauptmenue
     ########################################################################################################################
     if false
     domain = "news"
-    if creds.include?("hauptmenue"+domain) and user_signed_in?
+    if creds.include?("hauptmenue_"+domain) and user_signed_in?
         path = home_index10_path
         html_string = html_string + simple_menue(domain, path)
     end
 
     domain = "vermietungen"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = mobjects_path(:mtype => "vermietungen", :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
     domain = "ausschreibungen"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = mobjects_path(:mtype => domain, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
     domain = "publikationen"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = mobjects_path(:mtype => domain, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
     domain = "artikel"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = mobjects_path(:mtype => "artikel", :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
     domain = "umfragen"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = mobjects_path(:mtype => domain, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
     domain = "innovationswettbewerbe"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = mobjects_path(:mtype => domain)
         html_string = html_string + simple_menue(domain, path)
     end
 
     domain = "veranstaltungen"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = mobjects_path(:mtype => domain, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
     domain = "ausflugsziele"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = mobjects_path(:mtype => domain, :msubtype => nil)
         html_string = html_string + simple_menue(domain, path)
     end
 
     domain = "dsstandorte"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         path = signage_locs_path
         html_string = html_string + simple_menue(domain, path)
     end
     
     domain = "angebote"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         hasharray = []
         domain2 = "standard"
         if creds.include?(domain+domain2)
@@ -2195,17 +2195,17 @@ def build_hauptmenue
     end
 
     domain = "stellenanzeigen"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         hasharray = []
         domain2 = "suchen"
-        if creds.include?("hauptmenue"+domain+domain2)
+        if creds.include?("hauptmenue_"+domain+domain2)
           path = mobjects_path(:mtype => "stellenanzeigen", :msubtype => "suchen")
           hash = Hash.new
           hash = {"path" => path, "text" => (I18n.t :suchen), "icon" => :suchen }
           hasharray << hash
         end
         domain2 = "anbieten"
-        if creds.include?("hauptmenue"+domain+domain2)
+        if creds.include?("hauptmenue_"+domain+domain2)
           path = mobjects_path(:mtype => "stellenanzeigen", :msubtype => "anbieten")
           hash = Hash.new
           hash = {"path" => path, "text" => (I18n.t :anbieten), "icon" => :anbieten }
@@ -2216,17 +2216,17 @@ def build_hauptmenue
     end
 
     domain = "kleinanzeigen"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         hasharray = []
         domain2 = "suchen"
-      if creds.include?("hauptmenue"+domain+domain2)
+      if creds.include?("hauptmenue_"+domain+domain2)
         path = mobjects_path(:mtype => "kleinanzeigen", :msubtype => "suchen")
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :suchen), "icon" => :suchen }
         hasharray << hash
       end
       domain2 = "anbieten"
-      if creds.include?("hauptmenue"+domain+domain2)
+      if creds.include?("hauptmenue_"+domain+domain2)
         path = mobjects_path(:mtype => "kleinanzeigen", :msubtype => "anbieten")
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :anbieten), "icon" => :anbieten }
@@ -2237,24 +2237,24 @@ def build_hauptmenue
     end
 
     domain = "crowdfunding"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
         hasharray = []
         domain2 = "spenden"
-      if creds.include?("hauptmenue"+domain+domain2)
+      if creds.include?("hauptmenue_"+domain+domain2)
         path = mobjects_path(:mtype => "crowdfunding", :msubtype => "spenden")
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :spenden), "icon" => :spenden }
         hasharray << hash
       end
         domain2 = "belohnungen"
-      if creds.include?("hauptmenue"+domain+domain2)
+      if creds.include?("hauptmenue_"+domain+domain2)
         path = mobjects_path(:mtype => "crowdfunding", :msubtype => "belohnungen")
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :belohnungen), "icon" => :belohnungen }
         hasharray << hash
       end
         domain2 = "zinsen"
-      if creds.include?("hauptmenue"+domain+domain2)
+      if creds.include?("hauptmenue_"+domain+domain2)
         path = mobjects_path(:mtype => "crowdfunding", :msubtype => "zinsen")
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :zinsen), "icon" => :zinsen }
@@ -2265,10 +2265,10 @@ def build_hauptmenue
     end
 
     domain = "kalender"
-    if creds.include?("hauptmenue"+domain)
+    if creds.include?("hauptmenue_"+domain)
       hasharray = []
       domain2 = "geburtstage"
-      if creds.include?("hauptmenue"+domain+domain2)
+      if creds.include?("hauptmenue_"+domain+domain2)
         if user_signed_in?
           path = showcal_index_path + "?dom=geburtstage"
           hash = Hash.new
@@ -2277,35 +2277,35 @@ def build_hauptmenue
         end
       end
       domain2 = "aktionen"
-      if creds.include?("hauptmenue"+domain+domain2)
+      if creds.include?("hauptmenue_"+domain+domain2)
         path = showcal_index_path + "?dom=aktionen"
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :aktionen), "icon" => :aktionen }
         hasharray << hash
       end
       domain2 = "ausschreibungen"
-      if creds.include?("hauptmenue"+domain+domain2)
+      if creds.include?("hauptmenue_"+domain+domain2)
         path = showcal_index_path + "?dom=ausschreibungen"
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :ausschreibungen), "icon" => :ausschreibungen }
         hasharray << hash
       end
       domain2 = "veranstaltungen"
-      if creds.include?("hauptmenue"+domain+domain2)
+      if creds.include?("hauptmenue_"+domain+domain2)
         path = showcal_index_path + "?dom=veranstaltungen"
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :veranstaltungen), "icon" => :veranstaltungen }
         hasharray << hash
       end
       domain2 = "stellenanzeigen"
-      if creds.include?("hauptmenue"+domain+domain2)
+      if creds.include?("hauptmenue_"+domain+domain2)
         path = showcal_index_path + "?dom=stellenanzeigen"
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :stellenanzeigen), "icon" => :stellenanzeigen }
         hasharray << hash
       end
       domain = "crowdfunding"
-      if creds.include?("hauptmenue"+domain+domain2)
+      if creds.include?("hauptmenue_"+domain+domain2)
         path = showcal_index_path + "?dom=crowdfunding"
         hash = Hash.new
         hash = {"path" => path, "text" => (I18n.t :crowdfunding), "icon" => :crowdfunding }
