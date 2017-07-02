@@ -1296,33 +1296,30 @@ def showImage2(size, item, linkit)
     if linkit
       html_string = link_to(item) do
         if item.avatar_file_name
-            #image_tag(item.avatar(size), class:"card-img-top img-responsive")
             image_tag(item.avatar(size), class:"img-responsive")
         else
-          html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
-          # case item.class.name
-          #   when "User"
-          #     image_tag(image_def(:personen, nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
-          #   when "Company"
-          #     image_tag(image_def("institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
-          #   else
-          #     image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
-          # end
+          case item.class.name
+            when "User"
+              image_tag("person.png", :size => size, class:"card-img-top img-responsive" )
+            when "Company"
+              image_tag("company.png", :size => size, class:"card-img-top img-responsive" )
+            else
+              image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive" )
+          end
         end
       end
     else
       if item.avatar_file_name
           html_string = image_tag(item.avatar(size), class:"card-img-top img-responsive")
       else
-        html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
-        # case item.class.name
-        #   when "User"
-        #     html_string = image_tag(image_def(:personen, nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
-        #   when "Company"
-        #     html_string = image_tag(image_def("institutionen", nil, nil), :size => "50x50", class:"card-img-top img-responsive" )
-        #   else
-        #     html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
-        # end
+          case item.class.name
+            when "User"
+              image_tag("person.png", :size => size, class:"card-img-top img-responsive" )
+            when "Company"
+              image_tag("company.png", :size => size, class:"card-img-top img-responsive" )
+            else
+              image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive" )
+          end
       end
     end
     return html_string.html_safe
@@ -2585,7 +2582,7 @@ def init_apps
     @array << hash
 
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "info", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "info", "access" => true, "icon" => "news"}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "personen", "right" => "kalendereintraege", "access" => false, "icon" => "news"}
@@ -2874,7 +2871,7 @@ def init_apps
 
   $activeapps = []
   apps.each do |a|
-    $activeapps << a.domain+a.right if a.access
+    $activeapps << a.domain+"_"+a.right if a.access
   end
   
   return $activeapps
@@ -2899,7 +2896,7 @@ def getUserCreds
   if current_user.superuser
     appparams = Appparam.all
     appparams.each do |a|
-      credapps << a.domain+a.right
+      credapps << a.domain+"_"+a.right
     end
   else  
     creds = current_user.credentials
@@ -2907,8 +2904,8 @@ def getUserCreds
       init_credentials
     end
     creds.each do |c|
-      if $activeapps.include?(c.appparam.domain+c.appparam.right)
-        credapps << c.appparam.domain+c.appparam.right if c.access
+      if $activeapps.include?(c.appparam.domain+"_"+c.appparam.right)
+        credapps << c.appparam.domain+"_"+c.appparam.right if c.access
       end
     end
   end

@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     @users.each do |u|
       if u.longitude and u.latitude and u.geo_address
         @locs << [u.fullname, u.latitude, u.longitude]
-        @wins << ["<img src=" + u.avatar(:small) + "<br><h3>" + u.name + u.lastname + "</h3><p>" + u.geo_address + "</p>"]
+        @wins << ["<img src=" + u.avatar(:small) + "<br><h3>" + u.name + " " + u.lastname + "</h3><p>" + u.geo_address + "</p>"]
       end
     end
     if @locs.length == 0
