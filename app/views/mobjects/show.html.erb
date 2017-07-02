@@ -386,11 +386,11 @@
                <% end %>
 
               <b><%= I18n.t :verantwortlich %></b><br>
-              <%= showImage2(:small, @mobject.owner, true) %><br>
-              <% if @mobject.owner_type == "user" %>
+              <%= showImage2("50x50", @mobject.owner, true) %><br>
+              <% if @mobject.owner_type == "User" %>
                 <%= @mobject.owner.name + " " + @mobject.owner.lastname %>
               <% end %>
-              <% if @mobject.owner_type == "company" %>
+              <% if @mobject.owner_type == "Company" %>
                 <%= @mobject.owner.name %>
               <% end %>
         			<br><br>
@@ -1493,7 +1493,7 @@ $(document).ready(function(){
           $.ajax({
   
               // url: "http://tkbinfo-horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
-              url: "http://tgcloud.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
+              url: "http://tgpcloud.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
 
               //force to handle it as text
               dataType: "text",
