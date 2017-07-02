@@ -1451,6 +1451,7 @@ $(document).ready(function(){
       <% end %>
 
       <% if @topic == "objekte_projektdashboard" %>
+      
         google.charts.load('current', {'packages':['corechart']});
         <% @projects.each do |p| %>
         
@@ -1487,13 +1488,13 @@ $(document).ready(function(){
           }
         <% end %>
 
-        window.setInterval( callme, 15000 );
+        window.setInterval(callme, 15000 );
 
         function callme() {
           $.ajax({
   
               // url: "http://tkbinfo-horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
-              url: "http://tgpcloud.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
+              url: "https://tgpcloud.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
               // url: "http://tgpcloud.herokuapp.com/home/dashboard_projectdata.json?pid=1",
 
               //force to handle it as text
