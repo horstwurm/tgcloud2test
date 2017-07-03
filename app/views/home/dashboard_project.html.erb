@@ -129,7 +129,7 @@ $(document).ready(function(){
                           google.charts.setOnLoadCallback(costfunc<%= p.id %>);
                         }
                         if (json[i].kategorie == "aufwand") {
-                          $("#effort<%= p.id  %>").text( parseInt( (json[i].summe)/8.5) + " PT");
+                          $("#effort<%= p.id  %>").text( parseInt( (json[i].summe)/8) + " PT");
                           effortdataset_<%= p.id %>.push([Date(), json[i].summe]);
                           google.charts.setOnLoadCallback(effortfunc<%= p.id %>);
                         }

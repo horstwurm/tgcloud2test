@@ -92,7 +92,7 @@ class TimetracksController < ApplicationController
     end
     @timetrack.datum=Date.today.strftime('%Y-%m-%d')
     if @timetrack.costortime == "aufwand"
-      @timetrack.amount = 8.5
+      @timetrack.amount = 8.0
       @timetrack.activity = "Aktivität..."
     end
     if @timetrack.costortime == "kosten"
@@ -168,7 +168,7 @@ class TimetracksController < ApplicationController
         @mobject.sum_pkosten_ist = @mobject.timetracks.where('costortime=?',"kosten").sum(:amount)
       end
       if @timetrack.costortime == "aufwand"
-        @mobject.sum_paufwand_ist = @mobject.timetracks.where('costortime=?',"aufwand").sum(:amount)/8.5
+        @mobject.sum_paufwand_ist = @mobject.timetracks.where('costortime=?',"aufwand").sum(:amount)/8
       end 
       @mobject.save
     end

@@ -4,7 +4,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading header">
                 <li_header>
-                <%= link_to mobject_path(:id => @mdetail.mobject_id, :topic => "Details") do %>
+                <%= link_to mobject_path(:id => @mdetail.mobject_id, :topic => "objekte_details") do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
                   <%= I18n.t :details %><%= @mdetail.mobject.name %>

@@ -2686,11 +2686,11 @@ def init_apps
     hash = {"domain" => "personen", "right" => "mappositionenfavoriten", "access" => false, "icon" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "aktivitaeten", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "aktivitaeten", "access" => true, "icon" => "news"}
     @array << hash
 
     hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "info", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "info", "access" => true, "icon" => "news"}
     @array << hash
     hash = Hash.new
     hash = {"domain" => "institutionen", "right" => "angebote", "access" => false, "icon" => "news"}

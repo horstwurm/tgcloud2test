@@ -659,7 +659,7 @@
                             <% ist = t.sum %>
                           <% end %>
                           <% if @c_scope == "aufwand" %>
-                            <% ist = t.sum / 8.5 %>
+                            <% ist = t.sum / 8 %>
                           <% end %>
                           <% h = {:monat => t.gdate[5,2], :kapa => ist.to_f } %>
                           <% tts << h %>
@@ -965,7 +965,7 @@
                   <% h = [@range[i], ist, (plan * 170) / 100] %>
                 <% end %>
                 <% if @c_scope == "kosten" %>
-                  <% h = [@range[i], ist, soll] %>
+                  <% h = [@range[i], ist, plan] %>
                 <% end %>
                 <% @istsoll << h %>
 
@@ -1097,18 +1097,17 @@
                             <% h = [@user.id, @range[i], ist, (plan * 170) / 100] %>
                           <% end %>
                           <% if @c_scope == "kosten" %>
-                            <% h = [@user.id, @range[i], ist, soll] %>
+                            <% h = [@user.id, @range[i], ist, plan] %>
                           <% end %>
                           
                           <% @istsollall << h %>
                           <% @istsollallgraph << h[1..3] %>
           
                       <% end %>
-
-                      <% @iso << @istsollallgraph %>
-                      <% @isoall << @istsollall %>
-                                
-                      <div id="<%="chart" + (@iso.length-1).to_s %>"></div>
+                      
+                      <% @isoall << @istsollallgraph %>
+                      
+                      <div id="<%="chart" + (@isoall.length-1).to_s %>"></div>
 
                     </div>
                   </div>
@@ -1362,10 +1361,10 @@ $(document).ready(function(){
           chart.draw(data, options);
         };
 
-       <% for i in 0..@iso.length-1 do %>
+       <% for i in 0..@isoall.length-1 do %>
             google.charts.setOnLoadCallback(drawChart<%= i.to_s %>);
             function drawChart<%= i.to_s %>() {
-              var data = google.visualization.arrayToDataTable(<%= raw @iso[i] %>);
+              var data = google.visualization.arrayToDataTable(<%= raw @isoall[i] %>);
               var options = {
                 <% if @c_scope == "aufwand" %>
                   title: "<%= I18n.t :rapportiertestundenuser %>",
@@ -1517,7 +1516,7 @@ $(document).ready(function(){
                           google.charts.setOnLoadCallback(costfunc<%= p.id %>);
                         }
                         if (json[i].kategorie == "aufwand") {
-                          $("#effort<%= p.id  %>").text( parseInt( (json[i].summe)/8.5) + " PT");
+                          $("#effort<%= p.id  %>").text( parseInt( (json[i].summe)/8) + " PT");
                           effortdataset_<%= p.id %>.push([Date(), json[i].summe]);
                           google.charts.setOnLoadCallback(effortfunc<%= p.id %>);
                         }
