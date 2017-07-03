@@ -1281,12 +1281,20 @@ def showFirstImage2(size, item, details)
         if pic.avatar_file_name
           image_tag pic.avatar(size), class:"img-rounded img-responsive"
         else
-          image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
-          #image_tag(image_def(:objekte, item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
+          case item.mtype
+            when "projekte"
+              image_tag("project.png", :size => "50x50", class:"card-img-top img-responsive")
+            else
+              image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
+            end
         end
       else
-        image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
-        #image_tag(image_def(:objekte, item.mtype, item.msubtype), :size => "50x50", class:"card-img-top img-responsive" )
+        case item.mtype
+          when "projekte"
+            image_tag("project.png", :size => "50x50", class:"card-img-top img-responsive")
+          else
+            image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
+          end
       end
     end
     return html_string.html_safe
@@ -1300,11 +1308,11 @@ def showImage2(size, item, linkit)
         else
           case item.class.name
             when "User"
-              image_tag("person.png", :size => size, class:"card-img-top img-responsive" )
+              image_tag("person.png", :size => "50x50", class:"card-img-top img-responsive" )
             when "Company"
-              image_tag("company.png", :size => size, class:"card-img-top img-responsive" )
+              image_tag("company.png", :size => "50x50", class:"card-img-top img-responsive" )
             else
-              image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive" )
+              image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
           end
         end
       end

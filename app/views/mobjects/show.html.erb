@@ -386,7 +386,7 @@
                <% end %>
 
               <b><%= I18n.t :verantwortlich %></b><br>
-              <%= showImage2("50x50", @mobject.owner, true) %><br>
+              <%= showImage2(:small, @mobject.owner, true) %><br>
               <% if @mobject.owner_type == "User" %>
                 <%= @mobject.owner.name + " " + @mobject.owner.lastname %>
               <% end %>
