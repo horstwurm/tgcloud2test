@@ -407,7 +407,7 @@
 
         <% when "objekte_details" %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.mdetails.where('mtype=?', "details"), "mdetails", nil) %>
+            <%= build_medialist2(@mobject.mdetails, "mdetails", nil) %>
           </div>
 
         <% when "objekte_umfrageteilnehmer" %>

@@ -1318,16 +1318,16 @@ def showImage2(size, item, linkit)
       end
     else
       if item.avatar_file_name
-          html_string = image_tag(item.avatar(size), class:"card-img-top img-responsive")
+          image_tag(item.avatar(size), class:"img-responsive")
       else
-          case item.class.name
-            when "User"
-              image_tag("person.png", :size => size, class:"card-img-top img-responsive" )
-            when "Company"
-              image_tag("company.png", :size => size, class:"card-img-top img-responsive" )
-            else
-              image_tag("no_pic.jpg", :size => size, class:"card-img-top img-responsive" )
-          end
+        case item.class.name
+          when "User"
+            html_string = image_tag("person.png", :size => "50x50", class:"card-img-top img-responsive" )
+          when "Company"
+            html_string = image_tag("company.png", :size => "50x50", class:"card-img-top img-responsive" )
+          else
+            html_string = image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
+        end
       end
     end
     return html_string.html_safe
