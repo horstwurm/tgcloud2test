@@ -79,6 +79,12 @@
         <% when "institutionen_projekte" %>
           <%= build_medialist2(@company.mobjects.where('mtype=? and parent=?',"projekte",0), "mobjects", nil) %>
 
+        <% when "institutionen_kampagnen" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"kampagnen"),"mobjects", nil) %>
+
+        <% when "institutionen_standorte" %>
+          <%= build_medialist2(@company.mobjects.where('mtype=?',"standorte"), "mobjects", nil) %>
+
         <% when "institutionen_partnerlinks" %>
           <div class="panel-body">
             <% @company.partner_links.each do |pl| %>

@@ -1318,7 +1318,7 @@ def showImage2(size, item, linkit)
       end
     else
       if item.avatar_file_name
-          image_tag(item.avatar(size), class:"img-responsive")
+          html_string = image_tag(item.avatar(size), class:"img-responsive")
       else
         case item.class.name
           when "User"
@@ -1410,6 +1410,8 @@ def navigate(object,item)
         if item.partner
           html_string = html_string + build_nav("institutionen",item,"institutionen_partnerlinks", item.partner_links.count > 0)
         end
+        html_string = html_string + build_nav("institutionen",item,"institutionen_kampagnen", item.mobjects.where('mtype=?',"kampagnen").count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_standorte", item.mobjects.where('mtype=?',"standorte").count > 0)
 
         ########################################################################################################################
         # inactive code
@@ -1643,7 +1645,7 @@ def action_buttons2(object_type, item, topic)
             content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
           end
           if user_signed_in?
-            if $activeapps.include?("institutionenfavoriten")
+            if $activeapps.include?("institutionen_favoriten")
               html_string = html_string + link_to(new_favourit_path(:object_name => "Company", :object_id => item.id, :user_id => current_user.id)) do
                 content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
               end
@@ -1659,7 +1661,7 @@ def action_buttons2(object_type, item, topic)
             html_string = html_string + link_to(new_webmaster_path(:object_name => "Company", :object_id => item.id, :user_id => current_user.id), title: (I18n.t :missbrauchmelden), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
               content_tag(:i, nil, class: "btn btn-warning pull-right glyphicon glyphicon-eye-open")
             end
-            if $activeapps.include?("institutionentransaktionen")
+            if $activeapps.include?("institutionen_transaktionen")
               html_string = html_string + link_to(listaccount_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => item.id, :ref => (I18n.t :verguetungan)+item.name, :object_name => "Company", :object_id => item.id, :amount => nil) do
                 content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-primary glyphicon glyphicon-plus")
               end
@@ -1671,7 +1673,7 @@ def action_buttons2(object_type, item, topic)
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
 
-        when "institutionen_vermietungen", "institutionen_veranstaltungen", "institutionen_ausflugsziele", "institutionen_ausschreibungen", "institutionen_publikationen", "institutionen_umfragen", "institutionen_projekte", "institutionen_innovationswettbewerbe"
+        when "institutionen_kampagnen", "institutionen_standorte", "institutionen_vermietungen", "institutionen_veranstaltungen", "institutionen_ausflugsziele", "institutionen_ausschreibungen", "institutionen_publikationen", "institutionen_umfragen", "institutionen_projekte", "institutionen_innovationswettbewerbe"
           html_string = html_string + link_to(new_mobject_path :company_id => item.id, :mtype => subtopic(topic), :msubtype => nil) do
             content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class: "btn btn-special glyphicon glyphicon-plus")
           end
@@ -2046,7 +2048,7 @@ def getIcon2(topic)
       icon = "envelope"
     when :zugriffsberechtigungen, :projektberechtigungen
       icon = "lock"
-    when :dskampagnen
+    when :kampagnen, :dskampagnen
       icon = "bullhorn"
     when :dsstandorte
       icon = "blackboard"

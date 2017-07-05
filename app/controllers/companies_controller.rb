@@ -40,6 +40,8 @@ class CompaniesController < ApplicationController
 
     @stats = [["Aktivtäten","Anzahl"]]
     @stats << ["Projekte/Tasks", @company.mobjects.where('mtype=?','projekte').count ]
+    @stats << ["Werbekampagnen", @company.mobjects.where('mtype=?','kampagnen').count ]
+    @stats << ["Werbestandorte", @company.mobjects.where('mtype=?','standorte').count ]
     @stats << ["Partnerlinks", @company.partner_links.count ]
 
     if false
