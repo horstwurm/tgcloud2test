@@ -30,10 +30,10 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        if @comment.mobject.mtype == "Artikel"
-          @topic = "Info"
+        if @comment.mobject.mtype == "artikel"
+          @topic = "info"
         else
-          @topic = "Blog"
+          @topic = "blog"
         end
         format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => @topic), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @comment }
@@ -49,10 +49,10 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        if @mrating.mobject.mtype == "Artikel"
-          @topic = "Info"
+        if @mrating.mobject.mtype == "artikel"
+          @topic = "info"
         else
-          @topic = "Blog"
+          @topic = "blog"
         end
         format.html { redirect_to mobject_path(:id => @comment.mobject_id, :topic => @topic), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @comment }
@@ -67,10 +67,10 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @mobject_id = @comment.mobject_id
-    if @mrating.mobject.mtype == "Artikel"
-      @topic = "Info"
+    if @mrating.mobject.mtype == "artikel"
+      @topic = "info"
     else
-      @topic = "Blog"
+      @topic = "blog"
     end
     @comment.destroy
     respond_to do |format|

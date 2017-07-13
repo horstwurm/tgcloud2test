@@ -20,7 +20,7 @@ class MdetailsController < ApplicationController
       @mdetail.mtype = "details"
     end
     @mdetail.textoptions = "text"
-    @mdetail.sequence = 0
+    @mdetail.sequence = @mdetail.mobject.mdetails.count
     
   end
 

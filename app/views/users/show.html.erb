@@ -541,7 +541,7 @@
         <% when "personen_bewertungen" %>
           <%= build_medialist2(@user.mratings, "mratings", "objekte") %>
         <% when "personen_anmeldungen" %>
-          <%= build_medialist2(@user.participants, "participants", "objekte") %>
+          <%= build_medialist2(@user.madvisors.where('role=?',"eventteilnehmer"), "madvisors", "objekte") %>
   
         <% when "personen_kalendereintraege" %>
           <div id='calendar'></div>
@@ -832,14 +832,7 @@
               <%= header((I18n.t :objekte), true) %>
           </div>
           <%= build_kachel_access("objekte", "user", @user) %>
-          <div class="row">
-              <%= header((I18n.t :dskampagnen), true) %>
-          </div>
-          <%= build_kachel_access("dskampagnen", "user", @user) %>
-          <div class="row">
-              <%= header((I18n.t :dsstandorte), true) %>
-          </div>
-  
+
     	 <% when "personen_transaktionen" %>
           <%= build_kachel_access("dsstandorte", "user", @user) %>
           <div class="panel-body">

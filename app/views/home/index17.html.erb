@@ -31,14 +31,14 @@ $(document).ready(function(){
 
   <% @questionaire.questions.each do |q| %>
   
-    <% if q.mcategory.name == "Multiple" or q.mcategory.name == "Single" %>
+    <% if q.mcategory.name == "multiple" or q.mcategory.name == "single" %>
       window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
       <% q.answers.each do |qa| %>
         dataset<%= q.id.to_s %>.push(['<%= qa.name %>', <%= qa.user_answers.where('checker=?',true).count %>]);
       <% end %>
     <% end %>
 
-    <% if q.mcategory.name == "Numerisch" %>
+    <% if q.mcategory.name == "numerisch" %>
       window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
       <% q.answers.each do |qa| %>
         dataset<%= q.id.to_s %>.push(['Minimum', <%= qa.user_answers.minimum(:num) %>]);
@@ -47,7 +47,7 @@ $(document).ready(function(){
       <% end %>
     <% end %>
 
-    <% if q.mcategory.name == "Text" %>
+    <% if q.mcategory.name == "text" %>
       window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
       <% q.answers.each do |qa| %>
         dataset<%= q.id.to_s %>.push(['kein Text angegeben', <%= qa.user_answers.where('description=?',"").count %>]);

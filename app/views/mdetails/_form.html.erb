@@ -28,14 +28,14 @@
                   <div class="form-group">
                      <%= f.file_field :avatar, class:"form-control" %>
                   </div>
-                  <% if @mdetail.mobject.mtype == "Artikel" %>
+                  <% if @mdetail.mobject.mtype == "artikel" %>
                       <%= f.label I18n.t :textoptionen %>
-                      <%= f.radio_button :textoptions, "Text" %> <%= I18n.t :text %><br>
-                      <%= f.radio_button :textoptions, "Link" %> <%= I18n.t :link %><br>
-                      <%= f.radio_button :textoptions, "Zitat" %> <%= I18n.t :zitat %><br>
-                      <%= f.radio_button :textoptions, "Abstimmung" %> <%= I18n.t :abstimmung %><br>                      
-                      <%= f.radio_button :textoptions, "Bewertung" %> <%= I18n.t :bewertung %><br>
-                      <%= f.radio_button :textoptions, "Blog" %> <%= I18n.t :blog %><br>
+                      <%= f.radio_button :textoptions, "text" %> <%= I18n.t :text %><br>
+                      <%= f.radio_button :textoptions, "link" %> <%= I18n.t :link %><br>
+                      <%= f.radio_button :textoptions, "zitat" %> <%= I18n.t :zitat %><br>
+                      <%= f.radio_button :textoptions, "abstimmung" %> <%= I18n.t :abstimmung %><br>                      
+                      <%= f.radio_button :textoptions, "bewertung" %> <%= I18n.t :bewertung %><br>
+                      <%= f.radio_button :textoptions, "blog" %> <%= I18n.t :blog %><br>
                   <% end %>
                   <br>
                   <div class="form-group">

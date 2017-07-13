@@ -15,7 +15,7 @@
             <div class="col-md-6">
               <div class="panel panel-heading header">
               <li_header>
-                <%= link_to mobject_path(:id => @question.mobject_id, :topic => :fragen) do %>
+                <%= link_to mobject_path(:id => @question.mobject_id, :topic => "objekte_fragen") do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
                 <%= @question.mobject.mtype.upcase %>

@@ -9,7 +9,6 @@ has_many :madvisors, dependent: :destroy
 has_many :mcalendars, dependent: :destroy
 has_many :mstats, dependent: :destroy
 has_many :msponsors, dependent: :destroy
-has_many :participants, dependent: :destroy
 has_many :tickets, as: :owner, dependent: :destroy 
 has_many :comments, dependent: :destroy 
 has_many :editions, dependent: :destroy 

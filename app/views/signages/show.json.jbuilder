@@ -1,1 +1,0 @@
-json.partial! "signages/signage", signage: @signage

@@ -11,16 +11,18 @@ class MobjectsController < ApplicationController
     @controller_name = controller_name
     
     if params[:set_part_id]
-      @anmeldung = current_user.participants.where('mobject_id=?', params[:set_part_id]).first
+      @anmeldung = current_user.madvisors.where('mobject_id=? and role=?', params[:set_part_id],"eventteilnehmer").first
       if !@anmeldung
-        @participant = Participant.new
-        @participant.user_id = current_user.id
-        @participant.mobject_id = params[:set_part_id]
-        @participant.save
+        @madvisor = Madvisor.new
+        @madvisor.user_id = current_user.id
+        @madvisor.mobject_id = params[:set_part_id]
+        @madvisor.role = "eventteilnehmer"
+        @madvisor.grade = "Teilnehmer"
+        @madvisor.save
       end
     end
     if params[:del_part_id]
-      @anmeldung = current_user.participants.where('mobject_id=?', params[:del_part_id]).first
+      @anmeldung = current_user.madvisors.where('mobject_id=? and role=?', params[:del_part_id], "eventteilnehmer").first
       if @anmeldung
         @anmeldung.destroy
       end
@@ -98,113 +100,75 @@ class MobjectsController < ApplicationController
 
   # GET /mobjects/1
   def show
-    if params[:edition_id]
-      session[:edition_id] = params[:edition_id]
-      @edition_id = params[:edition_id]
-    end
-    if params[:confirm_id]
-      calEntry = Mcalendar.find(params[:confirm_id])
-      if calEntry
-        calEntry.confirmed = true
-        calEntry.save
-      end
-    end
-    if params[:noconfirm_id]
-      calEntry = Mcalendar.find(params[:noconfirm_id])
-      if calEntry
-        calEntry.confirmed = false
-        calEntry.save
-      end
-    end
     if !params[:topic]
       if @mobject.mtype == "publikationen"
-        @topic = "ausgaben"
+        @topic = "objekte_ausgaben"
       else
         @topic = "objekte_info"
       end
     else
       @topic = params[:topic]
     end
-    if false
-    if !session[:cw]
-      session[:cw] = Date.today.cweek.to_i
+
+    if params[:edition_id]
+      session[:edition_id] = params[:edition_id]
+      @edition_id = params[:edition_id]
     end
-    if !session[:year]
-      session[:year] = Date.today.cwyear.to_i
-    end
-    if params[:dir]
-      case params[:dir]
-        when ">"
-          if session[:cw] == 52
-            session[:cw] = 1
-            session[:year] = session[:year].to_i + 1
-          else
-            session[:cw] = session[:cw].to_i + 1
-          end
-        when "<"
-          if session[:cw] == 1
-            session[:cw] = 52
-            session[:year] = session[:year].to_i - 1
-          else
-            session[:cw] = session[:cw].to_i - 1
-          end
+
+    if @topic == "objekte_crowdfunding"
+      @mobjects_anz = Mstat.select("date(created_at) as datum, count(amount) as summe").where('mobject_id = ?', @mobject.id).group("date(created_at)")
+      @mobjects_bet = Mstat.select("date(created_at) as datum, sum(amount) as summe").where('mobject_id = ?', @mobject.id).group("date(created_at)")
+  
+      @anz_s = ""
+      @mobjects_anz.each do |i|
+        @anz_s = @anz_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
       end
-    end
-    @start = Date.commercial(session[:year],session[:cw],1)
-    @calendars = Mcalendar.search(@mobject.id, session[:cw], session[:year]).order(date_from: :asc)
-    @calanz = @calendars.count
+      @anz_s = @anz_s[0, @anz_s.length - 1]    
+  
+      @bet_s = ""
+      @mobjects_bet.each do |i|
+        @bet_s = @bet_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
+      end
+      @bet_s = @bet_s[0, @bet_s.length - 1]
     end
     
-    @mobjects_anz = Mstat.select("date(created_at) as datum, count(amount) as summe").where('mobject_id = ?', @mobject.id).group("date(created_at)")
-    @mobjects_bet = Mstat.select("date(created_at) as datum, sum(amount) as summe").where('mobject_id = ?', @mobject.id).group("date(created_at)")
-
-    @anz_s = ""
-    @mobjects_anz.each do |i|
-      @anz_s = @anz_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
-    end
-    @anz_s = @anz_s[0, @anz_s.length - 1]    
-
-    @bet_s = ""
-    @mobjects_bet.each do |i|
-      @bet_s = @bet_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
-    end
-    @bet_s = @bet_s[0, @bet_s.length - 1]
-    
-   counter = 0 
-   @array = ""
-   @cals = @mobject.mcalendars
-   @anz = @cals.count
-   @cals.each do |c|
-
-      time_from = c.time_from.to_s
-      if c.time_from.to_s.length == 1
-        time_from = "0"+c.time_from.to_s
-      end
-      time_to = c.time_to.to_s
-      if c.time_to.to_s.length == 1
-        time_to = "0"+c.time_to.to_s
-      end
-      @calstart = c.date_from.strftime("%Y-%m-%d")+"T"+time_from+":00"
-      @calend = c.date_to.strftime("%Y-%m-%d")+"T"+time_to+":00"
-      
-      counter = counter + 1
-      @array = @array + "{"
-      if c.confirmed
-        @array = @array + "color: '#ACC550',"
-      else
-        @array = @array + "color: '#61A6A7',"
-      end
-      @array = @array + "textColor: 'white',"
-      @array = @array + "title: '" + c.user.name + " " + c.user.lastname + "', "
-      @array = @array + "start: '" + @calstart + "', "
-      @array = @array + "end: '" + @calend + "', "
-      @array = @array + "url: '" + user_path(:id => c.user.id, :topic => "Info") +"'" 
-      @array = @array + "}"
-      if @cals.count >= counter
-        @array = @array + ", "
-      end
-      
-   end
+    if @topic == "objekte_calender"
+     counter = 0 
+     @array = ""
+     @cals = @mobject.mcalendars
+     @anz = @cals.count
+     @cals.each do |c|
+  
+        time_from = c.time_from.to_s
+        if c.time_from.to_s.length == 1
+          time_from = "0"+c.time_from.to_s
+        end
+        time_to = c.time_to.to_s
+        if c.time_to.to_s.length == 1
+          time_to = "0"+c.time_to.to_s
+        end
+        @calstart = c.date_from.strftime("%Y-%m-%d")+"T"+time_from+":00"
+        @calend = c.date_to.strftime("%Y-%m-%d")+"T"+time_to+":00"
+        
+        counter = counter + 1
+        @array = @array + "{"
+        if c.confirmed
+          @array = @array + "color: '#ACC550',"
+        else
+          @array = @array + "color: '#61A6A7',"
+        end
+        @array = @array + "textColor: 'white',"
+        @array = @array + "title: '" + c.user.name + " " + c.user.lastname + "', "
+        @array = @array + "start: '" + @calstart + "', "
+        @array = @array + "end: '" + @calend + "', "
+        @array = @array + "url: '" + user_path(:id => c.user.id, :topic => "personen_info") +"'" 
+        @array = @array + "}"
+        if @cals.count >= counter
+          @array = @array + ", "
+        end
+        
+     end
+  end
    
    if @topic == "objekte_auftragscontrolling"
       if params[:export]
@@ -389,6 +353,123 @@ class MobjectsController < ApplicationController
 
         end
       end
+
+      if @topic == "objekte_details" and (@mobject.mtype == "artikel")
+
+        if params[:dir]
+          
+          @details =[]
+          @mobject.mdetails.order(:sequence).each do |q|
+            h = Hash.new
+            h = {:id => q.id, :seq => q.sequence}
+            @details << h
+          end
+
+          @myd = Mdetail.find(params[:d_id])
+          
+          if params[:dir] == "left"
+
+            if @myd and @myd.sequence > 0
+
+              @myd.sequence = @myd.sequence - 1
+              @myd.save
+
+              index = -1
+              for i in 0..@details.length-1
+                if @myd.id == @details[i][:id]
+                  index = i-1
+                end
+              end
+
+              if index > -1
+                @myd2 = Mdetail.find(@details[index][:id])
+                if @myd2
+                  @myd2.sequence = @myd2.sequence + 1
+                  @myd2.save
+               end
+              end
+
+            end
+
+          end
+
+        end
+      end
+
+  if @topic == "objekte_signcal"
+      if params[:confirm_id]
+        @cal = SignageCal.find(params[:confirm_id])
+        if @cal
+          @cal.confirmed = true
+          @cal.save
+        end
+      end
+      if params[:noconfirm_id]
+        @cal = SignageCal.find(params[:noconfirm_id])
+        if @cal
+          @cal.confirmed = false
+          @cal.save
+        end
+      end
+
+      counter = 0 
+      @array = ""
+      if @mobject.mtype == "standorte"
+        @cals = SignageCal.where('mstandort=?', @mobject.id)
+        session[:signage_cal_mode] = "loc"
+      end
+      if @mobject.mtype == "kampagnen"
+        @cals = SignageCal.where('mkampagne=?', @mobject.id)
+        session[:signage_cal_mode] = "kam"
+      end
+      if @cals
+        @anz = @cals.count
+        @cals.each do |c|
+          
+          if @mobject.mtype == "kampagnen"
+            @obj = Mobject.find(c.mstandort)
+          end
+          if @mobject.mtype == "standorte"
+            @obj = Mobject.find(c.mkampagne)
+          end
+
+          icon = '<i class="glyphicon glyphicon-calender"></i>'
+  
+          time_from = c.time_from.to_s
+          if c.time_from.to_s.length == 1
+            time_from = "0"+c.time_from.to_s
+          end
+          time_to = c.time_to.to_s
+          if c.time_to.to_s.length == 1
+            time_to = "0"+c.time_to.to_s
+          end
+          @calstart = c.date_from.strftime("%Y-%m-%d")+"T"+time_from+":00"
+          @calend = c.date_to.strftime("%Y-%m-%d")+"T"+time_to+":00"
+
+          @calstart = c.date_from.strftime("%Y-%m-%d")
+          @calend = c.date_to.strftime("%Y-%m-%d")
+          
+          counter = counter + 1
+          @array = @array + "{"
+          @array = @array + "color: '#ACC550',"
+          @array = @array + "textColor: 'white',"
+          @array = @array + "icon: '" + icon + "', "
+          @array = @array + "title: '" + @obj.name + "', "
+          @array = @array + "start: '" + @calstart + "', "
+          @array = @array + "end: '" + @calend + "', "
+          if @loc
+            @array = @array + "url: '" + mobject_path(:id => c.mkampagne, :topic => "objekte_info") +"'" 
+          end
+          if @kam
+            @array = @array + "url: '" + mobject_path(:id => c.mstandort, :topic => "objekte_info") +"'" 
+          end
+          @array = @array + "}"
+          if @cals.count >= counter
+            @array = @array + ", "
+          end
+      end
+    end
+  end
     
   end
 

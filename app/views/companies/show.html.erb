@@ -9,8 +9,6 @@
     </header>
   </div>
   
-  <% @topic = @topic.to_s %>
-  
   <div class="row">
       <div class='col-xs-12'>
 
@@ -149,10 +147,6 @@
           <%= build_medialist2(@company.mobjects.where('mtype=?',"umfragen"), "mobjects", nil) %>
         <% when "institutionen_publikationen" %>
           <%= build_medialist2(@company.mobjects.where('mtype=?',"publikationen"), "mobjects", nil) %>
-        <% when "institutionen_dskampagnen" %>
-          <%= build_medialist2(@company.signage_camps, "signage_camps", nil) %>
-        <% when "institutionen_dsstandorte" %>
-          <%= build_medialist2(@company.signage_locs, "signage_locs", nil) %>
     	 <% when "institutionen_kundenbeziehungen" %>
           <% hash = Hash.new %>
           <% hash = {:company_id => @company.id} %>

@@ -70,7 +70,7 @@
                 <div class="row">
                   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <header><%= fo.created_at.strftime("%d.%m.%Y") %></header>
-                    <%= link_to mobject_path(:id => fo.id, :topic => "Info") do %>
+                    <%= link_to mobject_path(:id => fo.id, :topic => "objekte_info") do %>
                       <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
                     <% end %>
                   </div>
@@ -116,11 +116,11 @@
                   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <header><%= fav.created_at.strftime("%d.%m.%Y") %></header>
                     <% if fav.object_name == "User" %>
-                      <%= link_to user_path(:id => fav.object_id, :topic => "Info") do %>
+                      <%= link_to user_path(:id => fav.object_id, :topic => "personen_info") do %>
                         <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
                       <% end %>
                     <% else %>
-                      <%= link_to company_path(:id => fav.object_id, :topic => "Info") do %>
+                      <%= link_to company_path(:id => fav.object_id, :topic => "institutionen_info") do %>
                         <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
                       <% end %>
                     <% end %>
@@ -174,7 +174,7 @@
                 <div class="row">
                   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <header><%= p.created_at.strftime("%d.%m.%Y") %></header>
-                    <%= link_to user_path(:id => it.id, :topic => "Info") do %>
+                    <%= link_to user_path(:id => it.id, :topic => "personen_info") do %>
                       <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
                     <% end %>
                   </div>
@@ -339,14 +339,14 @@
     <% end %>
     <div class="row">
       <% @mobjects.each do |m| %>
-        <% @pants = m.participants.where('created_at>=?', @n.day.ago) %>
+        <% @pants = m.madvisors.where('created_at>=? and role=?', @n.day.ago, "eventteilnehmer") %>
         <% @pants.each do |p| %>
           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
             <div class="panel-body panel-nav">
               <div class="row">
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                   <header><%= p.created_at.strftime("%d.%m.%Y") %></header>
-                  <%= link_to mobject_path(:id => p.mobject_id, :topic => "Teilnehmer (Veranstaltungen)") do %>
+                  <%= link_to mobject_path(:id => p.mobject_id, :topic => "objekte_teilnehmerveranstaltung") do %>
                     <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
                   <% end %>
                 </div>
@@ -394,15 +394,15 @@
                   <header><%= su.created_at.strftime("%d.%m.%Y") %></header>
                   <% case @suche.table_name %>
                     <% when "mobjects" %>
-                      <%= link_to mobject_path(:id => su.id, :topic => "Info") do %>
+                      <%= link_to mobject_path(:id => su.id, :topic => "objekte_info") do %>
                         <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
                       <% end %>
                     <% when "users" %>
-                      <%= link_to user_path(:id => su.id, :topic => "Info") do %>
+                      <%= link_to user_path(:id => su.id, :topic => "personen_info") do %>
                         <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
                       <% end %>
                     <% when "companies" %>
-                      <%= link_to company_path(:id => su.id, :topic => "Info") do %>
+                      <%= link_to company_path(:id => su.id, :topic => "institutionen_info") do %>
                         <i class="glyphicon glyphicon-circle-arrow-right" style="font-size:3em"></i>
                       <% end %>
                   <% end %>

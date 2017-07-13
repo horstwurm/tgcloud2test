@@ -1,8 +1,9 @@
+<% Rails.root %>
 
 <div class="row">
     <div class='col-xs-12'>
       <div class='panel-body'>
-         <%= link_to mobject_path(:id => @question.mobject_id, :topic => :fragen) do %>
+         <%= link_to mobject_path(:id => @question.mobject_id, :topic => "objekte_fragen") do %>
           <i class="btn btn-primary glyphicon glyphicon-list"></i>
          <% end %><br>
       </div>
@@ -81,7 +82,7 @@ $(document).ready(function(){
         
     function callme() {
         $.ajax({
-            url: "http://tkbmarkt.herokuapp.com/home/Umfragen_data.json?question_id=<%= @question.id %>",
+            url: "http://tgpcloud.herokuapp.com/home/Umfragen_data.json?question_id=<%= @question.id %>",
             //url: "https://ostch-horstwurm.c9users.io/home/Umfragen_data.json?question_id=<%= @question.id %>",
             //force to handle it as text
             dataType: "text",

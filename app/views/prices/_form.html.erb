@@ -4,7 +4,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading header">
                 <li_header>
-                <%= link_to mobject_path(:id => @price.mobject_id, :topic => :preise) do %>
+                <%= link_to mobject_path(:id => @price.mobject_id, :topic => "objekte_preise") do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
                   <%= (I18n.t :preis) + " " + @price.mobject.name %>

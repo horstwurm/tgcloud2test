@@ -7,13 +7,13 @@
                 <%= link_to idea_ratings_path(:idea_id => @idea_crowdrating.idea_id) do %>
                   <i class="btn btn-primary glyphicon glyphicon-list"></i>
                 <% end %>
-                  RATING <%= @idea_crowdrating.idea.header %>
+                  <%= (I18n.t :rating) + " " + @idea_crowdrating.idea.header %>
                 </li_header>
                 </div>
                 <div class="panel-body">
                   <% if @idea_crowdrating.errors.any? %>
                     <div id="error_explanation">
-                      <h2><%= pluralize(@idea_crowdrating.errors.count, "error") %> prohibited this workorder from being saved:</h2>
+                      <h2><%= pluralize(@idea_crowdrating.errors.count, "error") + " " + (i18n.t :notsaved) %></h2>
                       <ul>
                         <% @idea_crowdrating.errors.full_messages.each do |message| %>
                           <li><%= message %></li>
@@ -22,13 +22,13 @@
                     </div>
                   <% end %>
                   <div class="form-group">
-                    <%= f.label "Bewertung" %><br/>
+                    <%= f.label (I18n.t :rating) %><br/>
                     <div class="form-group">
                       <input id="ex2" data-slider-id='ex2Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1" data-slider-value="<%= @idea_crowdrating.rating %>"/>
                     </div>
                   </div>
                   <div class="form-group">
-                    <%= f.label "Kommentar" %><br/>
+                    <%= f.label (I18n.t :kommentar) %><br/>
                     <%= f.text_area :rating_text, rows: 5, class:"form-control"%>
                   </div>
                       <%= f.hidden_field :user_id, class:"form-control" %>

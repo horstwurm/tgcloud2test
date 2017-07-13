@@ -67,7 +67,7 @@ class ShowcalController < ApplicationController
                 @array = @array + "textColor : 'white',"
                 @array = @array + "title : '" + @user.name + " " + @user.lastname + "', "
                 @array = @array + "start : '" + @caldate + "', "
-                @array = @array + "url : '" + user_path(:id => @user.id, :topic => "Info") +"'" 
+                @array = @array + "url : '" + user_path(:id => @user.id, :topic => "personen_info") +"'" 
                 @array = @array + "}"
                 if current_user.favourits.count >= counter
                   @array = @array + ", "
@@ -100,7 +100,7 @@ class ShowcalController < ApplicationController
           if u.date_to
             @array = @array + "end : '" + u.date_to.to_s + "', "
           end
-          @array = @array + "url : '" + mobject_path(:id => u.id, :topic => "Info") +"'" 
+          @array = @array + "url : '" + mobject_path(:id => u.id, :topic => "objekte_info") +"'" 
           @array = @array + "}"
           if @mobjects.count >= counter
             @array = @array + ", "

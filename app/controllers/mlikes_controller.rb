@@ -33,7 +33,7 @@ end
 
     respond_to do |format|
       if @mlike.save
-        format.html { redirect_to mobject_path(:id => @mlike.mobject_id, :topic => "Info"), (I18n.t :act_update) }
+        format.html { redirect_to mobject_path(:id => @mlike.mobject_id, :topic => "objekte_info"), (I18n.t :act_update) }
         format.json { render :show, status: :created, location: @mlike }
       else
         format.html { render :new }
@@ -47,7 +47,7 @@ end
   def update
     respond_to do |format|
       if @mlike.update(mlike_params)
-        format.html { redirect_to mobject_path(:id => @mlike.mobject_id, :topic => "Info"), notice: (I18n.t :act_delete) }
+        format.html { redirect_to mobject_path(:id => @mlike.mobject_id, :topic => "objekte_info"), notice: (I18n.t :act_delete) }
         format.json { render :show, status: :ok, location: @mlike }
       else
         format.html { render :edit }
@@ -62,7 +62,7 @@ end
     @mobject_id = @mlike.mobject_id
     @mlike.destroy
     respond_to do |format|
-      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => "Info"), notice: 'Mlike was successfully destroyed.' }
+      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => "objekte_info"), notice: 'Mlike was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

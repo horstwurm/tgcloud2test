@@ -29,7 +29,7 @@ class CompaniesController < ApplicationController
   # GET /companies/1
   def show
      if params[:topic]
-       @topic = params[:topic].to_sym
+       @topic = params[:topic]
      else 
        @topic = "institutionen_info"
      end 
@@ -42,6 +42,10 @@ class CompaniesController < ApplicationController
     @stats << ["Projekte/Tasks", @company.mobjects.where('mtype=?','projekte').count ]
     @stats << ["Werbekampagnen", @company.mobjects.where('mtype=?','kampagnen').count ]
     @stats << ["Werbestandorte", @company.mobjects.where('mtype=?','standorte').count ]
+    @stats << ["Publikationen", @company.mobjects.where('mtype=?','publikationren').count ]
+    @stats << ["Umfragen", @company.mobjects.where('mtype=?','umfragen').count ]
+    @stats << ["Innovationswettbewerbe", @company.mobjects.where('mtype=?','innovationswettbewerbe').count ]
+    @stats << ["Veranstaltungen", @company.mobjects.where('mtype=?','veranstaltungen').count ]
     @stats << ["Partnerlinks", @company.partner_links.count ]
 
     if false
@@ -54,8 +58,6 @@ class CompaniesController < ApplicationController
     @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','ausschreibungen'), "ausschreibungen" )
     @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','ausflugsziele'), "ausflugsziele" )
     @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','stellenanzeigen'), "stellenanzeigen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','publikationen'), "publikationen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','umfragen'), "umfragen" )
     @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','crowdfunding'), "crowdfunding" )
     @array_s = @company.build_stats(@array_s, @company.mstats, "crowdfunding Beitraege" )            if false
     @array_s = @company.build_stats(@array_s, @company.customers, "kundenstatus" )

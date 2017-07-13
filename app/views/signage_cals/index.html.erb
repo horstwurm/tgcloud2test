@@ -1,19 +1,31 @@
 
-  <div class="panel-header">
-    <% if user_signed_in? %>
-      <%= link_to new_signage_cal_path(:loc_id => @loc_id) do %>
-        <i class="btn btn-primary glyphicon glyphicon-plus"></i>
-      <% end %>
+  <div class="row">
+    <% if @loc %>
+      <%= header("Kalender " + @loc.name + " " + "<span class='badge'>" + @anz.to_s + "</span>", true) %>
+    <% end %>
+    <% if @kam %>
+      <%= header("Kalender " + @kam.name + " " + "<span class='badge'>" + @anz.to_s + "</span>", true) %>
     <% end %>
   </div>
-  
-  <div class="row">
-    <%= header("Kalender " + "<span class='badge'>" + @anz.to_s + "</span>", true) %>
+
+  <div class="panel-header">
+    <% if user_signed_in? %>
+      <% if @loc %>
+        <%= link_to new_signage_cal_path(:loc_id => @loc.id) do %>
+          <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+        <% end %>
+      <% end %>
+      <% if @kam %>
+        <%= link_to new_signage_cal_path(:kam_id => @kam.id) do %>
+          <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+        <% end %>
+      <% end %>
+    <% end %>
   </div>
 
   <div id='calendar'></div>
   
-  <%= header("Terminübersicht", false) %>
+  <%= header("Kalenderübersicht ", false) %>
   <div class="panel-body">
   	<table class="table table-striped">
       <thead>
@@ -28,28 +40,52 @@
       <body>
       	<% if user_signed_in? and @cals %>
           <% @cals.each do |ca| %>
-      			<% if ca.signage_loc.owner.user_id == current_user.id %>
+            <% if @kam %>
+              <% @owner_id = @kam.owner_id %>
+              <% @obj = Mobject.find(ca.mstandort) %>
+            <% end %>
+            <% if @loc %>
+              <% @owner_id = @loc.owner_id %>
+              <% @obj = Mobject.find(ca.mkampagne) %>
+            <% end %>
+      			<% if @owner_id == current_user.id %>
               <tr>
                 <td>
     				      <% if !ca.confirmed %>
-                    <%= link_to signage_cals_path(:confirm_id => ca.id, :loc_id => ca.signage_loc_id) do %>
-                      <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
+    				        <% if @loc %>
+                      <%= link_to signage_cals_path(:confirm_id => ca.id, :loc_id => @loc.id) do %>
+                        <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
+                      <% end %>
+                    <% end %>
+    				        <% if @kam %>
+                      <%= link_to signage_cals_path(:confirm_id => ca.id, :kam_id => @kam.id) do %>
+                        <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
+                      <% end %>
                     <% end %>
                   <% else %>
-                    <%= link_to signage_cals_path(:noconfirm_id => ca.id, :loc_id => ca.signage_loc_id) do %>
-                      <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
+    				        <% if @loc %>
+                      <%= link_to signage_cals_path(:noconfirm_id => ca.id, :loc_id => @loc.id) do %>
+                        <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
+                      <% end %>
+                    <% end %>
+    				        <% if @kam %>
+                      <%= link_to signage_cals_path(:noconfirm_id => ca.id, :loc_id => @kam.id) do %>
+                        <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
+                      <% end %>
                     <% end %>
                   <% end %>
+
                   <%= link_to edit_signage_cal_path(ca) do %>
                     <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
                   <% end %>
   				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
                     <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
                   <% end %>
+
                 </td>
                 <td>
-                  <%= showImage2(:small, @ca.owner, true) %>
-                  <%= ca.owner.name %>
+                  <%= showFirstImage2(:small, @obj, @obj.mdetails) %>
+                  <%= @obj.name %>
                 </td>
                 <td>
                   <small_cal>
@@ -70,10 +106,6 @@
   </div>
 
 <script>
-  document.addEventListener("turbolinks:load", function() {init_map(0);initialize();drawChart()})
-</script>
-
-<script>
 $(document).ready(function(){
 
     $('#calendar').fullCalendar({
@@ -84,8 +116,8 @@ $(document).ready(function(){
         defaultView: 'basicDay',
         defaultView: 'basicWeek',
         defaultView: 'listYear',
-        defaultView: 'month',
         defaultView: 'agendaWeek',
+        defaultView: 'month',
         slotDuration: '1:00:00',
         contentHeight: 'auto',
         textColor: 'white',
@@ -95,4 +127,8 @@ $(document).ready(function(){
     })
   
 });
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {})
 </script>

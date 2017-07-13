@@ -85,6 +85,11 @@ class UsersController < ApplicationController
         @stats << ["Gruppen", @user.mobjects.where('mtype=?','gruppen').count ]
         @stats << ["Zeiterfassungen", @user.timetracks.count ]
         @stats << ["Ressourcenplanungen", @user.plannings.count ]
+        @stats << ["Artikel", @user.mobjects.where('mtype=?','artikel').count ]
+        @stats << ["Publikationen", @user.mobjects.where('mtype=?','publikationen').count ]
+        @stats << ["Umfragen", @user.mobjects.where('mtype=?','umfragen').count ]
+        @stats << ["Innovationswettbewerbe", @user.mobjects.where('mtype=?','innovationswettbewerbe').count ]
+        @stats << ["Veranstaltungen", @user.mobjects.where('mtype=?','veranstaltungen').count ]
 
         if false
         @stats << ["Kalendereinträge", Appointment.where('user_id1=? or user_id2=?',@user.id,@user.id).count]
@@ -95,10 +100,6 @@ class UsersController < ApplicationController
         @stats << ["Veranstaltungen", @user.mobjects.where('mtype=?','veranstaltungen').count ]
         @stats << ["Ausschreibungen", @user.mobjects.where('mtype=?','ausschreibungen').count ]
         @stats << ["Ausflugsziele", @user.mobjects.where('mtype=?','ausflugsziele').count ]
-        @stats << ["Artikel", @user.mobjects.where('mtype=?','artikel').count ]
-        @stats << ["Publikationen", @user.mobjects.where('mtype=?','publikationen').count ]
-        @stats << ["Umfragen", @user.mobjects.where('mtype=?','umfragen').count ]
-        @stats << ["Innovationswettbewerbe", @user.mobjects.where('mtype=?','innovationswettbewerbe').count ]
         @stats << ["Crowdfunding", @user.mobjects.where('mtype=?','crowdfunding').count ]
         @stats << ["Crowdfunding Beiträge", @user.mstats.count ]
         @stats << ["Tickets", @user.user_tickets.count ]
@@ -282,7 +283,7 @@ class UsersController < ApplicationController
           end
           @array = @array + "start: '" + @calstart + "', "
           @array = @array + "end: '" + @calend + "', "
-          @array = @array + "url: '" + user_path(:id => c.user_id2, :topic => "Info") +"'" 
+          @array = @array + "url: '" + user_path(:id => c.user_id2, :topic => "personen_info") +"'" 
           @array = @array + "}"
           if @cals.count >= counter
             @array = @array + ", "

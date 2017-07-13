@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
     has_many :mstats, as: :owner, dependent: :destroy 
     has_many :customers, as: :owner, dependent: :destroy 
     has_many :transactions, as: :owner, dependent: :destroy 
-    has_many :signage_locs, as: :owner, dependent: :destroy 
 
     has_many :credentials, dependent: :destroy 
     has_many :webmasters, dependent: :destroy 
@@ -26,7 +25,6 @@ class User < ActiveRecord::Base
     has_many :user_tickets, dependent: :destroy 
     has_many :madvisors, dependent: :destroy 
     has_many :user_positions, dependent: :destroy 
-    has_many :participants, dependent: :destroy   
     has_many :mlikes, dependent: :destroy   
     has_many :user_answers, dependent: :destroy   
     has_many :timetracks, dependent: :destroy 

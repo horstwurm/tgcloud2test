@@ -155,7 +155,7 @@ def index7
               @array = @array + "textColor : 'white',"
               @array = @array + "title : '" + @user.name + " " + @user.lastname + "', "
               @array = @array + "start : '" + @caldate + "', "
-              @array = @array + "url : '" + user_path(:id => @user.id, :topic => "Info") +"'" 
+              @array = @array + "url : '" + user_path(:id => @user.id, :topic => "personen_nfo") +"'" 
               @array = @array + "}"
               if current_user.favourits.count >= counter
                 @array = @array + ", "
@@ -182,7 +182,7 @@ def index7
             if u.date_to
               @array = @array + "end : '" + u.date_to.to_s + "', "
             end
-            @array = @array + "url : '" + mobject_path(:id => u.id, :topic => "Info") +"'" 
+            @array = @array + "url : '" + mobject_path(:id => u.id, :topic => "objekte_info") +"'" 
             @array = @array + "}"
             if @mobjects.count >= counter
               @array = @array + ", "
@@ -238,20 +238,16 @@ def index10
 end
 
 def index11
-  if params[:camp_id]
-    @campaign = SignageCamp.find(params[:camp_id])
+  if params[:kam_id]
+    @campaign = Mobject.find(params[:kam_id])
     @company = @campaign.owner
-    @signages = @campaign.signages
+    @signages = @campaign.mdetails
     @location = nil
   end
   if params[:loc_id]
-    @location = SignageLoc.find(params[:loc_id])
-    @cals = SignageCal.where('signage_loc_id=?',params[:loc_id])
-    campaigns = []
-    @cals.each do |c|
-        campaigns << c.signage_camp_id
-    end
-    @campaigns = SignageCamp.where('id IN (?)', campaigns)
+    @location = Mobject.find(params[:loc_id])
+    @company = @location.owner
+    @campaigns = SignageCal.where('mstandort=?',params[:loc_id])
     @signages = nil
   end
   
@@ -334,7 +330,7 @@ end
 def index15
   @question = Question.find(params[:question_id])
   
-  if @question.mcategory.name == "Text" or @question.mcategory.name == "Numerisch" 
+  if @question.mcategory.name == "text" or @question.mcategory.name == "numerisch" 
     if @question.answers.count == 0
       @a = Answer.new
       @a.question_id = @question.id
@@ -347,7 +343,7 @@ def index15
     @ua = UserAnswer.find(params[:user_answer_id])
     @a = @ua.answer
     
-    if @question.mcategory.name == "Single"
+    if @question.mcategory.name == "single"
       @question.answers.each do |qa|
         @uai = UserAnswer.where('user_id=? and answer_id=?', current_user.id, qa.id).first
         if @uai and @uai.checker
@@ -357,7 +353,7 @@ def index15
       end
     end
     if @ua
-      if @question.mcategory.name == "Multiple"
+      if @question.mcategory.name == "multiple"
         if @ua.checker
           @ua.checker = false
         else

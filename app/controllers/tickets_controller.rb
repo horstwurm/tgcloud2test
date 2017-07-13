@@ -61,7 +61,7 @@ class TicketsController < ApplicationController
         redirect_to tickets_path :msponsor_id => @ticket.owner_id, notice: (I18n.t :act_create)
       end
       if @ticket.owner_type == "Mobject"
-        redirect_to mobject_path(:id => @ticket.owner_id, :topic => "Eintrittskarten"), notice: (I18n.t :act_create)
+        redirect_to mobject_path(:id => @ticket.owner_id, :topic => "objekte_eintrittskarten"), notice: (I18n.t :act_create)
       end
     else
       render :new
@@ -75,7 +75,7 @@ class TicketsController < ApplicationController
         redirect_to tickets_path :msponsor_id => @ticket.owner_id, notice: (I18n.t :act_update)
       end
       if @ticket.owner_type == "Mobject"
-        redirect_to mobject_path(:id => @ticket.owner_id, :topic => "Eintrittskarten"), notice: (I18n.t :act_update)
+        redirect_to mobject_path(:id => @ticket.owner_id, :topic => "objekte_eintrittskarten"), notice: (I18n.t :act_update)
       end
     else
       render :edit
@@ -95,7 +95,7 @@ class TicketsController < ApplicationController
       redirect_to tickets_path :msponsor_id => @msponsor_id, notice: (I18n.t :act_delete)
     end
     if @mobject_id
-      redirect_to mobject_path(:id => @mobject_id, :topic => "Eintrittskarten"), notice: (I18n.t :act_delete)
+      redirect_to mobject_path(:id => @mobject_id, :topic => "objekte_eintrittskarten"), notice: (I18n.t :act_delete)
     end
   end
 

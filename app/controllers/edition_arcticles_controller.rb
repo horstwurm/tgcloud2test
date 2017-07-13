@@ -4,7 +4,47 @@ class EditionArcticlesController < ApplicationController
   # GET /edition_arcticles
   # GET /edition_arcticles.json
   def index
+    if params[:topic]
+      @topic = params[:topic]
+    else
+      @topic = "editionarticles_info"
+    end
+
     @edition = Edition.find(params[:edition_id])
+    
+    if params[:dir]
+      @ques=[]
+      @edition.edition_arcticles.order(:sequence).each do |q|
+        h = Hash.new
+        h = {:id => q.id, :seq => q.sequence}
+        @ques << h
+      end
+
+      @myq = EditionArcticle.find(params[:d_id])
+      if params[:dir] == "left"
+
+        if @myq and @myq.sequence > 1
+
+          @myq.sequence = @myq.sequence - 1
+          @myq.save
+
+          index = -1
+          for i in 0..@ques.length-1
+            if @myq.id == @ques[i][:id]
+              index = i-1
+            end
+          end
+          if index > -1
+            @myq2 = EditionArcticle.find(@ques[index][:id])
+            if @myq2
+              @myq2.sequence = @myq2.sequence + 1
+              @myq2.save
+            end
+          end
+        end
+      end
+    end
+
     @edition_arcticles = @edition.edition_arcticles
     @editionas = @edition_arcticles.count
   end
@@ -21,6 +61,7 @@ class EditionArcticlesController < ApplicationController
     @edition_arcticle.mobject_id = params[:article_id]
     @edition_arcticle.active = false
     @edition_arcticle.status = ""
+    @edition_arcticle.sequence = Edition.find(params[:edition_id]).edition_arcticles.count+1
 end
 
   # GET /edition_arcticles/1/edit

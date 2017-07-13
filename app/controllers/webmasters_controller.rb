@@ -32,7 +32,7 @@ class WebmastersController < ApplicationController
     @webmaster.status = "CHECK"
     if @webmaster.save
       item = Object.const_get(@webmaster.object_name).find(@webmaster.object_id)
-      redirect_to item, :topic => "Info", notice: (I18n.t :act_create)
+      redirect_to item, :topic => "objekte_info", notice: (I18n.t :act_create)
       # webmasters_path, notice: 'Webmaster was successfully created.'
     else
       render :new
@@ -42,9 +42,9 @@ class WebmastersController < ApplicationController
   # PUT /webmasters/1
   def update
     case params[:commit]
-      when "Speichern"
+      when "speichern"
         @webmaster.status = "CHECK"
-      when "Freigeben"
+      when "freigeben"
         @webmaster.status = "OK"
         item = Object.const_get(@webmaster.object_name).find(@webmaster.object_id)
         if item
@@ -52,7 +52,7 @@ class WebmastersController < ApplicationController
           item.status = "OK"
           item.save
         end
-      when "Sperren"
+      when "sperren"
         @webmaster.status = "NOK"
         item = Object.const_get(@webmaster.object_name).find(@webmaster.object_id)
         if item

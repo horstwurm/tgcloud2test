@@ -17,14 +17,14 @@
         <% @question.answers.each do |a| %>
 
           <% case @question.mcategory.name %>
-            <% when "Text", "Numerisch" %>
+            <% when "text", "numerisch" %>
               <div class="row">
                   <div class='col-xs-10 col-sm-10 col-md-10 col-lg-10 xl-10'>
                     <% @ua = UserAnswer.where('user_id=? and answer_id=?', current_user.id, a.id).first %>
-                    <% if @ua and @question.mcategory.name == "Text" %>
+                    <% if @ua and @question.mcategory.name == "text" %>
                       <%= @ua.description %>
                     <% end %>
-                    <% if @ua and @question.mcategory.name == "Numerisch" %>
+                    <% if @ua and @question.mcategory.name == "numerisch" %>
                       <%= @ua.num %>
                     <% end %>
                   </div>
@@ -41,7 +41,7 @@
                   </div>
               </div>
 
-            <% when "Single", "Multiple" %>
+            <% when "single", "multiple" %>
               <div class="row">
                   <div class='col-xs-10 col-sm-10 col-md-10 col-lg-10 xl-10'>
                     <% @ua = UserAnswer.where('user_id=? and answer_id=?', current_user.id, a.id).first %>

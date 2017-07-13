@@ -70,7 +70,7 @@ $(document).ready(function(){
   function drawChart4() {
     var data = google.visualization.arrayToDataTable(dataset_artikel);
     var options = {
-      title: 'Artikel',
+      title: '(<%= I18n.t :artikel %>)',
       colors: ['#ACC550'],
       curveType: 'function',
       legend: { position: 'bottom' }

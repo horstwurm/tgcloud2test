@@ -17,13 +17,9 @@ Rails.application.routes.draw do
   resources :editions
   resources :qrcodes
   resources :signage_hits
-  resources :signage_camps
   resources :signage_cals
-  resources :signage_locs
-  resources :signages
   get 'rooms/show'
 
-  resources :participants
   resources :credentials
   root 'home#index3'
   

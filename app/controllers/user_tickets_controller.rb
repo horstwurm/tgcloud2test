@@ -27,11 +27,11 @@ class UserTicketsController < ApplicationController
     @user_ticket = UserTicket.where('user_id=? and ticket_id=?',params[:user_id], params[:ticket_id]).last
     if @user_ticket
         #content = "Ticket_ID:"+ @user_ticket.id.to_s + " für " + @user_ticket.ticket.name + " für " + User.find(@user_ticket.user_id).fullname + " für Event " + @user_ticket.ticket.msponsor.mobject.name + " gesponsort von " + @user_ticket.ticket.msponsor.company.name + " persönliches Ticket"
-        content = "http://tkbmarkt.herokuapp.com/home/index1?me="+@user_ticket.id.to_s
+        content = "http://tgpcloud.herokuapp.com/home/index1?me="+@user_ticket.id.to_s
         @user_ticket.avatar = @user_ticket.buildQRCode(content)
         @user_ticket.save
     end
-    redirect_to user_path(:id => @user_ticket.user_id, :topic => "Tickets"), notice: (I18n.t :act_create) 
+    redirect_to user_path(:id => @user_ticket.user_id, :topic => "objekte_eintrittskarten"), notice: (I18n.t :act_create) 
   end
 
   # GET /user_tickets/1/edit

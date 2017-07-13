@@ -1,1 +1,0 @@
-json.array! @signages, partial: 'signages/signage', as: :signage

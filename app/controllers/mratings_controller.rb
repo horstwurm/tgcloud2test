@@ -41,7 +41,7 @@ class MratingsController < ApplicationController
   # PUT /mratings/1
   def update
     if @mrating.update(mrating_params)
-      if @mrating.mobject.mtype == "Artikel"
+      if @mrating.mobject.mtype == "artikel"
         @topic = "objekte_info"
       else
         @topic = "objekte_bewertungen"
@@ -55,7 +55,7 @@ class MratingsController < ApplicationController
   # DELETE /mratings/1
   def destroy
     @id = @mrating.mobject_id
-    if @mrating.mobject.mtype == "Artikel"
+    if @mrating.mobject.mtype == "artikel"
       @topic = "objekte_info"
     else
       @topic = "objekte_bewertungen"

@@ -11,6 +11,12 @@ class EditionsController < ApplicationController
   # GET /editions/1.json
   def show
     #@edition = Edition.find(params[:edition_id])
+    if params[:topic]
+      @topic = params[:topic]
+    else
+      @topic = "editionen_info"
+    end
+      
   end
 
   # GET /editions/new
@@ -31,7 +37,7 @@ class EditionsController < ApplicationController
 
     respond_to do |format|
       if @edition.save
-        format.html { redirect_to mobject_path(:id => @edition.mobject_id, :topic => "Ausgaben"), notice: (I18n.t :act_create) }
+        format.html { redirect_to mobject_path(:id => @edition.mobject_id, :topic => "objekte_ausgaben"), notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @edition }
       else
         format.html { render :new }
@@ -45,7 +51,7 @@ class EditionsController < ApplicationController
   def update
     respond_to do |format|
       if @edition.update(edition_params)
-        format.html { redirect_to mobject_path(:id => @edition.mobject_id, :topic => "Ausgaben"), notice: (I18n.t :act_update) }
+        format.html { redirect_to mobject_path(:id => @edition.mobject_id, :topic => "objekte_ausgaben"), notice: (I18n.t :act_update) }
         format.json { render :show, status: :ok, location: @edition }
       else
         format.html { render :edit }
@@ -60,7 +66,7 @@ class EditionsController < ApplicationController
     @mobject_id = @edition.mobject_id
     @edition.destroy
     respond_to do |format|
-      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => "Ausgaben"), notice: (I18n.t :act_delete) }
+      format.html { redirect_to mobject_path(:id => @mobject_id, :topic => "objekte_ausgaben"), notice: (I18n.t :act_delete) }
       format.json { head :no_content }
     end
   end

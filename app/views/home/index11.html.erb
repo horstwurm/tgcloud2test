@@ -17,9 +17,9 @@
     <% @campaigns.each do |camp| %>
       <% nr = nr + 1 %>
       <% if nr == session[:campaign_nr] %>
-        <% @camp = camp %>
-        <% @signages = camp.signages %>
-        <% @company = camp.owner %>
+        <% @camp = Mobject.find(camp.mkampagne) %>
+        <% @signages = @camp.mdetails %>
+        <% @company = @camp.owner %>
       <% end %>
     <% end %>
   <% end %>
@@ -29,8 +29,8 @@
 
 <% if @location %>
   <% hit = SignageHit.new %>
-  <% hit.signage_loc_id = @location.id %>
-  <% hit.signage_camp_id = @camp.id %>
+  <% hit.mstandort = @location.id %>
+  <% hit.mkampagne = @camp.id %>
   <% hit.datetime_from = DateTime.new %>
   <% hit.save %>
 <% end %>
@@ -165,17 +165,10 @@ $(document).ready(function(){
     function cache_clear(){
      window.location.reload(true);
     }
-
+    
 });
 </script>
 
 <script>
-  document.addEventListener("turbolinks:load", function() {wait()})
-</script>
-
-<script>
-  function wait() {
-    await sleep(100);
-    location.reload(true);
-  }
+  document.addEventListener("turbolinks:load", function( {cache_clear();})
 </script>

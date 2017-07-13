@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170629091038) do
+ActiveRecord::Schema.define(version: 20170706171337) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -415,16 +415,6 @@ ActiveRecord::Schema.define(version: 20170629091038) do
     t.index ["owner_type"], name: "index_mstats_on_owner_type"
   end
 
-  create_table "participants", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "mobject_id"
-    t.string   "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["mobject_id"], name: "index_participants_on_mobject_id"
-    t.index ["user_id"], name: "index_participants_on_user_id"
-  end
-
   create_table "partner_links", force: :cascade do |t|
     t.integer  "company_id"
     t.string   "name"
@@ -542,6 +532,10 @@ ActiveRecord::Schema.define(version: 20170629091038) do
     t.boolean  "confirmed"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "mkampagne"
+    t.integer  "mstandort"
+    t.index ["mkampagne"], name: "index_Signage_cals_on_mkampagne"
+    t.index ["mstandort"], name: "index_Signage_cals_on_mstandort"
     t.index ["signage_camp_id"], name: "index_signage_cals_on_signage_camp_id"
     t.index ["signage_loc_id"], name: "index_signage_cals_on_signage_loc_id"
   end
@@ -562,6 +556,10 @@ ActiveRecord::Schema.define(version: 20170629091038) do
     t.datetime "datetime_from"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "mkampagne"
+    t.integer  "mstandort"
+    t.index ["mkampagne"], name: "index_Signage_hits_on_mkampagne"
+    t.index ["mstandort"], name: "index_Signage_hits_on_mstandort"
     t.index ["signage_camp_id"], name: "index_signage_hits_on_signage_camp_id"
     t.index ["signage_loc_id"], name: "index_signage_hits_on_signage_loc_id"
   end

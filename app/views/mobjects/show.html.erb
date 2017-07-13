@@ -1,3 +1,6 @@
+  <% @mobject.mtype %><br>
+  <% @topic %>
+  
   <% if @edition_id %>
     <div class="row">
       <action>
@@ -17,8 +20,6 @@
     </nav>
     </header>
   </div>
-  
-  <% @topic = @topic.to_s %>
   
   <div class="row">
       <div class='col-xs-12'>
@@ -378,7 +379,7 @@
               <% end %>
 
                <% if @mobject.mtype == "innovationswettbewerbe" %>
-                <%= header3("objekte", @mobject, :ideen, false) %>
+                <%= header((I18n.t :ideen), false) %>
                 <div class="panel-body">
                   <%= build_medialist2(@mobject.ideas.order(rating: :desc), "ideas", "user") %>
                 </div>
@@ -407,7 +408,7 @@
 
         <% when "objekte_details" %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.mdetails, "mdetails", nil) %>
+            <%= build_medialist2(@mobject.mdetails.order(:sequence), "mdetails", nil) %>
           </div>
 
         <% when "objekte_umfrageteilnehmer" %>
@@ -465,7 +466,7 @@
             <%= build_medialist2(@mobject.tickets, "tickets", nil) %>
           </div>
 
-        <% when "objekte_bewertungen" %>
+        <% when "objekte_crowdideenbewertung" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mratings, "mratings", "user") %>
           </div>
@@ -483,6 +484,122 @@
         <% when "objekte_gruppenmitglieder" %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.madvisors.where('role=?', @mobject.mtype), "madvisors", "user") %>
+          </div>
+
+        <% when "objekte_signstat" %>
+          <% if @mobject.mtype == "kampagnen" %>
+            <% @stats = SignageHit.select("date(created_at) as datum, count(mkampagne) as summe").where('mkampagne=?', @mobject.id).group("date(created_at)") %>
+            <% @objs = SignageHit.select("mstandort as obj, count(mstandort) as summe").where('mkampagne=?', @mobject.id).group("mstandort") %>
+          <% end %>
+            <% if @mobject.mtype == "standorte" %>
+            <% @stats = SignageHit.select("date(created_at) as datum, count(mstandort) as summe").where('mstandort=?', @mobject.id).group("date(created_at)") %>
+            <% @objs = SignageHit.select("mkampagne as obj, count(mkampagne) as summe").where('mstandort=?', @mobject.id).group("mkampagne") %>
+          <% end %>
+
+          <%= header((I18n.t :anzahl), false) %> 
+          <div id="signchartzeit"></div>
+          <br><br>
+          <% if @mtype == "kampagnen" %>
+            <%= header((I18n.t :standorte), false) %> 
+          <% end %>
+          <% if @mtype == "standorte" %>
+            <%= header((I18n.t :kampagnen), false) %> 
+          <% end %>
+          <div id="signchartobjekt"></div>
+          <br><br>
+          
+          <% num =0 %>
+          <% @objs.each do |o| %>
+            <% num = num + 1 %>
+            <%= header(Mobject.find(o.obj).name, false) %> 
+            <div id="signchartobj<%= num %>"></div>
+            <br><br>
+          <% end %>
+
+        <% when "objekte_signcal" %>
+          <div id='calendar'></div>
+          <%= header("Kalenderübersicht ", false) %>
+          <div class="panel-body">
+          	<table class="table table-striped">
+              <thead>
+                <tr>
+          	      <small_cal>
+          	      <th></th>
+                  <th colspan=2>wer</th>
+                  <th colspan=2>von-bis</th>
+                  </small_cal>
+                </tr>
+              </thead>
+              <body>
+              	<% if user_signed_in? and @cals %>
+                  <% @cals.each do |ca| %>
+
+                    <% if @mobject.mtype == "kampagnen" %>
+                      <% @obj = Mobject.find(ca.mstandort) %>
+                    <% end %>
+                    <% if @mobject.mtype == "standorte" %>
+                      <% @obj = Mobject.find(ca.mkampagne) %>
+                    <% end %>
+              			<% if @obj.owner_id == current_user.id %>
+                      <tr>
+                        <td>
+            				      <% if !ca.confirmed %>
+            				        <% if @loc %>
+                              <%= link_to signage_cals_path(:confirm_id => ca.id, :loc_id => @loc.id) do %>
+                                <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
+                              <% end %>
+                            <% end %>
+            				        <% if @kam %>
+                              <%= link_to signage_cals_path(:confirm_id => ca.id, :kam_id => @kam.id) do %>
+                                <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
+                              <% end %>
+                            <% end %>
+                          <% else %>
+            				        <% if @loc %>
+                              <%= link_to signage_cals_path(:noconfirm_id => ca.id, :loc_id => @loc.id) do %>
+                                <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
+                              <% end %>
+                            <% end %>
+            				        <% if @kam %>
+                              <%= link_to signage_cals_path(:noconfirm_id => ca.id, :loc_id => @kam.id) do %>
+                                <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
+                              <% end %>
+                            <% end %>
+                          <% end %>
+        
+                          <%= link_to edit_signage_cal_path(ca) do %>
+                            <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
+                          <% end %>
+          				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                            <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                          <% end %>
+        
+                        </td>
+                        <td>
+                          <%= showFirstImage2(:small, @obj, @obj.mdetails) %>
+                          <%= @obj.name %>
+                        </td>
+                        <td>
+                          <small_cal>
+                            <%= ca.date_from.strftime("%d.%m.%Y") + ca.time_from.to_s + " Uhr" %>
+                          </small_cal>
+                        </td>
+                        <td>
+                          <small_cal>
+                            <%= ca.date_to.strftime("%d.%m.%Y") + ca.time_to.to_s + " Uhr" %>
+                          </small_cal>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                <% end %>          
+              </body>
+           	</table>
+          </div>
+
+        <% when "objekte_ansprechpartner" %>
+          <div class="panel-body">
+            <%= build_medialist2(@mobject.madvisors, "madvisors", "user") %>
           </div>
 
         <% when "objekte_ressourcenplanung" %>
@@ -1200,7 +1317,7 @@
 
         <% when "objekte_teilnehmerveranstaltung" %>
           <div class="panel-body">
-            <%= build_medialist2(@mobject.participants, "participants", "user") %>
+            <%= build_medialist2(@mobject.madvisors.where('role=?',"eventteilnehmer"), "madvisors", "user") %>
           </div>
 
         <% when "objekte_kalendervermietungen" %>
@@ -1528,6 +1645,79 @@ $(document).ready(function(){
         }
       <% end %>
 
+    <% if @topic == "objekte_signstat" %>
+
+        window.datasetsign1 = [['Datum', 'Anzahl']];
+        <% @stats.each do |s| %>
+          datasetsign1.push(['<%= s.datum %>', <%= s.summe %>]);
+        <% end %>
+        google.charts.setOnLoadCallback(drawSign1);
+        function drawSign1() {
+          var data = google.visualization.arrayToDataTable(datasetsign1);
+          var options = {
+            title: "<%= I18n.t :anzahl %>",
+            colors: ['#ACC550'],
+            legend: { position: 'bottom' }
+          };
+          var chart = new google.visualization.LineChart(document.getElementById('signchartzeit'));
+          chart.draw(data, options);
+        };
+
+        window.datasetsign2 = [['Datum', 'Anzahl']];
+        <% @objs.each do |s| %>
+          datasetsign2.push(['<%= Mobject.find(s.obj).name %>', <%= s.summe %>]);
+        <% end %>
+        google.charts.setOnLoadCallback(drawSign2);
+        function drawSign2() {
+          var data = google.visualization.arrayToDataTable(datasetsign2);
+          var options = {
+            <% if @mobject.mtype == "kampagnen" %>
+              title: "<%= I18n.t :standorte %>",
+            <% end %>
+            <% if @mobject.mtype == "standorte" %>
+              title: "<%= I18n.t :kampagnen %>",
+            <% end %>
+            colors: ['#ACC550'],
+            legend: { position: 'bottom' }
+          };
+          var chart = new google.visualization.ColumnChart(document.getElementById('signchartobjekt'));
+          chart.draw(data, options);
+        };
+        
+        <% if true %>
+        <% num = 0 %>
+        <% @objs.each do |s| %>
+        
+            <% num = num + 1 %>
+
+            <% if @mobject.mtype == "kampagnen" %>
+              <% @substats = SignageHit.select("date(created_at) as datum, count(mstandort) as summe").where('mkampagne=? and mstandort=?', @mobject.id, s.obj).group("date(created_at)") %>
+            <% end %>
+            <% if @mobject.mtype == "standorte" %>
+              <% @substats = SignageHit.select("date(created_at) as datum, count(mkampagne) as summe").where('mstandort=? and mkampagne=?', @mobject.id, s.obj).group("date(created_at)") %>
+            <% end %>
+
+            window.datasetsigno<%= num %> = [['Datum', 'Anzahl']];
+            <% @substats.each do |s| %>
+              datasetsigno<%= num %>.push(['<%= s.datum %>', <%= s.summe %>]);
+            <% end %>
+            google.charts.setOnLoadCallback(drawSigno<%= num %>);
+            function drawSigno<%= num %>() {
+              var data = google.visualization.arrayToDataTable(datasetsigno<%= num %>);
+              var options = {
+                title: "<%= Mobject.find(s.obj).name %>",
+                colors: ['#ACC550'],
+                legend: { position: 'bottom' }
+              };
+              var chart = new google.visualization.LineChart(document.getElementById('signchartobj<%= num %>'));
+              chart.draw(data, options);
+            };
+
+        <% end %>
+        <% end %>
+
+    <% end %>
+
     $("nav").hide();
     $("navhide").hide();
     $("navhide").hide();
@@ -1567,6 +1757,26 @@ $(document).ready(function(){
       });
     <% end %>
 
+  <% if @topic == "objekte_signcal" %>
+    $('#calendar').fullCalendar({
+        now: '<%= DateTime.now %>',
+        allDaySlot: false,
+        timeFormat: 'H(:mm)',
+        defaultView: 'basicWeek',
+        defaultView: 'basicDay',
+        defaultView: 'basicWeek',
+        defaultView: 'listYear',
+        defaultView: 'agendaWeek',
+        defaultView: 'month',
+        slotDuration: '1:00:00',
+        contentHeight: 'auto',
+        textColor: 'white',
+        firstDay: 1,
+        weekNumbers: true,
+        events: [<%= raw @array %> ]
+    });
+  <% end %>
+  
     $("a").tooltip();
     $('.owl-show').owlCarousel({  
       itemsCustom : false,
@@ -1644,5 +1854,12 @@ $(document).ready(function(){
 
   <% when "objekte_projektdashboard" %>
       document.addEventListener("turbolinks:load", function() {callme();})
+
+  <% when "objekte_projektdashboard" %>
+      document.addEventListener("turbolinks:load", function() {callme();})
+
+  <% when "objekte_signstat" %>
+      document.addEventListener("turbolinks:load", function() {drawSign1();drawSign2();})
+
 <% end %>
 </script>
