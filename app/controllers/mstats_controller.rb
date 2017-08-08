@@ -17,9 +17,13 @@ class MstatsController < ApplicationController
   def new
     @mstat = Mstat.new
     @mstat.mobject_id = params[:mobject_id]
-    @mstat.amount = Mobject.find(params[:mobject_id]).price
+    if Mobject.find(params[:mobject_id]).price
+      @mstat.amount = Mobject.find(params[:mobject_id]).price
+    else
+      @mstat.amount = 0
+    end
     @dontype = params[:dontype]
-    if params[:dontype] == "User"
+    if params[:dontype] == "user"
       @mstat.owner_id = current_user.id
       @mstat.owner_type = "User"
     else
@@ -38,7 +42,7 @@ class MstatsController < ApplicationController
   def create
     @mstat = Mstat.new(mstat_params)
     if @mstat.save
-      redirect_to mobject_path(:id => @mstat.mobject_id, :topic => "CF Transaktionen"), notice: (I18n.t :act_create)
+      redirect_to mobject_path(:id => @mstat.mobject_id, :topic => "objekte_cftransaktionen"), notice: (I18n.t :act_create)
     else
       render :new
     end
@@ -47,7 +51,7 @@ class MstatsController < ApplicationController
   # PUT /mstats/1
   def update
     if @mstat.update(mstat_params)
-      redirect_to mobject_path(:id => @mstat.mobject_id, :topic => "CF Transaktionen"), notice: (I18n.t :act_update)
+      redirect_to mobject_path(:id => @mstat.mobject_id, :topic => "objekte_cftransaktionen"), notice: (I18n.t :act_update)
     else
       render :edit
     end
@@ -57,7 +61,7 @@ class MstatsController < ApplicationController
   def destroy
     @id = @mstat.mobject_id
     @mstat.destroy
-    redirect_to mobject_path(:id => @id, :topic => "CF Transaktionen"), notice: (I18n.t :act_delete)
+    redirect_to mobject_path(:id => @id, :topic => "objekte_cftransaktionen"), notice: (I18n.t :act_delete)
   end
 
   private

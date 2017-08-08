@@ -4,16 +4,16 @@
         <div class="col-md-9">
             <div class="panel panel-heading header">
               <h1>
-              <%= link_to mobject_path(:id => @mstat.mobject_id, :topic => "CF_Transaktionen") do %>
+              <%= link_to mobject_path(:id => @mstat.mobject_id, :topic => "objekte_cftransaktionen") do %>
                 <i class="btn btn-primary glyphicon glyphicon-list"></i>
               <% end %>
-              <% if @mstat.mobject.msubtype == "Spenden" %>
+              <% if @mstat.mobject.msubtype == "spenden" %>
                 SPENDER
               <% end %>
-              <% if @mstat.mobject.msubtype == "Belohnungen" %>
+              <% if @mstat.mobject.msubtype == "belohnungen" %>
                 UNTERSTUETZER
               <% end %>
-              <% if @mstat.mobject.msubtype == "Zinsen" %>
+              <% if @mstat.mobject.msubtype == "zinsen" %>
                 KREDITGEBER
               <% end %>
               <% if @mstat.owner_type == "Company" %>
@@ -50,22 +50,31 @@
             <% end %>
             <%= f.hidden_field :mobject_id, class:"form-control" %>
             <%= f.hidden_field :owner_type, class:"form-control" %>
-            <% if @mstat.mobject.msubtype == "Spenden" %>
+            <% if @mstat.mobject.msubtype == "spenden" %>
               <div class="form-group">
-                <%= f.label "Spendenbetrag" %><br/>
-                <%= f.number_field :amount, class:"form-control"%>
+                <%= f.label (I18n.t :spendenbetrag) %><br/>
+                <div class="input-group">
+                  <%= f.text_field :amount, :value => (@mstat.amount), :style => "text-align: Right", class:"form-control" %>
+                  <div class="input-group-addon"> <%= (I18n.t :waehrung) %></div>
+                </div>
               </div>
             <% end %>
-            <% if @mstat.mobject.msubtype == "Belohnungen" %>
+            <% if @mstat.mobject.msubtype == "belohnungen" %>
               <div class="form-group">
-                <%= f.label "Unterstützungsbetrag" %><br/>
-                <%= f.number_field :amount, :readonly => true, class:"form-control"%>
+                <%= f.label (I18n.t :supportbetrag) %><br/>
+                <div class="input-group">
+                  <%= f.text_field :amount, :value => (@mstat.amount), :readonly => true, :style => "text-align: Right", class:"form-control" %>
+                  <div class="input-group-addon"> <%= (I18n.t :waehrung) %></div>
+                </div>
               </div>
             <% end %>
-            <% if @mstat.mobject.msubtype == "Zinsen" %>
+            <% if @mstat.mobject.msubtype == "zinsen" %>
               <div class="form-group">
-                <%= f.label "Kreditbetrag" %><br/>
-                <%= f.number_field :amount, class:"form-control"%>
+                <%= f.label (I18n.t :kreditbetrag) %><br/>
+                <div class="input-group">
+                  <%= f.text_field :amount, :value => (@mstat.amount), :style => "text-align: Right", class:"form-control" %>
+                  <div class="input-group-addon"> <%= (I18n.t :waehrung) %></div>
+                </div>
               </div>
             <% end %>
             <div class="form-group">

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :sensors
   resources :idea_crowdratings
   resources :prices
   resources :crits
@@ -58,6 +59,8 @@ Rails.application.routes.draw do
   get 'home/dashboard2_data'
   get 'home/dashboard_projectdata'
   get 'home/Umfragen_data'
+  get 'home/readsensordata'
+  get 'home/writesensordata'
   
   resources :searches
   resources :partner_links

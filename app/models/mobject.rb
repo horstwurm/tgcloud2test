@@ -19,6 +19,7 @@ has_many :plannings, dependent: :destroy
 has_many :ideas, dependent: :destroy 
 has_many :crits, dependent: :destroy
 has_many :prices, dependent: :destroy
+has_many :sensors, dependent: :destroy
 
 before_validation :update_geo_address
 geocoded_by :geo_address

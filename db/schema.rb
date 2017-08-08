@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170706171337) do
+ActiveRecord::Schema.define(version: 20170725175419) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -358,6 +358,10 @@ ActiveRecord::Schema.define(version: 20170706171337) do
     t.string   "address3"
     t.float    "latitude"
     t.float    "longitude"
+    t.float    "min"
+    t.float    "max"
+    t.float    "alert"
+    t.boolean  "alertlow"
     t.string   "risk"
     t.string   "quality"
     t.string   "costinfo"
@@ -520,6 +524,20 @@ ActiveRecord::Schema.define(version: 20170706171337) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.index ["user_id"], name: "index_searches_on_user_id"
+  end
+
+  create_table "sensordata", force: :cascade do |t|
+    t.integer  "mobject_id"
+    t.float    "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sensors", force: :cascade do |t|
+    t.integer  "mobject_id"
+    t.float    "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "signage_cals", force: :cascade do |t|

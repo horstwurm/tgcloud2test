@@ -1,76 +1,42 @@
 
-<div class="row">
-    <div class='col-xs-12'>
-      <div class='panel-body'>
-         <%= link_to mobjects_path(:mtype => @questionaire.mtype) do %>
-          <i class="btn btn-primary glyphicon glyphicon-list"></i>
-         <% end %><br>
-      </div>
-    </div>
-</div>
+    <div id="calendar_basic" style="width: 1000px; height: 350px;"></div>
 
-<%= header("Umfrage "+@questionaire.name, false) %>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["calendar"]});
+      google.charts.setOnLoadCallback(drawChart);
 
-<div class="row">
-  <% @questionaire.questions.each do |q| %>
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-      <div>
-        <%= header("Frage "+q.name, false) %>
-      </div>
-      <div id="<%="chart"+q.id.to_s %>"></div>
-    </div>
-  <% end %>
-</div>
+   function drawChart() {
+       var dataTable = new google.visualization.DataTable();
+       dataTable.addColumn({ type: 'date', id: 'Date' });
+       dataTable.addColumn({ type: 'number', id: 'Won/Loss' });
+       dataTable.addRows([
+          [ new Date(2012, 3, 13), 37032 ],
+          [ new Date(2012, 3, 14), 38024 ],
+          [ new Date(2012, 3, 15), 38024 ],
+          [ new Date(2012, 3, 16), 38108 ],
+          [ new Date(2012, 3, 17), 38229 ],
+          // Many rows omitted for brevity.
+          [ new Date(2013, 9, 4), 38177 ],
+          [ new Date(2013, 9, 5), 38705 ],
+          [ new Date(2013, 9, 12), 38210 ],
+          [ new Date(2013, 9, 13), 38029 ],
+          [ new Date(2013, 9, 19), 38823 ],
+          [ new Date(2013, 9, 23), 38345 ],
+          [ new Date(2013, 9, 24), 38436 ],
+          [ new Date(2013, 9, 30), 38447 ]
+        ]);
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+       var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
 
-<script>
-$(document).ready(function(){
+       var options = {
+         title: "Red Sox Attendance",
+         height: 350,
+       };
 
-  google.charts.load('current', {'packages':['corechart']});
-
-  <% @questionaire.questions.each do |q| %>
-  
-    <% if q.mcategory.name == "multiple" or q.mcategory.name == "single" %>
-      window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
-      <% q.answers.each do |qa| %>
-        dataset<%= q.id.to_s %>.push(['<%= qa.name %>', <%= qa.user_answers.where('checker=?',true).count %>]);
-      <% end %>
-    <% end %>
-
-    <% if q.mcategory.name == "numerisch" %>
-      window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
-      <% q.answers.each do |qa| %>
-        dataset<%= q.id.to_s %>.push(['Minimum', <%= qa.user_answers.minimum(:num) %>]);
-        dataset<%= q.id.to_s %>.push(['Maximum', <%= qa.user_answers.maximum(:num) %>]);
-        dataset<%= q.id.to_s %>.push(['Durchschnitt', <%= qa.user_answers.average(:num) %>]);
-      <% end %>
-    <% end %>
-
-    <% if q.mcategory.name == "text" %>
-      window.dataset<%= q.id.to_s %> = [['kategorie', 'anzahl'],['keine Antwort',0]];
-      <% q.answers.each do |qa| %>
-        dataset<%= q.id.to_s %>.push(['kein Text angegeben', <%= qa.user_answers.where('description=?',"").count %>]);
-        dataset<%= q.id.to_s %>.push(['Text angegeben', <%= qa.user_answers.where('description<>?',"").count %>]);
-      <% end %>
-    <% end %>
-
-    google.charts.setOnLoadCallback(drawChart<%= q.id.to_s %>);
-    function drawChart<%= q.id.to_s %>() {
-      var data = google.visualization.arrayToDataTable(dataset<%= q.id.to_s %>);
-      var options = {
-        title: 'Antworten',
-        colors: ['#ACC550'],
-        legend: { position: 'bottom' }
-      };
-      var chart = new google.visualization.ColumnChart(document.getElementById('<%="chart"+q.id.to_s %>'));
-      chart.draw(data, options);
-    };
-
-  <% end %>
-  
-});
-</script>
+       chart.draw(dataTable, options);
+   }
+    </script>
 
 <script>
   document.addEventListener("turbolinks:load", function() {drawChart1})

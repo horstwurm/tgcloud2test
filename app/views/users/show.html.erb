@@ -542,7 +542,9 @@
           <%= build_medialist2(@user.mratings, "mratings", "objekte") %>
         <% when "personen_anmeldungen" %>
           <%= build_medialist2(@user.madvisors.where('role=?',"eventteilnehmer"), "madvisors", "objekte") %>
-  
+        <% when "personen_sensoren" %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"sensoren"), "mobjects", nil) %>
+   
         <% when "personen_kalendereintraege" %>
           <div id='calendar'></div>
           <div class="panel-body">

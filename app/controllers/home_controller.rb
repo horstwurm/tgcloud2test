@@ -407,4 +407,42 @@ end
 def dashboard_project
 end
 
+def readsensordata
+  if params[:sensor]
+    @sensor = Mobject.find(params[:sensor])
+    @iots = @sensor.sensors.order(:created_at)
+  else
+    @iots = Sensor.all.order(:created_at)
+  end
+  respond_to do |format|
+    format.json 
+      msg = []
+      #msg << {:datum => "Datum", :wert => "Wert"}
+      @iots.each do |i|
+          msg << {:datum => i.created_at.to_s, :wert => i.value}
+      end
+      render :json => msg.to_json
+  end
+end
+
+def writesensordata
+  if params[:sensor] and params[:value]
+    @sensor = Sensor.new
+    @sensor.mobject_id = params[:sensor]
+    @sensor.value = params[:value]
+    @sensor.save
+  end
+  @sensors = Mobject.find(params[:sensor]).sensors
+  msg = []
+  if @sensors and @sensors.count > 0 
+    msg << {:type => "Anzahl", :anzahl => @sensors.count}
+  else
+    msg << {:type => "Anzahl", :anzahl => 0}
+  end
+  respond_to do |format|
+    format.json 
+      render :json => msg.to_json
+  end
+end
+
 end

@@ -31,7 +31,7 @@ class MobjectsController < ApplicationController
     if params[:mtype]
       session[:mtype] = params[:mtype]
       case params[:mtype]
-        when "kleinanzeigen", "stellenanzeigen", "crowdfunding", "angebote"
+        when "crowdfunding"
           if params[:msubtype]
             session[:msubtype] = params[:msubtype]
           end
@@ -115,24 +115,21 @@ class MobjectsController < ApplicationController
       @edition_id = params[:edition_id]
     end
 
-    if @topic == "objekte_crowdfunding"
+    if @topic == "objekte_cfstatistik"
       @mobjects_anz = Mstat.select("date(created_at) as datum, count(amount) as summe").where('mobject_id = ?', @mobject.id).group("date(created_at)")
       @mobjects_bet = Mstat.select("date(created_at) as datum, sum(amount) as summe").where('mobject_id = ?', @mobject.id).group("date(created_at)")
   
-      @anz_s = ""
+      @anz_s = [["Datum", "Anzahl TRX"]]
       @mobjects_anz.each do |i|
-        @anz_s = @anz_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
+        @anz_s << [i.datum.to_s, i.summe]
       end
-      @anz_s = @anz_s[0, @anz_s.length - 1]    
-  
-      @bet_s = ""
+      @bet_s = [["Datum", "Betrag"]]
       @mobjects_bet.each do |i|
-        @bet_s = @bet_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
+        @bet_s << [i.datum.to_s, i.summe]
       end
-      @bet_s = @bet_s[0, @bet_s.length - 1]
     end
     
-    if @topic == "objekte_calender"
+    if @topic == "objekte_kalendervermietungen"
      counter = 0 
      @array = ""
      @cals = @mobject.mcalendars
@@ -479,7 +476,14 @@ class MobjectsController < ApplicationController
     @mobject.status = "OK"
     @mobject.eventpart = false
     @mobject.mtype = params[:mtype]
-    @mobject.msubtype = params[:msubtype]
+    case @mobject.mtype
+      when "angebote"
+        @mobject.msubtype = "aktion"
+      when "kleinanzeigen", "stellenanzeigen"
+        @mobject.msubtype = "anbieten"
+      when "crowdfunding"
+        @mobject.msubtype = "spenden"
+    end
     @mobject.mcategory_id = params[:msubtype]
     @mobject.active = true
     @mobject.social = false
@@ -506,6 +510,10 @@ class MobjectsController < ApplicationController
     @mobject.sum_paufwand_plan = 100
     @mobject.quality = "hoch"
     @mobject.risk = "tief"
+    @mobject.min = 0
+    @mobject.max = 100
+    @mobject.alert = 80
+    @mobject.alertlow = false
 
     if params[:parent]
       @mobject.parent = params[:parent].to_i
@@ -575,7 +583,7 @@ class MobjectsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def mobject_params
-      params.require(:mobject).permit(:sum_paufwand_ist, :sum_pkosten_ist, :sum_paufwand_plan, :sum_pkosten_plan, :risk, :quality, :costinfo, :parent, :online_pub, :eventpart, :owner_id, :owner_type, :mtype, :msubtype, :mcategory_id, :company_id, :user_id, :status, :name, :description, :reward, :interest_rate, :due_date, :date_from, :date_to, :time_from, :time_to, :days, :amount, :price, :tasks, :skills, :offers, :social, :price_reg, :price_new, :active, :keywords, :homepage, :address1, :address2, :address3, :latitude, :longitude, :geo_address)
+      params.require(:mobject).permit(:min, :max, :alert, :alertlow, :sum_paufwand_ist, :sum_pkosten_ist, :sum_paufwand_plan, :sum_pkosten_plan, :risk, :quality, :costinfo, :parent, :online_pub, :eventpart, :owner_id, :owner_type, :mtype, :msubtype, :mcategory_id, :company_id, :user_id, :status, :name, :description, :reward, :interest_rate, :due_date, :date_from, :date_to, :time_from, :time_to, :days, :amount, :price, :tasks, :skills, :offers, :social, :price_reg, :price_new, :active, :keywords, :homepage, :address1, :address2, :address3, :latitude, :longitude, :geo_address)
     end
 
 end

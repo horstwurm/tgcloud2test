@@ -38,35 +38,19 @@ class CompaniesController < ApplicationController
       @campaign = SignageCamp.find(params[:camp_id])
     end
 
+    @mtypes = Mobject.select("mtype").distinct
     @stats = [["Aktivtäten","Anzahl"]]
-    @stats << ["Projekte/Tasks", @company.mobjects.where('mtype=?','projekte').count ]
-    @stats << ["Werbekampagnen", @company.mobjects.where('mtype=?','kampagnen').count ]
-    @stats << ["Werbestandorte", @company.mobjects.where('mtype=?','standorte').count ]
-    @stats << ["Publikationen", @company.mobjects.where('mtype=?','publikationren').count ]
-    @stats << ["Umfragen", @company.mobjects.where('mtype=?','umfragen').count ]
-    @stats << ["Innovationswettbewerbe", @company.mobjects.where('mtype=?','innovationswettbewerbe').count ]
-    @stats << ["Veranstaltungen", @company.mobjects.where('mtype=?','veranstaltungen').count ]
     @stats << ["Partnerlinks", @company.partner_links.count ]
-
-    if false
-    @array_s = ""
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','angebote'), "angebote" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','kleinanzeigen'), "Kleinanzeigen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','vermietungen'), "Vermietungen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','veranstaltungen'), "Veranstaltungen" )
-    @array_s = @company.build_stats(@array_s, @company.msponsors, "sponsorenengagements" ) 
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','ausschreibungen'), "ausschreibungen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','ausflugsziele'), "ausflugsziele" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','stellenanzeigen'), "stellenanzeigen" )
-    @array_s = @company.build_stats(@array_s, @company.mobjects.where('mtype=?','crowdfunding'), "crowdfunding" )
-    @array_s = @company.build_stats(@array_s, @company.mstats, "crowdfunding Beitraege" )            if false
-    @array_s = @company.build_stats(@array_s, @company.customers, "kundenstatus" )
-    @array_s = @company.build_stats(@array_s, @company.transactions.where('ttype=?', "payment"), "transaktionen" )
-    @array_s = @company.build_stats(@array_s, Email.where('m_to=? or m_from=?', @company.user.id, @company.user.id), "nachrichten" )
-    #@array_s = @company.build_stats(@array_s, @company.user.searches, "abfragen" )
-    @array_s = @array_s[0, @array_s.length - 1]
+    @stats << ["Kundenverbindungen", @company.customers.count ]
+    @stats << ["ZV Transaktionen", @company.transactions.where('ttype=?', "payment").count]
+    @mtypes.each do |t|
+      @text = t.mtype
+      @anz = @company.mobjects.where('mtype=?',t.mtype).count
+      if @anz and @anz > 0
+        @stats << [@text, @anz]
+      end
     end
-    
+
   end
 
   # GET /companies/new
