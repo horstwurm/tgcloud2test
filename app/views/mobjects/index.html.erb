@@ -55,15 +55,15 @@
           <% if m.sensors.last %>
             <% dat = m.sensors.last.created_at.strftime("%m.%d.%Y-%H:%m") %>
             <% wert = m.sensors.last.value %>
-            <% if m.min %>
-              <% min = m.min %>
+            <% if m.mini %>
+              <% min = m.mini %>
             <% else %>
-              <% min = 0 %>
+              <% mini = 0 %>
             <% end %>
-            <% if m.max %>
-              <% max = m.max %>
+            <% if m.maxi %>
+              <% max = m.maxi %>
             <% else %>
-              <% mas = 100 %>
+              <% max = 100 %>
             <% end %>
             <% if m.alert %>
               <% alert = m.alert %>

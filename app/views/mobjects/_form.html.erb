@@ -200,11 +200,11 @@
                   <% when "sensoren" %>
                       <%= f.label I18n.t :wertebereich %>
                       <div class="input-group">
-                        <%= f.text_field :min, :value => (@mobject.min), :style => "text-align: Right", class:"form-control" %>
+                        <%= f.text_field :mini, :value => (@mobject.mini), :style => "text-align: Right", class:"form-control" %>
                         <div class="input-group-addon"> <%= (I18n.t :min) %></div><br>
                       </div>
                       <div class="input-group">
-                        <%= f.text_field :max, :value => (@mobject.max), :style => "text-align: Right", class:"form-control" %>
+                        <%= f.text_field :maxi, :value => (@mobject.maxi), :style => "text-align: Right", class:"form-control" %>
                         <div class="input-group-addon"> <%= (I18n.t :max) %></div>
                       </div>
                       <%= f.label I18n.t :alarmierung %>
