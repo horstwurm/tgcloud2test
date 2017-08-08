@@ -419,7 +419,7 @@ def readsensordata
       msg = []
       #msg << {:datum => "Datum", :wert => "Wert"}
       @iots.each do |i|
-          msg << {:datum => i.created_at.to_s, :wert => i.value}
+          msg << {:datum => i.created_at.strftime("%H:%m"), :wert => i.value}
       end
       render :json => msg.to_json
   end
