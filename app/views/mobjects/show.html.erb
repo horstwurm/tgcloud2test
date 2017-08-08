@@ -1625,8 +1625,7 @@ $(document).ready(function(){
           $.ajax({
   
               // url: "http://tkbinfo-horstwurm.c9users.io/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
-              url: "http://tgpcloud.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
-              // url: "http://tgpcloud.herokuapp.com/home/dashboard_projectdata.json?pid=1",
+              url: "http://mytgcloud.herokuapp.com/home/dashboard_projectdata.json?pid=<%= @mobject.id %>",
 
               //force to handle it as text
               dataType: "text",
@@ -1823,8 +1822,8 @@ $(document).ready(function(){
         
           $.ajax({
     
-              url: "http://tgpcloud.herokuapp.com/home/readsensordata.json?sensor=<%= @mobject.id %>",
-              url: "https://tgcloud-horstwurm.c9users.io/home/readsensordata.json?sensor=<%= @mobject.id %>",
+              url: "http://mytgcloud.herokuapp.com/home/readsensordata.json?sensor=<%= @mobject.id %>",
+              // url: "https://tgcloud-horstwurm.c9users.io/home/readsensordata.json?sensor=<%= @mobject.id %>",
               dataType: "text",
               success: function(data) {
     
