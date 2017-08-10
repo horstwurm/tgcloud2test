@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.3.0'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0'
 # Use Puma as the app server
@@ -42,7 +44,7 @@ gem 'jquery-turbolinks'
 gem 'aws-sdk', '~>2.3'
 gem 'rqrcode-with-patches', '~> 0.5.4'
 gem 'rqrcode_png'
-gem 'redis'
+#gem 'redis'
 
 gem 'fullcalendar.io-rails'
 gem 'momentjs-rails'
