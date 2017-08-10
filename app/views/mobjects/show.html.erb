@@ -1152,6 +1152,7 @@
   
                 <% @iso = [] %>
                 <% @isoall = [] %>
+                <% @isoallrep = [] %>
                 <% @timetracks = Timetrack.select("user_id").where('mobject_id=? and costortime=?', @mobject.id, @c_scope).distinct %>
                 <% @timetracks.each do |u| %>
                   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -1223,6 +1224,7 @@
                       <% end %>
                       
                       <% @isoall << @istsollallgraph %>
+                      <% @isoallrep << @istsollall %>
                       
                       <div id="<%="chart" + (@isoall.length-1).to_s %>"></div>
 
@@ -1232,7 +1234,7 @@
             </div>
             
             <% if @export %>
-              <% @filename = exportWriter(@mobject, @istsoll, @istsollkum, @istsollau, @isoall) %>
+              <% @filename = exportWriter(@mobject, @istsoll, @istsollkum, @istsollau, @isoallrep) %>
               <% link_to @filename, @filename.remove("public") %>
     	        <%= link_to @filename.remove("public") do %>
                 <span><i class="btn btn-active glyphicon glyphicon-cloud-download"></i></span>

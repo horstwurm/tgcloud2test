@@ -510,8 +510,8 @@ class MobjectsController < ApplicationController
     @mobject.sum_paufwand_plan = 100
     @mobject.quality = "hoch"
     @mobject.risk = "tief"
-    @mobject.mini = 0
     @mobject.maxi = 100
+    @mobject.mini = 0
     @mobject.alert = 80
     @mobject.alertlow = false
 
