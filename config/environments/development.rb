@@ -36,10 +36,11 @@ Rails.application.configure do
   
   ActionMailer::Base.smtp_settings = {
       :address        => 'smtp.genotec.ch',
-      :port           => '465',
+      :port           => '25',
       :authentication => :plain,
       :user_name      => "sa_hw@bmptg.ch",
       :password       => "Sommer2017@",
+      :domain         => 'https://tgcloud-horstwurm.c9users.io',
       :enable_starttls_auto => true
   }
 
