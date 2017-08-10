@@ -27,11 +27,21 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
   # CR001 
-  config.action_mailer.default_url_options = { host: '127.0.0.1', port:3000 }
+  config.action_mailer.default_url_options = { host: 'https://tgcloud-horstwurm.c9users.io' }
   config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  
+  ActionMailer::Base.smtp_settings = {
+      :address        => 'smtp.genotec.ch',
+      :port           => '465',
+      :authentication => :plain,
+      :user_name      => "sa_hw@bmptg.ch",
+      :password       => "Sommer2017@",
+      :enable_starttls_auto => true
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
