@@ -40,9 +40,8 @@ Rails.application.configure do
       :authentication => :plain,
       :user_name      => "sa_hw@bmptg.ch",
       :password       => "Sommer2017@",
-      :domain         => 'https://tgcloud-horstwurm.c9users.io',
-      :enable_starttls_auto => true
-  }
+      :domain         => 'genotec.ch',
+    }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

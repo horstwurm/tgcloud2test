@@ -72,11 +72,11 @@ Rails.application.configure do
   ActionMailer::Base.smtp_settings = {
       :address        => 'smtp.genotec.ch',
       :port           => '25',
+      :domain         => 'genotec.ch',
       :authentication => :plain,
+      :enable_starttls_auto => true
       :user_name      => ENV['SMTP_USERNAME'],
       :password       => ENV['SMTP_PASSWORD'],
-      :domain         => 'heroku.com',
-      :enable_starttls_auto => true
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
