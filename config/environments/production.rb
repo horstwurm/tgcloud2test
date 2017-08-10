@@ -77,7 +77,7 @@ Rails.application.configure do
       :enable_starttls_auto => true,
       :user_name      => ENV['SMTP_USERNAME'],
       :password       => ENV['SMTP_PASSWORD'],
-  }telnet 
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
