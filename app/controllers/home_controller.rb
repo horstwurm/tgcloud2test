@@ -373,11 +373,7 @@ def index16
 end
 
 def index17
-  if params[:questionaire_id] 
-    @questionaire = Mobject.find(params[:questionaire_id])
-  else
-    @questionaire = Mobject.where('mtype=?',"umfragen").first
-  end
+  TestMailer.test_email(current_user).deliver_now
 end
 
 def Umfragen_data
