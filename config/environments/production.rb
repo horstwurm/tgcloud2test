@@ -65,6 +65,19 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "tkbnet_#{Rails.env}"
   config.action_mailer.perform_caching = false
+  # CR001
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: 'mytgcloud.herokuapp.com' }
+  
+  ActionMailer::Base.smtp_settings = {
+      :address        => 'smtp.bmptg.ch',
+      :port           => '587',
+      :authentication => :plain,
+      :user_name      => ENV['SMTP_USERNAME'],
+      :password       => ENV['SMTP_PASSWORD'],
+      :domain         => 'heroku.com',
+      :enable_starttls_auto => true
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

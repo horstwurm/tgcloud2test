@@ -6,13 +6,16 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '5655b56303d5ce7a8d261a20dc0c0992da29d53de9fc32d3847d4a69c103012a215accaec0eff9b6b4c6a55b6807e49d0da9fa299944b50cfdac2b86b396fc0e'
+  # CR001
+  config.secret_key = '5655b56303d5ce7a8d261a20dc0c0992da29d53de9fc32d3847d4a69c103012a215accaec0eff9b6b4c6a55b6807e49d0da9fa299944b50cfdac2b86b396fc0e'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  # CR001
+  config.mailer_sender = 'mytgcloud@example.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -128,6 +131,8 @@ Devise.setup do |config|
   # Default is nil, meaning there is no restriction on how long a user can take
   # before confirming their account.
   # config.confirm_within = 3.days
+  # CR001
+  config.confirm_within = 3.days
 
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
@@ -171,7 +176,9 @@ Devise.setup do |config|
   # :failed_attempts = Locks an account after a number of failed attempts to sign in.
   # :none            = No lock strategy. You should handle locking by yourself.
   # config.lock_strategy = :failed_attempts
-
+  # CR001 
+  config.lock_strategy = :none
+  
   # Defines which key will be used when locking and unlocking an account
   # config.unlock_keys = [:email]
 
@@ -181,7 +188,9 @@ Devise.setup do |config|
   # :both  = Enables both strategies
   # :none  = No unlock strategy. You should handle unlocking by yourself.
   # config.unlock_strategy = :both
-
+  # CR001
+  config.unlock_strategy = :email
+  
   # Number of authentication tries before locking an account if lock_strategy
   # is failed attempts.
   # config.maximum_attempts = 20
@@ -191,6 +200,8 @@ Devise.setup do |config|
 
   # Warn on the last attempt before the account is locked.
   # config.last_attempt_warning = true
+  # CR001
+  config.last_attempt_warning = true
 
   # ==> Configuration for :recoverable
   #
