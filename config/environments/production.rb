@@ -70,9 +70,9 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'mytgcloud.herokuapp.com' }
   
   ActionMailer::Base.smtp_settings = {
-      :address        => 'smtp.genotec.ch',
+      :address        => 'smtp.mailgun.org',
       :port           => '587',
-      :domain         => 'genotec.ch',
+      :domain         => 'mg.mytgcloud.com',
       :authentication => :plain,
       :enable_starttls_auto => true,
       :user_name      => ENV['SMTP_USERNAME'],
