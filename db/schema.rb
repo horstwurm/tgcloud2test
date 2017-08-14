@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725175419) do
+ActiveRecord::Schema.define(version: 20170813160641) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -69,8 +69,21 @@ ActiveRecord::Schema.define(version: 20170725175419) do
     t.string   "parent_domain"
     t.string   "right"
     t.boolean  "access"
+    t.string   "info"
+    t.float    "fee"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "charges", force: :cascade do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "stripe_id"
+    t.string   "topic"
+    t.string   "plan"
+    t.float    "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -735,6 +748,7 @@ ActiveRecord::Schema.define(version: 20170725175419) do
     t.boolean  "calendar"
     t.integer  "time_from"
     t.integer  "time_to"
+    t.string   "stripe_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "avatar_file_name"

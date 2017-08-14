@@ -12,11 +12,11 @@
                 <% domain_text = "Neues Angebot" %>
                 <% hash = Hash.new %>
                 <% path = new_mobject_path(:mtype => "Angebote", :msubtype => "Standard", :user_id => @user_id, :company_id => @company_id) %>
-                <% hash = {"path" => path, "text" => "Standardangebot", "icon" => "Standard", :user_id => @user_id, :company_id => @company_id } %>
+                <% hash = {"path" => path, "text" => "Standardangebot", "info" => "Standard", :user_id => @user_id, :company_id => @company_id } %>
                 <% hasharray << hash %>
                 <% hash = Hash.new %>
                 <% path = new_mobject_path(:mtype => "Angebote", :msubtype => "Aktion", :user_id => @user_id, :company_id => @company_id) %>
-                <% hash = {"path" => path, "text" => "Befristete Sonderaktion", "icon" => "Aktion", :user_id => @user_id, :company_id => @company_id } %>
+                <% hash = {"path" => path, "text" => "Befristete Sonderaktion", "info" => "Aktion", :user_id => @user_id, :company_id => @company_id } %>
                 <% hasharray << hash %>
                 <%= complex_menue(domain, domain_text, hasharray) %>
 
@@ -29,11 +29,11 @@
                 <% domain_text = "Neue Kleinanzeige" %>
                 <% hash = Hash.new %>
                 <% path = new_mobject_path(:mtype => "Kleinanzeigen", :msubtype => "Suchen", :user_id => @user_id, :company_id => @company_id) %>
-                <% hash = {"path" => path, "text" => "Suchen", "icon" => "Suchen", :user_id => @user_id, :company_id => @company_id } %>
+                <% hash = {"path" => path, "text" => "Suchen", "info" => "Suchen", :user_id => @user_id, :company_id => @company_id } %>
                 <% hasharray << hash %>
                 <% hash = Hash.new %>
                 <% path = new_mobject_path(:mtype => "Kleinanzeigen", :msubtype => "Anbieten", :user_id => @user_id, :company_id => @company_id) %>
-                <% hash = {"path" => path, "text" => "Anbieten", "icon" => "Anbieten", :user_id => @user_id, :company_id => @company_id } %>
+                <% hash = {"path" => path, "text" => "Anbieten", "info" => "Anbieten", :user_id => @user_id, :company_id => @company_id } %>
                 <% hasharray << hash %>
                 <%= complex_menue(domain, domain_text, hasharray) %>
 
@@ -46,11 +46,11 @@
                 <% domain_text = "Neue Stellenanzeige" %>
                 <% hash = Hash.new %>
                 <% path = new_mobject_path(:mtype => "Stellenanzeigen", :msubtype => "Suchen", :user_id => @user_id, :company_id => @company_id) %>
-                <% hash = {"path" => path, "text" => "Suchen", "icon" => "Suchen", :user_id => @user_id, :company_id => @company_id } %>
+                <% hash = {"path" => path, "text" => "Suchen", "info" => "Suchen", :user_id => @user_id, :company_id => @company_id } %>
                 <% hasharray << hash %>
                 <% hash = Hash.new %>
                 <% path = new_mobject_path(:mtype => "Stellenanzeigen", :msubtype => "Anbieten", :user_id => @user_id, :company_id => @company_id) %>
-                <% hash = {"path" => path, "text" => "Anbieten", "icon" => "Anbieten", :user_id => @user_id, :company_id => @company_id } %>
+                <% hash = {"path" => path, "text" => "Anbieten", "info" => "Anbieten", :user_id => @user_id, :company_id => @company_id } %>
                 <% hasharray << hash %>
                 <%= complex_menue(domain, domain_text, hasharray) %>
 
@@ -64,15 +64,15 @@
                 <% domain_text = "Neue Crowdfunding Initiative" %>
                 <% hash = Hash.new %>
                 <% path = new_mobject_path(:mtype => "Crowdfunding", :msubtype => "Spenden", :user_id => @user_id, :company_id => @company_id) %>
-                <% hash = {"path" => path, "text" => "Spenden", "icon" => "Spenden", :user_id => @user_id, :company_id => @company_id } %>
+                <% hash = {"path" => path, "text" => "Spenden", "info" => "Spenden", :user_id => @user_id, :company_id => @company_id } %>
                 <% hasharray << hash %>
                 <% hash = Hash.new %>
                 <% path = new_mobject_path(:mtype => "Crowdfunding", :msubtype => "Belohnungen", :user_id => @user_id, :company_id => @company_id) %>
-                <% hash = {"path" => path, "text" => "Belohnungen", "icon" => "Belohnungen", :user_id => @user_id, :company_id => @company_id } %>
+                <% hash = {"path" => path, "text" => "Belohnungen", "info" => "Belohnungen", :user_id => @user_id, :company_id => @company_id } %>
                 <% hasharray << hash %>
                 <% hash = Hash.new %>
                 <% path = new_mobject_path(:mtype => "Crowdfunding", :msubtype => "Zinsen", :user_id => @user_id, :company_id => @company_id) %>
-                <% hash = {"path" => path, "text" => "Zinsen", "icon" => "Zinsen", :user_id => @user_id, :company_id => @company_id } %>
+                <% hash = {"path" => path, "text" => "Zinsen", "info" => "Zinsen", :user_id => @user_id, :company_id => @company_id } %>
                 <% hasharray << hash %>
                 <%= complex_menue(domain, domain_text, hasharray) %>
 

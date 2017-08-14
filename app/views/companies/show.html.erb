@@ -151,6 +151,9 @@
           <%= build_medialist2(@company.mobjects.where('mtype=?',"umfragen"), "mobjects", nil) %>
         <% when "institutionen_publikationen" %>
           <%= build_medialist2(@company.mobjects.where('mtype=?',"publikationen"), "mobjects", nil) %>
+    	 <% when "institutionen_charges" %>
+          <%= build_medialist2(@company.charges, "charges", nil) %>
+
     	 <% when "institutionen_kundenbeziehungen" %>
           <% hash = Hash.new %>
           <% hash = {:company_id => @company.id} %>

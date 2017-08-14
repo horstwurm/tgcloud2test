@@ -27912,8 +27912,8 @@ var complexOptions = [ // names of options that are objects whose properties sho
 	'header',
 	'footer',
 	'buttonText',
-	'buttonIcons',
-	'themeButtonIcons'
+	'buttoninfos',
+	'themeButtoninfos'
 ];
 
 
@@ -34661,7 +34661,7 @@ DayGrid.mixin({
 		var content = $(
 			'<div class="fc-header ' + view.widgetHeaderClass + '">' +
 				'<span class="fc-close ' +
-					(isTheme ? 'ui-icon ui-icon-closethick' : 'fc-icon fc-icon-x') +
+					(isTheme ? 'ui-info ui-info-closethick' : 'fc-info fc-info-x') +
 				'"></span>' +
 				'<span class="fc-title">' +
 					htmlEscape(title) +
@@ -35785,8 +35785,8 @@ TimeGrid.mixin({
 		props.right = right * 100 + '%';
 
 		if (shouldOverlap && seg.forwardPressure) {
-			// add padding to the edge so that forward stacked events don't cover the resizer's icon
-			props[this.isRTL ? 'marginLeft' : 'marginRight'] = 10 * 2; // 10 is a guesstimate of the icon's width
+			// add padding to the edge so that forward stacked events don't cover the resizer's info
+			props[this.isRTL ? 'marginLeft' : 'marginRight'] = 10 * 2; // 10 is a guesstimate of the info's width
 		}
 
 		return props;
@@ -37589,10 +37589,10 @@ function Toolbar(calendar, toolbarOptions) {
 					var customButtonProps;
 					var viewSpec;
 					var buttonClick;
-					var overrideText; // text explicitly set by calendar's constructor options. overcomes icons
+					var overrideText; // text explicitly set by calendar's constructor options. overcomes infos
 					var defaultText;
-					var themeIcon;
-					var normalIcon;
+					var themeinfo;
+					var normalinfo;
 					var innerHtml;
 					var classes;
 					var button; // the element
@@ -37608,7 +37608,7 @@ function Toolbar(calendar, toolbarOptions) {
 									customButtonProps.click.call(button[0], ev);
 								}
 							};
-							overrideText = ''; // icons will override text
+							overrideText = ''; // infos will override text
 							defaultText = customButtonProps.text;
 						}
 						else if ((viewSpec = calendar.getViewSpec(buttonName))) {
@@ -37629,24 +37629,24 @@ function Toolbar(calendar, toolbarOptions) {
 
 						if (buttonClick) {
 
-							themeIcon =
+							themeinfo =
 								customButtonProps ?
-									customButtonProps.themeIcon :
-									calendar.options.themeButtonIcons[buttonName];
+									customButtonProps.themeinfo :
+									calendar.options.themeButtoninfos[buttonName];
 
-							normalIcon =
+							normalinfo =
 								customButtonProps ?
-									customButtonProps.icon :
-									calendar.options.buttonIcons[buttonName];
+									customButtonProps.info :
+									calendar.options.buttoninfos[buttonName];
 
 							if (overrideText) {
 								innerHtml = htmlEscape(overrideText);
 							}
-							else if (themeIcon && calendar.options.theme) {
-								innerHtml = "<span class='ui-icon ui-icon-" + themeIcon + "'></span>";
+							else if (themeinfo && calendar.options.theme) {
+								innerHtml = "<span class='ui-info ui-info-" + themeinfo + "'></span>";
 							}
-							else if (normalIcon && !calendar.options.theme) {
-								innerHtml = "<span class='fc-icon fc-icon-" + normalIcon + "'></span>";
+							else if (normalinfo && !calendar.options.theme) {
+								innerHtml = "<span class='fc-info fc-info-" + normalinfo + "'></span>";
 							}
 							else {
 								innerHtml = htmlEscape(defaultText);
@@ -39001,7 +39001,7 @@ Calendar.defaults = {
 		day: 'day'
 	},
 
-	buttonIcons: {
+	buttoninfos: {
 		prev: 'left-single-arrow',
 		next: 'right-single-arrow',
 		prevYear: 'left-double-arrow',
@@ -39012,7 +39012,7 @@ Calendar.defaults = {
 	
 	// jquery-ui theming
 	theme: false,
-	themeButtonIcons: {
+	themeButtoninfos: {
 		prev: 'circle-triangle-w',
 		next: 'circle-triangle-e',
 		prevYear: 'seek-prev',
@@ -39056,13 +39056,13 @@ Calendar.rtlDefaults = { // right-to-left defaults
 		center: '',
 		right: 'title'
 	},
-	buttonIcons: {
+	buttoninfos: {
 		prev: 'right-single-arrow',
 		next: 'left-single-arrow',
 		prevYear: 'right-double-arrow',
 		nextYear: 'left-double-arrow'
 	},
-	themeButtonIcons: {
+	themeButtoninfos: {
 		prev: 'circle-triangle-e',
 		next: 'circle-triangle-w',
 		nextYear: 'seek-prev',

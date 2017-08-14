@@ -20,6 +20,12 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 de:
+  yearly: "Jahresgebühr"
+  monthly: "Monatsgebühr"
+  plan: "Zahlungsart"
+  fee: "Nutzungsgebühr"
+  service: "TGCloudService"
+  charges: "TGcloud Zahlungen"
   news: "News"
   personen: "Personen"
   institutionen: "Institutionen"

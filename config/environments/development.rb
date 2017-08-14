@@ -32,15 +32,12 @@ Rails.application.configure do
   # CR001 
   config.action_mailer.default_url_options = { host: 'https://tgcloud-horstwurm.c9users.io' }
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :mailgun
   
-  ActionMailer::Base.smtp_settings = {
-      :address        => 'smtp.genotec.ch',
-      :port           => '587',
-      :authentication => :plain,
-      :user_name      => "sa_hw@bmptg.ch",
-      :password       => "Sommer2017@",
-      :domain         => 'genotec.ch'
+  config.action_mailer.delivery_method = :mailgun
+    config.action_mailer.mailgun_settings = {
+      api_key: 'key-8543570e5be692fe5bf4f9983ce6dfd6',
+      domain: 'mg.mytgcloud.com',
     }
 
   # Print deprecation notices to the Rails logger.

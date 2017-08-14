@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :charges
   resources :sensors
   resources :idea_crowdratings
   resources :prices

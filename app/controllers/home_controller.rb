@@ -373,7 +373,25 @@ def index16
 end
 
 def index17
-  TestMailer.test_email(current_user).deliver_now
+# First, instantiate the Mailgun Client with your API key
+mg_client = Mailgun::Client.new 'key-8543570e5be692fe5bf4f9983ce6dfd6'
+
+# Put the client in test mode
+mg_client.enable_test_mode!
+
+# Define your message parameters
+message_params = {  from: 'bob@sending_domain.com',
+                    to: 'horst.wurm@bluewin.ch',
+                    subject: 'The Ruby SDK is awesome!',
+                    text: 'It is really easy to send a message!'
+                  }
+
+# Send your message through the client
+# Note: This will not actually hit the API, and will return a generic OK response.
+mg_client.send_message('sending_domain.com', message_params)
+
+# You can now access a copy of message_params
+Mailgun::Client.deliveries.first[:from] # => 'bob@sending_domain.com'
 end
 
 def Umfragen_data

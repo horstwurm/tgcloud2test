@@ -4,7 +4,8 @@ class Company < ActiveRecord::Base
       
     geocoded_by :geo_address
     after_validation :geocode
-    
+
+    has_many :charges, as: :owner, dependent: :destroy 
     has_many :mobjects, as: :owner, dependent: :destroy 
     has_many :mstats, as: :owner, dependent: :destroy 
     has_many :customers, as: :owner, dependent: :destroy 

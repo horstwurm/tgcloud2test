@@ -45,6 +45,8 @@ gem 'aws-sdk', '~>2.3'
 gem 'rqrcode-with-patches', '~> 0.5.4'
 gem 'rqrcode_png'
 #gem 'redis'
+gem 'mailgun-ruby', '~>1.1.6'
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
 gem 'fullcalendar.io-rails'
 gem 'momentjs-rails'

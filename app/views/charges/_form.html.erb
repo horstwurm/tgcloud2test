@@ -1,0 +1,74 @@
+   <%= form_for @charge do |f| %>
+
+        <% if @charge.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@charge.errors.count, "error") + (I18n.t :notsaved) %></h2>
+              <ul>
+                  <% @charge.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading header">
+                      <li_header>
+                      <%= link_to user_path(:id => @charge.owner_id, :topic => "personen_charges") do %>
+                        <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                      <% end %>
+                      </li_header>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel-body">
+                    <div class="form-group">
+                      <div class="form-group">
+                        <%= f.label I18n.t :service %>
+                        <%= I18n.t (@charge.topic) %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label I18n.t :plan %>
+                        <%= I18n.t (@charge.plan) %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label I18n.t :fee %>
+                        <preis>
+                        <%= sprintf("%05.2f CHF", @charge.amount) %>
+                        </preis>
+                      </div>
+                    </div>
+                     <%= f.hidden_field :plan, class:"form-control" %>
+                     <%= f.hidden_field :owner_id, class:"form-control" %>
+                     <%= f.hidden_field :owner_type, class:"form-control" %>
+                     <%= f.hidden_field :amount, class:"form-control" %>
+                     <%= f.hidden_field :topic, class:"form-control" %>
+
+                      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                              data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                              data-description="<%= @charge.topic %>"
+                              data-amount="<%= @charge.amount*100 %>"
+                              data-currency="chf"
+                              <% if @charge.owner_type == "User" %>
+                                data-email="<%= @charge.owner.email %>"
+                              <% else %>
+                                data-email="<%= @charge.owner.user.email %>"
+                              <% end %>
+                              data-locale="auto">
+                      </script>
+                    <% if false %>
+                      <div class="actions">
+                         <%= f.submit (I18n.t :speichern),  class:"btn btn-primary btn-lg"%>
+                      </div>
+                    <% end %>
+                    
+                </div>
+            </div>
+        </div>
+    <% end %> 
+

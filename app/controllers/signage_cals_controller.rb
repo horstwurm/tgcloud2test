@@ -42,7 +42,7 @@ class SignageCalsController < ApplicationController
             @obj = Mobject.find(c.mkampagne)
           end
 
-          icon = '<i class="glyphicon glyphicon-calender"></i>'
+          info = '<i class="glyphicon glyphicon-calender"></i>'
   
           time_from = c.time_from.to_s
           if c.time_from.to_s.length == 1
@@ -62,7 +62,7 @@ class SignageCalsController < ApplicationController
           @array = @array + "{"
           @array = @array + "color: '#ACC550',"
           @array = @array + "textColor: 'white',"
-          @array = @array + "icon: '" + icon + "', "
+          @array = @array + "info: '" + info + "', "
           @array = @array + "title: '" + @obj.name + "', "
           @array = @array + "start: '" + @calstart + "', "
           @array = @array + "end: '" + @calend + "', "

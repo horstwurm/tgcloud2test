@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+    has_many :charges, as: :owner, dependent: :destroy 
     has_many :mobjects, as: :owner, dependent: :destroy 
     has_many :mstats, as: :owner, dependent: :destroy 
     has_many :customers, as: :owner, dependent: :destroy 

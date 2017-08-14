@@ -565,7 +565,7 @@
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-/* mouse grab icon */
+/* mouse grab info */
 .grabbing { 
     cursor:url(grabbing.png) 8 8, move;
 }
@@ -1204,10 +1204,10 @@ body .fc { /* extra precedence to overcome jqui */
 }
 
 
-/* Icons (inline elements with styled text that mock arrow icons)
+/* infos (inline elements with styled text that mock arrow infos)
 --------------------------------------------------------------------------------------------------*/
 
-.fc-icon {
+.fc-info {
 	display: inline-block;
 	height: 1em;
 	line-height: 1em;
@@ -1226,62 +1226,62 @@ body .fc { /* extra precedence to overcome jqui */
 	}
 
 /*
-Acceptable font-family overrides for individual icons:
+Acceptable font-family overrides for individual infos:
 	"Arial", sans-serif
 	"Times New Roman", serif
 
 NOTE: use percentage font sizes or else old IE chokes
 */
 
-.fc-icon:after {
+.fc-info:after {
 	position: relative;
 }
 
-.fc-icon-left-single-arrow:after {
+.fc-info-left-single-arrow:after {
 	content: "\02039";
 	font-weight: bold;
 	font-size: 200%;
 	top: -7%;
 }
 
-.fc-icon-right-single-arrow:after {
+.fc-info-right-single-arrow:after {
 	content: "\0203A";
 	font-weight: bold;
 	font-size: 200%;
 	top: -7%;
 }
 
-.fc-icon-left-double-arrow:after {
+.fc-info-left-double-arrow:after {
 	content: "\000AB";
 	font-size: 160%;
 	top: -7%;
 }
 
-.fc-icon-right-double-arrow:after {
+.fc-info-right-double-arrow:after {
 	content: "\000BB";
 	font-size: 160%;
 	top: -7%;
 }
 
-.fc-icon-left-triangle:after {
+.fc-info-left-triangle:after {
 	content: "\25C4";
 	font-size: 125%;
 	top: 3%;
 }
 
-.fc-icon-right-triangle:after {
+.fc-info-right-triangle:after {
 	content: "\25BA";
 	font-size: 125%;
 	top: 3%;
 }
 
-.fc-icon-down-triangle:after {
+.fc-info-down-triangle:after {
 	content: "\25BC";
 	font-size: 125%;
 	top: 2%;
 }
 
-.fc-icon-x:after {
+.fc-info-x:after {
 	content: "\000D7";
 	font-size: 200%;
 	top: 6%;
@@ -1325,9 +1325,9 @@ NOTE: use percentage font sizes or else old IE chokes
 	border-bottom-right-radius: 4px;
 }
 
-/* icons in buttons */
+/* infos in buttons */
 
-.fc button .fc-icon { /* non-theme */
+.fc button .fc-info { /* non-theme */
 	position: relative;
 	top: -0.05em; /* seems to be a good adjustment across browsers */
 	margin: 0 .2em;
@@ -2609,7 +2609,7 @@ tkb_green {
 }
 
 /*******************************************************************************************************/
-/* ICON Kachel */
+/* info Kachel */
 /*******************************************************************************************************/
 /* line 75, /home/ubuntu/workspace/app/assets/stylesheets/bootstraply.css.scss */
 .kachel_min_height {
@@ -3850,7 +3850,7 @@ th {
   }
 }
 @font-face {
-  font-family: 'Glyphicons Halflings';
+  font-family: 'glyphicons Halflings';
   src: url("/assets/bootstrap/glyphicons-halflings-regular-13634da87d9e23f8c3ed9108ce1724d183a39ad072e73e1b3d8cbf646d2d0407.eot");
   src: url("/assets/bootstrap/glyphicons-halflings-regular-13634da87d9e23f8c3ed9108ce1724d183a39ad072e73e1b3d8cbf646d2d0407.eot?#iefix") format("embedded-opentype"), url("/assets/bootstrap/glyphicons-halflings-regular-fe185d11a49676890d47bb783312a0cda5a44c4039214094e7957b4c040ef11c.woff2") format("woff2"), url("/assets/bootstrap/glyphicons-halflings-regular-a26394f7ede100ca118eff2eda08596275a9839b959c226e15439557a5a80742.woff") format("woff"), url("/assets/bootstrap/glyphicons-halflings-regular-e395044093757d82afcb138957d06a1ea9361bdcf0b442d06a18a8051af57456.ttf") format("truetype"), url("/assets/bootstrap/glyphicons-halflings-regular-42f60659d265c1a3c30f9fa42abcbb56bd4a53af4d83d316d6dd7a36903c43e5.svg#glyphicons_halflingsregular") format("svg");
 }
@@ -3859,7 +3859,7 @@ th {
   position: relative;
   top: 1px;
   display: inline-block;
-  font-family: 'Glyphicons Halflings';
+  font-family: 'glyphicons Halflings';
   font-style: normal;
   font-weight: normal;
   line-height: 1;
@@ -9291,14 +9291,14 @@ tbody.collapse.in {
   outline: 0;
 }
 /* line 211, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_navbar.scss */
-.navbar-toggle .icon-bar {
+.navbar-toggle .info-bar {
   display: block;
   width: 22px;
   height: 2px;
   border-radius: 1px;
 }
 /* line 217, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_navbar.scss */
-.navbar-toggle .icon-bar + .icon-bar {
+.navbar-toggle .info-bar + .info-bar {
   margin-top: 4px;
 }
 @media (min-width: 768px) {
@@ -9565,7 +9565,7 @@ tbody.collapse.in {
   background-color: #ddd;
 }
 /* line 448, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_navbar.scss */
-.navbar-default .navbar-toggle .icon-bar {
+.navbar-default .navbar-toggle .info-bar {
   background-color: #888;
 }
 /* line 453, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_navbar.scss */
@@ -9666,7 +9666,7 @@ tbody.collapse.in {
   background-color: #333;
 }
 /* line 583, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_navbar.scss */
-.navbar-inverse .navbar-toggle .icon-bar {
+.navbar-inverse .navbar-toggle .info-bar {
   background-color: #fff;
 }
 /* line 588, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_navbar.scss */
@@ -11786,8 +11786,8 @@ button.close {
   filter: alpha(opacity=90);
 }
 /* line 128, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_carousel.scss */
-.carousel-control .icon-prev,
-.carousel-control .icon-next,
+.carousel-control .info-prev,
+.carousel-control .info-next,
 .carousel-control .glyphicon-chevron-left,
 .carousel-control .glyphicon-chevron-right {
   position: absolute;
@@ -11797,31 +11797,31 @@ button.close {
   display: inline-block;
 }
 /* line 138, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_carousel.scss */
-.carousel-control .icon-prev,
+.carousel-control .info-prev,
 .carousel-control .glyphicon-chevron-left {
   left: 50%;
   margin-left: -10px;
 }
 /* line 143, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_carousel.scss */
-.carousel-control .icon-next,
+.carousel-control .info-next,
 .carousel-control .glyphicon-chevron-right {
   right: 50%;
   margin-right: -10px;
 }
 /* line 148, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_carousel.scss */
-.carousel-control .icon-prev,
-.carousel-control .icon-next {
+.carousel-control .info-prev,
+.carousel-control .info-next {
   width: 20px;
   height: 20px;
   line-height: 1;
   font-family: serif;
 }
 /* line 158, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_carousel.scss */
-.carousel-control .icon-prev:before {
+.carousel-control .info-prev:before {
   content: '\2039';
 }
 /* line 163, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_carousel.scss */
-.carousel-control .icon-next:before {
+.carousel-control .info-next:before {
   content: '\203a';
 }
 
@@ -11880,8 +11880,8 @@ button.close {
   /* line 240, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_carousel.scss */
   .carousel-control .glyphicon-chevron-left,
   .carousel-control .glyphicon-chevron-right,
-  .carousel-control .icon-prev,
-  .carousel-control .icon-next {
+  .carousel-control .info-prev,
+  .carousel-control .info-next {
     width: 30px;
     height: 30px;
     margin-top: -10px;
@@ -11889,12 +11889,12 @@ button.close {
   }
   /* line 249, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_carousel.scss */
   .carousel-control .glyphicon-chevron-left,
-  .carousel-control .icon-prev {
+  .carousel-control .info-prev {
     margin-left: -10px;
   }
   /* line 253, /usr/local/rvm/gems/ruby-2.3.0/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_carousel.scss */
   .carousel-control .glyphicon-chevron-right,
-  .carousel-control .icon-next {
+  .carousel-control .info-next {
     margin-right: -10px;
   }
 

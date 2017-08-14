@@ -8,15 +8,15 @@
           <% end %>
           <%= link_to searches_path :search_domain => "tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :generate => true, :page => session[:page] do %>
             <i class="btn btn-primary pull-right glyphicon glyphicon-user">
-              <span class="glythicon glyphicon-filter"></span></i>
+              <span class="glythinfo glyphicon-filter"></span></i>
           <% end %>
           <%= link_to searches_path :search_domain => "tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :activate => true, :page => session[:page] do %>
             <i class="btn btn-warning pull-right glyphicon glyphicon-user">
-              <span class="glythicon glyphicon-hand-right"></span></i>
+              <span class="glythinfo glyphicon-hand-right"></span></i>
           <% end %>
           <%= link_to searches_path :search_domain => "tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :remove => true, :page => session[:page] do %>
             <i class="btn btn-danger pull-right glyphicon glyphicon-user">
-              <span class="glythicon glyphicon-trash"></span></i>
+              <span class="glythinfo glyphicon-trash"></span></i>
           <% end %>
           <% @counter = UserTicket.where('ticket_id=?',@ticket.id).count %>
           <%= link_to ticketuserview_index_path :ticket_id => @ticket.id do %>

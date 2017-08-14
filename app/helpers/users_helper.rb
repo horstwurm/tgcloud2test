@@ -174,6 +174,10 @@ def build_medialist2(items, cname, par)
           html_string = html_string + '<div class="panel-body panel-listhead">'
 
             case items.table_name
+                when "appparams"
+                  html_string = html_string + (I18n.t item.right.to_sym)
+                when "charges"
+                  html_string = html_string + (I18n.t item.topic.to_sym)
                 when "prices"
                   html_string = html_string + item.sequence.to_s + (I18n.t :nterpreis)
                 when "crits"
@@ -319,7 +323,7 @@ def build_medialist2(items, cname, par)
                   when "searches"
                       if par != nil and par != ""
                         html_string = html_string + link_to(showcal_index_path(:filter_id => item.id, :dom => par)) do
-                          content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon(item.mtype.to_sym)["icon"], style:"font-size:8em") 
+                          content_tag(:i, nil, class:"glyphicon glyphicon-" + getinfo(item.mtype.to_sym)["info"], style:"font-size:8em") 
                         end
                       else
                         html_string = html_string + "<soft_padding>"
@@ -352,6 +356,53 @@ def build_medialist2(items, cname, par)
             html_string = html_string + '<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">'
               html_string = html_string + '<div class="panel-header panel-media"><list>'
                 case items.table_name
+                    when "appparams"
+                      html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> Optionen<br><br>'
+                      if item.fee
+                        html_string = html_string + link_to(new_charge_path(:user_id => current_user.id, :topic => item.right, :fee => item.fee/100, :plan => "monthly")) do
+                          content_tag(:i, nil, class:"btn btn-special glyphicon glyphicon-plus")
+                        end
+                        html_string = html_string + " " + sprintf("%05.2f CHF/Monat",item.fee/100) 
+                        html_string = html_string + "<br><br>"
+                        html_string = html_string + link_to(new_charge_path(:user_id => current_user.id, :topic => item.right, :fee => item.fee/10, :plan => "yearly")) do
+                          content_tag(:i, nil, class:"btn btn-special glyphicon glyphicon-plus")
+                        end
+                        html_string = html_string + " " + sprintf("%05.2f CHF/Jahr",item.fee/10) 
+                      end
+
+
+                    when "charges"
+                      html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
+                      html_string = html_string + item.plan + "<br>"
+                      html_string = html_string + '<i class="glyphicon glyphicon-calendar"></i> '
+                      html_string = html_string + item.created_at.strftime("%d-%m-%Y") + "-"
+                      if item.plan == "yearly"
+                        offset = 365
+                      else
+                        offset = 30
+                      end
+                      html_string = html_string + (item.created_at.to_date + offset).strftime("%d-%m-%Y") + "<br>"
+                      html_string = html_string + '<i class="glyphicon glyphicon-euro"></i> '
+                      html_string = html_string + sprintf("%05.2f CHF",item.amount)  + "<br>"
+                      proc = (item.created_at.to_date.jd+offset - Date.today.jd)*100/offset
+                      html_string = html_string + proc.to_s  + "%<br>"
+                      if proc > 0
+                        if proc >= 30
+                          progresscolor = "success"
+                        end
+                        if proc > 10 and proc < 30
+                          progresscolor = "warning"
+                        end
+                        if proc <= 10 
+                          progresscolor = "danger"
+                        end
+                        html_string = html_string + '<div class="progress">'
+                        html_string = html_string + '<div class="progress-bar progress-bar-' + progresscolor + ' progress-bar-striped" role="progressbar2" aria-valuenow="' + proc.to_s + '" aria-valuemin="0" aria-valuemax="100" style="width:' + proc.to_s + '%">'
+                        html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
+                        html_string = html_string + '</div>'
+                        html_string = html_string + '</div>'
+                      end
+
                     when "idea_crowdratings"
                       if item.rating and item.rating > 0
                         item.rating.round.times do
@@ -1349,15 +1400,15 @@ def header3(objekt, item, topic, format)
 
     pos = topic.to_s.index("_")
     if pos > 0
-      iconsymbol = (topic[pos+1..topic.length-1]).to_sym
+      infosymbol = (topic[pos+1..topic.length-1]).to_sym
     else
-      iconsymbol = topic
+      infosymbol = topic
     end
     
   if format
-    html_string = "<div class='col-xs-12'><div class='panel-heading header'><li_header>" + (I18n.t iconsymbol) + "</li_header></div></div>"
+    html_string = "<div class='col-xs-12'><div class='panel-heading header'><li_header>" + (I18n.t infosymbol) + "</li_header></div></div>"
   else
-    html_string = "<div class='panel-heading header'><li_header>" + (I18n.t iconsymbol) + "</li_header></div>"
+    html_string = "<div class='panel-heading header'><li_header>" + (I18n.t infosymbol) + "</li_header></div>"
   end
   
   html_string = html_string + action_buttons2(objekt, item, topic)
@@ -1396,6 +1447,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("personen",item,"personen_bewertungen", item.mratings.count > 0)
         html_string = html_string + build_nav("personen",item,"personen_favoriten",item.favourits.count > 0)
         html_string = html_string + build_nav("personen",item,"personen_zugriffsberechtigungen", item.credentials.count > 0)
+        html_string = html_string + build_nav("personen",item,"personen_charges", item.charges.count > 0)
 
         ########################################################################################################################
         # inactive code
@@ -1430,6 +1482,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("institutionen",item,"institutionen_ausschreibungen",item.mobjects.where('mtype=?',"ausschreibungen").count > 0)
         html_string = html_string + build_nav("institutionen",item,"institutionen_crowdfunding", item.mobjects.where('mtype=?',"crowdfunding").count > 0)
         html_string = html_string + build_nav("institutionen",item,"institutionen_crowdfundingbeitraege", item.mstats.count > 0)
+        html_string = html_string + build_nav("institutionen",item,"institutionen_charges", item.charges.count > 0)
 
         ########################################################################################################################
         # inactive code
@@ -1539,20 +1592,20 @@ def build_nav(domain, item, domain2, condition)
     end
 
     pos = domain2.index("_")
-    iconsymbol = (domain2[pos+1..domain2.length-1]).to_sym
+    infosymbol = (domain2[pos+1..domain2.length-1]).to_sym
     
     case domain
       when "personen"
-        html_string = link_to(user_path(:id => item.id, :topic => domain2), title: getIcon2(iconsymbol)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(iconsymbol)["icon"])
+        html_string = link_to(user_path(:id => item.id, :topic => domain2), title: getinfo2(infosymbol)["infotext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getinfo2(infosymbol)["info"])
         end
       when "institutionen"
-        html_string = link_to(company_path(:id => item.id, :topic => domain2), title: getIcon2(iconsymbol)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(iconsymbol)["icon"])
+        html_string = link_to(company_path(:id => item.id, :topic => domain2), title: getinfo2(infosymbol)["infotext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getinfo2(infosymbol)["info"])
         end
       when "objekte"
-        html_string = link_to(mobject_path(:id => item.id, :topic => domain2), title: getIcon2(iconsymbol)["icontext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
-          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getIcon2(iconsymbol)["icon"])
+        html_string = link_to(mobject_path(:id => item.id, :topic => domain2), title: getinfo2(infosymbol)["infotext"], 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip' ) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + getinfo2(infosymbol)["info"])
         end
     end
   end
@@ -1916,139 +1969,135 @@ def action_buttons2(object_type, item, topic)
   return html_string.html_safe
 end
 
-def getIcon2(topic)
+def getinfo2(topic)
   
-  icon = "question_mark"
+  info = "question_mark"
   if I18n.t topic
-    icontext = (I18n.t topic)
+    infotext = (I18n.t topic)
   else
-    icontext = "unbekannt"
+    infotext = "unbekannt"
   end
 
   case topic
     when :signstat
-      icon = "signal"
+      info = "signal"
     when :signlocshow, :signkamshow
-      icon = "film"
+      info = "film"
     when :signcal
-      icon = "calendar"
+      info = "calendar"
     when :projekte
-      icon = "tasks"
+      info = "tasks"
     when :institutionen
-      icon = "copyright-mark"
+      info = "copyright-mark"
     when :zeiterfassung
-      icon = "time"
+      info = "time"
     when :ressourcenplanung
-      icon = "screenshot"
+      info = "screenshot"
     when :gruppen
-      icon = "th"
+      info = "th"
     when :zugriffsberechtigungen, :projektberechtigungen
-      icon = "lock"
-
-    ########################################################################################################################
-    # inactive code
-    ########################################################################################################################
-    when :news
-      icon = "alert"
+      info = "lock"
+     when :news
+      info = "alert"
     when :personen, :geburtstage, :ansprechpartner, :anmeldungen, :gruppenmitglieder, :umfrageteilnehmer, :teilnehmerveranstaltung, :kalendergeburtstage
-      icon = "user"
+      info = "user"
     when :vermietungen
-      icon = "retweet"
+      info = "retweet"
     when :sensoren, :sensordaten
-      icon = "record"
+      info = "record"
     when :ausschreibungen, :kalenderausschreibungen
-      icon = "pencil"
+      info = "pencil"
     when :publikationen, :kalenderpublikationen, :ausgaben
-      icon = "book"
+      info = "book"
     when :artikel
-      icon = "text-background"
+      info = "text-background"
     when :umfragen, :fragen, :meineabfragen
-      icon = "question-sign"
+      info = "question-sign"
     when :innovationswettbewerbe
-      icon = "cog"
+      info = "cog"
     when :veranstaltungen, :kalenderveranstaltungen
-      icon = "glass"
+      info = "glass"
     when :ausflugsziele
-      icon = "camera"
+      info = "camera"
     when :werbeflaechen
-      icon = "blackboard"
+      info = "blackboard"
     when :angebote
-      icon = "shopping-cart"
+      info = "shopping-cart"
     when :angebotestandard, :info
-      icon = "info-sign"
+      info = "info-sign"
     when :angeboteaktion, :aktionen, :kalenderaktionen
-      icon = "exclamation-sign"
+      info = "exclamation-sign"
     when :stellenanzeigen, :kalenderstellenanzeigen
-      icon = "briefcase"
+      info = "briefcase"
     when :kleinanzeigen
-      icon = "pushpin"
+      info = "pushpin"
     when :stellenanzeigensuchen, :kleinanzeigensuchen, :details
-      icon = "search"
+      info = "search"
     when :stellenanzeigenanbieten, :kleinanzeigenanbieten
-      icon = "filter"
+      info = "filter"
     when :crowdfunding, :kalendercrowdfunding
-      icon = "grain"
+      info = "grain"
     when :crowdfundingspenden
-      icon = "gift"
+      info = "gift"
     when :crowdfundingbelohnungen, :tickets
-      icon = "qrcode"
+      info = "qrcode"
     when :crowdfundingzinsen
-      icon = "signal"
+      info = "signal"
     when :kalender, :kalendereintraege, :kalender, :kalendervermietungen
-      icon = "calendar"
+      info = "calendar"
     when :ideen, :einstellungen
-      icon = "cog"
-    when :crowdfundingbeitraege, :transaktionen, :cftransaktionen
-      icon = "euro"
+      info = "cog"
+    when :crowdfundingbeitraege, :transaktionen, :cftransaktionen, :charges
+      info = "euro"
     when :bewertungen
-      icon = "star"
+      info = "star"
     when :favoriten, :sponsorenengagements
-      icon = "heart"
+      info = "heart"
     when :kundenbeziehungen
-      icon = "check"
+      info = "check"
     when :emails
-      icon = "envelope"
+      info = "envelope"
     when :zugriffsberechtigungen, :projektberechtigungen
-      icon = "lock"
+      info = "lock"
     when :kampagnen, :dskampagnen
-      icon = "bullhorn"
+      info = "bullhorn"
     when :dsstandorte
-      icon = "blackboard"
+      info = "blackboard"
     when :jury
-      icon = "education"
+      info = "education"
     when :preise
-      icon = "gift"
+      info = "gift"
     when :bewertungskriterien
-      icon = "pencil"
+      info = "pencil"
     when :projektdashboard, :aktivitaeten, :cfstatistik
-      icon = "dashboard"
+      info = "dashboard"
     when :auftragscontrolling
-      icon = "eye-open"
+      info = "eye-open"
     when :substruktur
-      icon = "cog"
+      info = "cog"
     when :fragen
-      icon = "question-sign"
+      info = "question-sign"
     when :ausgaben
-      icon = "dublicate"
+      info = "dublicate"
     when :blog
-      icon = "comment"
+      info = "comment"
     when :tickets, :eintrittskarten
-      icon = "barcode"
+      info = "barcode"
     when :show
-      icon = "film"
+      info = "film"
     when :kontobeziehungen
-      icon = "film"
+      info = "film"
     when :mappositionen, :mappositionenfavoriten, :standorte
-      icon = "map-marker"
+      info = "map-marker"
     when :partnerlinks
-      icon = "globe"
+      info = "globe"
     when :ausschreibungsangebote
-      icon = "book"
+      info = "book"
     when :berechtigungen
-      icon = "lock"
+      info = "lock"
   end
   ret = Hash.new
-  ret = {"icon" => icon, "icontext" => icontext}
+  ret = {"info" => info, "infotext" => infotext}
   return ret
 end
 
@@ -2189,7 +2238,7 @@ def build_hauptmenue
         if user_signed_in?
           path = showcal_index_path + "?dom=geburtstage"
           hash = Hash.new
-          hash = {"path" => path, "text" => (I18n.t :geburtstage), "icon" => :geburtstage }
+          hash = {"path" => path, "text" => (I18n.t :geburtstage), "info" => :geburtstage }
           hasharray << hash
         end
       end
@@ -2197,28 +2246,28 @@ def build_hauptmenue
       if creds.include?("hauptmenue_"+domain+domain2)
         path = showcal_index_path + "?dom=aktionen"
         hash = Hash.new
-        hash = {"path" => path, "text" => (I18n.t :aktionen), "icon" => :aktionen }
+        hash = {"path" => path, "text" => (I18n.t :aktionen), "info" => :aktionen }
         hasharray << hash
       end
       domain2 = "ausschreibungen"
       if creds.include?("hauptmenue_"+domain+domain2)
         path = showcal_index_path + "?dom=ausschreibungen"
         hash = Hash.new
-        hash = {"path" => path, "text" => (I18n.t :ausschreibungen), "icon" => :ausschreibungen }
+        hash = {"path" => path, "text" => (I18n.t :ausschreibungen), "info" => :ausschreibungen }
         hasharray << hash
       end
      domain2 = "stellenanzeigen"
       if creds.include?("hauptmenue_"+domain+domain2)
         path = showcal_index_path + "?dom=stellenanzeigen"
         hash = Hash.new
-        hash = {"path" => path, "text" => (I18n.t :stellenanzeigen), "icon" => :stellenanzeigen }
+        hash = {"path" => path, "text" => (I18n.t :stellenanzeigen), "info" => :stellenanzeigen }
         hasharray << hash
       end
       domain = "crowdfunding"
       if creds.include?("hauptmenue_"+domain+domain2)
         path = showcal_index_path + "?dom=crowdfunding"
         hash = Hash.new
-        hash = {"path" => path, "text" => (I18n.t :crowdfunding), "icon" => :crowdfunding }
+        hash = {"path" => path, "text" => (I18n.t :crowdfunding), "info" => :crowdfunding }
         hasharray << hash
       end
       domain_text = I18n.t :kalender
@@ -2236,8 +2285,8 @@ def simple_menue (domain, path)
     content_tag(:div, nil, class:"col-xs-12 col-sm-12 col-md-6 col-lg-4") do
       content_tag(:div, nil, class:"panel-body panel-nav") do
         temp = content_tag(:div, nil, class:"col-xs-3 col-sm-3 col-md-3 col-lg-3") do
-          icon_size = "4"
-          content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon2(domain.to_sym)["icon"], style:"font-size:" + icon_size + "em") 
+          info_size = "4"
+          content_tag(:i, nil, class:"glyphicon glyphicon-" + getinfo2(domain.to_sym)["info"], style:"font-size:" + info_size + "em") 
         end
         temp = temp + content_tag(:div, nil, class:"col-xs-7 col-sm-7 col-md-7 col-lg-7") do
           content_tag(:home_nav, (I18n.t domain))
@@ -2254,8 +2303,8 @@ def complex_menue (domain, domain_text, hasharray)
     content_tag(:div, nil, class:"panel-body panel-nav") do
       
       temp = content_tag(:div, nil, class:"col-xs-3 col-sm-3 col-md-3 col-lg-3") do
-        icon_size = "4"
-        content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon2(domain.to_sym)["icon"], style:"font-size:" + icon_size + "em") 
+        info_size = "4"
+        content_tag(:i, nil, class:"glyphicon glyphicon-" + getinfo2(domain.to_sym)["info"], style:"font-size:" + info_size + "em") 
       end
       temp = temp + content_tag(:div, nil, class:"col-xs-9 col-sm-9 col-md-9 col-lg-9") do
         temp2 = content_tag(:home_nav, domain_text) + "<br><br>".html_safe
@@ -2271,7 +2320,7 @@ def build_sub_menu(domain, domain_text, hasharray)
   html_string = "<" + domain.to_sym.to_s + "_options" + ">"
   for i in 0..hasharray.length-1
         html_string = html_string + "<a href="+hasharray[i]["path"] + ">"
-        html_string = html_string + "<i class='glyphicon glyphicon-"+getIcon2(hasharray[i]["icon"])["icon"]+"' style='font-size:2em'> </i> "
+        html_string = html_string + "<i class='glyphicon glyphicon-"+getinfo2(hasharray[i]["info"])["info"]+"' style='font-size:2em'> </i> "
         html_string = html_string + hasharray[i]["text"]
         html_string = html_string + "</a><br><br>"
   end
@@ -2318,8 +2367,8 @@ def build_kachel_access(topic, mode, user)
       content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
         content_tag(:div, nil, class:"thumbnail " + thumbnail_state, align:"center") do
           content_tag(:span, nil) do
-            icon_size = "4"
-            content_tag(:i, nil, class:"glyphicon glyphicon-" + getIcon2(a.right.to_sym)["icon"], style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe + (I18n.t a.right))
+            info_size = "4"
+            content_tag(:i, nil, class:"glyphicon glyphicon-" + getinfo2(a.right.to_sym)["info"], style:"font-size:" + info_size + "em") + content_tag(:small_cal, "<br>".html_safe + (I18n.t a.right))
           end
         end
       end
@@ -2371,340 +2420,325 @@ def init_apps
     @array = []
 
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "news", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "news", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "personen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "personen", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "institutionen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "institutionen", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "angebote", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "angebote", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "vermietungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "vermietungen", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "ausschreibungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "ausschreibungen", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "stellenanzeigen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "stellenanzeigen", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "veranstaltungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "veranstaltungen", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "ausflugsziele", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "ausflugsziele", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "kleinanzeigen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "kleinanzeigen", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "publikationen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "publikationen", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "artikel", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "artikel", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "innovationswettbewerbe", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "innovationswettbewerbe", "access" => false, "info" => "payable", "fee" => 500}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "umfragen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "umfragen", "access" => false, "info" => "payable", "fee" => 300}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "projekte", "access" => true, "icon" => "projekte"}
+    hash = {"domain" => "hauptmenue", "right" => "projekte", "access" => true, "info" => "payable", "fee" => 700}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "sensoren", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "sensoren", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "crowdfunding", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "crowdfunding", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "standorte", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "standorte", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "kampagnen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "kampagnen", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "hauptmenue", "right" => "kalender", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "geburtstage", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "publikationen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "aktionen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "crowdfunding", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "stellenanzeigen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "veranstaltungen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "hauptmenue", "parent_domain" => "kalender", "right" => "ausschreibungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "hauptmenue", "right" => "kalender", "access" => false, "info" => "news", "fee" => 0}
     @array << hash
 
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "info", "access" => true, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "info", "access" => true, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "kalendereintraege", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "kalendereintraege", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "angebote", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "angebote", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "ansprechpartner", "access" => true, "icon" => "personen"}
+    hash = {"domain" => "personen", "right" => "ansprechpartner", "access" => true, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "institutionen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "institutionen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "stellenanzeigen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "stellenanzeigen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "kleinanzeigen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "kleinanzeigen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "vermietungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "vermietungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "veranstaltungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "veranstaltungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "sensoren", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "sensoren", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "anmeldungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "anmeldungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "tickets", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "tickets", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "ausflugsziele", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "ausflugsziele", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "ausschreibungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "ausschreibungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "innovationswettbewerbe", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "innovationswettbewerbe", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "ideen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "ideen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "crowdfunding", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "crowdfunding", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "crowdfundingbeitraege", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "crowdfundingbeitraege", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "bewertungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "bewertungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "favoriten", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "favoriten", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "gruppen", "access" => true, "icon" => "th"}
+    hash = {"domain" => "personen", "right" => "gruppen", "access" => true, "info" => "th"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "publikationen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "publikationen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "artikel", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "artikel", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "umfragen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "umfragen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "projekte", "access" => true, "icon" => "projekte"}
+    hash = {"domain" => "personen", "right" => "projekte", "access" => true, "info" => "projekte"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "zeiterfassung", "access" => true, "icon" => "zeiterfassung"}
+    hash = {"domain" => "personen", "right" => "zeiterfassung", "access" => true, "info" => "zeiterfassung"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "ressourcenplanung", "access" => true, "icon" => "ressourcenplanung"}
+    hash = {"domain" => "personen", "right" => "ressourcenplanung", "access" => true, "info" => "ressourcenplanung"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "kundenbeziehungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "kundenbeziehungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "kontobeziehungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "kontobeziehungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "transaktionen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "transaktionen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "emails", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "emails", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "mappositionen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "mappositionen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "mappositionenfavoriten", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "mappositionenfavoriten", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "personen", "right" => "aktivitaeten", "access" => true, "icon" => "news"}
-    @array << hash
-
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "info", "access" => true, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "aktivitaeten", "access" => true, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "angebote", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "stellenanzeigen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "kleinanzeigen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "vermietungen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "veranstaltungen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "sponsorenengagements", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "ausflugsziele", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "ausschreibungen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "innovationswettbewerbe", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "crowdfunding", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "crowdfundingbeitraege", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "publikationen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "umfragen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "sensoren", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "projekte", "access" => true, "icon" => "projekte"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "kundenbeziehungen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "kontobeziehungen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "transaktionen", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "emails", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "favoriten", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "partnerlinks", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "aktivitaeten", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "standorte", "access" => false, "icon" => "news"}
-    @array << hash
-    hash = Hash.new
-    hash = {"domain" => "institutionen", "right" => "kampagnen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "personen", "right" => "charges", "access" => true, "info" => "news"}
     @array << hash
 
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "info", "access" => true, "icon" => "info"}
+    hash = {"domain" => "institutionen", "right" => "info", "access" => true, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "details", "access" => true, "icon" => "details"}
+    hash = {"domain" => "institutionen", "right" => "angebote", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "eintrittskarten", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "stellenanzeigen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "sponsorenengagements", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "kleinanzeigen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "ansprechpartner", "access" => true, "icon" => "personen"}
+    hash = {"domain" => "institutionen", "right" => "vermietungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "projektberechtigungen", "access" => true, "icon" => "berechtigungen"}
+    hash = {"domain" => "institutionen", "right" => "veranstaltungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "auftragscontrolling", "access" => true, "icon" => "auftragscontrolling"}
+    hash = {"domain" => "institutionen", "right" => "sponsorenengagements", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "ressourcenplanung", "access" => true, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "ausflugsziele", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "projektdashboard", "access" => true, "icon" => "projektdashboard"}
+    hash = {"domain" => "institutionen", "right" => "ausschreibungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "kalender", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "innovationswettbewerbe", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "teilnehmerveranstaltung", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "crowdfunding", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "ausschreibungsangebote", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "crowdfundingbeitraege", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "bewertungen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "publikationen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "blog", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "umfragen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "fragen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "sensoren", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "umfrageteilnehmer", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "projekte", "access" => true, "info" => "projekte"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "jury", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "kundenbeziehungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "preise", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "kontobeziehungen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "ideen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "transaktionen", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "bewertungskriterien", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "emails", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "gruppenmitglieder", "access" => true, "icon" => "personen"}
+    hash = {"domain" => "institutionen", "right" => "favoriten", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "substruktur", "access" => true, "icon" => "task"}
+    hash = {"domain" => "institutionen", "right" => "partnerlinks", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "ausgaben", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "aktivitaeten", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "cfstatistik", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "standorte", "access" => false, "info" => "news"}
     @array << hash
     hash = Hash.new
-    hash = {"domain" => "objekte", "right" => "cftransaktionen", "access" => false, "icon" => "news"}
+    hash = {"domain" => "institutionen", "right" => "kampagnen", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "institutionen", "right" => "charges", "access" => true, "info" => "news"}
+    @array << hash
+
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "info", "access" => true, "info" => "info"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "details", "access" => true, "info" => "details"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "eintrittskarten", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "sponsorenengagements", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "ansprechpartner", "access" => true, "info" => "personen"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "projektberechtigungen", "access" => true, "info" => "berechtigungen"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "auftragscontrolling", "access" => true, "info" => "auftragscontrolling"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "ressourcenplanung", "access" => true, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "projektdashboard", "access" => true, "info" => "projektdashboard"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "kalender", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "teilnehmerveranstaltung", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "ausschreibungsangebote", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "bewertungen", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "blog", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "fragen", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "umfrageteilnehmer", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "jury", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "preise", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "ideen", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "bewertungskriterien", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "gruppenmitglieder", "access" => true, "info" => "personen"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "substruktur", "access" => true, "info" => "task"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "ausgaben", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "cfstatistik", "access" => false, "info" => "news"}
+    @array << hash
+    hash = Hash.new
+    hash = {"domain" => "objekte", "right" => "cftransaktionen", "access" => false, "info" => "news"}
     @array << hash
     
     for i in 0..@array.length-1
@@ -2716,8 +2750,11 @@ def init_apps
         c.parent_domain = "root"
       end
       c.right = @array[i]["right"]
-      #c.icon = @array[i]["icon"]
+      c.info = @array[i]["info"]
       c.access = @array[i]["access"]
+      if @array[i]["domain"] == "hauptmenue"
+        c.fee = @array[i]["fee"]
+      end
       c.save
     end
     apps = Appparam.all

@@ -816,7 +816,13 @@
             <% end %>
             </table>
           </div>
-  
+
+    	 <% when "personen_charges" %>
+          <%= build_medialist2(@user.charges, "charges", nil) %>
+          <br><br>
+          <%= build_medialist2(Appparam.where('info=?', "payable"), "appparams", nil) %>
+          <br><br>
+
     	 <% when "personen_zugriffsberechtigungen" %>
           <div class="row">
               <%= header((I18n.t :hauptmenue), true) %>

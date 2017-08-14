@@ -250,21 +250,21 @@ class UsersController < ApplicationController
           user = User.find(c.user_id2)
           case c.channel
             when "Geschäftsstelle"
-               icon = '<i class="glyphicon glyphicon-briefcase"></i>'
+               info = '<i class="glyphicon glyphicon-briefcase"></i>'
             when "Treffpunkt"
-               icon = '<i class="glyphicon glyphicon-map-marker"></i>'
+               info = '<i class="glyphicon glyphicon-map-marker"></i>'
             when "Wohnort Berater"
-               icon = '<i class="glyphicon glyphicon-home"></i>'
+               info = '<i class="glyphicon glyphicon-home"></i>'
             when "Wohnort Kunde"
-               icon = '<i class="glyphicon glyphicon-home"></i>'
+               info = '<i class="glyphicon glyphicon-home"></i>'
             when "Telefon"
-               icon = '<i class="glyphicon glyphicon-phone-alt"></i>'
+               info = '<i class="glyphicon glyphicon-phone-alt"></i>'
             when "VideoChat"
-               icon = '<i class="glyphicon glyphicon-facetime-video"></i>'
+               info = '<i class="glyphicon glyphicon-facetime-video"></i>'
             else
-               icon = '<i class="glyphicon glyphicon-question-sign"></i>'
+               info = '<i class="glyphicon glyphicon-question-sign"></i>'
           end
-          @array = @array + "icon: '" + icon + "', "
+          @array = @array + "info: '" + info + "', "
           if user
             @array = @array + "title: '" + user.name + " " + user.lastname + "', "
           else
