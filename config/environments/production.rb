@@ -66,13 +66,25 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "tkbnet_#{Rails.env}"
   config.action_mailer.perform_caching = false
   # CR001
+  config.action_mailer.default_url_options = { :host => 'https://mytgcloud.herokuapp.com' }
   config.action_mailer.delivery_method = :mailgun
-  config.action_mailer.default_url_options = { host: 'mytgcloud.herokuapp.com' }
-  
-  config.action_mailer.mailgun_settings = {
-    api_key: 'key-8543570e5be692fe5bf4f9983ce6dfd6',
-    domain: 'mg.mytgcloud.com',
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+      :address              => 'smtp.mailgun.org',
+      :port                 => 2525,
+      :domain               => 'sandbox************************************.mailgun.org',
+      :user_name            => ENV.fetch('SMTP_USERNAME'),
+      :password             => ENV.fetch('SMTP_PASSWORD'),
+      :authentication => :plain,
+      :enable_starttls_auto => true,
+      :ssl =>false
   }
+  config.action_mailer.delivery_method = :mailgun
+    config.action_mailer.mailgun_settings = {
+      api_key: 'key-8543570e5be692fe5bf4f9983ce6dfd6',
+      domain: 'mg.mytgcloud.com',
+    }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false

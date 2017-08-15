@@ -30,10 +30,19 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
   # CR001 
-  config.action_mailer.default_url_options = { host: 'https://tgcloud-horstwurm.c9users.io' }
-  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_url_options = { :host => 'https://tgcloud-horstwurm.c9users.io' }
   config.action_mailer.delivery_method = :mailgun
-  
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+      :address              => 'smtp.mailgun.org',
+      :port                 => 2525,
+      :domain               => 'sandbox************************************.mailgun.org',
+      :user_name            => 'postmaster@mg.mytgcloud.com',
+      :password             => 'c5db1003602c48d3fd900955a2bacde4',
+      :authentication => :plain,
+      :enable_starttls_auto => true,
+      :ssl =>false
+  }
   config.action_mailer.delivery_method = :mailgun
     config.action_mailer.mailgun_settings = {
       api_key: 'key-8543570e5be692fe5bf4f9983ce6dfd6',
