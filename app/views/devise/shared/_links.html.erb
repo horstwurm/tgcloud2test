@@ -1,3 +1,4 @@
+<% if false %>
 <%- if controller_name != 'sessions' %>
   <%= link_to "LogIn", new_session_path(resource_name), class:"btn btn-default btn-xs" %>
 <% end -%>
@@ -22,4 +23,8 @@
   <%- resource_class.omniauth_providers.each do |provider| %>
     <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class:"btn btn-default btn-xs" %>
   <% end -%>
+<% end -%>
+<% end %>
+<%- if Devise.mappings[:user].recoverable? && controller_path != 'passwords' && controller_path != 'registrations' %>
+  <%= link_to "Forgot your password?", new_password_path(@devise_mapping.name), class:"btn btn-default btn-xs" %>
 <% end -%>

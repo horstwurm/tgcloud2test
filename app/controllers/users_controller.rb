@@ -343,8 +343,8 @@ class UsersController < ApplicationController
       if @user.save
         
         # send eMail
-        puts "ATTENTION ATTENTION here we go...."
-        UserMailer.signup_confirmation(@user, "newKMU Sign In Confirmation").deliver_now
+        #puts "ATTENTION ATTENTION here we go...."
+        UserMailer.welcome_email(@user).deliver_now
         
         format.html { redirect_to users_url, notice: (I18n.t :act_create) }
         format.json { render :show, status: :created, location: @user }

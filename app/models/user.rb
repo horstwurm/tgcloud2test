@@ -1,12 +1,12 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+
+devise :database_authenticatable, :registerable,
+       :recoverable, :rememberable, :trackable, :validatable #, :confirmable
+
+   def after_database_authentication
+        # here's the custom code
+        # UserMailer.welcome_email(User.last).deliver_now
+  end
 
     has_many :charges, as: :owner, dependent: :destroy 
     has_many :mobjects, as: :owner, dependent: :destroy 
@@ -66,4 +66,12 @@ class User < ActiveRecord::Base
         [name, lastname, email].join(' ')        
     end
 
+      def self.find_first_by_auth_conditions warden_conditions
+        conditions = warden_conditions.dup
+        if (email = conditions.delete(:email)).present?
+          where(email: email.downcase).first
+        elsif conditions.has_key?(:reset_password_token)
+          where(reset_password_token: conditions[:reset_password_token]).first
+        end
+      end
 end

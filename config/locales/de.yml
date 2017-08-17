@@ -20,6 +20,17 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 de:
+  newpw: "Neues Passwort"
+  confirmpw: "Passwort wiederholen"
+  forgotpw: "Passwort vergessen?"
+  changepw: "Passwort ändern"
+  instructpw: "Passwort zurücksetzen"
+  welcometo: "Willkommen bei myTGCloud"
+  confirmaccount: "Bitte bestätigen Sie Ihren Account mit dem u.g. Link"
+  registered: "Sie haben sich erfolgreich registriert, Ihr Benutzername ist: "
+  confirmlink: "Account bestätigen"
+  login: "Anmeldungen mit folgendem Link"
+  thx: "Vielen Dank für Ihre Registrierung!"
   yearly: "Jahresgebühr"
   monthly: "Monatsgebühr"
   plan: "Zahlungsart"

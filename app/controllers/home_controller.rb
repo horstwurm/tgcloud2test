@@ -373,7 +373,7 @@ def index16
 end
 
 def index17
-  TestMailer.test_email(User.find(1)).deliver_now
+  UserMailer.welcome_email(User.last).deliver_now
 end
 
 def Umfragen_data

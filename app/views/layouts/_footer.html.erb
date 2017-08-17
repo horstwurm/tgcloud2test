@@ -42,7 +42,7 @@
                     <% else %>
                        <% link_to (I18n.t :anmelden), credentials_path(current_user.id) %>
                        <%= link_to (I18n.t :abmelden), destroy_user_session_path, method: :delete %><br>
-    		           <%= link_to (I18n.t :passwordchange), edit_user_registration_path %><br><br>
+    		           <% link_to (I18n.t :passwordchange), edit_user_registration_path %><br><br>
     		           <%= link_to (I18n.t :accountdel), registration_path(current_user), data: { confirm: (I18n.t :sindsiesicher) }, method: :delete, class:"btn btn-danger btn-xs" %><br>
                     <% end %>
                 </footer_text>

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  #devise_for :users
   resources :charges
   resources :sensors
   resources :idea_crowdratings
@@ -90,7 +91,9 @@ Rails.application.routes.draw do
   resources :accounts
   root 'home#index3'
 
-  devise_for :users, :controllers => {registrations: 'registrations'}
+  #devise_for :users, :controllers => {registrations: 'registrations'}
+  #devise_for :users, :controllers => {registrations: 'registrations', passwords: 'passwords', confirmations: "confirmations"}
+  devise_for :users, :controllers => {registrations: 'registrations', passwords: 'passwords'}
   
   resources :users
   resources :tests

@@ -1,8 +1,8 @@
 <div class="container">
   <div class="jumbotron">
-    <h1>Welcome <%= @email %>!</h1>
-    <p>You can confirm your account email through the link below:</p>
+    <h1><%= (I18n.t :welcometo) + " " + @email %>!</h1>
+    <p><%= (I18n.t :confirmaccount) %></p>
     <br>
-    <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+    <p><%= link_to (I18n.t :confirmlink), confirmation_url(@resource, :confirmation_token => @token) %></p>
   </div>
 </div>

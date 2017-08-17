@@ -6,16 +6,13 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # CR001
-  config.secret_key = '5655b56303d5ce7a8d261a20dc0c0992da29d53de9fc32d3847d4a69c103012a215accaec0eff9b6b4c6a55b6807e49d0da9fa299944b50cfdac2b86b396fc0e'
+  # config.secret_key = 'b8ee18d0b699e41541423431892383be7d31a6b1525ce9de7ad5a6272590ad4db3cbe2f5bc83bbf9ffa2d3b74142335d61b9e78e193cc9804f908215ba0b3cec'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
-  # CR001
-  config.mailer_sender = 'mytgcloud@example.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -111,7 +108,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 11
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '1bfd4c79ee48f85c3bd727e3290428f4bbae8f20d1a548bc2f32877a32237490961c816cb697670328dfc297e182be2779d7a84b5e8aa05114620b4d7c7ac4cb'
+  # config.pepper = '39e6807e88bb0443bfae113106c0b68623b6a95be4648b8e79b0b6ec54b706bbf298184b342f70ce46f5085c8c954ac17726f3381d1810065397120b170d5107'
 
   # Send a notification email when the user's password is changed
   # config.send_password_change_notification = false
@@ -131,8 +128,6 @@ Devise.setup do |config|
   # Default is nil, meaning there is no restriction on how long a user can take
   # before confirming their account.
   # config.confirm_within = 3.days
-  # CR001
-  config.confirm_within = 3.days
 
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
@@ -176,9 +171,7 @@ Devise.setup do |config|
   # :failed_attempts = Locks an account after a number of failed attempts to sign in.
   # :none            = No lock strategy. You should handle locking by yourself.
   # config.lock_strategy = :failed_attempts
-  # CR001 
-  config.lock_strategy = :none
-  
+
   # Defines which key will be used when locking and unlocking an account
   # config.unlock_keys = [:email]
 
@@ -188,9 +181,7 @@ Devise.setup do |config|
   # :both  = Enables both strategies
   # :none  = No unlock strategy. You should handle unlocking by yourself.
   # config.unlock_strategy = :both
-  # CR001
-  config.unlock_strategy = :email
-  
+
   # Number of authentication tries before locking an account if lock_strategy
   # is failed attempts.
   # config.maximum_attempts = 20
@@ -200,8 +191,6 @@ Devise.setup do |config|
 
   # Warn on the last attempt before the account is locked.
   # config.last_attempt_warning = true
-  # CR001
-  config.last_attempt_warning = true
 
   # ==> Configuration for :recoverable
   #

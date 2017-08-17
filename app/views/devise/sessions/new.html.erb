@@ -1,6 +1,6 @@
 <div class="container">
     <div class="jumbotron">
-    <h2><%= I18n.t :willkommen %><%= $app_name %></h2>
+    <h2><%= I18n.t :welcometo %></h2>
     <br>
       <%= image_tag("thurcloud.png", :size => "200x200") %>
       <br><br>
@@ -24,6 +24,9 @@
       <div class="actions">
             <%= f.submit (I18n.t :anmelden), class:"btn btn-primary btn-lg" %>
       </div>
+      <%- if Devise.mappings[:user].recoverable? && controller_path != 'passwords' && controller_path != 'registrations' %>
+        <%= link_to (I18n.t :forgotpw), new_password_path(@devise_mapping.name) %>
+      <% end -%>
     <% end %>
     <% render "devise/shared/links" %>
   </div>
