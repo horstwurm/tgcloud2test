@@ -76,12 +76,15 @@ ActiveRecord::Schema.define(version: 20170816164538) do
   end
 
   create_table "charges", force: :cascade do |t|
+    t.integer  "appparam_id"
     t.integer  "owner_id"
     t.string   "owner_type"
     t.string   "stripe_id"
     t.string   "topic"
     t.string   "plan"
     t.float    "amount"
+    t.date     "date_from"
+    t.date     "date_to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -30,7 +30,7 @@
                     <div class="form-group">
                       <div class="form-group">
                         <%= f.label I18n.t :service %>
-                        <%= I18n.t (@charge.topic) %>
+                        <%= I18n.t (@charge.appparam.right) %>
                       </div>
                       <div class="form-group">
                         <%= f.label I18n.t :plan %>
@@ -47,7 +47,9 @@
                      <%= f.hidden_field :owner_id, class:"form-control" %>
                      <%= f.hidden_field :owner_type, class:"form-control" %>
                      <%= f.hidden_field :amount, class:"form-control" %>
-                     <%= f.hidden_field :topic, class:"form-control" %>
+                     <%= f.hidden_field :appparam_id, class:"form-control" %>
+                     <%= f.hidden_field :date_from, class:"form-control" %>
+                     <%= f.hidden_field :date_to, class:"form-control" %>
 
                       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                               data-key="<%= Rails.configuration.stripe[:publishable_key] %>"

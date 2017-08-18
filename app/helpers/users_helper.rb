@@ -68,10 +68,10 @@ end
 def carousel2(mobject, size)
     html = ""
     if mobject.mdetails == nil
-      html = html + image_tag(image_def("objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
+      html = html + image_tag(mobject.mtype + ".png", :size => size, class:"card-img-top img-responsive" )
     else
       if mobject.mdetails.count == 0
-        html = html + image_tag(image_def("objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
+        html = html + image_tag(mobject.mtype + ".png", :size => size, class:"card-img-top img-responsive" )
       else
         html = html +  '<div class="owl-show">'
         mobject.mdetails.each do |p|
@@ -177,7 +177,7 @@ def build_medialist2(items, cname, par)
                 when "appparams"
                   html_string = html_string + (I18n.t item.right.to_sym)
                 when "charges"
-                  html_string = html_string + (I18n.t item.topic.to_sym)
+                  html_string = html_string + (I18n.t item.appparam.right.to_sym)
                 when "prices"
                   html_string = html_string + item.sequence.to_s + (I18n.t :nterpreis)
                 when "crits"
@@ -259,6 +259,8 @@ def build_medialist2(items, cname, par)
               html_string = html_string + '<div class="panel-header">'
 
                 case items.table_name
+                  when "appparams"
+                      html_string = html_string + image_tag(item.right+".png", :size => "100x100")
                   when "prices"
                       html_string = html_string + showImage2(:medium, item, true)
                   when "crits"
@@ -357,17 +359,62 @@ def build_medialist2(items, cname, par)
               html_string = html_string + '<div class="panel-header panel-media"><list>'
                 case items.table_name
                     when "appparams"
-                      html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> Optionen<br><br>'
+
+                      html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i>'+ (I18n.t :abo) + '<br><br>'
+
+                      if par == "user"
+                        @charges = item.charges.where('owner_id=? and owner_type=?', current_user.id, "User").order(created_at: :desc)
+                      else
+                        @charges = item.charges.where('owner_id=? and owner_type=?', current_user.id, "Company").order(created_at: :desc)
+                      end
+                      startdatum = Date.today
+                      @charges.each do |c|
+
+                        html_string = html_string + '<i class="glyphicon glyphicon-calendar"></i> '
+                        html_string = html_string + c.date_from.strftime("%d-%m-%Y") + "-" + c.date_to.strftime("%d-%m-%Y")
+                        
+                        if c.date_to > startdatum
+                          startdatum = c.date_to
+                        end
+                        if c.date_to < Date.today
+                          proc = 0
+                        end  
+                        if c.date_from > Date.today
+                          proc = 100
+                        end
+                        if c.date_from <= Date.today and c.date_to >= Date.today
+                          days = c.date_to - c.date_from
+                          days_used = c.date_to - Date.today
+                          proc = (days_used/days*100).to_i
+                        end
+                        if proc > 0
+                          if proc >= 30
+                            progresscolor = "success"
+                          end
+                          if proc > 10 and proc < 30
+                            progresscolor = "warning"
+                          end
+                          if proc <= 10 
+                            progresscolor = "danger"
+                          end
+                          html_string = html_string + '<div class="progress">'
+                          html_string = html_string + '<div class="progress-bar progress-bar-' + progresscolor + ' progress-bar-striped" role="progressbar2" aria-valuenow="' + proc.to_s + '" aria-valuemin="0" aria-valuemax="100" style="width:' + proc.to_s + '%">'
+                          html_string = html_string + '<span class="sr-only">40% Complete (success)</span>'
+                          html_string = html_string + '</div>'
+                          html_string = html_string + '</div>'
+                        end
+                      end
+                      
                       if item.fee
-                        html_string = html_string + link_to(new_charge_path(:user_id => current_user.id, :topic => item.right, :fee => item.fee/100, :plan => "monthly")) do
-                          content_tag(:i, nil, class:"btn btn-special glyphicon glyphicon-plus")
+                        html_string = html_string + link_to(new_charge_path(:user_id => current_user.id, :appparam_id => item.id, :datum => startdatum, :plan => "monthly")) do
+                          content_tag(:i, content_tag(:div,sprintf("%05.2f CHF/m",item.fee/100)), class:"btn btn-special")
                         end
-                        html_string = html_string + " " + sprintf("%05.2f CHF/Monat",item.fee/100) 
-                        html_string = html_string + "<br><br>"
-                        html_string = html_string + link_to(new_charge_path(:user_id => current_user.id, :topic => item.right, :fee => item.fee/10, :plan => "yearly")) do
-                          content_tag(:i, nil, class:"btn btn-special glyphicon glyphicon-plus")
+                        #html_string = html_string + " " + sprintf("%05.2f CHF/Monat",item.fee/100) 
+                        #html_string = html_string + "<br><br>"
+                        html_string = html_string + link_to(new_charge_path(:user_id => current_user.id, :appparam_id => item.id, :datum => startdatum, :plan => "yearly")) do
+                          content_tag(:i, content_tag(:div,sprintf("%05.2f CHF/y",item.fee/10)), class:"btn btn-special")
                         end
-                        html_string = html_string + " " + sprintf("%05.2f CHF/Jahr",item.fee/10) 
+                        #html_string = html_string + " " + sprintf("%05.2f CHF/y",item.fee/10) 
                       end
 
 
@@ -1335,20 +1382,10 @@ def showFirstImage2(size, item, details)
         if pic.avatar_file_name
           image_tag pic.avatar(size), class:"img-rounded img-responsive"
         else
-          case item.mtype
-            when "projekte"
-              image_tag("project.png", :size => "50x50", class:"card-img-top img-responsive")
-            else
-              image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
-            end
+          image_tag(item.mtype + ".png", :size => size, class:"card-img-top img-responsive")
         end
       else
-        case item.mtype
-          when "projekte"
-            image_tag("project.png", :size => "50x50", class:"card-img-top img-responsive")
-          else
-            image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive")
-          end
+        image_tag(item.mtype + ".png", :size => size, class:"card-img-top img-responsive")
       end
     end
     return html_string.html_safe

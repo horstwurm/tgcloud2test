@@ -15,6 +15,10 @@ class ChargesController < ApplicationController
   # GET /charges/new
   def new
     @charge = Charge.new
+    if params[:appparam_id]
+      @appparam = Appparam.find(params[:appparam_id])
+      @charge.appparam_id = @appparam.id
+    end
     if params[:user_id]
       @charge.owner_id = params[:user_id]
       @charge.owner_type = "User"
@@ -23,11 +27,19 @@ class ChargesController < ApplicationController
       @charge.owner_id = params[:company_id]
       @charge.owner_type = "Company"
     end
-    @charge.topic = params[:topic]
-    @charge.amount = params[:fee]
+    @charge.topic = @appparam.right
     @charge.plan = params[:plan]
-    if !@charge.amount
-      @charge.amount = 500
+    @charge.date_from = params[:datum]
+    if params[:plan] == "monthly"
+      @charge.date_to = params[:datum].to_date + 30
+      @charge.amount = @appparam.fee/100
+    end
+    if params[:plan] == "yearly"
+      @charge.date_to = params[:datum].to_date + 365
+      @charge.amount = @appparam.fee/10
+    end
+    if !@appparam.fee
+      @charge.amount = 0
     end
   end
 
@@ -109,6 +121,6 @@ class ChargesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def charge_params
-      params.require(:charge).permit(:owner_id, :owner_type, :stripe_id, :topic, :amount, :plan)
+      params.require(:charge).permit(:owner_id, :owner_type, :stripe_id, :appparam_id, :date_from, :date_to, :amount, :plan)
     end
 end

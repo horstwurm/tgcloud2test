@@ -818,9 +818,11 @@
           </div>
 
     	 <% when "personen_charges" %>
+    	    <% if false %>
           <%= build_medialist2(@user.charges, "charges", nil) %>
           <br><br>
-          <%= build_medialist2(Appparam.where('info=?', "payable"), "appparams", nil) %>
+          <% end %>
+          <%= build_medialist2(Appparam.where('info=?', "payable"), "appparams", "user") %>
           <br><br>
 
     	 <% when "personen_zugriffsberechtigungen" %>
