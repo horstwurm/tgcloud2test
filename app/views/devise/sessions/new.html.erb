@@ -24,7 +24,7 @@
       <div class="actions">
             <%= f.submit (I18n.t :anmelden), class:"btn btn-primary btn-lg" %>
       </div>
-      <%- if Devise.mappings[:user].recoverable? && controller_path != 'passwords' && controller_path != 'registrations' %>
+      <%- if Devise.mappings[:user].recoverable? && controller_path != 'passwords' && controller_path != 'registrations' && $usemailgun %>
         <%= link_to (I18n.t :forgotpw), new_password_path(@devise_mapping.name) %>
       <% end -%>
     <% end %>

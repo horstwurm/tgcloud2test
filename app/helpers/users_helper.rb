@@ -1399,9 +1399,9 @@ def showImage2(size, item, linkit)
         else
           case item.class.name
             when "User"
-              image_tag("person.png", :size => "50x50", class:"card-img-top img-responsive" )
+              image_tag("personen.png", :size => "50x50", class:"card-img-top img-responsive" )
             when "Company"
-              image_tag("company.png", :size => "50x50", class:"card-img-top img-responsive" )
+              image_tag("institutionen.png", :size => "50x50", class:"card-img-top img-responsive" )
             else
               image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
           end

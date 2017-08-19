@@ -4,5 +4,5 @@
 # Mime::Type.register "text/richtext", :rtf
 
 Mailgun.configure do |config|
-  config.api_key = 'key-8543570e5be692fe5bf4f9983ce6dfd6'
+  config.api_key = ENV.fetch('SMTP_API_KEY')
 end

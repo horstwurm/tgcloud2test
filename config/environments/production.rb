@@ -81,7 +81,7 @@ Rails.application.configure do
   }
   config.action_mailer.delivery_method = :mailgun
     config.action_mailer.mailgun_settings = {
-      api_key: 'key-8543570e5be692fe5bf4f9983ce6dfd6',
+      api_key: ENV.fetch('SMTP_API_KEY'),
       domain: 'mg.mytgcloud.com',
     }
 

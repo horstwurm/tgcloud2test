@@ -94,6 +94,8 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.14)
+    figaro (1.1.1)
+      thor (~> 0.14)
     fullcalendar.io-rails (3.1.0)
       jquery-rails (>= 3.1.0, < 5.0)
       momentjs-rails (~> 2.15)
@@ -254,6 +256,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   devise
+  figaro
   fullcalendar.io-rails
   geocoder
   gmaps4rails
