@@ -1,3 +1,5 @@
+# Ignore application.yml (api keys)
 /config/application.yml
-/log
+# Ignore all logfiles and tempfiles.
+/log/*
 /tmp
