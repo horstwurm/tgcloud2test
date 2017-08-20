@@ -373,7 +373,13 @@ def index16
 end
 
 def index17
-  UserMailer.welcome_email(User.last).deliver_now
+  if params[:mailgunflag]
+    $usemailgun = true
+  else
+    $usemailgun = false
+  end
+  #UserMailer.welcome_email(User.last).deliver_now
+  redirect_to home_index3_path
 end
 
 def Umfragen_data

@@ -64,11 +64,12 @@
     					   <% if current_user.superuser %>
         						<%= link_to (I18n.t :funktionsmgt), appparams_path %><br>
         						<%= link_to (I18n.t :tabellenmgt), home_index9_path %><br>
-        						<%= link_to (I18n.t :userstat), home_index2_path %><br>
+        						<%= link_to (I18n.t :userstat), home_index2_path %><br><br>
         						<!--<%= link_to "Dashboard", home_dashboard_path %><br><br>-->
         						<!--<%= link_to "Dashboard2", home_dashboard2_path %><br><br>-->
         						<!--<%= link_to "Dashboard Project", home_dashboard_project_path %><br><br>-->
-        						<%= link_to "Test", home_index17_path %><br><br>
+        						<%= link_to "Mailgun aktivieren", home_index17_path(:mailgunflag => true) %><br>
+        						<%= link_to "Mailgun deaktivieren", home_index17_path(:mailgunflag => false) %>
     					   <% end %>
                         <% end %>
                     </footer_text>
