@@ -391,6 +391,8 @@ def index18
 
       @dl = Dataloader.find(params[:dataloader_id])      
       path = @dl.document.path
+      path=File.join(Rails.root, "/app/assets/images/migvoll.xlsx")
+      #path = "/images/migvoll.xlsx"
       workbook = Creek::Book.new path
       worksheets = workbook.sheets
       
