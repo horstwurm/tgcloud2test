@@ -3,4 +3,5 @@ class Mcategory < ActiveRecord::Base
     has_many :companies
     has_many :articles
     has_many :questions
+    has_many :dataloaders
 end

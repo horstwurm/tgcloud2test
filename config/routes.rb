@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :dataloaders
+  
   #devise_for :users
   resources :charges
   resources :sensors
@@ -54,6 +56,7 @@ Rails.application.routes.draw do
   get 'home/index15'
   get 'home/index16'
   get 'home/index17'
+  get 'home/index18'
   get 'home/dashboard'
   get 'home/dashboard2'
   get 'home/dashboard_project'

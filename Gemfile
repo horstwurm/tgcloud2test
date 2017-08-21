@@ -54,6 +54,8 @@ gem 'fullcalendar.io-rails'
 gem 'momentjs-rails'
 
 gem 'writeexcel'
+#gem "roo", "~> 2.7.0"
+gem 'creek'
 
 gem 'rails-i18n'
 

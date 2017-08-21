@@ -1,0 +1,1 @@
+json.array! @dataloaders, partial: 'dataloaders/dataloader', as: :dataloader

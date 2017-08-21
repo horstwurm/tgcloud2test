@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170816164538) do
+ActiveRecord::Schema.define(version: 20170821092243) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -85,8 +85,8 @@ ActiveRecord::Schema.define(version: 20170816164538) do
     t.float    "amount"
     t.date     "date_from"
     t.date     "date_to"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -160,6 +160,17 @@ ActiveRecord::Schema.define(version: 20170816164538) do
     t.datetime "updated_at",      null: false
     t.index ["owner_id"], name: "index_customers_on_owner_id"
     t.index ["owner_type"], name: "index_customers_on_owner_type"
+  end
+
+  create_table "dataloaders", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "mcategory_id"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "edition_arcticles", force: :cascade do |t|
@@ -769,7 +780,7 @@ ActiveRecord::Schema.define(version: 20170816164538) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email" # Only if using reconfirmable
+    t.string   "unconfirmed_email"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

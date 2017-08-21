@@ -382,6 +382,100 @@ def index17
   redirect_to home_index3_path
 end
 
+def index18
+  if params[:dataloader_id]
+    
+      max = 100000
+      
+      require 'creek'
+
+      @dl = Dataloader.find(params[:dataloader_id])      
+      path = @dl.document.path
+      workbook = Creek::Book.new path
+      worksheets = workbook.sheets
+      
+      @html = ""
+      first = true
+      counter=0
+      worksheets.each do |worksheet|
+        
+        if first
+          first = false
+          counter = 1
+          worksheet.rows.each do |row|
+            
+            row_cells = row.values
+
+            if counter > 1 and counter < max                          #skip first row 
+              
+              # do something with row_cells
+              #puts row_cells
+              if row_cells[0] and row_cells[0] != ""
+                
+                @email = row_cells[0].to_s
+                @name = row_cells[6].to_s
+                @lastname = row_cells[7].to_s
+                @project = row_cells[1].to_s
+                @activity = row_cells[3].to_s
+                
+                @anz = row_cells[2].to_f
+                @datum = row_cells[4]
+
+                #@html = @html + @email + " " + @name + " " + @lastname + " " + @project + " " + @anz.to_s + "<br><br>"
+  
+                @user = User.where('email=?',@email).first
+                if !@user
+                  users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:@email, password:"password", name:@name, lastname:@lastname, address1:"TKB", address2:"Im Roos", address3:"Weinfelden", superuser:false, webmaster:false })
+                  @user = User.where('email=?',@email).first
+                end
+                
+                @projekt = Mobject.where('name=? and mtype=?',@project, "projekte").first
+                if !@projekt
+                  mobjects = Mobject.create({status:"OK", active:true, mtype:"projekte", msubtype:nil, name:@project, date_from: "01.01.2016", date_to: "31.12.2017", owner_type:"User", owner_id: 1, mcategory_id:29, address1: "", address2: "", address3: ""})
+                  @projekt = Mobject.where('name=? and mtype=?',@project, "projekte").first
+                end
+
+                if @projekt and @user
+                  
+                  @madvisor = @projekt.madvisors.where('mobject_id=? and user_id=? and role=?', @projekt.id, @user.id, "projekte").first
+                  if !@madvisor
+                    madvisors = Madvisor.create({mobject_id: @projekt.id, user_id: @user.id, role: "projekte", grade: "Projekt-Mitarbeiter"})
+                  end
+
+                  @plannings = @user.plannings.where('mobject_id=? and user_id=?', @projekt.id, @user.id).first
+                  if !@plannings
+                    for y in 2016..2017
+                      for m in 1..12
+                        if m.to_s.length == 1
+                          mon = "0"+m.to_s
+                        else
+                          mon = m.to_s
+                        end
+                        plannings = Planning.create({mobject_id: @projekt.id, user_id: @user.id, amount: 10, jahr: y.to_s, monat: mon, costortime: "aufwand"})
+                      end
+                    end
+                  end
+
+                end
+                
+                if @projekt and @user and @datum != nil and @datum != ""
+                  timetracks = Timetrack.create({mobject_id: @projekt.id, user_id: @user.id, activity: @activity, amount: @anz, datum: @datum.to_date, costortime: "aufwand"})
+                end
+
+              end
+            end
+            counter = counter + 1
+          end
+
+        end
+
+      end
+      @html = counter.to_s + " records migrated...".html_safe
+      
+      #redirect_to dataloaders_path
+  end
+end
+
 def Umfragen_data
 
     @question = Question.find(params[:question_id])

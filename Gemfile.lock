@@ -80,6 +80,9 @@ GEM
       execjs
     coffee-script-source (1.11.1)
     concurrent-ruby (1.0.2)
+    creek (1.1.2)
+      nokogiri (~> 1.6.0)
+      rubyzip (>= 1.0.0)
     debug_inspector (0.0.2)
     devise (4.2.0)
       bcrypt (~> 3.0)
@@ -198,6 +201,7 @@ GEM
     rqrcode_png (0.1.5)
       chunky_png
       rqrcode
+    rubyzip (1.2.1)
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -255,6 +259,7 @@ DEPENDENCIES
   bootstrap-switch-rails
   byebug
   coffee-rails (~> 4.2)
+  creek
   devise
   figaro
   fullcalendar.io-rails

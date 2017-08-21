@@ -164,8 +164,17 @@ mcategories = Mcategory.create({ctype:"sensoren", name:"Schalter"})
 mcategories = Mcategory.create({ctype:"plaene", name:"monatlich"})
 mcategories = Mcategory.create({ctype:"plaene", name:"jährlich"})
 
+#create Question categories 118
+mcategories = Mcategory.create({ctype:"dataloads", name:"Benutzer"})
+mcategories = Mcategory.create({ctype:"dataloads", name:"Projekte"})
+mcategories = Mcategory.create({ctype:"dataloads", name:"Zeiterfassung"})
+
+#create Question categories 121
+#mcategories = Mcategory.create({ctype:"dataloads", name:"Benutzer"})
+
 #create some users...
 users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:"horst.wurm@bluewin.ch", password:"password", name:"Horst", lastname:"Wurm", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:true, webmaster:true, avatar:File.open(path+'horst.gif', 'rb')})
+users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:"curdin.schenkel@tkb.ch", password:"password", name:"Curdin", lastname:"Schenkel", address1:"Im Roos", address2:"Weinfelden", address3:"Thurgau", superuser:true, webmaster:true, avatar:File.open(path+'curdinschenkel.jpg', 'rb')})
 
 if false
 users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"11.2.1970", anonymous:false, status:"OK", active:true, email:"t.oschewsky@bluewin.ch", password:"password", name:"Tanja", lastname:"Oschewsky", address1:"Hörnliblick 11", address2:"Zezikon", address3:"Thurgau", superuser:false, webmaster:false, avatar:File.open(path+'ma_3.jpg', 'rb')})
