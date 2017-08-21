@@ -346,7 +346,7 @@
                         <tr>            
     
                           <% plans = [] %>
-                          <% @plannings = Planning.where('mobject_id=? and user_id=? and costortime=? and jahr=?', w.id, current_user.id, @c_scope, @c_year.to_s) %>
+                          <% @plannings = Planning.where('mobject_id=? and user_id=? and costortime=? and jahr=?', w.id, @user.id, @c_scope, @c_year.to_s) %>
                           <% @plannings.each do |p| %>
                             <% h = Hash.new %>
                             <% h = {:id => p.id, :monat => p.monat.to_i, :kapa => p.amount} %>
@@ -373,13 +373,13 @@
                               
                               <% if moto > 0%>
                                 <td class="color_kapa_booked" align="right">
-                  				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                  				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => @user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
                                     <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
                                   <% end %>
                                  <%= moto.to_s+" CHF" %><br>
                               <% else %>
                                   <td>
-                  				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                  				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => @user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
                                     <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
                                   <% end %>
                               <% end %>
@@ -404,7 +404,7 @@
                               <% end  %>
                               <% if !kapa %>
                                   <td>
-                  				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => current_user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
+                  				        <%= link_to new_planning_path(:mobject_id => w.id, :user_id => @user.id, :month => @data[i], :year => @c_year, :scope => @c_scope) do %>
                                     <i class="btn btn-primary btn-xs glyphicon glyphicon-plus"></i>
                                   <% end %>
                               <% end %>
