@@ -433,7 +433,7 @@ def index18
                 
                 @projekt = Mobject.where('name=? and mtype=?',@project, "projekte").first
                 if !@projekt
-                  mobjects = Mobject.create({status:"OK", active:true, mtype:"projekte", msubtype:nil, name:@project, date_from: "01.01.2016", date_to: "31.12.2017", owner_type:"User", owner_id: 1, mcategory_id:29, address1: "", address2: "", address3: ""})
+                  mobjects = Mobject.create({status:"OK", active:true, mtype:"projekte", msubtype:nil, name:@project, date_from: "01.01.2016", date_to: "31.12.2017", owner_type:"Company", owner_id: 1, mcategory_id:29, address1: "", address2: "", address3: ""})
                   @projekt = Mobject.where('name=? and mtype=?',@project, "projekte").first
                 end
 
