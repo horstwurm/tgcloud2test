@@ -19,6 +19,11 @@
         <td><%= dataloader.name %></td>
         <td><%= dataloader.document_file_name %></td>
         <td><%= link_to 'Import', home_index18_path(:dataloader_id => dataloader.id) %></td>
+        <td>
+          <%= link_to(dataloader.document.url, target: "_blank") do %>
+            <i class="btn btn-primary glyphicon glyphicon-cloud-download"></i>
+          <% end %>
+        </td>
         <td><%= link_to 'Show', dataloader %></td>
         <td><%= link_to 'Edit', edit_dataloader_path(dataloader) %></td>
         <td><%= link_to 'Destroy', dataloader, method: :delete, data: { confirm: 'Are you sure?' } %></td>
