@@ -151,6 +151,9 @@
           <%= build_medialist2(@company.mobjects.where('mtype=?',"umfragen"), "mobjects", nil) %>
         <% when "institutionen_publikationen" %>
           <%= build_medialist2(@company.mobjects.where('mtype=?',"publikationen"), "mobjects", nil) %>
+        <% when "institutionen_stellvertretungen" %>
+          <%= build_medialist2(@company.deputies, "deputies", nil) %>
+
     	 <% when "institutionen_charges" %>
     	    <% if false %>
           <%= build_medialist2(@company.charges, "charges", nil) %>

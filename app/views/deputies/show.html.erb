@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Owner:</strong>
+  <%= @deputy.owner_id %>
+</p>
+
+<p>
+  <strong>Owner type:</strong>
+  <%= @deputy.owner_type %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @deputy.user_id %>
+</p>
+
+<p>
+  <strong>Date from:</strong>
+  <%= @deputy.date_from %>
+</p>
+
+<p>
+  <strong>Date to:</strong>
+  <%= @deputy.date_to %>
+</p>
+
+<%= link_to 'Edit', edit_deputy_path(@deputy) %> |
+<%= link_to 'Back', deputies_path %>

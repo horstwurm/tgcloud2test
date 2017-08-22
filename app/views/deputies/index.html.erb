@@ -1,0 +1,93 @@
+
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="digg_pagination">
+            <% if @owner_type == "User" %>
+              <%= link_to(user_path(:id => @owner.id, :topic => "personen_stellvertretungen")) do %>
+                <i class="btn btn-primary glyphicon glyphicon-list"></i>
+              <% end %>
+            <% end %>
+            <% if @owner_type == "Company" %>
+              <%= link_to(company_path(:id => @owner.id, :topic => "institutionen_stellvertretungen")) do %>
+                <i class="btn btn-primary glyphicon glyphicon-list"></i>
+              <% end %>
+            <% end %>
+            <%= will_paginate @users, :container => false, previous_label: "<", next_label: ">" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <%= header((I18n.t :stellvertretungen) + " " + @owner.name + "<span class='badge'>" + @deppanz.to_s + "</span>", true) %>
+  </div>
+  
+	<div class="row">
+    <div class="col-md-12">
+  		<table class="table table-striped">
+        <thead>
+          <tr>
+            <th colspan=2><%= (I18n.t :status) %></th>
+            <th colspan=3><%= (I18n.t :personen) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |u| %>
+            <tr>
+              <td>
+                <% found = false %>
+                <% for i in 0..@array.length-1 %>
+                  <% if @array[i]["key"].to_i == u.id %>
+                    <% found = true %>
+                  <% end %>
+                <% end %>
+                <% if !found %>
+                  <% if @owner_type == "User" %>
+                    <%= link_to deputies_path(:user_id => @owner.id, :deputy_id => u.id, :page => session[:page]) do %>
+                      <i class="btn btn-primary glyphicon glyphicon-pawn"></i>
+                    <% end %>
+                  <% end %>
+                  <% if @owner_type == "Company" %>
+                    <%= link_to deputies_path(:company_id => @owner.id, :deputy_id => u.id, :page => session[:page]) do %>
+                      <i class="btn btn-primary glyphicon glyphicon-pawn"></i>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <% if @owner_type == "User" %>
+                    <%= link_to deputies_path(:user_id => @owner.id, :nodeputy_id => u.id, :page => session[:page]) do %>
+                      <i class="btn btn-danger glyphicon glyphicon-remove"></i>
+                    <% end %>
+                  <% end %>
+                  <% if @owner_type == "Company" %>
+                    <%= link_to deputies_path(:company_id => @owner.id, :nodeputy_id => u.id, :page => session[:page]) do %>
+                      <i class="btn btn-danger glyphicon glyphicon-remove"></i>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
+              </td>
+              <td>
+                <% if found %>
+                    <berater>berechtigt</berater>
+                <% end %>
+              </td>
+              <td>
+                <% if u.avatar_file_name == nil %>
+                  <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag u.avatar(:small), class:"img-rounded"  %>
+                <% end %>
+              </td>
+              <td>
+                <%= u.name + " " + u.lastname %>            
+              </td>
+              <td>
+                <%= u.email %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

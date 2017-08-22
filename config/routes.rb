@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :dataloaders
+  resources :deputies
   
   #devise_for :users
   resources :charges

@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 de:
+  stellvertretungen: "Stellvertretungen"
+  favoriten: "meine Favoriten"
+  crowdfundingbeitraege: "Crowdfunding Zuwendungen"
   abo: "Abonnement"
   newpw: "Neues Passwort"
   confirmpw: "Passwort wiederholen"

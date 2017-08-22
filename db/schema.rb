@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170821092243) do
+ActiveRecord::Schema.define(version: 20170822100711) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -169,8 +169,18 @@ ActiveRecord::Schema.define(version: 20170821092243) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "deputies", force: :cascade do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.integer  "userid"
+    t.date     "date_from"
+    t.date     "date_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "edition_arcticles", force: :cascade do |t|

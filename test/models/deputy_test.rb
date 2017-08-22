@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DataloaderTest < ActiveSupport::TestCase
+class DeputyTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
