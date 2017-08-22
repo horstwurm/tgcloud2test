@@ -385,7 +385,8 @@ end
 def index18
   if params[:dataloader_id]
     
-      max = 100000
+      #max = 100000
+      max = 500
       
       require 'creek'
 
@@ -419,6 +420,13 @@ def index18
                 @lastname = row_cells[7].to_s
                 @project = row_cells[1].to_s
                 @activity = row_cells[3].to_s
+                #@parent = row_cells[3]
+                @parent = 0
+                if @parent != nil or @parent.to_i > 0
+                  @parent = @parent.to_i
+                else
+                  @parent = 0
+                end
                 
                 @anz = row_cells[2].to_f
                 @datum = row_cells[4]
@@ -433,7 +441,7 @@ def index18
                 
                 @projekt = Mobject.where('name=? and mtype=?',@project, "projekte").first
                 if !@projekt
-                  mobjects = Mobject.create({status:"OK", active:true, mtype:"projekte", msubtype:nil, name:@project, date_from: "01.01.2016", date_to: "31.12.2017", owner_type:"Company", owner_id: 1, mcategory_id:29, address1: "", address2: "", address3: ""})
+                  mobjects = Mobject.create({parent: @parent, status:"OK", active:true, mtype:"projekte", msubtype:nil, name:@project, date_from: "01.01.2016", date_to: "31.12.2017", owner_type:"Company", owner_id: 1, mcategory_id:29, address1: "", address2: "", address3: ""})
                   @projekt = Mobject.where('name=? and mtype=?',@project, "projekte").first
                 end
 
