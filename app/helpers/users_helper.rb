@@ -1071,7 +1071,7 @@ def build_medialist2(items, cname, par)
                       content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-blackboard")
                     end
                   end
-                  if isowner(item.owner)
+                  if isowner(item)
                     access = true
                   end
                   if cname == "mobjects"
@@ -1559,7 +1559,7 @@ def navigate(object,item)
       when "objekte"
         html_string = html_string + build_nav("objekte",item,"objekte_info",item)
         if user_signed_in?
-          if isowner(item.owner)
+          if isowner(item)
             html_string = html_string + build_nav("objekte",item,"objekte_details",item.mdetails.where('mtype=?',"details").count > 0)
           end
         end 
