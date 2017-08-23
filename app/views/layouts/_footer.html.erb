@@ -23,9 +23,10 @@
                 <br>
                 <footer_text>
                     <%= link_to((I18n.t :info), home_index_path) %><br>
-                    <%= link_to((I18n.t :ueberuns), url_with_protocol("ueber_uns.html"), :target => '_blank') %><br>
-                    <%= link_to((I18n.t :impressum), url_with_protocol("impressum.html"), :target => '_blank') %><br>
-                    <%= link_to((I18n.t :rechtliches), url_with_protocol("rechtliches.html"), :target => '_blank') %><br>
+                    <%= link_to((I18n.t :nutzungsbedingungen), home_nutzung_path) %><br>
+                    <% link_to((I18n.t :ueberuns), url_with_protocol("ueber_uns.html"), :target => '_blank') %><br>
+                    <% link_to((I18n.t :impressum), url_with_protocol("impressum.html"), :target => '_blank') %><br>
+                    <% link_to((I18n.t :rechtliches), url_with_protocol("rechtliches.html"), :target => '_blank') %><br>
                     <br>
                 </footer_text>
             </div>

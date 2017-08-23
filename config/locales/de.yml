@@ -24,6 +24,10 @@ de:
   favoriten: "meine Favoriten"
   crowdfundingbeitraege: "Crowdfunding Zuwendungen"
   abo: "Abonnement"
+  hallo: "Hallo"
+  resetpw: "Passwortänderung"
+  resetpwhint: "Jemand hat einen Link zum Ändern des Passworts anfordert"
+  resetpwdisclaimer: "Wenn Sie es nicht waren, dann ignorieren Sie dieses eMail, Ihr Passwort bleibt unverändert"
   newpw: "Neues Passwort"
   confirmpw: "Passwort wiederholen"
   forgotpw: "Passwort vergessen?"
@@ -266,7 +270,7 @@ de:
   partner: "Partner"
   
   allrightsreserved: "copyright 2016,2017 alle Rechte vorbehalten"
-  tgcloudsoft: "tgcloudsoft AG"
+  tgcloudsoft: "tgcloudsoft"
   
   act_create: "Information gespeichert!"
   act_update: "Information geändert!"  

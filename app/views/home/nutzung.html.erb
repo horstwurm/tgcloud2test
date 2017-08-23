@@ -1,0 +1,234 @@
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-12">
+          <li_header>
+            <%= $app_name %> ...<br>
+          </li_header>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class='container' align='center'>
+            <%= image_tag("thurcloud.png", :size => "200x200") %><br>
+            <ntext>
+            <b>Version 0.91</b><br><br>
+            <i class="glyphicon glyphicon-copyright-mark"></i> <%= (I18n.t :allrightsreserved) %>
+            <br><br>
+            <!--<i class="glyphicon glyphicon-info-sign"></i> Dies ist eine freie Testversion zu Demozwecken, sämtliche Daten, Personen, Firmen, Services, etc. sind frei erfunden, jegliche Haftung ist ausgeschlossen!-->
+            </ntext>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+<% if false %>
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-12">
+          <li_header>
+          <%= $app_name + " " + (I18n.t :nutzungsbedingungen) %> <br>
+          </li_header>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+
+          <% content = "https://mytgcloud.herokuapp.com" %>
+
+          <% qr = RQRCode::QRCode.new(content, size: 12, :level => :h) %>
+          <% qr_img = qr.to_img %>
+          <% path=File.join(Rails.root, "/app/assets/images/") %>
+          <% qr_img.resize(200, 200).save(path+"app_qrcode.png") %>
+          <%= image_tag("app_qrcode.png", :size => "200x200") %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-12">
+          <li_header>
+          <%= $app_name + " " + (I18n.t :nutzungsbedingungen) %> <br>
+          </li_header>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+
+<h1>Standard-Vertragsbedingungen der TGcloudSoft (Anbieter) für die Nutzung von <b>myTGCloud</b></h1>
+
+<p>
+TGCloudSoft bietet Kunden auf https://mytgcloud.herokuapp.com Software bzw. Services an. Die hier vorliegenden Nutzungsbedingungen gelten für die Nutzung dieser Dienste.
+Sofern schriftlich nicht anders vereinbart gelten hierzu ergänzend die AGB der TGcloudSoft, die <a href='www.google.de'>hier</a> eingesehen und heruntergeladen werden können. 
+TGCloudSoft stellt dem Kunden die Nutzungsmöglichkeit für die Softwareanwendungen zum Zugriff über eine Telekommunikationsverbindung sowie Speicherplatz für seine Anwendungsdaten zu den folgenden Bedingungen zur Verfügung.      
+</p>
+
+<h1>VERTRAGSGEGENSTAND</h1>
+<p>
+Diese Vertragsbedingungen gelten für die Nutzung der Services der TGcloudSoft als Software as a Service (Saas) bzw. Cloud-Angebot im Rahmen der Nutzung einer public cloud.
+Die Services werden von TGCloudSoft als SaaS- bzw. Cloud-Lösung betrieben. Dem Kunden wird gegen Zahlung des vereinbarten Entgelts ermöglicht, die auf den Servern der TGCloudSoft, bzw. eines von TGCloudSoft beauftragten Dienstleisters gespeicherte und ablaufende Software über eine Internetverbindung während der Laufzeit dieses Vertrags für eigene Zwecke zu nutzen und seine Daten mit ihrer Hilfe zu speichern und zu verarbeiten. Ein unbefristetes Nutzungsrecht an dem Service über das Vertragsende hinaus wird nicht gewährt.
+Diese Vertragsbedingungen sowie ergänzend die Allgemeinen Geschäftsbedingungen der TGCloudSoft gelten ausschließlich. Vertragsbedingungen des Kunden finden keine Anwendung. Gegenbestätigungen des Kunden unter Hinweis auf seine eigenen Geschäftsbedingungen wird ausdrücklich widersprochen.
+</p>
+
+<h1>ART UND UMFANG DER LEISTUNG</h1>
+<p>
+Die TGCloudSoft stellt dem Kunden den Service in der jeweils vereinbarten Version am Leistungsübergabepunkt zur Nutzung bereit. Leistungsübergabepunkt für die Service-Nutzung sind die Router-Ausgänge der von TGCloudSoft 
+genutzten Rechenzentren, in denen sich die jeweils genutzten Server mit der Software befinden. Der Service, die für die Nutzung erforderliche Rechenleistung auf Servern und der erforderliche Speicherplatz auf Servern werden von TGCloudSoft bereitgestellt. 
+Die Bereitstellung der Systemvoraussetzungen auf Kundenseite liegt vollumfänglich in der Verantwortung des Kunden.
+TGCloudSoft schuldet nicht die Herstellung und Aufrechterhaltung der Datenverbindung zwischen den IT-Systemen des Kunden und dem beschriebenen Leistungsübergabepunkt. TGCloudSoft stellt dem Kunden keine Anwenderdokumentation zur Verfügung
+Teile des Services, die der Kunde nutzt bzw. anwendet, können im Eigentum von Partnerunternehmen (Unternehmen, mit denen die TGCloudSoft eine vertragliche Partnerschaft eingegangen ist) stehen (Fremdsoftware) und werden entweder von der TGCloudSoft oder von diesen Partnerunternehmen bereitgestellt (Fremdlizenzgeber). Sofern eine Bereitstellung vom Partnerunternehmen vorliegt und der Kunde diesen Fremdservice nutzen möchte, erklärt er sich damit einverstanden, den Fremdservice gemäß der Nutzungsbedingungen und anderer Beschränkungen, die in der anzuwendenden Lizenz dargelegt sind oder auf die verwiesen wird, zu nutzen.
+TGCloudSoft stellt sicher, dass das Datenschutzniveau zwischen diesen Unternehmen mindestens dieser Vereinbarung zwischen Kunde und der TGCloudSoft entspricht und alle gesetzlichen und vertraglichen Pflichten beachtet werden.
+</p>
+
+<h1>TECHNISCHE VORAUSSETZUNGEN</h1>
+<p>Für die Beschaffenheit oder Leistungsfähigkeit der erforderlichen Hard- und/ oder Software auf Seiten des Kunden ist TGCloudSoft nicht verantwortlich.</p>
+ 
+<h1>NUTZUNGSRECHTE AN DER SOFTWARE</h1>
+<p>
+Die Produkte & Services TGCloudSoft sind urheberrechtlich geschützt. TGCloudSoft räumt dem Kunden für die Laufzeit des Vertrages das einfache, nicht ausschließliche, nicht unterlizenzierbare, nicht übertragbare und zeitlich auf die vereinbarte Dauer beschränkte Recht ein, die von ihr zur Verfügung gestellte Benutzeroberfläche des Services zur Anzeige auf dem Bildschirm in den Arbeitsspeicher der vertragsgemäß hierfür verwendeten Endgeräte zu laden, auszuführen und die dabei entstehenden Vervielfältigungen der Benutzeroberfläche vorzunehmen sowie den Service für die vertragsgemäßen Zwecke gemäß der Produktbeschreibung zu nutzen. Ein darüber hinaus gehendes Recht wird dem Kunden nicht eingeräumt.
+Der Kunde ist berechtigt, den Service selbst oder durch seine Angestellten zu nutzen, sofern diese unter Angabe der jeweils zugehörigen E-Mail-Adressen registriert sind.Es können im Laufe des Vertragsverhältnisses neue Nutzer zugeschaltet, deaktiviert oder ausgetauscht werden. Lizenznehmer gegenüber TGCloudSoft ist ausschließlich der Kunde.
+Der Funktionsumfang des Services kann je nach buchbaren Möglichkeiten innerhalb der CLOUD-Lösung bei Bedarf sehr kurzfristig erweitert bzw. reduziert werden
+Der Kunde ist nicht befugt, den Service über die nach Maßgabe dieses Vertrages erlaubte Nutzung hinaus zu nutzen oder von Dritten nutzen zu lassen oder Dritten zugänglich zu machen, die nicht als berechtigte Nutzer registriert sind.
+Es ist dem Kunden nicht gestattet, den Service oder Teile davon zu vervielfältigen oder zu veräußern.
+Der Kunde ist nicht berechtigt, Änderungen an dem Service vorzunehmen. Er ist insbesondere nicht berechtigt, ihre Funktionsweise im Wege eines sog. reverse engineering zu untersuchen, zu dekompilieren, in ihre Bestandteile zu zerlegen und/ oder als Grundlage für die Erstellung eigener Softwareprogramme zu verwenden. Dies gilt nicht für Änderungen, die für die Berichtigung von Fehlern notwendig sind, sofern sich TGCloudSoft mit der Behebung eines Fehlers in Verzug befindet, die Fehlerbeseitigung ablehnt oder wegen der Eröffnung des Insolvenzverfahrens zur Fehlerbeseitigung außerstande ist.
+Sofern TGCloudSoft während der Laufzeit neue Versionen, Updates, Upgrades oder andere Neulieferungen im Hinblick auf den Service vornimmt und diese dem Kunden freiwillig oder aufgrund einer zusätzlichen vertraglichen Verpflichtung zur Verfügung stellt, gelten die vorstehenden Rechte auch für diese Anwendungen.
+Verletzt der Kunde oben genannte Regelungen aus von ihm zu vertretenden Gründen, ist TGCloudSoft berechtigt, den Zugriff des Kunden auf den Service zu sperren bzw. den Vertrag ohne Einhaltung einer Kündigungsfrist außerordentlich zu kündigen, sofern der Kunde die Verletzungshandlung auch eine Woche nach vorheriger schriftlicher Abmahnung durch TGCloudSoft weiterhin begeht.
+</p>
+ 
+
+<h1>RECHTE AM GEISTIGEN EIGENTUM</h1>
+<p>
+Alle Urheberrechte, Patentrechte, Firmenrechte, Markenrechte und andere gewerbliche Schutzrechte und Rechte am geistigen Eigentum sowie alle gleichartigen Rechte zum Schutz von Informationen, die sich auf den Service der TGCloudSoft beziehen, sind und bleiben jederzeit ausschließliches Eigentum von TGCloudSoft. 
+</p>
+
+<h1>KUNDENDATEN UND -INHALTE / FREISTELLUNG VON ANSPRÜCHEN DRITTER</h1>
+<p>
+TGCloudSoft benötigt von den Kunden zum Betrieb und zur Aktivierung des Services bestimmte Rechte an deren Inhalten. Dementsprechend speichert die TGCloudSoft als technischer Dienstleister Inhalte und Daten für den Kunden, die dieser bei der Nutzung des Services eingibt und speichert und zum Abruf bereitstellt. Sobald durch den Kunden Inhalte auf den Service hochgeladen werden, erteilt dieser der TGCloudSoft das unentgeltliche, nicht ausschließliche, zeitlich und räumlich unbeschränkte, unterlizenzierbare und übertragbare Recht, die Inhalte wie erforderlich als Reaktion auf benutzergesteuerte Aktionen, für Zwecke der Veröffentlichung und Qualitätssicherung des Services sowie für Services an Dritte sowie den Support von Kunden zu verwenden, zu vervielfältigen, öffentlich auszustellen, zu verteilen, öffentlich vorzuführen und zu übersetzen. Diese Lizenz dient ausschließlich zum Betreiben oder Verbessern des Services.
+Mit der Nutzung des Services bestätigt der Kunde, dass er die Rechtsposition zur Einräumung dieses Nutzungsrechts an TGCloudSoft besitzt. Der Kunde behält sämtliche Rechte und Eigentumsrechte an seinem Inhalt. TGCloudSoft beansprucht keine Eigentumsrechte an solchen Inhalten. 
+Für den Fall, dass Dienste Funktionen umfassen, die es Kunden ermöglichen, ihre Inhalte freizugeben und zu veröffentlichen gilt folgendes:
+Freigeben bedeutet, Kunden stellen ihre Inhalte der TGCloudSoft und/ oder anderen Benutzern durch Hochladen oder auf andere Weise zur Verfügung. Andere Benutzer bzw. TGCloudSoft können diese freigegebenen Inhalte auf vielerlei Art verwenden, kopieren, ändern oder weitergeben. Der Kunde sollte sich genau überlegen, welchen Inhalt er freigibt oder veröffentlicht, da der Kunde für den von ihm freigegebenen Inhalt die volle Verantwortung trägt.
+Der Kunde verpflichtet sich gegenüber TGCloudSoft, keine strafbaren oder sonst absolut oder im Verhältnis zu einzelnen Dritten rechtswidrigen Inhalte und Daten einzustellen und keine Viren oder sonstige Schadsoftware enthaltenden Programme im Zusammenhang mit dem Service zu nutzen. Der Kunde bleibt im Hinblick auf personenbezogene Daten verantwortliche Stelle und hat daher stets zu prüfen, ob die Verarbeitung solcher Daten über die Nutzung des Services von entsprechenden Erlaubnistatbeständen getragen ist.
+Der Kunde ist für sämtliche von ihm verwendete Inhalte und verarbeiteten Daten sowie die hierfür etwa erforderlichen Rechtspositionen allein verantwortlich. TGCloudSoft nimmt von Inhalten des Kunden keine Kenntnis, sie werden ohne Vorabprüfung oder Überwachung von TGCloudSoft für den Kunden gespeichert und für diesen zur Verfügung gestellt; eine Prüfung auf Richtigkeit und Rechtmäßigkeit durch die TGCloudSoft findet nicht statt.
+Der Kunde verpflichtet sich in diesem Zusammenhang, TGCloudSoft von jeder Haftung und jeglichen Kosten, einschließlich möglicher und tatsächlicher Kosten eines gerichtlichen Verfahrens, freizustellen, falls die TGCloudSoft von Dritten, auch von Mitarbeitern des Kunden persönlich, infolge von behaupteten Handlungen oder Unterlassungen des Kunden in Anspruch genommen wird. TGCloudSoft wird den Kunden über die Inanspruchnahme unterrichten und ihm, soweit dies rechtlich möglich ist, Gelegenheit zur Abwehr des geltend gemachten Anspruchs geben. Gleichzeitig wird der Kunde von TGCloudSoft unverzüglich alle ihm verfügbaren Informationen über den Sachverhalt, der Gegenstand der Inanspruchnahme ist, vollständig mitteilen.
+Darüber hinausgehende Schadensersatzansprüche der TGCloudSoft bleiben unberührt.
+</p>
+ 
+<h1>INSTANDHALTUNG DES SERVICES / GEWÄHRLEISTUNG</h1>
+<p>
+TGCloudSoft setzt Rechenzentren für das Betreiben der Cloud ein, deren „System-Verfügbarkeit“ mindestens 99,5% im Jahresmittel beträgt.
+TGCloudSoft schuldet die Verfügbarkeit des Services und damit die technische Nutzbarkeit des Services am Übergabeort zum Gebrauch durch den Kunden. Von der Verfügbarkeit ausgenommen sind Ausfallzeiten durch Wartung und Service-Pflege, Updates etc. sowie die Zeiten, in denen der Service aufgrund von technischen oder sonstigen Problemen, die nicht im Einflussbereich der TGCloudSoft liegen, nicht zu erreichen ist. 
+Supportleistungen sind ausschließlich montags bis freitags jeweils zwischen 9:00 Uhr und 17:00 Uhr CET verfügbar, jedoch nicht an Feiertagen
+Der Kunde hat die Möglichkeit, Störungen über die Supporthotline und/ oder schriftlich per Mail zu melden. Störungsmeldungen werden ausschließlich während der Service-Zeiten aufgenommen: Werktags (Montag bis Freitag) von 9.00 Uhr bis 17.00 Uhr (CET)
+TGCloudSoft weist darauf hin, dass folgende Leistungen ausgeschlossen sind:
+<ul>
+<li>Behebung von Problemen, die durch unsachgemäßen Umgang mit dem Service verursacht wurden</li>
+<li>Rettung von Daten der Kunden, es sei denn, der Datenverlust betrifft den ganzen oder überwiegenden Teil der Daten der Kunden und ist von TGCloudSoft verschuldet</li>
+<li>Datenrücksicherung, es sei denn, der Datenverlust betrifft den ganzen oder überwiegenden Teil der Daten der Kunden und ist von TGCloudSoft verschuldet</li>
+<li>individuelle Programmierleistungen, insbesondere Anpassung an neue Produkte und Services, eine geänderte Hardware- und Softwareumgebung sowie an geänderte Betriebsabläufe des Kunden oder vom Kunden verwendete Drittsoftware</li>
+<li>Vor-Ort-Service beim Kunden</li>
+<li>Schulungen</li>
+<li>Supportleistungen hinsichtlich der Zusammenarbeit der Software mit vom Kunden verwendeter Drittsoftware</li>
+<li>Entwicklung einer kundenspezifischen Implementierung wie Skripte, Programme, Konfigurationen und ähnliches</li>
+<li>Hilfe zu Modellierungsfragestellungen</li>
+</ul>
+</p>
+<p>
+TGCloudSoft beseitigt vom Kunden angezeigte Mängel des Services innerhalb angemessener Zeit. Mängel werden von den Parteien einvernehmlich in drei Fehlerkategorien unterteilt. Bei fehlendem Einvernehmen entscheidet TGCloudSoft unter Berücksichtigung der berechtigten Interessen des Kunden. Je nach Fehlerkategorie bzw. Fehlerklassen existieren folgende unterschiedliche Reaktionszeiten (Reaktionszeiten beginnen und laufen ausschließlich während der Servicezeiten.
+<ul>
+<li>Fehlerklasse 1 („sehr hoch“): Service steht nicht zur Verfügung oder ist in erheblichem Maße (schwerwiegend) eingeschränkt (Reaktionszeit: 12 Stunden)</li>
+<li>Fehlerklasse 2 („hoch“): Nutzung des Services ist nicht unmöglich, aber in erheblichem Maße beeinträchtigt  (Reaktionszeit: 24 Stunden)</li>
+<li>Fehlerklasse 3 („niedrig“): alle anderen Vorfälle bzw. Fehler (Fehlerbehebung im Rahmen einer neuen Softwareversion)</li>
+</ul>
+</p>
+
+<h1>MITWIRKUNGSPFLICHTEN DES KUNDEN</h1>
+<p>
+Der Kunde wird TGCloudSoft bei der Erbringung der vertraglichen Leistungen in angemessenem Umfang wie folgt unterstützen. 
+Der Kunde verpflichtet sich, die ihm zur Verfügung gestellten Zugangs- und Nutzungsdaten geheim zu halten, vor dem Zugriff durch Dritte zu schützen und nicht an unberechtigte Dritte oder Nutzer weiterzugeben, sofern dies nicht ausdrücklich von den Parteien vereinbart wurde. Der Kunde hat dafür zu sorgen, dass etwaige Mitarbeiter, denen Zugangsdaten zur Verfügung gestellt werden, diese in gleicher Art und Weise zu schützen. Der Kunde wird die TGCloudSoft unverzüglich unterrichten, sobald der Verdacht besteht, dass Zugangsdaten und Kennwörter nicht berechtigten Personen gegenüber bekannt geworden sein könnten.
+</p>
+ 
+<h1>VERGÜTUNG / VERZUG</h1>
+<p>Für die zu erbringenden Leistungen wird ein monatliches bzw. jährliches Nutzungsentgelt erhoben. Die Höhe richtet sich nach den gewählten Funktionen des Services, der Anzahl der vom Kunden registrierten Nutzer sowie der Dauer der Registrierung dieser Nutzer, den gewählten Komponenten/ Optionen/ Paketen sowie der gewählten Vertragsdauer. Preisangaben sind beim Bestellvorgang zu entnehmen.
+Es können im Laufe des Vertragsverhältnisses neue Nutzer zugeschaltet, ausgetauscht oder deaktiviert werden. Bei der Zuschaltung eines neuen Nutzers, der nicht mit dem vom Kunden bereits gezahlten Nutzungsentgelt abgegolten ist, tritt die jeweilige Gebühr für die Zuschaltung des Nutzers unmittelbar in Kraft. Bei einer Deaktivierung von bereits vorhandenen Nutzern, die nicht in dem ursprünglich vom Kunden gebuchten Kontingent enthalten waren und somit extra vergütet werden mussten, werden die Gebühren innerhalb eines gebuchten Vertragszeitraumes nicht angepasst bzw. reduziert. Es gilt die erhöhte Gebühr für den zusätzlichen Nutzer.
+Die jeweils gültige Gebühr für eine Erweiterung des Funktionsumfangs tritt unmittelbar in Kraft; bei einer Reduzierung des Funktionsumfangs werden die Gebühren während des zunächst vereinbarten Leistungszeitraums nicht angepasst.
+Vergütungen werden inkl. der Umsatzsteuer in der jeweils anfallenden gesetzlichen Höhe geschuldet. Rückvergütungen sind ausgeschlossen. Rechnungen werden ausschliesslich elektronischer Form erstellt. 
+</p>
+ 
+<h1>RECHTE ZUR DATENVERARBEITUNG / DATENSICHERUNG</h1>
+<p>
+TGCloudSoft hält sich an die gesetzlichen Datenschutzbestimmungen. Der Kunde räumt TGCloudSoft für die Zwecke der Vertragsdurchführung das Recht ein, die von TGCloudSoft für den Kunden zu speichernden Daten vervielfältigen zu dürfen, soweit dies zur Erbringung der nach diesem Vertrag geschuldeten Leistungen erforderlich ist. TGCloudSoft ist auch berechtigt, die Daten in einem Ausfallsystem bzw. separaten Ausfallrechenzentrum vorzuhalten. Zur Beseitigung von Störungen ist TGCloudSoft ferner berechtigt, Änderungen an der Struktur der Daten oder dem Datenformat vorzunehmen.
+TGCloudSoft sichert die Daten der Kunden jeweils täglich zum Zwecke der Wiederherstellung der Daten in ihrer Gesamtheit
+Leistungen nach diesem Vertrag werden von TGCloudSoft als Datenverarbeitung im Auftrag des Kunden erbracht, soweit die zu verarbeitenden Daten personenbezogen sind. Der Kunde ist Auftraggeber und verantwortliche Stelle TGCloudSoft ist verpflichtet, personenbezogene Daten, die im Auftrag des Kunden verarbeitet werden, geheim zu halten und nur gemäß den Weisungen des Kunden zu verarbeiten. Die Weisungen müssen rechtzeitig schriftlich mitgeteilt werden.
+TGCloudSoft trifft angemessene technische und organisatorische Sicherheitsvorkehrungen und Maßnahmen zum angemessenen Schutz der Daten von Kunden, die den Anforderungen des Datenschutzgesetzes genügen.
+TGCloudSoft wird kundenbezogene Daten nur in dem Umfang erheben und nutzen, wie es die Durchführung dieses Vertrages erfordert. Der Kunde stimmt der Erhebung und Nutzung solcher Daten in diesem Umfang zu.
+</p>
+ 
+<h1>GEHEIMHALTUNG / DATENSCHUTZ</h1>
+<p>Es gelten die Bestimmungen in den Allgemeinen Geschäftsbedingungen der TGCloudSoft</p>
+
+<h1>HAFTUNG UND SCHADENSERSATZ</h1>
+<p>Es gelten die Bestimmungen in den Allgemeinen Geschäftsbedingungen der TGCloudSoft.
+Eine Haftung der TGCloudSoft für anfängliche Mängel ist ausgeschlossen, es sei denn, TGCloudSoft hat den Mangel arglistig verschwiegen.
+TGCloudSoft haftet nicht für eine Verletzung der Rechte Dritter durch den Kunden, sofern und soweit sich diese Verletzung aus der Überschreitung der nach diesem Vertrag eingeräumten Nutzungsrechte ergibt. In diesem Fall stellt der Kunde TGCloudSoft auf erstes Anfordern von sämtlichen Ansprüchen Dritter frei.
+</p>
+ 
+
+<h1>VERTRAGSSCHLUSS UND BEGRENZTE NUTZUNG EINER KOSTENLOSEN TESTVERSION FÜR DIE DAUER VON 30 TAGEN</h1>
+<p>
+Die Nutzung des Services setzt eine Registrierung des Kunden voraus. Nach der erfolgreichen Registrierung wird dem Kunden ein persönlicher Nutzer-Account eingerichtet. 
+Vor der kostenpflichtigen Nutzung des Services bietet TGCloudSoft ihren Kunden zeitlich begrenzte, kostenlose Nutzung der Services an
+Der Vertrag über die kostenpflichtige Nutzung des Services kommt durch eine explizite Abonnement Funktion zustande
+Die Abwicklung der Bestellung erfolgt per E-Mail automatisiert. 
+Der Kunde hat daher sicherzustellen, dass die von ihm hinterlegte E-Mail-Adresse zutreffend ist   
+</p>
+ 
+<h1>VERTRAGSLAUFZEIT UND BEENDIGUNG DES VERTRAGES / (AUSSERORDENTLICHE) KÜNDIGUNG / EXIT MANAGEMENT</h1>
+<p>
+Entgeltliche Verträge, die auf bestimmte Zeit (montalich, jährlich) geschlossen wurden oder für die eine Mindestvertragslaufzeit vereinbart wurde, verlängern sich nicht; sondern es erfolgt eine Erinnerungs-eMail
+Die außerordentliche Kündigung aus wichtigem Grund bleibt beiden Parteien bei Vorliegen der gesetzlichen Voraussetzungen vorbehalten. 
+Ein wichtiger Grund zur außerordentlichen Kündigung liegt vor, wenn die Fortsetzung des Vertragsverhältnisses bis zum Ablauf der gesetzlichen Kündigungsfrist für die kündigende Partei unter Berücksichtigung aller Umstände des Einzelfalls und unter Abwägung der Interessen beider Parteien nicht zumutbar ist. Wichtige Gründe sind für die TGCloudSoft insbesondere die folgenden Ereignisse:
+Verstoß des Kunden gegen seine vertraglichen Pflichten. Hier insbesondere:
+
+<ul>
+<li>vorsätzliche Angabe des Kunden von falschen Kontaktdaten</li>
+<li>vorsätzliche Angabe des Kunden einer falschen oder ungültigen E-Mail-Adresse</li>
+<li>der Kunde gerät mit der Zahlung der Rechnung für mehr als 14 Tage in Verzug</li>
+<li>der Kunde überträgt seinen Nutzer-Account an einen Dritten</li>
+<li>der Kunde lässt die Nutzung seines Nutzer-Accounts durch unberechtigte Dritte zu, insbesondere durch namentlich nicht benannte Einzelpersonen</li>
+<li>Nichteinhaltung gesetzlicher Vorschriften durch den Kunden</li>
+</ul>
+</p>
+ 
+
+<h1>ÜBERTRAGUNG DER RECHTE UND PFLICHTEN</h1>
+<p>Die Abtretung der Rechte und Pflichten aus diesem Vertrag ist nur mit vorheriger schriftlicher Zustimmung der TGCloudSoft zulässig. TGCloudSoft ist berechtigt, Dritte mit der Erfüllung der Pflichten aus diesem Vertrag zu betrauen.</p>
+
+<h1>SCHLUSSBESTIMMUNGEN</h1>
+<p>TGCloudSoft behält sich das Recht vor, den Inhalt dieser Nutzungsbedingungen sowie die Leistungs- und Produktbeschreibung jederzeit einseitig zu ändern, sofern die Änderung auf sachlichen Gründen beruht und für den Kunden zumutbar ist bzw. wenn die Änderung lediglich vorteilhaft für den Kunden ist. Begründete Anlässe für Änderungen sowohl der Leistungs- und Produktbeschreibung als auch dieser Nutzungsbedingungen können sein:</p>
+<ul>
+<li>neue gesetzliche oder behördliche Vorgaben</li>
+<li>Vorgaben eines an die TGCloudSoft gerichteten Gerichtsurteils</li>
+<li>veränderte aktuelle Marktgegebenheiten</li>
+<li>Veränderungen der wirtschaftlichen Verhältnisses</li>
+<li>Einführung von neuen, zusätzlichen Dienstleistungen oder von Diensten/Services/ Software, die einer Leistungsbeschreibung in den AGB bedürfen, es sei denn, das bisherige Nutzungsverhältnis wird dadurch nachteilig verändert</li>
+<li>Notwendige Änderungen, um bestehende Sicherheitslücken zu schließen</li>
+<li>Anpassungen, die dem technischen Fortschritt dienen bzw. technisch und prozessual notwendig sind, es sei denn, sie haben wesentliche Auswirkungen für den Kunden.</li>
+</ul>
+<p>
+Über die Änderung wird TGCloudSoft den Kunden spätestens vier (4) Wochen vor Inkrafttreten der Änderung schriftlich per E-Mail informieren. Die Änderung bedarf der Zustimmung des Kunden. Die Zustimmung gilt als erteilt und die neuen Allgemeinen Geschäftsbedingungen bzw. neuen Leistungs- und Produktbeschreibungen werden in das Vertragsverhältnis einbezogen, sofern der Kunde nicht binnen vier (4) Wochen nach Zugang der Änderungsmitteilung für den Zeitpunkt des Wirksamwerdens der Änderung per E-Mail oder schriftlich widerspricht. Widerspricht der Kunde, gelten für ihn weiterhin die bisherigen vertraglichen Regelungen. Die TGCloudSoft wird dem Kunden im Rahmen der Mitteilung über die geänderte Fassung die oben erwähnte angemessene Reaktionsfrist setzen und auf die Folgen einer fehlenden Reaktion hinweisen.
+Widerspricht der Kunde, hat jede Partei das Recht, den Vertrag mit der für eine ordentliche Kündigung geltenden Frist per E-Mail oder schriftlich zu kündigen.
+TGCloudSoft ist berechtigt, ihre Nutzungsentgelte im Rahmen des Cloud Computing und seiner wiederkehrenden Leistungen zu erhöhen, um damit eine Erhöhung der Gesamtkosten (allgemeine Preisentwicklung) auszugleichen. Die Gesamtkosten bestehen insbesondere aus Kosten für Instandhaltung und Betrieb der Cloud einschließlich Materialkosten, Lohn- und Lohnnebenkosten, Kosten für die Dienstleistung, Kosten für die Kundenverwaltung (IT-Support) sowie Kosten der allgemeinen Verwaltung. Die Preisanpassung darf nur bis zum Umfang der Kostenerhöhung und entsprechend dem Anteil des erhöhten Kostenelements an den Gesamtkosten erfolgen; sie ist nur zulässig, wenn die Kostenerhöhung auf Änderungen beruht, die nach Vertragsschluss eingetreten sind und die von der TGCloudSoft nicht originär veranlasst wurden. Eine Preiserhöhung ist für jedes Produkt jeweils nur einmal pro Kalenderjahr zulässig.
+TGCloudSoft wird den Kunden über eine Preisanpassung vor ihrem Inkrafttreten informieren.
+</p>
+<p>Sollten einzelne Bestimmung dieser Vereinbarung unwirksam sein, wird hierdurch die Wirksamkeit der übrigen Bestimmungen nicht berührt. Die Parteien werden in diesem Fall zusammenwirken, um unwirksame Regelungen durch solche Regelungen zu ersetzen, die den unwirksamen Bestimmungen soweit wie möglich entsprechen.</p>
+
+<p>D1iese Vereinbarung enthält alle Abmachungen zwischen den Vertragsparteien und ersetzt alle anderen vorherigen oder gleichzeitigen Mitteilungen, Verhandlungen, Diskussionen, Abmachungen, Regelungen oder Vereinbarungen, die mündlich oder schriftlich zwischen den Parteien in Bezug zu den relevanten Produkten und Dienstleistungen getroffen wurden.</p>
+
+<b>Stand: August.2017</b>

@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
 
+def nutzung
+end
+
 def index
     @users = User.select("date(created_at) as datum, count(id) as summe").group("date(created_at)")
     @anz_pk = ""

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get 'statement/index'
 
   get 'showcal/index'
+  get 'home/nutzung'
   get 'home/index'
   get 'home/index1'
   #get 'home/index1/:ticket_id', to: 'home#index1'

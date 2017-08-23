@@ -992,7 +992,7 @@ def build_medialist2(items, cname, par)
             if user_signed_in?
               case cname
                 when "prices"
-                  if (item.mobject.owner_type == "User" and item.mobject.owner_id == current_user.id) or (item.mobject.owner_type == "Company" and item.mobject.owner.user_id == current_user.id)
+                  if isowner(item.mobject)
                     access = true
                   end
                 when "crits"
@@ -1005,7 +1005,7 @@ def build_medialist2(items, cname, par)
                       access = true
                     end
                   else
-                    if (item.mobject.owner_type == "User" and item.mobject.owner_id == current_user.id) or (item.mobject.owner_type == "Company" and item.mobject.owner.user_id == current_user.id)
+                    if isowner(item.mobject)
                       access = true
                     end
                   end
@@ -1022,31 +1022,31 @@ def build_medialist2(items, cname, par)
                       content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-education")
                     end
                   end
-                  if (item.user_id == current_user.id)
+                  if (item.user_id == current_user.id) or isdeputy(item.user)
                     access = true
                   end
                 when "idea_crowdratings"
-                  if (item.user_id == current_user.id)
+                  if (item.user_id == current_user.id) or isdeputy(item.user)
                     access = true
                   end
                 when "questions"
-                  if (item.mobject.owner_type == "User" and item.mobject.owner_id == current_user.id) or (item.mobject.owner_type == "Company" and item.mobject.owner.user_id == current_user.id)
+                  if isowner(item.mobject)
                     access = true
                   end
                 when "edition_arcticles"
-                  if (item.edition.mobject.owner_type == "User" and item.edition.mobject.owner_id == current_user.id) or (item.edition.mobject.owner_type == "Company" and item.edition.mobject.owner.user_id == current_user.id)
+                  if isowner(item.mobject)
                     access = true
                   end
                 when "editions"
     	            html_string = html_string + link_to(edition_arcticles_path(:edition_id => item)) do 
                     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-text-background")
                   end
-                  if (item.mobject.owner_type == "User" and item.mobject.owner_id == current_user.id) or (item.mobject.owner_type == "Company" and item.mobject.owner.user_id == current_user.id)
+                  if isowner(item.mobject)
                     access = true
                   end
                 when "tickets"
                   if item.owner_type == "Mobject"
-                    if (item.owner.owner_id == current_user.id) or (item.owner.owner_type == "Company" and item.owner.user_id == current_user.id)
+                  if isowner(item.mobject)
                       access = true
                     end
                     if item.user_tickets and item.contingent
@@ -1058,11 +1058,11 @@ def build_medialist2(items, cname, par)
                     end
                   end
                 when "users"
-                  if item.id == current_user.id or current_user.superuser
+                  if item.id == current_user.id or isdeputy(item)
                     access=true
                   end 
                 when "favourits", "searches", "mratings", "comments"
-                  if item.user_id == current_user.id
+                  if item.user_id == current_user.id or isdeputy(item)
                     access=true
                   end 
                 when "mobjects", "partners", "mstats", "transactions"
@@ -1071,7 +1071,7 @@ def build_medialist2(items, cname, par)
                       content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-blackboard")
                     end
                   end
-                  if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
+                  if isowner(item.owner)
                     access = true
                   end
                   if cname == "mobjects"
@@ -1132,11 +1132,11 @@ def build_medialist2(items, cname, par)
                 when "nopartners"
                   access = true
                 when "deputies"
-                  if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company"and item.owner.user_id == current_user.id)
+                  if isowner(item.owner)
                     access = true
                   end
                  when "madvisors"
-                  if item.user_id == current_user.id or current_user.superuser
+                  if item.user_id == current_user.id or isdeputy(item)
                     access = true
                   end
                 when "mdetails"
@@ -1145,11 +1145,11 @@ def build_medialist2(items, cname, par)
                       content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-cloud-download")
                     end
                   end
-                  if (item.mobject.owner_type == "User"and item.mobject.owner_id == current_user.id) or (item.mobject.owner_type == "Company"and item.mobject.owner.user_id == current_user.id)
+                  if isowner(item.mobject)
                     access = true
                   end
                 when "msponsors"
-                  if item.company.user_id == current_user.id
+                  if item.company.user_id == current_user.id or isdeputy(item.company)
                     access = true
                   end
                  
@@ -1559,13 +1559,13 @@ def navigate(object,item)
       when "objekte"
         html_string = html_string + build_nav("objekte",item,"objekte_info",item)
         if user_signed_in?
-          if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
-          html_string = html_string + build_nav("objekte",item,"objekte_details",item.mdetails.where('mtype=?',"details").count > 0)
+          if isowner(item.owner)
+            html_string = html_string + build_nav("objekte",item,"objekte_details",item.mdetails.where('mtype=?',"details").count > 0)
           end
         end 
         if item.mtype == "projekte"
           if user_signed_in?
-            if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
+            if isowner(item.owner)
               html_string = html_string + build_nav("objekte",item,"objekte_substruktur", Mobject.where('parent=?',item.id).count > 0)
               html_string = html_string + build_nav("objekte",item,"objekte_projektberechtigungen", item.madvisors.where('role=?',item.mtype).count > 0)
             end
@@ -1589,7 +1589,7 @@ def navigate(object,item)
         end
         if item.mtype == "umfragen"
           if user_signed_in?
-            if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
+            if isowner(item.owner)
               html_string = html_string + build_nav("objekte",item,"objekte_fragen",item.questions.count > 0)
               html_string = html_string + build_nav("objekte",item,"objekte_umfrageteilnehmer",User.count > 0)
             end
@@ -1766,7 +1766,7 @@ def action_buttons2(object_type, item, topic)
 
         when "personen_stellvertretungen"
              if user_signed_in?
-              if (item.id == current_user.id)
+              if (item.id == current_user.id) or current_user.superuser
                 html_string = html_string + link_to(deputies_path(:user_id => item.id)) do
                   content_tag(:i, content_tag(:b, (I18n.t :hinzufuegen)), class:"btn btn-special glyphicon glyphicon-plus")
                 end
