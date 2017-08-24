@@ -476,6 +476,7 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + item.name + "<br>"
                       html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
                       html_string = html_string + "<b>" + item.description + "</b><br>"
+
                     when "crits"
                       if item.rating and item.rating > 0
                         html_string = html_string + '<div class="progress">'
@@ -611,6 +612,7 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + item.mcategory.name + '<br>'
                       html_string = html_string + '<i class="glyphicon glyphicon-exclamation-sign"></i> '
                       html_string = html_string + item.status.to_s + '<br>'
+
                     when "tickets"
                       html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
                       html_string = html_string + item.mcategory.name + '<br>'
@@ -620,9 +622,11 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + item.contingent.to_s + ' verfügbar <br>'
                       html_string = html_string + '<i class="glyphicon glyphicon-warning-sign"></i> '
                       html_string = html_string + item.user_tickets.count.to_s + ' verkauft <br>'
+
                     when "mdetails"
                       html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
                       html_string = html_string + item.description + '<br>'
+
                     when "users"
                       html_string = html_string + '<i class="glyphicon glyphicon-home"></i> '
                       if item.address1 and item.address1.length > 0 
@@ -643,6 +647,7 @@ def build_medialist2(items, cname, par)
                       end
                       html_string = html_string + '<br><i class="glyphicon glyphicon-envelope"></i> '
                       html_string = html_string +  item.email
+
                     when "companies"
                       html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
                       html_string = html_string + item.mcategory.name + '<br>'
@@ -665,6 +670,7 @@ def build_medialist2(items, cname, par)
                       end
                       html_string = html_string + '<br><i class="glyphicon glyphicon-envelope"></i> '
                       html_string = html_string + item.user.email
+
                     when "customers"
                       html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
                       html_string = html_string + @comp.mcategory.name + '<br>'
@@ -691,7 +697,6 @@ def build_medialist2(items, cname, par)
                         html_string = html_string + '<i class="glyphicon glyphicon-signal"></i> '
                         html_string = html_string + sprintf("%3.1f %",item.interest_rate)  + '<br>'
                       end
-
                       if item.owner_type == "Company"
                           html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i> '
                           html_string = html_string + item.owner.name + "<br>"
@@ -1009,6 +1014,7 @@ def build_medialist2(items, cname, par)
                       access = true
                     end
                   end
+
                 when "ideas"
       	          html_string = html_string + link_to(idea_crowdratings_path(:idea_id => item)) do 
                       content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-star")
@@ -1025,18 +1031,22 @@ def build_medialist2(items, cname, par)
                   if (item.user_id == current_user.id) or isdeputy(item.user)
                     access = true
                   end
+
                 when "idea_crowdratings"
                   if (item.user_id == current_user.id) or isdeputy(item.user)
                     access = true
                   end
+
                 when "questions"
                   if isowner(item.mobject)
                     access = true
                   end
+
                 when "edition_arcticles"
                   if isowner(item.mobject)
                     access = true
                   end
+
                 when "editions"
     	            html_string = html_string + link_to(edition_arcticles_path(:edition_id => item)) do 
                     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-text-background")
@@ -1044,6 +1054,7 @@ def build_medialist2(items, cname, par)
                   if isowner(item.mobject)
                     access = true
                   end
+
                 when "tickets"
                   if item.owner_type == "Mobject"
                   if isowner(item.mobject)
@@ -1057,20 +1068,23 @@ def build_medialist2(items, cname, par)
                       end
                     end
                   end
+
                 when "users"
                   if item.id == current_user.id or isdeputy(item)
                     access=true
                   end 
+
                 when "favourits", "searches", "mratings", "comments"
                   if item.user_id == current_user.id or isdeputy(item)
                     access=true
                   end 
+
                 when "mobjects", "partners", "mstats", "transactions"
-                  if cname == "signage_locs"
-      	            html_string = html_string + link_to(home_index11_path(:loc_id => item.id)) do 
-                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-blackboard")
-                    end
-                  end
+                  #if cname == "signage_locs"
+      	          #   html_string = html_string + link_to(home_index11_path(:loc_id => item.id)) do 
+                  #    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-blackboard")
+                  #  end
+                  # end
                   if isowner(item)
                     access = true
                   end
@@ -1559,13 +1573,13 @@ def navigate(object,item)
       when "objekte"
         html_string = html_string + build_nav("objekte",item,"objekte_info",item)
         if user_signed_in?
-          if isowner(item)
+          if isowner(item) or isdeputy(item)
             html_string = html_string + build_nav("objekte",item,"objekte_details",item.mdetails.where('mtype=?',"details").count > 0)
           end
         end 
         if item.mtype == "projekte"
           if user_signed_in?
-            if isowner(item)
+            if isowner(item) or isdeputy(item)
               html_string = html_string + build_nav("objekte",item,"objekte_substruktur", Mobject.where('parent=?',item.id).count > 0)
               html_string = html_string + build_nav("objekte",item,"objekte_projektberechtigungen", item.madvisors.where('role=?',item.mtype).count > 0)
             end
