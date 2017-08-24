@@ -1132,7 +1132,7 @@ def build_medialist2(items, cname, par)
                 when "nopartners"
                   access = true
                 when "deputies"
-                  if isowner(item.owner)
+                  if isowner(item)
                     access = true
                   end
                  when "madvisors"
@@ -1565,7 +1565,7 @@ def navigate(object,item)
         end 
         if item.mtype == "projekte"
           if user_signed_in?
-            if isowner(item.owner)
+            if isowner(item)
               html_string = html_string + build_nav("objekte",item,"objekte_substruktur", Mobject.where('parent=?',item.id).count > 0)
               html_string = html_string + build_nav("objekte",item,"objekte_projektberechtigungen", item.madvisors.where('role=?',item.mtype).count > 0)
             end
@@ -1589,7 +1589,7 @@ def navigate(object,item)
         end
         if item.mtype == "umfragen"
           if user_signed_in?
-            if isowner(item.owner)
+            if isowner(item)
               html_string = html_string + build_nav("objekte",item,"objekte_fragen",item.questions.count > 0)
               html_string = html_string + build_nav("objekte",item,"objekte_umfrageteilnehmer",User.count > 0)
             end
