@@ -1867,8 +1867,18 @@ def action_buttons2(object_type, item, topic)
     when "objekte"
        case topic
           when "objekte_info"
-             html_string = html_string + link_to(mobjects_path(:mtype => item.mtype, :msubtype => item.msubtype, :page => session[:page], :parent => session[:parent]), title: (I18n.t :objekte)+item.mtype, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
-              content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+             #html_string = html_string + link_to(mobjects_path(:mtype => item.mtype, :msubtype => item.msubtype, :page => session[:page], :parent => session[:parent]), title: (I18n.t :objekte)+item.mtype, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+              #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+             #end
+             if item.owner_type == "Company"
+               html_string = html_string + link_to(company_path(:id => item.owner.id, :topic => "institutionen_projekte"), title: (I18n.t :objekte)+item.mtype, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+               end
+             end
+             if item.owner_type == "User"
+               html_string = html_string + link_to(user_path(:id => item.owner.id, :topic => "personen_projekte"), title: (I18n.t :objekte)+item.mtype, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+                content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+               end
              end
              if session[:edition_id]
                html_string = html_string + link_to(edition_path(:id => session[:edition_id], :topic => "objekte_info"), title: (I18n.t :zurueckzurausgabe), 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do

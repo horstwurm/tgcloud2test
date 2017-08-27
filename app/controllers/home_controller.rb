@@ -385,6 +385,26 @@ def index17
   redirect_to home_index3_path
 end
 
+def index18
+  
+  @array = []
+  #@array << ['alle', "TKB", "TKB"]
+  @projects = Mobject.all
+  @projects.each do |p|
+    #h = Hash.new
+    #h = {"alle Projekte"}
+    if p.parent and p.parent > 0
+      @par = Mobject.find(p.parent).name
+    else
+      @par = "TKB"
+    end
+    #@array << [p.name, @par, p.name]
+    @array << [ ("<a href=/mobjects/" + p.id.to_s + ">" + p.name + "</a>"), @par, p.name]
+  end
+  #@array = []
+  #@array << ["root", "ich", "root"]
+end
+
 def import
     path=File.join(Rails.root, "/app/assets/images/mig2017.xlsx")
     workbook = Creek::Book.new path
