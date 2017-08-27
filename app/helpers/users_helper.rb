@@ -3404,4 +3404,60 @@ def isowner(mobject)
   return zugriff
 end
 
+def import(email, name, lastname, project, activity, parent, anz, datum)
+
+@user = User.where('email=?',email).first
+if !@user
+  users = User.create({org: "OE4711", costinfo: "KST0815", rate:150, calendar:true, time_from:8, time_to:20, dateofbirth:"09.05.1963", anonymous:false, status:"OK", active:true, email:email, password:"password", name:name, lastname:lastname, address1:"TKB", address2:"Im Roos", address3:"Weinfelden", superuser:false, webmaster:false })
+  @user = User.where('email=?',@email).first
+end
+
+@projekt = Mobject.where('name=? and mtype=?',project, "projekte").first
+if !@projekt
+  mobjects = Mobject.create({parent: 0, status:"OK", active:true, mtype:"projekte", msubtype:nil, name:project, date_from: "01.01.2016", date_to: "31.12.2017", owner_type:"Company", owner_id: 1, mcategory_id:29, address1: "", address2: "", address3: ""})
+  @projekt = Mobject.where('name=? and mtype=?',project, "projekte").first
+  if @projekt
+    if parent and parent != ""
+      @par = Mobject.where('name=? and mtype=?',parent, "projekte").first
+      if !@par
+        mobjects = Mobject.create({parent: 0, status:"OK", active:true, mtype:"projekte", msubtype:nil, name:parent, date_from: "01.01.2016", date_to: "31.12.2017", owner_type:"Company", owner_id: 1, mcategory_id:29, address1: "", address2: "", address3: ""})
+        @par = Mobject.where('name=? and mtype=?',parent, "projekte").first
+      end
+      if @par
+        @projekt.parent = @par.id
+        @projekt.save
+      end
+    end
+  end
+end
+
+if @projekt and @user
+  
+  @madvisor = @projekt.madvisors.where('mobject_id=? and user_id=? and role=?', @projekt.id, @user.id, "projekte").first
+  if !@madvisor
+    madvisors = Madvisor.create({mobject_id: @projekt.id, user_id: @user.id, role: "projekte", grade: "Projekt-Mitarbeiter"})
+  end
+
+  @plannings = @user.plannings.where('mobject_id=? and user_id=?', @projekt.id, @user.id).first
+  if !@plannings
+    for y in 2016..2017
+      for m in 1..12
+        if m.to_s.length == 1
+          mon = "0"+m.to_s
+        else
+          mon = m.to_s
+        end
+        plannings = Planning.create({mobject_id: @projekt.id, user_id: @user.id, amount: 10, jahr: y.to_s, monat: mon, costortime: "aufwand"})
+      end
+    end
+  end
+
+end
+
+if @projekt and @user and datum != nil and datum != ""
+  timetracks = Timetrack.create({mobject_id: @projekt.id, user_id: @user.id, activity: activity, amount: anz, datum: datum.to_date, costortime: "aufwand"})
+  return true
+end
+end
+
 end    

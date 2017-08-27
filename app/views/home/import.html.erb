@@ -1,0 +1,36 @@
+<h1>importing.....</h1>
+<% @html = "" %>
+<% first = true %>
+<% counter=1 %>
+<% mig = 0 %>
+<% max = 200 %>
+<% @worksheets.each do |worksheet| %>
+    <% if first == true %>
+        <% first = false %>
+        <% counter = 0 %>
+        <% worksheet.rows.each do |row| %>
+            <% counter = counter + 1 %>
+            <% if counter > 1 and counter <= max %>
+                <% row_cells = row.values %>
+                <% if row_cells[0] and row_cells[0] != "" %>
+                    <% @email = row_cells[0].to_s %>
+                    <% @name = row_cells[7].to_s %>
+                    <% @lastname = row_cells[8].to_s %>
+                    <% @project = row_cells[1].to_s %>
+                    <% @activity = row_cells[4].to_s %>
+                    <% @parent = row_cells[2] %>
+                    <% @anz = row_cells[3].to_f %> 
+                    <% @datum = row_cells[5] %>
+                    <% result = import(@email, @name, @lastname, @project, @activity, @parent, @anz, @datum) %>
+                    <% if result %>
+                        <% mig = mig + 1 %>
+                    <% end %>
+                <% end %>
+            <% end %>
+        <% end %>
+    <% end %>
+<% end %>
+<br><b>
+<%= @html = "Anzahl records read: "+ counter.to_s %><br>
+<%= @html = "Anzahl records imported: "+ mig.to_s %>
+</b>
