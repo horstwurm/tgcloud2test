@@ -387,7 +387,7 @@ end
 
 def index18
     max = 100000
-    mx = 500
+    max = 20
     require 'creek'
 
     #@dl = Dataloader.find(params[:dataloader_id])      
