@@ -386,8 +386,7 @@ def index17
 end
 
 def index18
-    #max = 100000
-    max = 580
+    max = 100000
     
     require 'creek'
 
