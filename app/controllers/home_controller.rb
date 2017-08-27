@@ -386,8 +386,7 @@ def index17
 end
 
 def index18
-    max = 100000
-    max = 20
+    max = 10764
     require 'creek'
 
     #@dl = Dataloader.find(params[:dataloader_id])      
@@ -402,7 +401,7 @@ def index18
     counter=1
     worksheets.each do |worksheet|
 
-      if first
+      if first == true
         first = false
         counter = 1
         worksheet.rows.each do |row|
