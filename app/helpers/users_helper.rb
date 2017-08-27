@@ -1414,22 +1414,34 @@ def build_medialist2(items, cname, par)
 end
 
 def showFirstImage2(size, item, details)
+    case size
+      when :medium
+        ssize = "250x250"
+      when :small
+        ssize = "50x50"
+    end
     html_string = link_to item do
       if details.count > 0
         pic = details.first
         if pic.avatar_file_name
           image_tag pic.avatar(size), class:"img-rounded img-responsive"
         else
-          image_tag(item.mtype + ".png", :size => size, class:"card-img-top img-responsive")
+          image_tag(item.mtype + ".png", :size => ssize, class:"card-img-top img-responsive")
         end
       else
-        image_tag(item.mtype + ".png", :size => size, class:"card-img-top img-responsive")
+        image_tag(item.mtype + ".png", :size => ssize, class:"card-img-top img-responsive")
       end
     end
     return html_string.html_safe
 end
 
 def showImage2(size, item, linkit)
+    case size
+      when :medium
+        ssize = "250x250"
+      when :small
+        ssize = "50x50"
+    end
     if linkit
       html_string = link_to(item) do
         if item.avatar_file_name
@@ -1437,11 +1449,11 @@ def showImage2(size, item, linkit)
         else
           case item.class.name
             when "User"
-              image_tag("personen.png", :size => "50x50", class:"card-img-top img-responsive" )
+              image_tag("personen.png", :size => ssize, class:"card-img-top img-responsive" )
             when "Company"
-              image_tag("institutionen.png", :size => "50x50", class:"card-img-top img-responsive" )
+              image_tag("institutionen.png", :size => ssize, class:"card-img-top img-responsive" )
             else
-              image_tag("no_pic.jpg", :size => "50x50", class:"card-img-top img-responsive" )
+              image_tag("no_pic.jpg", :size => ssize, class:"card-img-top img-responsive" )
           end
         end
       end
