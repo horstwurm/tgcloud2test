@@ -3455,8 +3455,11 @@ if @projekt and @user
 end
 
 if @projekt and @user and datum != nil and datum != ""
-  timetracks = Timetrack.create({mobject_id: @projekt.id, user_id: @user.id, activity: activity, amount: anz, datum: datum.to_date, costortime: "aufwand"})
-  return true
+  tt = Timetrack.where('mobject_id=? and user_id=? and activity=? and datum=? and amount=?', @projekt.id, @user.id, activity, datum.to_date, anz).first
+  if !tt
+    timetracks = Timetrack.create({mobject_id: @projekt.id, user_id: @user.id, activity: activity, amount: anz, datum: datum.to_date, costortime: "aufwand"})
+    return true
+  end
 end
 end
 
