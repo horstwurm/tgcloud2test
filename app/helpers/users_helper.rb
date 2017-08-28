@@ -1871,12 +1871,12 @@ def action_buttons2(object_type, item, topic)
               #content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
              #end
              if item.owner_type == "Company"
-               html_string = html_string + link_to(company_path(:id => item.owner.id, :topic => "institutionen_projekte"), title: (I18n.t :objekte)+item.mtype, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+               html_string = html_string + link_to(company_path(:id => item.owner.id, :topic => "institutionen_" + item.mtype), title: (I18n.t :objekte)+item.mtype, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
                end
              end
              if item.owner_type == "User"
-               html_string = html_string + link_to(user_path(:id => item.owner.id, :topic => "personen_projekte"), title: (I18n.t :objekte)+item.mtype, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
+               html_string = html_string + link_to(user_path(:id => item.owner.id, :topic => "personen_" + item.mtype), title: (I18n.t :objekte)+item.mtype, 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'class' => 'new-tooltip') do
                 content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
                end
              end
