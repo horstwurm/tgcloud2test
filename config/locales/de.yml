@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 de:
+  noprojects: "Keine Projektberechtigungen!"
   stellvertretungen: "Stellvertretungen"
   favoriten: "meine Favoriten"
   crowdfundingbeitraege: "Crowdfunding Zuwendungen"
