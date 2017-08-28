@@ -81,6 +81,17 @@ class TimetracksController < ApplicationController
     @timetrack = Timetrack.new
     if params[:mobject_id]
       @timetrack.mobject_id = params[:mobject_id]
+    else
+      @advisors = current_user.madvisors.where('role=?',"projekte")
+      if @advisors.first
+        @timetrack.mobject_id = @advisors.first.mobject_id
+        @mobs = []
+        @advisors.each do |m|
+          @mobs << [m.mobject.name, m.mobject_id]
+        end
+      else
+        redirect_to user_path(:id => params[:user_id], :topic => "personen_zeiterfassung"), notice: (I18n.t :noprojects)
+      end
     end
     if params[:user_id]
       @timetrack.user_id = params[:user_id]

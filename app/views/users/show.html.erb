@@ -152,7 +152,10 @@
                   <% end %>
                   <% @date_start %>
                   <% @date_end %>
-                  
+
+                  <%= link_to new_timetrack_path(:user_id => @user.id, :scope => @c_scope) do %>
+                    <span><i class="btn btn-special %> glyphicon glyphicon-plus"></i></span>
+                  <% end %>
                   <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung", :year => @c_year, :month => @c_month, :mode => "alles", :scope => @c_scope) do %>
                     <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-fullscreen"> alles</i></span>
                   <% end %>
