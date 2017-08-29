@@ -73,11 +73,7 @@
                 <% end %>
               </td>
               <td>
-                <% if u.avatar_file_name == nil %>
-                  <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
-                <% else %>
-                  <%= image_tag u.avatar(:small), class:"img-rounded"  %>
-                <% end %>
+                <%= showImage2(:small, u, true) %>
               </td>
               <td>
                 <%= u.name + " " + u.lastname %>            

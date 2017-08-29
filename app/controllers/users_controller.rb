@@ -102,6 +102,11 @@ class UsersController < ApplicationController
 
       when "personen_ressourcenplanung", "personen_zeiterfassung"
 
+        if params[:tdatum]
+          @c_datum = params[:tdatum].to_date
+        else
+          @c_datum = Date.today
+        end
         if params[:year]
           @c_year = params[:year]
         else
@@ -121,7 +126,8 @@ class UsersController < ApplicationController
         if params[:mode]
           @c_mode = params[:mode]
         else
-          @c_mode = "Jahr"
+          @c_mode = "Datum"
+          @c_datum = Date.today
         end
         if params[:scope]
           @c_scope = params[:scope]
@@ -130,6 +136,9 @@ class UsersController < ApplicationController
         end
         
         if params[:dir] == ">"
+          if @c_mode == "Datum"
+            @c_datum = @c_datum.to_date + 1
+          end
           if @c_mode == "Woche"
             if @c_week.to_i == 52
               @c_week =  1
@@ -151,6 +160,9 @@ class UsersController < ApplicationController
           end
         end
         if params[:dir] == "<"
+          if @c_mode == "Datum"
+            @c_datum = @c_datum.to_date - 1
+          end
           if @c_mode == "Woche"
             if @c_week.to_i == 1
               @c_week =  52

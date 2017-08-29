@@ -141,14 +141,22 @@
                       <% btn_m = "active" %>
                       <% btn_y = "inactive" %>
                       <% btn_a = "inactive" %>
+                      <% btn_d = "inactive" %>
                     <% when "Jahr" %>
                       <% btn_y = "active" %>
                       <% btn_m = "inactive" %>
                       <% btn_a = "inactive" %>
+                      <% btn_d = "inactive" %>
                     <% when "alles" %>
                       <% btn_y = "inactive" %>
                       <% btn_m = "inactive" %>
                       <% btn_a = "active" %>
+                      <% btn_d = "inactive" %>
+                    <% when "Datum" %>
+                      <% btn_y = "inactive" %>
+                      <% btn_m = "inactive" %>
+                      <% btn_a = "inactive" %>
+                      <% btn_d = "active" %>
                   <% end %>
                   <% @date_start %>
                   <% @date_end %>
@@ -156,38 +164,45 @@
                   <%= link_to new_timetrack_path(:user_id => @user.id, :scope => @c_scope) do %>
                     <span><i class="btn btn-special %> glyphicon glyphicon-plus"></i></span>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung", :year => @c_year, :month => @c_month, :mode => "alles", :scope => @c_scope) do %>
-                    <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-fullscreen"> alles</i></span>
+
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung", :year => @c_year, :month => @c_month, :mode => "Datum", :scope => @c_scope, :tdatum => @c_datum) do %>
+                    <span><i class="btn btn-<%= btn_d %> glyphicon glyphicon-calendar"> <%= @c_datum.strftime("%d.%m.%Y") %></i></span>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Monat", :scope => @c_scope) do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Monat", :scope => @c_scope, :tdatum => @c_datum) do %>
                     <span><i class="btn btn-<%= btn_m %> glyphicon glyphicon-calendar"> <%= @c_month %></i></span>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope)  do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => @c_scope, :tdatum => @c_datum)  do %>
                     <span><i class="btn btn-<%= btn_y %> glyphicon glyphicon-calendar"> <%= @c_year %></i></span>
                   <% end %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung", :year => @c_year, :month => @c_month, :mode => "alles", :scope => @c_scope, :tdatum => @c_datum) do %>
+                    <span><i class="btn btn-<%= btn_a %> glyphicon glyphicon-calendar"> alles</i></span>
+                  <% end %>
   
-                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => "kosten")  do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => "kosten", :tdatum => @c_datum)  do %>
                     <span><i class="btn btn-<%= btn_sc %> glyphicon glyphicon-euro"></i></span>
                   <% end %>
-                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => "aufwand")  do %>
+                  <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung",  :year => @c_year, :month => @c_month, :mode => "Jahr", :scope => "aufwand", :tdatum => @c_datum)  do %>
                     <span><i class="btn btn-<%= btn_sa %> glyphicon glyphicon-time"></i></span>
                   <% end %>
           
                   <% if @c_mode != "alles" %>
-                    <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope)  do %>
+                    <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung", :dir => "<", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope, :tdatum => @c_datum)  do %>
                       <i class="btn btn-primary glyphicon glyphicon-chevron-left"></i>
                     <% end %>
-                    <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope) do %>
+                    <%= link_to user_path(:id => @user.id, :topic => "personen_zeiterfassung", :dir => ">", :year => @c_year, :month => @c_month, :mode => @c_mode, :scope => @c_scope, :tdatum => @c_datum) do %>
                       <i class="btn btn-primary glyphicon glyphicon-chevron-right"></i>
                     <% end %>
                  <% end %>
-                 <% if @c_mode == "alles" %>
-                   <% @timetracks = Timetrack.select("mobject_id").where('user_id=? and costortime=?', @user.id, @c_scope).distinct %>
-                 <% else %>
-                   <% @timetracks = Timetrack.select("mobject_id").where('user_id=? and costortime=? and datum >=? and datum <=?', @user.id, @c_scope, @date_start, @date_end).distinct %>
+                 <% case @c_mode %>
+                   <% when "alles" %>
+                     <% @timetracks = Timetrack.select("mobject_id").where('user_id=? and costortime=?', @user.id, @c_scope).distinct %>
+                   <% when "Datum" %>
+                     <% @timetracks = Timetrack.select("mobject_id").where('user_id=? and costortime=? and datum=?', @user.id, @c_scope, @c_datum.to_date).distinct %>
+                   <% else %>
+                     <% @timetracks = Timetrack.select("mobject_id").where('user_id=? and costortime=? and datum >=? and datum <=?', @user.id, @c_scope, @date_start, @date_end).distinct %>
                  <% end  %>
                  <br><br>
-                
+
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div>
@@ -231,7 +246,7 @@
                   </div>
                 </div>
   
-                <% if @c_mode == "Monat" %>
+                <% if @c_mode == "Datum" %>
                   <br><br>
                   <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -244,16 +259,17 @@
                               <th></th>
                               <th><%= (I18n.t :datum) %></th>            
                               <th colspan=2><%= (I18n.t :projekte) %></th>
+                              <th><%= (I18n.t :activity) %></th>
                               <% if @c_scope == "aufwand" %>
-                                <th><%= (I18n.t :anzahlstunden) %></th>
+                                <th align="right"><%= (I18n.t :anzahlstunden) %></th>
                               <% end %>
                               <% if @c_scope == "kosten" %>
-                                <th><%= (I18n.t :betrag) %></th>
+                                <th align="right"><%= (I18n.t :betrag) %></th>
                               <% end %>
                             </tr>
                           </thead>
                           <tbody>
-                          <% @activities = Timetrack.where('user_id=? and costortime=? and datum >=? and datum <=?', @user.id, @c_scope, @date_start, @date_end).order(datum: :desc) %>
+                          <% @activities = Timetrack.where('user_id=? and costortime=? and datum=?', @user.id, @c_scope, @c_datum).order(datum: :desc) %>
                           <% @activities.each do |a| %>
                             <tr>
                               <td>
@@ -267,6 +283,7 @@
                               <td><%= a.datum.strftime('%d-%m-%Y') %></td>
                               <td><%= showFirstImage2(:small, Mobject.find(a.mobject_id),Mobject.find(a.mobject_id).mdetails) %></td>
                               <td><%= Mobject.find(a.mobject_id).name %></td>
+                              <td><%= a.activity %></td>
                               <td align="right"><%= a.amount %></td>
                             </tr>
                           <% end %>
@@ -950,8 +967,11 @@
   <script>
       google.charts.load('current', {'packages':['corechart']});
 
-      <% if @c_mode == "alles" %>
+      <% case @c_mode %>
+        <% when "alles" %>
           <% @tts = Timetrack.select("mobject_id, sum(amount) as sum").where('user_id=? and costortime=?', @user.id, @c_scope).group("mobject_id") %>
+        <% when "Datum" %>
+          <% @tts = Timetrack.select("mobject_id, sum(amount) as sum").where('user_id=? and costortime=? and datum=?', @user.id, @c_scope, @c_datum).group("mobject_id") %>
       <% else %>
           <% @tts = Timetrack.select("mobject_id, sum(amount) as sum").where('user_id=? and costortime=? and datum >=? and datum <=?', @user.id, @c_scope, @date_start, @date_end).group("mobject_id") %>
       <% end %>
@@ -981,6 +1001,8 @@
         <% case @c_mode %>
           <% when "alles" %>
             <% @tts = Timetrack.select("jahrmonat as gdate, sum(amount) as sum").where('user_id=? and costortime=? and mobject_id=?', @user.id, @c_scope, t.mobject_id).group("jahrmonat").order("gdate") %>
+          <% when "Datum" %>
+            <% @tts = Timetrack.select("date(datum) as gdate, sum(amount) as sum").where('user_id=? and costortime=? and mobject_id=? and datum=?', @user.id, @c_scope, t.mobject.id, @c_datum).group("datum").order("datum") %>
           <% when "Monat" %>
             <% @tts = Timetrack.select("date(datum) as gdate, sum(amount) as sum").where('user_id=? and costortime=? and mobject_id=? and datum >=? and datum <=?', @user.id, @c_scope, t.mobject.id, @date_start, @date_end).group("datum").order("datum") %>
           <% when "Jahr" %>
